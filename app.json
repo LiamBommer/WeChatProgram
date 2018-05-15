@@ -1,17 +1,17 @@
 {
   "pages":[
-    "pages/Project/Announcement/Announcement",
-    "pages/Project/Project",
     "pages/Project/Announcement/addAnnouncement/addAnnouncement",
+    "pages/addMember/addMember",
+    "pages/memberList/memberList",
+    "pages/Project/Project",
     "pages/Project/buildProject/buildProject",
     "pages/Project/Meeting/Meeting",
     "pages/Project/Meeting/addMeeting/addMeeting",
     "pages/Project/Task/Task",
     "pages/Project/Task/buildTask/buildTask",
+    "pages/Project/Announcement/Announcement",
     "pages/Notification/Notification",
     "pages/Mine/Mine",
-    "pages/addMember/addMember",
-    "pages/memberList/memberList",
     "pages/logs/logs"
   ],
   "window":{
