@@ -1,8 +1,10 @@
 {
   "pages":[
+    "pages/Meeting/addMeeting/addMeeting",
     "pages/index/index",
     "pages/logs/logs",
     "pages/addMember/addMember"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
