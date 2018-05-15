@@ -1,0 +1,48 @@
+.addMember-container {
+  margin-top: 40rpx;
+}
+
+.item {
+  width: 100%;
+  height: 120rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  background-color: #fff;
+  /* border-bottom: 2rpx solid #888888; */
+  display: flex;
+  flex-direction: row;
+}
+
+.img-view {
+  display: flex;
+  align-items: center;
+}
+
+image {
+  height: 80rpx;
+  width: 80rpx;
+  background-color: #000;
+}
+
+.text-view {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 30rpx;  
+  
+}
+
+.text-wrap-view {
+  height: 80rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-title {
+  font-size: 34rpx;
+}
+
+.list-desc {
+  font-size: 28rpx;
+  color: #888888;
+}
