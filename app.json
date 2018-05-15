@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/Meeting/addMeeting/addMeeting",
+    "pages/Announcement/addAnnouncement/addAnnouncement",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/addMember/addMember"
-    
+    "pages/addMember/addMember",
+    "pages/Meeting/addMeeting/addMeeting"
   ],
   "window":{
     "backgroundTextStyle":"light",
