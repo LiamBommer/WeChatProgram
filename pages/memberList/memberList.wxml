@@ -1,0 +1,53 @@
+<!--pages/memberList/memberList.wxml-->
+<view class='memberList-container'>
+    
+    <!-- 标题 -->
+    <view class='title'>项目负责人</view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon'></image>
+        <view class='item-text'>帅涛</view>
+      </view>
+      <checkbox class='item-checkbox'/>
+    </view>
+
+    <!-- 标题 -->
+    <view class='title'>项目成员</view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon'></image>
+        <view class='item-text'>帅涛</view>
+      </view>
+      <checkbox class='item-checkbox'/>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon'></image>
+        <view class='item-text'>帅涛</view>
+      </view>
+      <checkbox class='item-checkbox'/>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon'></image>
+        <view class='item-text'>帅涛</view>
+      </view>
+      <checkbox class='item-checkbox'/>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon'></image>
+        <view class='item-text'>帅涛</view>
+      </view>
+      <checkbox class='item-checkbox'/>
+    </view>
+
+    <button class='addMember'>添加成员</button>
+    <button class='deleteMember'>删除成员</button>
+
+</view>

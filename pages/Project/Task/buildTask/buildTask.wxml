@@ -1,0 +1,24 @@
+<!--pages/Task/buildTask/buildTask.wxml-->
+<view class='buildTask-container'>
+    
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>任务名称</view>
+        <input class='item-content' placeholder='输入任务名称...'></input>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>任务成员</view>
+        <input class='item-content' placeholder='请选择任务成员...'></input>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>截止时间</view>
+        <input class='item-content' placeholder='输入截止时间...'></input>
+    </view>
+
+    <button class='submit'>完成</button>
+    <button class='cancel'>取消</button>
+
+</view>
+

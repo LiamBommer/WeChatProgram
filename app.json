@@ -1,15 +1,49 @@
 {
   "pages":[
-    "pages/Announcement/addAnnouncement/addAnnouncement",
-    "pages/index/index",
-    "pages/logs/logs",
+    "pages/Project/Announcement/Announcement",
+    "pages/Project/Project",
+    "pages/Project/Announcement/addAnnouncement/addAnnouncement",
+    "pages/Project/buildProject/buildProject",
+    "pages/Project/Meeting/Meeting",
+    "pages/Project/Meeting/addMeeting/addMeeting",
+    "pages/Project/Task/Task",
+    "pages/Project/Task/buildTask/buildTask",
+    "pages/Notification/Notification",
+    "pages/Mine/Mine",
     "pages/addMember/addMember",
-    "pages/Meeting/addMeeting/addMeeting"
+    "pages/memberList/memberList",
+    "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",
+    "backgroundTextStyle":"light",  
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "团队协作应用",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "selectedColor": "#09BB07",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/Project/Announcement/Announcement",
+        "iconPath": "pages/img/项目.png",
+        "selectedIconPath": "pages/img/项目 (点击).png",
+        "text": "项目"
+      },
+      {
+        "pagePath": "pages/Notification/Notification",
+        "iconPath": "pages/img/通知.png",
+        "selectedIconPath": "pages/img/通知 (点击).png",
+        "text": "通知"
+      },
+      {
+        "pagePath": "pages/Mine/Mine",
+        "iconPath": "pages/img/我.png",
+        "selectedIconPath": "pages/img/我 (点击).png",
+        "text": "我"
+      }
+    ]
   }
 }
+  

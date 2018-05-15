@@ -1,0 +1,31 @@
+<!--pages/buildProject/buildProject.wxml-->
+<view class='buildTask-container'>
+    
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>项目名称</view>
+        <input class='item-content' placeholder-class='placeholder' placeholder='输入项目名称...'></input>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>项目描述</view>
+        <input class='item-content' placeholder-class='placeholder' placeholder='输入项目描述...'></input>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+        <view class='item-title'>项目类型</view>
+        <view class="item-content">
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+              <view class="picker">
+                请选择项目类型:{{array[index]}}
+              </view>
+            </picker>
+        </view>
+    </view>
+
+    <button class='submit'>完成</button>
+    <button class='cancel'>取消</button>
+
+</view>
+
+
