@@ -8,6 +8,7 @@
   height: 120rpx;
   width: 100%;
   border: 2rpx solid #f2f2f2;
+
 }
 
 .input-text-view .content-view {
@@ -17,9 +18,10 @@
 }
 
 .input-text-view .title-view .title {
-  font-size: 36rpx;
+  font-size: 40rpx;
   height: 100%;
-  margin: 10rpx 40rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx; 
 }
 
 .input-text-view .content-view .content {
@@ -50,5 +52,5 @@ switch {
 
 button {
   margin-top: 80rpx;
-  width: 600rpx;
+  width: 670rpx;
 }
