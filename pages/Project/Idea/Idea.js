@@ -1,4 +1,4 @@
-// pages/Project/Announcement/addAnnouncement.js
+// pages/Project/Idea/Idea.js
 Page({
 
   /**

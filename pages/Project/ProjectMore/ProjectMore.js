@@ -6,18 +6,46 @@ Page({
    */
   data: {
     //隐藏判断
-    exitAnnouncement: true,
-    exitMeeting: false,
+    exitTask: true,
+    exitAnnouncement: false,
     exitSchedule: false,
+    exitMeeting: false,
+    exitIdea: false,
+  },
+
+  // 导航栏选择任务
+  selectTask: function () {
+    var that = this;
+    that.setData({
+      exitTask: true,
+      exitAnnouncement: false,
+      exitSchedule: false,
+      exitMeeting: false,
+      exitIdea: false,
+    });
   },
 
   // 导航栏选择公告
   selectAnnouncement:function(){
     var that = this;
     that.setData({
+      exitTask: false,
       exitAnnouncement: true,
-      exitMeeting: false,
       exitSchedule: false,
+      exitMeeting: false,
+      exitIdea: false,
+    });
+  },
+
+  // 导航栏选择日程
+  selectSchedule: function () {
+    var that = this;
+    that.setData({
+      exitTask: false,
+      exitAnnouncement: false,
+      exitSchedule: true,
+      exitMeeting: false,
+      exitIdea: false,
     });
   },
 
@@ -25,19 +53,23 @@ Page({
   selectMeeting: function () {
     var that = this;
     that.setData({
-      exitMeeting: true,
+      exitTask: false,
       exitAnnouncement: false,
       exitSchedule: false,
+      exitMeeting: true,
+      exitIdea: false,
     });
   }, 
-  
-  // 导航栏选择日程
-  selectSchedule: function() {
+
+  // 导航栏选择墙
+  selectIdea: function () {
     var that = this;
     that.setData({
-      exitSchedule: true,
-      exitMeeting: false,
+      exitTask: false,
       exitAnnouncement: false,
+      exitSchedule: false,
+      exitMeeting: false,
+      exitIdea: true,
     });
   },
 
