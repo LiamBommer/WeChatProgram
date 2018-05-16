@@ -1,19 +1,21 @@
-/* pages/Project/Meeting/Meeting.wxss */
-.Meeting-container{
+/* pages/Mine/Meeting/Meeting.wxss */
+
+.Mine-Meeting-container{
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.Meeting-container .title{
+.Mine-Meeting-container .Meeting-title{
     color: #888888;
     margin-left: 40rpx;
-    margin-top: 30rpx;
+    margin-top: 16rpx;
     margin-bottom: 16rpx;
     font-size: 34rpx;
+    width: 100%;
 }
 
-.Meeting-container .item{
+.Mine-Meeting-container .Meeting-item{ 
     background: #fff;
     color: #000;
     width: 100%;
@@ -22,7 +24,7 @@
     align-items: center;
 }
 
-.Meeting-container .item .item-first{
+.Mine-Meeting-container .Meeting-item .Meeting-item-first{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -30,25 +32,17 @@
     margin-left: 40rpx;
 }
 
-.Meeting-container .item .item-first .item-date{
+.Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-date{
     font-size: 40rpx;
     font-weight: bold;
 }
 
-.Meeting-container .item .item-first .item-time{
+.Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-time{
     font-size: 34rpx;
     color: #888888;
 }
 
-.Meeting-container .item .item-second{
-    font-size: 40rpx;
+.Mine-Meeting-container .Meeting-item .Meeting-item-second{
+    font-size: 34rpx;
     margin-left: 60rpx;
-}
-
-.Meeting-container .buildicon{
-  position: fixed;
-  left: 640rpx;
-  top: 1000rpx;
-  width: 80rpx;
-  height: 80rpx;
 }

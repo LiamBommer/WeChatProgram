@@ -1,0 +1,59 @@
+/* pages/Project/Schedule/Schedule.wxss */
+
+.Schedule-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Schedule-container .title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 30rpx;
+    margin-bottom: 16rpx;
+    font-size: 34rpx;
+}
+
+.Schedule-container .item{
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 190rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 0.5rpx solid #b2b2b2;
+}
+
+.Schedule-container .item .item-first{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 40rpx;
+}
+
+.Schedule-container .item .item-first .item-time{
+    font-weight: bold;
+}
+
+.Schedule-container .item .item-first .item-connect{
+  color: #b2b2b2;
+}
+
+.Schedule-container .item .item-second{
+    font-size: 40rpx;
+}
+
+.Schedule-container .item .item-third{
+    font-size: 30rpx;
+    color: #b2b2b2;
+}
+
+.Schedule-container .buildicon{
+  position: fixed;
+  left: 640rpx;
+  top: 1000rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
