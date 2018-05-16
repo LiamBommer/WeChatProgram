@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/Meeting/meetingDetail/meetingDetail",
     "pages/Project/Announcement/addAnnouncement/addAnnouncement",
     "pages/addMember/addMember",
     "pages/memberList/memberList",
@@ -15,7 +16,7 @@
     "pages/logs/logs"
   ],
   "window":{
-    "backgroundTextStyle":"light",  
+    "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "团队协作应用",
     "navigationBarTextStyle":"black"
@@ -46,4 +47,3 @@
     ]
   }
 }
-  

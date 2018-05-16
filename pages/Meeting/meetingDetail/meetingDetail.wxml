@@ -1,0 +1,40 @@
+<!-- meetingDeatil.wxml -->
+<view>
+   <view class="view-container">
+     <view class='title-view ver-align'>
+       <text class='title'>{{title}}</text>
+       <image></image>
+     </view>
+  </view>
+  <view class="view-container">
+     <view class='content-view'>
+       <text class='content'>{{content}}</text>
+     </view>
+  </view>
+  <view class="view-container">
+    <view class="item-view">
+      <image></image>
+      <text class='desc'>5/1</text>
+    </view>
+    <view class="item-view">
+      <image></image>
+      <text class='desc'>Repeat</text>
+    </view>
+    <view class="item-view member-view">
+      <view class="ver-align">
+        <image></image>
+        <text class='desc'>Member</text>
+      </view>
+      <view class="ver-align">
+        <image></image>
+        <image></image>
+        <image></image>
+        <image></image>
+      </view>
+    </view>
+    <view class="item-view">
+      <image></image>
+      <text class='desc delete-text'>Delete Meeting</text>
+    </view>
+  </view>
+</view>
