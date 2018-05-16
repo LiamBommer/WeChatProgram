@@ -1,0 +1,40 @@
+<!--pages/Mine/Meeting/Meeting.wxml-->
+<view class='Mine-Meeting-container'>
+
+  <!-- 标题 -->
+    <view class='Meeting-title'>2019年5月</view>
+    <!-- 列表项 -->
+    <view class='Meeting-item'>
+      <view class='Meeting-item-first'>
+        <view class='Meeting-item-date'>2日</view>
+        <view class='Meeting-item-time'>21:00</view>
+      </view>
+      <view class='Meeting-item-second'>
+        <view class='Meeting-item-title'>召开鹏凯捐钱慈善会</view>
+      </view>
+    </view>
+    <!-- 列表项 -->
+    <view class='Meeting-item'>
+      <view class='Meeting-item-first'>
+        <view class='Meeting-item-date'>2日</view>
+        <view class='Meeting-item-time'>21:00</view>
+      </view>
+      <view class='Meeting-item-second'>
+        <view class='Meeting-item-title'>召开鹏凯捐钱慈善会</view>
+      </view>
+    </view>
+
+    <!-- 标题 -->
+    <view class='Meeting-title'>2019年5月</view>
+    <!-- 列表项 -->
+    <view class='Meeting-item'>
+      <view class='Meeting-item-first'>
+        <view class='Meeting-item-date'>2日</view>
+        <view class='Meeting-item-time'>21:00</view>
+      </view>
+      <view class='Meeting-item-second'>
+        <view class='Meeting-item-title'>召开鹏凯捐钱慈善会</view>
+      </view>
+    </view>
+
+</view>

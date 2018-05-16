@@ -1,4 +1,4 @@
-// pages/Project/Meeting/Meeting.js
+// pages/Project/Schedule/Schedule.js
 Page({
 
   /**
@@ -6,12 +6,6 @@ Page({
    */
   data: {
   
-  },
-
-  build: function(){
-   wx.navigateTo({
-     url: './addMeeting/addMeeting',
-   })
   },
 
   /**

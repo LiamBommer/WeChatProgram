@@ -1,21 +1,108 @@
-/**index.wxss**/
-.userinfo {
+/* pages/Project/Project.wxss */
+.Project-container{
+    width:100%; 
+    display: flex;
+    flex-direction: column;
+}
+
+.Project-container .startitle{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 40rpx;
+    font-size: 40rpx;
+}
+
+.Project-container .staritem{
+    font-size: 40rpx;
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 140rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16rpx;
+}
+
+.Project-container .staritem .staritem-one{
+    display: flex;
+    align-items: center;
+}
+
+.Project-container .staritem .staritem-one .staritem-icon{
+    width: 140rpx;
+    height: 140rpx;
+    margin-left: 40rpx;
+    border-radius: 10rpx;
+}
+
+.Project-container .staritem .staritem-one .staritem-text{
+    margin-left: 30rpx;
+}
+
+.Project-container .staritem .staritemmore-icon{
+    margin-right: 40rpx;
+    width: 40rpx;
+    height: 40rpx;
+}
+
+
+.Project-container .title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 40rpx;
+    font-size: 34rpx;
+}
+
+.Project-container .item{
+    font-size: 34rpx;
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16rpx;
+}
+
+.Project-container .item .item-one{
+    display: flex;
+    align-items: center;
+}
+
+.Project-container .item .item-one .item-icon{
+    width: 120rpx;
+    height: 120rpx;
+    margin-left: 40rpx;
+    border-radius: 10rpx;
+}
+
+.Project-container .item .item-one .item-text{
+    margin-left: 30rpx;
+}
+
+.Project-container .item .itemmore-icon{
+    margin-right: 40rpx;
+    width: 40rpx;
+    height: 40rpx;
+}
+.Project-container .addProject{
+  height: 120rpx;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  font-size: 34rpx;
+  color: #888888;
+  margin-top: 16rpx;
+  border: 0.5rpx dashed #b2b2b2;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.Project-container .addProject .addProject-icon{
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 40rpx;
 }
 
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 200px;
+.Project-container .addProject .addProject-text{
+  margin-left: 50rpx;
 }

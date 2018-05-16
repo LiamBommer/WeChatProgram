@@ -1,11 +1,44 @@
-// pages/Meeting/addMeeting.js
+// pages/ProjectMore/ProjectMore.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    //隐藏判断
+    exitAnnouncement: true,
+    exitMeeting: false,
+    exitSchedule: false,
+  },
+
+  // 导航栏选择公告
+  selectAnnouncement:function(){
+    var that = this;
+    that.setData({
+      exitAnnouncement: true,
+      exitMeeting: false,
+      exitSchedule: false,
+    });
+  },
+
+  // 导航栏选择会议
+  selectMeeting: function () {
+    var that = this;
+    that.setData({
+      exitMeeting: true,
+      exitAnnouncement: false,
+      exitSchedule: false,
+    });
+  }, 
   
+  // 导航栏选择日程
+  selectSchedule: function() {
+    var that = this;
+    that.setData({
+      exitSchedule: true,
+      exitMeeting: false,
+      exitAnnouncement: false,
+    });
   },
 
   /**

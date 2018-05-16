@@ -1,18 +1,22 @@
 {
   "pages":[
-    "pages/Meeting/meetingDetail/meetingDetail",
-    "pages/Project/Announcement/addAnnouncement/addAnnouncement",
-    "pages/addMember/addMember",
-    "pages/memberList/memberList",
+    "pages/Mine/Mine",
+    "pages/Mine/Task/Task",
+    "pages/Mine/Meeting/Meeting",
+    "pages/Mine/Idea/Idea",
     "pages/Project/Project",
-    "pages/Project/buildProject/buildProject",
+    "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/Meeting/Meeting",
+    "pages/Project/Announcement/Announcement",
+    "pages/Project/Schedule/Schedule",
+    "pages/Project/Announcement/addAnnouncement/addAnnouncement",
+    "pages/Project/buildProject/buildProject",
     "pages/Project/Meeting/addMeeting/addMeeting",
     "pages/Project/Task/Task",
     "pages/Project/Task/buildTask/buildTask",
-    "pages/Project/Announcement/Announcement",
     "pages/Notification/Notification",
-    "pages/Mine/Mine",
+    "pages/addMember/addMember",
+    "pages/memberList/memberList",
     "pages/logs/logs"
   ],
   "window":{
@@ -27,21 +31,21 @@
     "borderStyle": "white",
     "list": [
       {
-        "pagePath": "pages/Project/Announcement/Announcement",
-        "iconPath": "pages/img/项目.png",
-        "selectedIconPath": "pages/img/项目 (点击).png",
+        "pagePath": "pages/Project/Project",
+        "iconPath": "img/项目.png",
+        "selectedIconPath": "img/项目 (点击).png",
         "text": "项目"
       },
       {
         "pagePath": "pages/Notification/Notification",
-        "iconPath": "pages/img/通知.png",
-        "selectedIconPath": "pages/img/通知 (点击).png",
+        "iconPath": "img/通知.png",
+        "selectedIconPath": "img/通知 (点击).png",
         "text": "通知"
       },
       {
         "pagePath": "pages/Mine/Mine",
-        "iconPath": "pages/img/我.png",
-        "selectedIconPath": "pages/img/我 (点击).png",
+        "iconPath": "img/我.png",
+        "selectedIconPath": "img/我 (点击).png",
         "text": "我"
       }
     ]

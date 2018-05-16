@@ -1,13 +1,47 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<!--pages/Project/Project.wxml-->
+<view class='Project-container'>
+    
+    <!-- 置顶标题 -->
+    <view class='startitle'>星标项目</view>
+    <!-- 置顶列表项 -->
+    <view class='staritem' bindtap='projectmore'>
+      <view class='staritem-one'>
+        <image class='staritem-icon'  src='/img/项目logo.png'></image>
+        <view class='staritem-text'>鲨鱼不配对</view>
+      </view>
+      <image class='staritemmore-icon' src='/img/更多.png'></image>
+    </view>
+    <!-- 置顶列表项 -->
+    <view class='staritem'>
+      <view class='staritem-one'>
+        <image class='staritem-icon' src='/img/项目logo.png'></image>
+        <view class='staritem-text'>鲨鱼不配对</view>
+      </view>
+      <image class='staritemmore-icon' src='/img/更多.png'></image>
+    </view>
+
+    <!-- 标题 -->
+    <view class='title'>我的项目</view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/项目logo.png'></image>
+        <view class='item-text'>鲨鱼派对</view>
+      </view>
+      <image class='itemmore-icon' src='/img/更多.png'></image>
+    </view>
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/项目logo.png'></image>
+        <view class='item-text'>鲨鱼派对</view>
+      </view>
+      <image class='itemmore-icon' src='/img/更多.png'></image>
+    </view>
+
+    <!-- 添加项目 -->
+    <view class='addProject'>
+        <image class='addProject-icon' src='/img/添加.png'></image>
+        <view class='addProject-text'>添加项目</view>
+    </view>
 </view>
