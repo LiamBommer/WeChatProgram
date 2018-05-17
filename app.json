@@ -10,6 +10,7 @@
     "pages/Project/Schedule/Schedule",
     "pages/Project/Meeting/Meeting",
     "pages/Project/Meeting/addMeeting/addMeeting",
+    "pages/Project/Meeting/meetingDetail/meetingDetai",
     "pages/Project/Idea/Idea",
     "pages/Mine/Mine",
     "pages/Mine/Task/Task",
@@ -18,8 +19,7 @@
     "pages/Notification/Notification",
     "pages/addMember/addMember",
     "pages/memberList/memberList",
-    "pages/logs/logs",
-    "pages/Meeting/meetingDetail/meetingDetail"
+    "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
