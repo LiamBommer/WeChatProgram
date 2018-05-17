@@ -1,1 +1,73 @@
 /* pages/Project/Idea/Idea.wxss */
+.idea-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+}
+
+.bg-img {
+  width: 100%;
+  height: 260rpx;
+  background-color: #888888;
+}
+
+.post-view {
+  width: 100%;
+  margin: 40rpx 40rpx 0rpx 40rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: white;
+}
+
+.post-view .post {
+  width: 291rpx;
+  height: 256rpx;
+  margin: 10rpx;
+  padding: 16rpx;
+  display: flex;
+  flex-direction: column;
+  background-color: #567b95;
+  color: white;
+}
+
+.post-view .user-info {
+  height: 60rpx;
+  width: 100%;
+}
+
+.post-view .user-info .avatar {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.post-view .user-info .username {
+  margin-left: 30rpx;
+}
+
+.post-view .content {
+  height: 160rpx;
+  padding: 10rpx 0rpx;
+  font-size: 28rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.post-view .bottom-view {
+  font-size: 26rpx;
+}
+
+.img-share {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.buildicon{
+  position: fixed;
+  left: 640rpx;
+  top: 1000rpx;
+  width: 80rpx;
+  height: 80rpx;
+}

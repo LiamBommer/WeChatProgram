@@ -50,7 +50,7 @@ page {
  */
 .view-container .item-view {
   border-bottom: 2rpx solid #f2f2f2;
-  height: 100rpx;
+  min-height: 100rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -73,7 +73,7 @@ page {
  * - 上边距 80rpx
  * - 宽670rpx （左右边距40rpx)
  */
-button[type="primary"] {
+button[size="default"] {
   margin-top: 80rpx;
   margin-bottom: 40rpx;
   width: 670rpx;

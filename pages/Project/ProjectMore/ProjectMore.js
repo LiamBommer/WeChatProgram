@@ -11,6 +11,15 @@ Page({
     exitSchedule: false,
     exitMeeting: false,
     exitIdea: false,
+    idea: {
+      img_visible: true,
+      bg_img: '',
+      icon_avatar: '/img/member.png',
+      icon_share: '/img/share.png',
+      username: '绝世产品经理',
+      content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
+      task: '关联的任务'
+    }
   },
 
   // 导航栏选择任务
@@ -101,6 +110,15 @@ Page({
   },
 
   /**
+   * 打开创建点子页面
+   */
+  createIdea: function() {
+    wx.navigateTo({
+      url: '../Idea/addIdea/addIdea'
+    });
+  },
+
+  /**
    * 显示会议详情页面
    */
   showMeetingDetail: function() {
@@ -124,6 +142,15 @@ Page({
   showScheduleDetail: function() {
     wx.navigateTo({
       url: '../Schedule/scheduleDetail/scheduleDetail'
+    });
+  },
+
+  /**
+   * 显示电子详情页面
+   */
+  showIdeaDetail: function() {
+    wx.navigateTo({
+      url: '../Idea/ideaDetail/ideaDetail'
     });
   },
 

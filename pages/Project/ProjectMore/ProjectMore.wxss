@@ -2,6 +2,7 @@
 @import "../Meeting/Meeting.wxss";
 @import "../Announcement/Announcement.wxss";
 @import "../Schedule/Schedule.wxss";
+@import "../Idea/Idea.wxss";
 
 .nav{
   width: 100%;

@@ -1,0 +1,47 @@
+<view class='ProjectDetail-container'>
+
+  <view class='view-container'>
+    <view class='title-view ver-align'>
+      <image src='' class='project-img'></image>
+      <text class='title'>{{project_name}}</text>
+    </view>
+  </view>
+
+  <view class='view-container list'>
+    <view class='item-view'>
+      <text class='des'>项目描述</text>
+      <text class='content'>{{project_desc}}</text>
+    </view>
+    <view class='item-view'>
+      <text class='des'>项目类型</text>
+      <text class='content'>{{project_type}}</text>
+    </view>
+    <view class='item-view space-between'>
+      <view class='intermediate-view'>
+        <text class='des'>项目归属</text>
+        <text>{{project_response}}</text>
+      </view>
+      <image src='{{icon_more}}'></image>
+    </view>
+    <view class='item-view space-between'>
+      <view class='intermediate-view'>
+        <text class='des'>成员</text>
+        <view class='member-view'>
+          <image src='{{icon_member}}'></image>
+          <image src='{{icon_member}}'></image>
+          <image src='{{icon_member}}'></image>
+          <image src='{{icon_member}}'></image>
+          <image src='{{icon_member}}'></image>
+        </view>
+      </view>
+      <image src='{{icon_more}}' bindtap='showMemberList'></image>
+    </view>
+    <view class='item-view'>
+      <text class='des'>置顶项目</text>
+      <checkbox/>
+    </view>
+  </view>
+
+ <button type='warn' size='default'>退出/解散项目</button>
+
+</view>

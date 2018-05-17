@@ -1,2 +1,52 @@
 <!--pages/Project/Idea/Idea.wxml-->
-<text>pages/Project/Idea/Idea.wxml</text>
+<view class='idea-container'>
+
+  <image src='{{idea.bg_img}}' class='bg-img'
+    style='display: {{idea.img_visible ? "" : "none"}}'></image>
+
+  <view class='post-view'>
+    <view class='post' bindtap='showIdeaDetail'>
+      <view class='user-info ver-align'>
+        <image src='{{idea.icon_avatar}}' class='avatar'></image>
+        <text class='username'>{{idea.username}}</text>
+      </view>
+      <view class='content'>
+        {{content}}
+      </view>
+      <view class='bottom-view ver-align space-between'>
+        <text class='task'>{{idea.task}}</text>
+        <image src='{{idea.icon_share}}' class='img-share'></image>
+      </view>
+    </view>
+    <view class='post'>
+      <view class='user-info ver-align'>
+        <image src='{{idea.icon_avatar}}' class='avatar'></image>
+        <text class='username'>{{idea.username}}</text>
+      </view>
+      <view class='content'>
+        {{idea.content}}
+      </view>
+      <view class='bottom-view ver-align space-between'>
+        <text class='task'>{{idea.task}}</text>
+        <image src='{{idea.icon_share}}' class='img-share'></image>
+      </view>
+    </view>
+    <view class='post'>
+      <view class='user-info ver-align'>
+        <image src='{{idea.icon_avatar}}' class='avatar'></image>
+        <text class='username'>{{idea.username}}</text>
+      </view>
+      <view class='content'>
+        {{idea.content}}
+      </view>
+      <view class='bottom-view ver-align space-between'>
+        <text class='task'>{{idea.task}}</text>
+        <image src='{{idea.icon_share}}' class='img-share'></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加图标 -->
+  <image class='buildicon' bindtap='createIdea' src='/img/create.png'></image>
+
+</view>

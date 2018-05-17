@@ -1,0 +1,9 @@
+
+.view-container .content-view {
+  height: 200rpx;
+  padding: 16rpx 0rpx;
+}
+
+.desc.delete-text {
+  color: #e64340;
+}

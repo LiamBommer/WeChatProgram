@@ -1,0 +1,31 @@
+<!-- ideaDetail.wxml -->
+<view class="idea-detail-container">
+
+ <view class='view-container'>
+    <view class='content-view'>
+      <text class='content'>
+        {{content}}
+      </text>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='{{icon_task_list}}'></image>
+        <text class='desc'>关联任务</text>
+      </view>
+      <image src='{{icon_add}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <text >任务 A</text>
+      <image src='{{icon_member}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <text >任务 B</text>
+      <image src='{{icon_member}}'></image>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_close}}'></image>
+      <text class='desc delete-text'>删除点子</text>
+    </view>
+ </view>
+
+</view>

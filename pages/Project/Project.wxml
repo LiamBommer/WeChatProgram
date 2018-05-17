@@ -9,7 +9,8 @@
         <image class='staritem-icon'  src='/img/logo.png'></image>
         <view class='staritem-text'>鲨鱼不配对</view>
       </view>
-      <image class='staritemmore-icon' src='/img/more.png'></image>
+      <image bindtap='showProjectDetail'
+      class='staritemmore-icon' src='/img/more.png'></image>
     </view>
     <!-- 置顶列表项 -->
     <view class='staritem'>
