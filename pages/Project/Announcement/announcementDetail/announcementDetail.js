@@ -1,18 +1,22 @@
-// pages/Project/Meeting/meetingDetail/meetingDetai.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    title: '会议标题',
-    content: "会议内容：jalkejflskjeflksjdflks ",
+    title: '公告标题',
+    content: '因为 Mr.Li 也很牛逼balabal ...\n'+
+            '我就不说什么了，大家都知道的。\n'+
+            '请同学们抓紧时间做完原型图，做完了请大家吃鸡腿',
+    note_time: '2018/05/01',
+    note_user: '产品经理',
+    belonging: '项目名',
     icon_share: '/img/share.png',
-    icon_deadline: '/img/deadline.png',
-    icon_cycle: '/img/cycle.png',
+    icon_belonging: '/img/belonging.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
-    icon_create: '/img/create.png',
+    icon_more: '/img/more.png',
+
   },
 
   /**

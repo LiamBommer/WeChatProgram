@@ -11,6 +11,7 @@
 
 page {
   background-color: #f2f2f2;
+  font-size: 34rpx;
 }
 
 /*
@@ -32,4 +33,47 @@ page {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+/*
+ * 使页面内元素垂直居中
+ * 常用于列表项等地方
+ */
+.space-between {
+  justify-content: space-between;
+}
+
+/*
+ * 列表项view
+ * 规定高度和底部边框，常用于带图标的列表项: 如截止时间等
+ * 自带上下居中
+ */
+.view-container .item-view {
+  border-bottom: 2rpx solid #f2f2f2;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/*
+ * 列表项view 内的图片和文字
+ * 规定高度和底部边框，常用于带图标的列表项: 如截止时间等
+ */
+.item-view image {
+  height: 40rpx;
+  width: 40rpx;
+}
+.item-view .desc {
+  padding-left: 30rpx;
+}
+
+/*
+ * 主要按钮
+ * - 上边距 80rpx
+ * - 宽670rpx （左右边距40rpx)
+ */
+button[type="primary"] {
+  margin-top: 80rpx;
+  width: 670rpx;
 }

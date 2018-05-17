@@ -1,7 +1,7 @@
 <!-- meetingDeatil.wxml -->
 <view>
    <view class="view-container">
-     <view class='title-view ver-align'>
+     <view class='title-view ver-align space-between'>
        <text class='title'>{{title}}</text>
        <image src='{{icon_share}}'></image>
      </view>
@@ -20,7 +20,7 @@
       <image src='{{icon_cycle}}'></image>
       <text class='desc'>Repeat</text>
     </view>
-    <view class="item-view member-view">
+    <view class="item-view ver-align space-between">
       <view class="ver-align">
         <image src='{{icon_member}}'></image>
         <text class='desc'>Member</text>

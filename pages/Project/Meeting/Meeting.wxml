@@ -38,7 +38,7 @@
     </view>
 
   <!-- 添加图标 -->
-  <image class='buildicon' bindtap='build' src='/img/创建.png'></image>
+  <image class='buildicon' bindtap='createMeeting' src='/img/create.png'></image>
 
 
 

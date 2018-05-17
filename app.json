@@ -7,7 +7,9 @@
     "pages/Project/Task/buildTask/buildTask",
     "pages/Project/Announcement/Announcement",
     "pages/Project/Announcement/addAnnouncement/addAnnouncement",
+    "pages/Project/Announcement/announcementDetail/announcementDetail",
     "pages/Project/Schedule/Schedule",
+    "pages/Project/Schedule/addSchedule/addSchedule",
     "pages/Project/Meeting/Meeting",
     "pages/Project/Meeting/addMeeting/addMeeting",
     "pages/Project/Meeting/meetingDetail/meetingDetail",
@@ -34,20 +36,20 @@
     "list": [
       {
         "pagePath": "pages/Project/Project",
-        "iconPath": "img/项目.png",
-        "selectedIconPath": "img/项目 (点击).png",
+        "iconPath": "img/project.png",
+        "selectedIconPath": "img/project_selected.png",
         "text": "项目"
       },
       {
         "pagePath": "pages/Notification/Notification",
-        "iconPath": "img/通知.png",
-        "selectedIconPath": "img/通知 (点击).png",
+        "iconPath": "img/notification.png",
+        "selectedIconPath": "img/notification_selected.png",
         "text": "通知"
       },
       {
         "pagePath": "pages/Mine/Mine",
-        "iconPath": "img/我.png",
-        "selectedIconPath": "img/我 (点击).png",
+        "iconPath": "img/me.png",
+        "selectedIconPath": "img/me_selected.png",
         "text": "我"
       }
     ]

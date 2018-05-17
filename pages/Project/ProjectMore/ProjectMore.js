@@ -83,11 +83,29 @@ Page({
   },
 
   /**
+   * 打开创建公告页面
+   */
+  createSchedule: function() {
+    wx.navigateTo({
+      url: '../Schedule/addSchedule/addSchedule'
+    });
+  },
+
+  /**
    * 显示会议详情页面
    */
   showMeetingDetail: function() {
     wx.navigateTo({
       url: '../Meeting/meetingDetail/meetingDetail'
+    });
+  },
+
+  /**
+   * 显示会议详情页面
+   */
+  showAnnouncementDetail: function() {
+    wx.navigateTo({
+      url: '../Announcement/announcementDetail/announcementDetail'
     });
   },
 
