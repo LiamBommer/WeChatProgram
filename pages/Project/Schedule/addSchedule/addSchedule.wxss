@@ -6,6 +6,7 @@
 
 .title-view .title {
   font-size: 40rpx;
+  width: 100%;
 }
 
 .view-container .task-view {

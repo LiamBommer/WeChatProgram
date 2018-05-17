@@ -75,5 +75,6 @@ page {
  */
 button[type="primary"] {
   margin-top: 80rpx;
+  margin-bottom: 40rpx;
   width: 670rpx;
 }

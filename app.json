@@ -10,6 +10,7 @@
     "pages/Project/Announcement/announcementDetail/announcementDetail",
     "pages/Project/Schedule/Schedule",
     "pages/Project/Schedule/addSchedule/addSchedule",
+    "pages/Project/Schedule/scheduleDetail/scheduleDetail",
     "pages/Project/Meeting/Meeting",
     "pages/Project/Meeting/addMeeting/addMeeting",
     "pages/Project/Meeting/meetingDetail/meetingDetail",

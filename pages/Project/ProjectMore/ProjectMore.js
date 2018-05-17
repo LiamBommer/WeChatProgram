@@ -92,6 +92,15 @@ Page({
   },
 
   /**
+   * 打开创建会议页面
+   */
+  createMeeting: function() {
+    wx.navigateTo({
+      url: '../Meeting/addMeeting/addMeeting'
+    });
+  },
+
+  /**
    * 显示会议详情页面
    */
   showMeetingDetail: function() {
@@ -106,6 +115,15 @@ Page({
   showAnnouncementDetail: function() {
     wx.navigateTo({
       url: '../Announcement/announcementDetail/announcementDetail'
+    });
+  },
+
+  /**
+   * 显示日程详情页面
+   */
+  showScheduleDetail: function() {
+    wx.navigateTo({
+      url: '../Schedule/scheduleDetail/scheduleDetail'
     });
   },
 

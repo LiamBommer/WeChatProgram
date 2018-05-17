@@ -1,12 +1,14 @@
-//addMember.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    title: '日程标题',
+    icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
-    icon_cycle: '/img/cycle.png',
+    icon_task_list: '/img/task_list.png',
+    icon_add: '/img/add.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',

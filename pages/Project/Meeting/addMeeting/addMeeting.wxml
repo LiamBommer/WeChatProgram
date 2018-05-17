@@ -1,27 +1,37 @@
 <!-- addMeeting.wxml -->
-<view class="addMeeting-container">
+<view>
 
-<view class="item" bindtap='QRCode'>
-  <view class='img-view'>
-    <image></image>
-  </view>
-  <view class='text-view'>
-    <view class='text-wrap-view'>
-        <text class='list-title'>二维码添加</text>
-        <text class="list-desc">让他人通过二维码加入</text>
+  <view class='view-container'>
+    <view  class='title-view ver-align'>
+      <input class='title' placeholder='会议标题'/>
     </view>
-  </view>
-</view>
-<view class="item" bindtap='inviteWeChat'>
-  <view class='img-view'>
-    <image></image>
-  </view>
-  <view class='text-view'>
-    <view class='text-wrap-view'>
-        <text class='list-title'>通过微信邀请</text>
-        <text class="list-desc">让微信朋友通过链接加入项目</text>
+    <view class='content-view'>
+      <textarea class='content' placeholder='会议内容'/>
     </view>
+
+    <view class="item-view ver-align">
+      <image src='{{icon_deadline}}'></image>
+      <text class='desc'>5月8日 截至</text>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_cycle}}'></image>
+      <text class='desc'>重复</text>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class="ver-align">
+        <image src='{{icon_member}}'></image>
+        <text class='desc'>成员</text>
+      </view>
+      <view class="ver-align">
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_create}}'></image>
+      </view>
+    </view>
+
   </view>
-</view>
+
+  <button type='primary' size='default'>完成</button>
 
 </view>
