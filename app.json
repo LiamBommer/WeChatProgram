@@ -10,7 +10,7 @@
     "pages/Project/Schedule/Schedule",
     "pages/Project/Meeting/Meeting",
     "pages/Project/Meeting/addMeeting/addMeeting",
-    "pages/Project/Meeting/meetingDetail/meetingDetai",
+    "pages/Project/Meeting/meetingDetail/meetingDetail",
     "pages/Project/Idea/Idea",
     "pages/Mine/Mine",
     "pages/Mine/Task/Task",

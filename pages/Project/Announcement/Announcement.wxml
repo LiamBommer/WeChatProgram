@@ -34,8 +34,8 @@
       <view class='item-read'>0人已读</view>
     </view>
   </view>
-  
+
   <!-- 添加图标 -->
-  <image class='buildicon' src='/img/创建.png'></image>
+  <image class='buildicon' bindtap='createAnnoun' src='/img/创建.png'></image>
 
 </view>

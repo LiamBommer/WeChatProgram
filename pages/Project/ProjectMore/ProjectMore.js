@@ -59,7 +59,7 @@ Page({
       exitMeeting: true,
       exitIdea: false,
     });
-  }, 
+  },
 
   // 导航栏选择墙
   selectIdea: function () {
@@ -74,58 +74,76 @@ Page({
   },
 
   /**
+   * 打开创建公告页面
+   */
+  createAnnoun: function() {
+    wx.navigateTo({
+      url: '../Announcement/addAnnouncement/addAnnouncement'
+    });
+  },
+
+  /**
+   * 显示会议详情页面
+   */
+  showMeetingDetail: function() {
+    wx.navigateTo({
+      url: '../Meeting/meetingDetail/meetingDetail'
+    });
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

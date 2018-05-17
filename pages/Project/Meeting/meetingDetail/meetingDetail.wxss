@@ -19,10 +19,9 @@
   font-size: 34rpx;
 }
 
-image {
+.view-container image {
   height: 40rpx;
   width: 40rpx;
-  background-color: #000;
 }
 
 .view-container .item-view {

@@ -4,7 +4,7 @@
   <!-- 标题 -->
     <view class='title'>2019年5月</view>
     <!-- 列表项 -->
-    <view class='item'>
+    <view class='item' bindtap='showMeetingDetail'>
       <view class='item-first'>
         <view class='item-date'>2日</view>
         <view class='item-time'>21:00</view>
@@ -36,12 +36,10 @@
         <view class='item-title'>召开鹏凯第三次捐钱慈善会</view>
       </view>
     </view>
-  
+
   <!-- 添加图标 -->
   <image class='buildicon' bindtap='build' src='/img/创建.png'></image>
 
-  
+
 
 </view>
-
-
