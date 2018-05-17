@@ -1,2 +1,53 @@
 <!--pages/Mine/Mine.wxml-->
-<text>pages/Mine/Mine.wxml</text>
+<view class="Mine-container">
+  
+    <!-- 头像昵称 -->
+    <view class="userinfo">
+      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <block wx:else>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/标签.png'></image>
+        <view class='item-text'>标签</view>
+      </view> 
+    </view>
+
+    <!-- 列表项 -->
+    <view class='item'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/沟通模板.png'></image>
+        <view class='item-text'>沟通模板</view>
+      </view> 
+    </view>
+
+    <!-- 导航栏 -->
+    <view class='nav'>
+     <view class='{{exitTask? "nav-select" : ""}}' bindtap='selectTask'>任务</view>
+     <view class='{{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view>
+     <view class='{{exitIdea? "nav-select" : ""}}' bindtap='selectIdea'>点子</view>
+    </view>
+
+    <!-- 导航栏详情 -->
+    <view class='nav-more'>
+      <!-- 任务 -->
+      <view style='display:{{exitTask? "" : "none"}}'>
+        <include src='./Task/Task' />
+      </view>
+      <!-- 会议 -->
+      <view style='display:{{exitMeeting? "" : "none"}}'>
+        <include src='./Meeting/Meeting' />
+      </view>
+      <!-- 点子 -->
+      <view style='display:{{exitIdea? "" : "none"}}'>
+        <include src='./Idea/Idea' />
+      </view>
+    </view>
+
+</view>
+

@@ -1,0 +1,23 @@
+<!--pages/ProjectMore/ProjectMore.wxml-->
+ <!-- 顶部导航栏 -->
+  <view class='nav'>
+     <view class=''>任务</view>
+     <view class='{{exitAnnouncement? "nav-select" : ""}}' bindtap='selectAnnouncement'>公告</view>
+     <view class='{{exitSchedule? "nav-select" : ""}}' bindtap='selectSchedule'>日程</view>
+     <view class='{{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view>
+     <view class=''>墙</view>
+  </view>
+
+<!-- 公告 -->
+<view style='display:{{exitAnnouncement? "" : "none"}}'>
+  <include src='../Announcement/Announcement' />
+</view>
+<!-- 日程 -->
+<view style='display:{{exitSchedule? "" : "none"}}'>
+  <include src='../Schedule/Schedule' />
+</view>
+<!-- 会议 -->
+<view style='display:{{exitMeeting? "" : "none"}}'>
+  <include src='../Meeting/Meeting' />
+</view>
+

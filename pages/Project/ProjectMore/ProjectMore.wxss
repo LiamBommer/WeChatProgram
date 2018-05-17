@@ -1,0 +1,19 @@
+/* pages/ProjectMore/ProjectMore.wxss */
+@import "../Meeting/Meeting.wxss";
+@import "../Announcement/Announcement.wxss";
+@import "../Schedule/Schedule.wxss";
+
+.nav{
+  width: 100%;
+  height: 90rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 34rpx;
+  background: #fff;
+  color: #888888;
+}
+
+.nav .nav-select{
+  color: #09BB07;
+}

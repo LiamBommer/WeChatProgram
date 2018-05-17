@@ -1,0 +1,48 @@
+/* pages/Mine/Meeting/Meeting.wxss */
+
+.Mine-Meeting-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Mine-Meeting-container .Meeting-title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 16rpx;
+    margin-bottom: 16rpx;
+    font-size: 34rpx;
+    width: 100%;
+}
+
+.Mine-Meeting-container .Meeting-item{ 
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 150rpx;
+    display: flex;
+    align-items: center;
+}
+
+.Mine-Meeting-container .Meeting-item .Meeting-item-first{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 40rpx;
+}
+
+.Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-date{
+    font-size: 40rpx;
+    font-weight: bold;
+}
+
+.Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-time{
+    font-size: 34rpx;
+    color: #888888;
+}
+
+.Mine-Meeting-container .Meeting-item .Meeting-item-second{
+    font-size: 34rpx;
+    margin-left: 60rpx;
+}

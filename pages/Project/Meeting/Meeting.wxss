@@ -1,1 +1,54 @@
 /* pages/Project/Meeting/Meeting.wxss */
+.Meeting-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Meeting-container .title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 30rpx;
+    margin-bottom: 16rpx;
+    font-size: 34rpx;
+}
+
+.Meeting-container .item{
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 150rpx;
+    display: flex;
+    align-items: center;
+}
+
+.Meeting-container .item .item-first{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 40rpx;
+}
+
+.Meeting-container .item .item-first .item-date{
+    font-size: 40rpx;
+    font-weight: bold;
+}
+
+.Meeting-container .item .item-first .item-time{
+    font-size: 34rpx;
+    color: #888888;
+}
+
+.Meeting-container .item .item-second{
+    font-size: 40rpx;
+    margin-left: 60rpx;
+}
+
+.Meeting-container .buildicon{
+  position: fixed;
+  left: 640rpx;
+  top: 1000rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
