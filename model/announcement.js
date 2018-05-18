@@ -1,4 +1,4 @@
-// model/annoucement.js
+// model/announcement.js
 var Bmob = require('../utils/bmob.js')
 
 /**
@@ -33,4 +33,4 @@ function getAnnoucements(projId){
   return annoucementArr
 }
 
-module.exports.getAnnoucements = getAnnoucements
+module.exports.getAnnouncements = getAnnouncements

@@ -102,3 +102,5 @@ function getProjectMembers(projId){
   return userArr
 }
 
+module.exports.getProjectList = getProjectList
+module.exports.getProjectMembers = getProjectMembers

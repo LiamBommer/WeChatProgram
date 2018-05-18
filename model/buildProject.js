@@ -37,3 +37,5 @@ function buildProject(title,desc,type){
       }
     })
 }
+
+module.exports.buildProject = buildProject
