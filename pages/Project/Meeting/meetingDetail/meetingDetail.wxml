@@ -1,9 +1,9 @@
 <!-- meetingDeatil.wxml -->
 <view>
    <view class="view-container">
-     <view class='title-view ver-align'>
+     <view class='title-view ver-align space-between'>
        <text class='title'>{{title}}</text>
-       <image></image>
+       <image src='{{icon_share}}'></image>
      </view>
   </view>
   <view class="view-container">
@@ -13,27 +13,27 @@
   </view>
   <view class="view-container">
     <view class="item-view">
-      <image></image>
+      <image src='{{icon_deadline}}'></image>
       <text class='desc'>5/1</text>
     </view>
     <view class="item-view">
-      <image></image>
-      <text class='desc'>Repeat</text>
+      <image src='{{icon_cycle}}'></image>
+      <text class='desc'>重复</text>
     </view>
-    <view class="item-view member-view">
+    <view class="item-view ver-align space-between">
       <view class="ver-align">
-        <image></image>
-        <text class='desc'>Member</text>
+        <image src='{{icon_member}}'></image>
+        <text class='desc'>成员</text>
       </view>
       <view class="ver-align">
-        <image></image>
-        <image></image>
-        <image></image>
-        <image></image>
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_member}}'></image>
+        <image src='{{icon_create}}'></image>
       </view>
     </view>
     <view class="item-view">
-      <image></image>
+      <image src='{{icon_close}}'></image>
       <text class='desc delete-text'>Delete Meeting</text>
     </view>
   </view>

@@ -1,0 +1,38 @@
+<!-- scheduleDeatil.wxml -->
+<view>
+   <view class="view-container">
+     <view class='title-view ver-align space-between'>
+       <text class='title'>{{title}}</text>
+       <image src='{{icon_share}}'></image>
+     </view>
+  </view>
+  <view class="view-container">
+    <view class="item-view">
+      <image src='{{icon_deadline}}'></image>
+      <text class='desc'>5月1日 开始</text>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_deadline}}'></image>
+      <text class='desc'>5月8日 截至</text>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='{{icon_task_list}}'></image>
+        <text class='desc'>关联任务</text>
+      </view>
+      <image src='{{icon_add}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <text >任务 A</text>
+      <image src='{{icon_member}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <text >任务 B</text>
+      <image src='{{icon_member}}'></image>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_close}}'></image>
+      <text class='desc delete-text'>删除日程</text>
+    </view>
+  </view>
+</view>

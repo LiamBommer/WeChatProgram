@@ -1,18 +1,20 @@
 <!-- addAnnouncement.wxml -->
  <view class="addAnnouncement-container">
 
-   <view class='input-text-view'>
-     <view  class='title-view'>
+   <view class='view-container'>
+     <view  class='title-view ver-align'>
        <input class='title' placeholder='公告标题'/>
      </view>
-     <view  class='content-view'>
+     <view class='content-view'>
        <textarea class='content' placeholder='公告内容'/>
      </view>
    </view>
 
-   <view class='item-view'>
-     <text class='read-text'>显示已读和未读成员</text>
-     <switch />
+   <view class='view-container'>
+     <view class='item-view ver-align space-between'>
+       <text>显示已读和未读成员</text>
+       <switch />
+     </view>
    </view>
 
    <button type='primary' size='default'>完成</button>

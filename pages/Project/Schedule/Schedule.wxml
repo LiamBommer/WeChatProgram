@@ -4,7 +4,7 @@
   <!-- 标题 -->
     <view class='title'>2019年5月</view>
     <!-- 列表项 -->
-    <view class='item'>
+    <view class='item' bindtap='showScheduleDetail'>
       <view class='item-first'>
         <view class='item-time'>2日</view>
         <view class='item-connect'>|</view>
@@ -55,11 +55,10 @@
         <view class='item-text'>给帅涛颁奖</view>
       </view>
     </view>
-  
-  <!-- 添加图标 -->
-  <image class='buildicon' src='/img/创建.png'></image>
 
-  
+  <!-- 添加图标 -->
+  <image class='buildicon' bindtap='createSchedule' src='/img/create.png'></image>
+
+
 
 </view>
-
