@@ -4,8 +4,8 @@ var Bmob = require('../utils/bmob.js')
 /**
  *2018-05-18
  *@author mr.li
- *@return 所有项目的数组
- *获取用户的所有项目,默认10条
+ *@return 指定项目的所有公告数组
+ *根据项目id获取所有公告，默认10条
  * 
  */
 function getAnnoucements(projId){
