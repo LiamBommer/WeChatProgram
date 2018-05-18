@@ -36,9 +36,9 @@
       </view>
       <image src='{{icon_more}}' bindtap='showMemberList'></image>
     </view>
-    <view class='item-view'>
+    <view class='item-view space-between'>
       <text class='des'>置顶项目</text>
-      <checkbox/>
+      <switch/>
     </view>
   </view>
 
