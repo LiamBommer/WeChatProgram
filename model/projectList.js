@@ -69,7 +69,7 @@ function getProjectMembers(projId){
   var memberId = [] //项目的所有成员id数组
   var userArr = [] //项目所有成员数组
   
-  //获取指定项目的所有成员id，默认10条
+  //获取指定项目的所有成员id，50条
   memberQuery.equalTo("proj_id",projId)
   memberQuery.select("user_id")
   memberQuery.find().then(function (results) {
@@ -84,7 +84,8 @@ function getProjectMembers(projId){
 
   //获取指定项目的所有成员,默认10条
   userQuery.select("nickName","userPic")  //查询出用户的昵称和头像
-  userQuery.containedIn("objectId", userId)
+  userQuery.limit(50)
+  userQuery.containedIn("objectId", userId)  
   userQuery.find({
     success: function (results) {
       console.log("共查询到项目 " + results.length + " 条记录");
