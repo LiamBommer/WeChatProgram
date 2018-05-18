@@ -1,0 +1,96 @@
+<!--pages/Project/Task/TaskDetail/TaskDetail.wxml-->
+<view>
+  <!-- 标题 -->
+  <view class="view-container">
+     <view class='title-view ver-align space-between'>
+       <view class='title'>
+          <checkbox class='item-checkbox'/>
+          <view class='title-text'>{{title}}</view>
+       </view>
+       <image src='{{icon_share}}'></image>
+     </view>
+  </view>
+
+  <!-- 内容 -->
+  <view class="view-container">
+    <view class="item-view">
+      <image class='header' src='{{icon_person}}'></image>
+      <image src='{{icon_person}}'></image>
+      <image src='{{icon_person}}'></image>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_deadline}}'></image>
+      <text class='desc'>5月8日 20:00 截至</text>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_project}}'></image>
+      <text class='desc'>鲨鱼派对/项目名</text>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_add}}'></image>
+      <text class='desc'>添加更多内容</text>
+    </view>
+    <view class="item-view">
+      <image src='{{icon_close}}'></image>
+      <text class='desc delete-text'>删除任务</text>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='{{icon_task_list}}'></image>
+        <text class='desc'>子任务</text>
+      </view>
+      <image src='{{icon_add}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='childtask'>
+        <checkbox class='item-checkbox'/>
+        <text >任务 A</text>
+      </view>
+      <image src='{{icon_member}}'></image>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='childtask'>
+        <checkbox class='item-checkbox'/>
+        <text >任务 B</text>
+      </view>
+      <image src='{{icon_member}}'></image>
+    </view>
+  </view>
+
+  <!-- 聊天框 -->
+  <view class='chat'>
+     <!-- 任务消息 -->
+     <view class='taskremind'>
+        <view class='text'>帅涛添加了子任务“个人访谈-金哥"</view>
+        <view class='time'>5月2日 20:00</view>
+     </view>
+     <!-- 任务消息 -->
+     <view class='taskremind'>
+        <view class='text'>帅涛添加了子任务“个人访谈-金哥"</view>
+        <view class='time'>5月2日 20:00</view>
+     </view>
+     <!-- 信息框 -->
+     <view class='chatperson'>
+        <image class='person-icon' src='{{icon_chatperson}}'></image>
+        <view class='content'>帅涛太帅了！</view>
+     </view>
+     <!-- 我发送的信息框 -->
+     <view class='chatperson-me'>
+        <view class='content'>我也觉得！</view>
+        <image class='person-icon' src='{{icon_chatperson}}'></image>
+     </view>
+     <!-- 信息框 -->
+     <view class='chatperson'>
+        <image class='person-icon' src='{{icon_chatperson}}'></image>
+        <view class='content'>帅涛太帅了！</view>
+     </view>
+     <!-- 输入框 -->
+     <view class='input'>
+        <image class='template-icon' src='/img/communication_model.png'></image>
+        <input type='text' placeholder='在此输入文字...'></input>
+        <image class='face-icon' src='/img/expression.png'></image>
+        <image class='picture-icon' src='/img/picture.png'></image>
+     </view>
+  </view>
+</view>
+
