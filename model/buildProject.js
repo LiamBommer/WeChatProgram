@@ -38,4 +38,27 @@ function buildProject(title,desc,type){
     })
 }
 
+/**
+ * @author mr.li
+ * @parameter projId项目id，userId用户id
+ * 当用户创建项目时，添加项目成员表，并指定为领导人
+ */
+function addLeader(projId, userId){
+  var ProjectMember = Bmob.Object.extend("proj_member")
+  var projMember = new ProjectMember();
+
+  projMember.save({
+    proj_id: projId,
+    user_id: userId,
+    is_leader: 1
+  },{
+    success: function(result){
+      console.log("保存项目领导成功！")
+    },
+    error: function(result,error){
+      console.log("保存项目领导失败！",error)
+    }
+  })
+}
 module.exports.buildProject = buildProject
+module.exports.addLeader = addLeader

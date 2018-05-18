@@ -7,9 +7,6 @@ App({
     const Bmob = require('./utils/bmob.js')
     Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
 
-    //格式化时间
-    var timeUtil = require('./utils/util.js');
-
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
