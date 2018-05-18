@@ -4,22 +4,26 @@
     <!-- 置顶标题 -->
     <view class='startitle'>星标项目</view>
     <!-- 置顶列表项 -->
-    <view class='staritem' bindtap='projectmore'>
-      <view class='staritem-one'>
+    <view class='staritem'>
+      <view class='staritem-one' bindtap='projectmore'>
         <image class='staritem-icon'  src='/img/logo.png'></image>
         <view class='staritem-text'>鲨鱼不配对</view>
       </view>
-      <image bindtap='showProjectDetail'
-      class='staritemmore-icon' src='/img/more.png'></image>
+      <view class='staritem-two' bindtap='showProjectDetail'>
+        <image class='staritemmore-icon' src='/img/more.png'></image>
+      </view>
     </view>
     <!-- 置顶列表项 -->
     <view class='staritem'>
-      <view class='staritem-one'>
-        <image class='staritem-icon' src='/img/logo.png'></image>
+      <view class='staritem-one' bindtap='projectmore'>
+        <image class='staritem-icon'  src='/img/logo.png'></image>
         <view class='staritem-text'>鲨鱼不配对</view>
       </view>
-      <image class='staritemmore-icon' src='/img/more.png'></image>
+      <view class='staritem-two' bindtap='showProjectDetail'>
+        <image class='staritemmore-icon' src='/img/more.png'></image>
+      </view>
     </view>
+    
 
     <!-- 标题 -->
     <view class='title'>我的项目</view>
