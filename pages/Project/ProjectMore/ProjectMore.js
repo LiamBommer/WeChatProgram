@@ -83,6 +83,15 @@ Page({
   },
 
   /**
+   * 打开创建任务页面
+   */
+  createTask: function () {
+    wx.navigateTo({
+      url: '../Task/buildTask/buildTask',
+    })
+  },
+
+  /**
    * 打开创建公告页面
    */
   createAnnoun: function() {
@@ -117,7 +126,16 @@ Page({
       url: '../Idea/addIdea/addIdea'
     });
   },
-
+  
+  /**
+   * 显示任务详情页面
+   */
+  showTask: function() {
+    wx.navigateTo({
+      url: '../Task/TaskDetail/TaskDetail'
+    });
+  },
+  
   /**
    * 显示会议详情页面
    */

@@ -1,0 +1,128 @@
+/* pages/Project/Task/TaskDetail/TaskDetail.wxss */
+.view-container .title-view .title {
+  display: flex;
+  font-size: 40rpx;
+  align-items: center;
+}
+
+.view-container .title-view .title .title-text{
+  margin-left: 10rpx;
+}
+
+.view-container .title-view {
+  border-bottom: 2rpx solid #f2f2f2;
+  height: 120rpx;
+  padding: 16rpx 0rpx;
+}
+
+.view-container .item-view .header{
+  padding-right: 30rpx; 
+}
+
+.desc.delete-text {
+  color: #e64340;
+}
+
+.title-view image {
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.item-checkbox{
+  margin-right: 10rpx;
+}
+
+.chat{
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 120rpx;
+}
+
+.chat .taskremind{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888888;
+  font-size: 34rpx;
+  margin-top: 40rpx;
+}
+
+.chat .chatperson{
+  margin-top: 40rpx;
+  width: 300rpx;
+  margin-left: 40rpx;
+  display: flex;
+  align-items: center;
+}
+
+.chat .chatperson .person-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.chat .chatperson .content{
+  margin-left: 20rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 5rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson-me{
+  margin-top: 40rpx;
+  height: 80rpx;
+  width: 700rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.chat .chatperson-me .person-icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.chat .chatperson-me .content{
+  margin-right: 20rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 5rpx;
+  line-height: 50rpx;
+}
+
+.chat .input{
+  position: fixed;
+  bottom: 0rpx;
+  background: #fff;
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.chat .input .template-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 40rpx;
+}
+
+.chat .input input{
+  margin-left: 30rpx;
+  height: 75rpx;
+  width: 500rpx;
+  background: #F2F2F2;
+  border-radius: 20rpx;
+}
+
+.chat .input .face-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+}
+
+.chat .input .picture-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+}

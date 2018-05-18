@@ -1,4 +1,5 @@
 /* pages/ProjectMore/ProjectMore.wxss */
+@import "../Task/Task.wxss";
 @import "../Meeting/Meeting.wxss";
 @import "../Announcement/Announcement.wxss";
 @import "../Schedule/Schedule.wxss";

@@ -1,1 +1,142 @@
 /* pages/Task/Task.wxss */
+/* <!--pages/Task/Task.wxml-->
+<view class='Task-container'>
+   
+   <!-- 任务栏 -->
+   <view class='container'>
+     <!-- 标题 -->
+     <view class='tasktitle'>
+        <view class='title'>待处理</view>
+        <image class='more' src=''></image>
+     </view>
+     <!-- 任务内容 -->
+     <view class='taskitem'>
+        <!-- 内容上部分 -->
+        <view class='taskitem-top'>
+            <checkbox class='item-checkbox'/>
+            <view class='task'>任务一</view>   
+        </view>
+        <!-- 内容下部分 -->
+        <view class='taskitem-bottom'>
+            <image class='icon' src=''></image>
+            <image class='childtask' src=''></image>
+            <view class='tasktime'>6月1日 18:00截止</view>   
+        </view>
+     </view>
+
+   </view>
+ 
+</view>
+*/
+
+
+.Task-container{
+  display: flex;
+}
+
+.Task-container .task-container{
+  box-shadow: 5rpx 5rpx 1rpx #888888;
+  border-radius: 10rpx;
+  height: 960rpx;
+  width: 690rpx;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+  background: #E8E8E8;
+}
+
+.Task-container .task-container .tasktitle{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 30rpx;
+   margin-left: 20rpx;
+}
+
+.Task-container .task-container .tasktitle .title{
+   font-size: 34rpx;
+   color: #888888;
+}
+
+.Task-container .task-container .tasktitle .more{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.Task-container .task-container .taskitem{
+  box-shadow: 2rpx 2rpx 1rpx #888888;
+  border-radius: 10rpx;
+  background: #fff;
+  width: 650rpx;
+  height: 150rpx;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-top{
+  display: flex;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom{
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .taskicon{
+  margin-left: 40rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .taskicon .icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 15rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .tasktime-green{
+   background: #09BB07;
+   color: #fff;
+   border-radius: 10rpx;
+   margin-right: 10rpx;
+   line-height: 45rpx;
+   padding: 5rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
+   background: #E64340;
+   color: #fff;
+   border-radius: 10rpx;
+   margin-right: 10rpx;
+   line-height: 45rpx;
+   padding: 5rpx;
+}
+
+.Task-container .task-container .addTask{
+  width: 650rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  font-size: 34rpx;
+  color: #888888;
+  margin-left: 20rpx;
+  margin-top: 30rpx;
+  border: 0.5rpx dashed #b2b2b2;
+}
+
+.Task-container .task-container .addTask .addTask-icon{
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .addTask .addTask-text{
+  margin-left: 50rpx;
+}
