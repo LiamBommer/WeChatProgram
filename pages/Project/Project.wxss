@@ -27,12 +27,20 @@
 .Project-container .staritem .staritem-one{
     display: flex;
     align-items: center;
+    width: 100%;
+}
+
+.Project-container .staritem .staritem-two{
+    display: flex;
+    align-items: center;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    height: 100%;
 }
 
 .Project-container .staritem .staritem-one .staritem-icon{
     width: 140rpx;
     height: 140rpx;
-    margin-left: 40rpx;
     border-radius: 10rpx;
 }
 
@@ -41,7 +49,7 @@
 }
 
 .Project-container .staritem .staritemmore-icon{
-    margin-right: 40rpx;
+    
     width: 40rpx;
     height: 40rpx;
 }
