@@ -1,0 +1,82 @@
+<!--pages/Project/Task/TaskDetail/CommModel/CommModel.wxml-->
+<view class='CommModel-container'>
+
+    <!-- 顶部导航栏 -->
+      <view class='leftnav'>
+        <view class='navitem {{exitComment? "nav-select" : ""}}' bindtap='selectComment'>
+          <image class='icon' src='{{exitComment? "/img/comment_selected.png" : "/img/comment.png"}}'></image>
+          <view class='text'>意见</view>
+        </view>
+        <view class='navitem {{exitQuestion? "nav-select" : ""}}' bindtap='selectQuestion'>
+          <image class='icon' src='{{exitQuestion? "/img/question_selected.png" : "/img/question.png"}}'></image>
+          <view class='text'>提问</view>
+        </view>
+        <view class='navitem {{exitLike? "nav-select" : ""}}' bindtap='selectLike'>
+          <image class='icon' src='{{exitLike? "/img/like_selected.png" : "/img/like.png"}}'></image>
+          <view class='text'>点赞</view>
+        </view>
+      </view>
+
+
+      <view class='rightcontent'>
+          <!-- 意见模板 -->
+          <view style='display:{{exitComment? "" : "none"}}'>
+              <view class='model' bindtap='ModelDetail'>
+                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <view class='model ' bindtap='ModelDetail'>
+                <view class='text'>模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          <!-- 提问模板 -->
+          <view style='display:{{exitQuestion? "" : "none"}}'>
+              <view class='model' bindtap='ModelDetail'>
+                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <view class='model' bindtap='ModelDetail'>
+                <view class='text'>模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          <!-- 点赞模板 -->
+          <view style='display:{{exitLike? "" : "none"}}'>
+              <view class='model' bindtap='ModelDetail'>
+                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <view class='model' bindtap='ModelDetail'>
+                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
+                <checkbox class='item-checkbox'/>
+              </view>
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          
+          
+          <view class='button'>
+            <!-- 删除 -->
+            <button class='delete'>删除</button> 
+            <!-- 发送 -->
+            <button class='submit'>发送</button>
+          </view>
+      </view>
+</view>

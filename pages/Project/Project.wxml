@@ -13,7 +13,7 @@
         <image class='staritemmore-icon' src='/img/more.png'></image>
       </view>
     </view>
-    <!-- 置顶列表项 -->
+    <!-- 置顶列表项 --> 
     <view class='staritem'>
       <view class='staritem-one' bindtap='projectmore'>
         <image class='staritem-icon'  src='/img/logo.png'></image>

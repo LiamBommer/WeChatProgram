@@ -13,7 +13,7 @@
     <!-- 列表项 -->
     <view class='item'>
       <view class='item-one'>
-        <image class='item-icon' src='/img/标签.png'></image>
+        <image class='item-icon' src='/img/tag.png'></image>
         <view class='item-text'>标签</view>
       </view> 
     </view>
@@ -21,7 +21,7 @@
     <!-- 列表项 -->
     <view class='item'>
       <view class='item-one'>
-        <image class='item-icon' src='/img/沟通模板.png'></image>
+        <image class='item-icon' src='/img/communication_model.png'></image>
         <view class='item-text'>沟通模板</view>
       </view> 
     </view>

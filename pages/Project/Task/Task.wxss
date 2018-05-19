@@ -1,37 +1,10 @@
 /* pages/Task/Task.wxss */
-/* <!--pages/Task/Task.wxml-->
-<view class='Task-container'>
-   
-   <!-- 任务栏 -->
-   <view class='container'>
-     <!-- 标题 -->
-     <view class='tasktitle'>
-        <view class='title'>待处理</view>
-        <image class='more' src=''></image>
-     </view>
-     <!-- 任务内容 -->
-     <view class='taskitem'>
-        <!-- 内容上部分 -->
-        <view class='taskitem-top'>
-            <checkbox class='item-checkbox'/>
-            <view class='task'>任务一</view>   
-        </view>
-        <!-- 内容下部分 -->
-        <view class='taskitem-bottom'>
-            <image class='icon' src=''></image>
-            <image class='childtask' src=''></image>
-            <view class='tasktime'>6月1日 18:00截止</view>   
-        </view>
-     </view>
-
-   </view>
- 
-</view>
-*/
-
-
 .Task-container{
-  display: flex;
+}
+
+.swiper{
+  height: 1050rpx;
+  width: 100%;
 }
 
 .Task-container .task-container{
@@ -107,7 +80,7 @@
    border-radius: 10rpx;
    margin-right: 10rpx;
    line-height: 45rpx;
-   padding: 5rpx;
+   padding: 1.5rpx 6rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -116,7 +89,7 @@
    border-radius: 10rpx;
    margin-right: 10rpx;
    line-height: 45rpx;
-   padding: 5rpx;
+   padding: 1.5rpx 6rpx;
 }
 
 .Task-container .task-container .addTask{
