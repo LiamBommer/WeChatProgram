@@ -43,7 +43,7 @@
     
     <!-- 内容隐藏 -->
     <view style='display:{{show? "" : "none"}}'>
-    <scroll-view style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+    <scroll-view style="height: 200px;" >
         <view class="scroll-view-item item-view">
           <image src='/img/alarm.png'></image>
           <view class='desc'>
@@ -104,45 +104,47 @@
 
   <!-- 聊天框 -->
   <view class='chat'>
-     <!-- 任务消息 -->
-     <block wx:for = "{{taskremind}}">
-        <view class='taskremind'>
-            <view class='text'>{{item.text}}</view>
-            <view class='time'>{{item.time}}</view>
-        </view>
-     </block>
-    
-     <!-- 信息框 -->
-     <block wx:for = "{{chat}}">
-        <block wx:if = "{{item.judgemine}}">
-          <block wx:if = "{{item.judgepictrue}}">
-          <!-- 图片信息框（我发送） -->
-          <view class='chatperson-me'>
-              <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
-              <image class='person-icon' src='{{item.icon}}'></image>
-          </view>
-          </block>
-          <block wx:else>
-          <!-- 文字信息框（我发送） -->
-          <view class='chatperson-me'>
-              <view class='content'>{{item.content}}</view>
-              <image class='person-icon' src='{{item.icon}}'></image>
-          </view>
-          </block>
-        </block>
-        <block wx:else>
-            <!-- 信息框（其他人发送） -->
-            <view class='chatperson'>
-                <image class='person-icon' src='{{item.icon}}'></image>
-                <view class='content'>{{item.content}}</view>
+     <scroll-view style="height: 400px;" scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
+        <!-- 任务消息 -->
+        <block wx:for = "{{taskremind}}">
+            <view class='taskremind' id="remind{{index}}">
+                <view class='text'>{{item.text}}</view>
+                <view class='time'>{{item.time}}</view>
             </view>
         </block>
-     </block>
+        
+        <!-- 信息框 -->
+        <block wx:for = "{{chat}}">
+            <block wx:if = "{{item.judgemine}}">
+              <block wx:if = "{{item.judgepictrue}}">
+              <!-- 图片信息框（我发送） -->
+              <view class='chatperson-me' id="chat{{index}}">
+                  <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
+                  <image class='person-icon' src='{{item.icon}}'></image>
+              </view>
+              </block>
+              <block wx:else>
+              <!-- 文字信息框（我发送） -->
+              <view class='chatperson-me' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
+                  <view class='content'>{{item.content}}</view>
+                  <image class='person-icon' src='{{item.icon}}'></image>
+              </view>
+              </block>
+            </block>
+            <block wx:else>
+                <!-- 信息框（其他人发送） -->
+                <view class='chatperson' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
+                    <image class='person-icon' src='{{item.icon}}'></image>
+                    <view class='content'>{{item.content}}</view>
+                </view>
+            </block>
+        </block> 
+     </scroll-view>
 
      <!-- 输入框 -->
      <view class='input'>
         <image class='template-icon' bindtap='CommModel' src='/img/communication_model.png'></image>
-        <input type='text' placeholder='在此输入文字...' bindtap='ChatClick' bindconfirm="ChatInput" value='{{Inputcontent}}'></input>
+        <textarea fixed type='text' placeholder='在此输入文字...' bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}'></textarea>
         <image class='face-icon' src='/img/expression.png'></image>
         <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
      </view>

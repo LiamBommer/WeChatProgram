@@ -11,6 +11,7 @@ Page({
     remindtime: "", 
     feedbacktime: "",
     Inputcontent:'',
+    scrollTop: 0,//消息定位
 
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
@@ -139,14 +140,16 @@ Page({
     })
   }, 
   
-  //点击聊天框
-  ChatClick:function(){
+  //点击输入框
+  ClickInput: function(e) {
     
   },
 
-  //聊天框按回车
+  //聊天框按回车发送消息
   ChatInput: function(e) {
     var that = this;
+    var scrollTop = that.data.scrollTop;
+    scrollTop += 200;
     var content = e.detail.value;
     var chat = that.data.chat;
     chat.push({
@@ -157,6 +160,7 @@ Page({
     that.setData({
       chat : chat,
       Inputcontent : "",
+      scrollTop: scrollTop,
     });
   },
 
