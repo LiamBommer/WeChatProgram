@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '任务2', 
+    title: '任务2',
+    show: false,
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
     icon_project:'/img/project.png',
@@ -16,7 +17,21 @@ Page({
     icon_add: '/img/add.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
-    icon_create: '/img/create.png',
+    icon_create: '/img/create.png', 
+  },
+
+  addMorecontent:function(){
+     var that = this;
+     var show = !that.data.show;
+     that.setData({
+       show: show
+     });
+  },
+
+  CommModel:function(){
+    wx.navigateTo({
+      url: './CommModel/CommModel',
+    })
   },
 
   /**

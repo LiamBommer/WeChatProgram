@@ -12,7 +12,7 @@
 <view style='display:{{exitTask? "" : "none"}}'>
   <include src='../Task/Task' />
 </view>
-<!-- 公告 -->
+<!-- 公告 --> 
 <view style='display:{{exitAnnouncement? "" : "none"}}'>
   <include src='../Announcement/Announcement' />
 </view>

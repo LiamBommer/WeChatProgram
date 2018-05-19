@@ -15,6 +15,10 @@
   padding: 16rpx 0rpx;
 }
 
+.view-container .item-view.delete{
+  border-bottom:1rpx solid #888888;
+}
+
 .view-container .item-view .header{
   padding-right: 30rpx; 
 }
@@ -36,7 +40,7 @@
   margin-top: 20rpx;
   display: flex;
   flex-direction: column;
-  padding-bottom: 120rpx;
+  padding-bottom: 140rpx;
 }
 
 .chat .taskremind{

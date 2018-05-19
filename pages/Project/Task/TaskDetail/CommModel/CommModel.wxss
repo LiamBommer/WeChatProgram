@@ -1,0 +1,118 @@
+/* pages/Project/Task/TaskDetail/CommModel/CommModel.wxss */
+.CommModel-container{
+  display: flex;
+  width: 100%;
+}
+
+.icon{
+  width: 60rpx;
+  height: 60rpx;
+  padding-top: 20rpx;
+  padding-left: 8rpx;
+}
+
+.CommModel-container .leftnav{
+  width: 25%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1rpx solid #b2b2b2;
+  font-size: 34rpx;
+}
+
+.CommModel-container .leftnav .navitem{
+  height: 170rpx;
+  width: 100%;
+  padding-left:73rpx;
+}
+
+.CommModel-container .leftnav .navitem.nav-select{
+  height: 170rpx;
+  background: #09BB07;
+  color: #fff;
+}
+
+.CommModel-container .leftnav .navitem .text{
+  padding-top: 0rpx;
+}
+
+
+.CommModel-container .rightcontent{
+  width: 75%;
+  background: #fff;
+  padding-left: 40rpx;
+}
+
+.CommModel-container .rightcontent .model{
+  width:97.5%;
+  display:flex;
+  font-size:30rpx;
+  align-items:center;
+  justify-content:space-between;
+  padding-top: 60rpx;
+}
+
+.CommModel-container .rightcontent .text{
+  padding-right: 20rpx;
+  font-size: 40rpx;
+}
+
+ .CommModel-container .rightcontent .add{
+  width: 650rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: #888888;
+  margin-left: -40rpx;
+  margin-top: 60rpx;
+  border-top: 0.5rpx dashed #b2b2b2;
+  border-bottom: 0.5rpx dashed #b2b2b2;
+}
+
+ .CommModel-container  .rightcontent .add .add-icon{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+}
+
+ .CommModel-container  .rightcontent .add .add-text{
+  margin-left: 25rpx;
+}
+
+ .CommModel-container  .rightcontent .delete{
+   width:146rpx;
+   height:68rpx;
+   border: 1rpx solid #E64340;
+   background: #fff;
+   color: #E64340;
+   line-height: 60rpx;
+ }
+
+.CommModel-container  .rightcontent .button{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 300rpx;
+  margin-left: -40rpx;
+  padding-bottom: 40rpx;
+  font-size: 34rpx;
+}
+
+.CommModel-container  .rightcontent .button .delete{
+   width:146rpx;
+   height:68rpx;
+   border: 1rpx solid #E64340;
+   background: #fff;
+   color: #E64340;
+   line-height: 60rpx;
+ }
+
+ .CommModel-container  .rightcontent .button .submit{
+   width:146rpx;
+   height:68rpx;
+   background: #09BB07;
+   color: #fff;
+   line-height: 60rpx;
+ }

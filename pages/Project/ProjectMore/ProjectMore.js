@@ -19,7 +19,33 @@ Page({
       username: '绝世产品经理',
       content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
       task: '关联的任务'
-    }
+    },
+
+    //任务列表
+    tasklist: [
+      '待处理',
+      '执行中',
+    ],
+
+    //任务项
+    task: [
+      {
+        title: '任务一',
+        time: '6月1日 18:00',
+        timestatus: 'green',
+      },
+      {
+        title: '任务二',
+        time: '6月1日 18:00',
+        timestatus: 'red',
+      },
+    ],
+    
+    //任务图标描述
+    icon: [
+      "/img/me.png",
+      "/img/task_list.png",
+    ],
   },
 
   // 导航栏选择任务

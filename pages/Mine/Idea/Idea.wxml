@@ -4,16 +4,16 @@
   <!-- 列表项 -->
   <view class='idea-item'>
     <!-- 列表左 -->
-    <view class='item-first'>
+    <view class='item-first'> 
       <view class='item-text'>
-        <image class='item-icon' src='/img/点子.png'></image>
+        <image class='item-icon' src='/img/idea.png'></image>
         <view class='item-title'>请帅涛吃饭</view>
       </view>
     </view>
     <!-- 列表右 -->
     <view class='item-second'>
       <view class='item-time'>2月12日20:00</view>
-    </view>
+    </view>  
   </view>
 
   <!-- 列表项 -->
@@ -21,7 +21,7 @@
     <!-- 列表左 -->
     <view class='item-first'>
       <view class='item-text'>
-        <image class='item-icon' src='/img/点子.png'></image>
+        <image class='item-icon' src='/img/idea.png'></image>
         <view class='item-title'>应该要请帅涛吃饭了</view>
       </view>
     </view>

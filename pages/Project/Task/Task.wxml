@@ -1,50 +1,42 @@
 <!--pages/Task/Task.wxml-->
 <view class='Task-container'>
-   
-   <!-- 任务栏 -->
-   <view class='task-container'>
-     <!-- 标题 -->
-     <view class='tasktitle'>
-        <view class='title'>待处理</view>
-        <image class='more' src='/img/more.png'></image>
-     </view>
-     <!-- 任务内容 -->
-     <view class='taskitem' bindtap='showTask'>
-        <!-- 内容上部分 -->
-        <view class='taskitem-top'>
-            <checkbox class='item-checkbox'/>
-            <view class='task'>任务一</view>   
-        </view>
-        <!-- 内容下部分 -->
-        <view class='taskitem-bottom'>
-            <view class='taskicon'>
-              <image class='icon' src='/img/me.png'></image>
-              <image class='icon' src='/img/task_list.png'></image>
-            </view>
-            <view class='tasktime-green'>6月1日 18:00 截止</view>   
-        </view>
-     </view>
-     <!-- 任务内容 -->
-     <view class='taskitem'>
-        <!-- 内容上部分 -->
-        <view class='taskitem-top'>
-            <checkbox class='item-checkbox'/>
-            <view class='task'>任务一</view>   
-        </view>
-        <!-- 内容下部分 -->
-        <view class='taskitem-bottom'>
-            <view class='taskicon'>
-              <image class='icon' src='/img/me.png'></image>
-              <image class='icon' src='/img/task_list.png'></image>
-            </view>
-            <view class='tasktime-red'>6月1日 18:00 截止</view>   
-        </view>
-     </view>
-     <!-- 添加任务 -->
-    <view class='addTask' bindtap='createTask'>
-        <image class='addTask-icon' src='/img/add.png'></image>
-        <view class='addTask-text'>添加任务</view>
-    </view>
 
-   </view>
+   <swiper class='swiper' indicator-dots="true">
+        <!-- 任务列表 -->
+        <block wx:for="{{tasklist}}">
+          <swiper-item>
+              <view class='task-container'>
+                <!-- 标题 -->
+                <view class='tasktitle'>
+                    <view class='title'>{{item}}</view>
+                    <image class='more' src='/img/more.png'></image>
+                </view>
+                <!-- 任务项 -->
+                <block wx:for="{{task}}">
+                  <view class='taskitem' bindtap='showTask'>
+                      <!-- 内容上部分 -->
+                      <view class='taskitem-top'>
+                          <checkbox class='item-checkbox'/>
+                          <view class='task'>{{item.title}}</view>   
+                      </view>
+                      <!-- 内容下部分 -->
+                      <view class='taskitem-bottom'>
+                          <view class='taskicon'>
+                              <block wx:for="{{icon}}">
+                              <image class='icon' src='{{item}}'></image>
+                              </block>
+                          </view>
+                          <view class='tasktime-{{item.timestatus}}'>{{item.time}} 截止</view>   
+                      </view>
+                  </view>
+                </block>
+                <!-- 添加任务 -->
+                <view class='addTask' bindtap='createTask'>
+                    <image class='addTask-icon' src='/img/add.png'></image>
+                    <view class='addTask-text'>添加任务</view>
+                </view>
+              </view>
+          </swiper-item>
+        </block>
+   </swiper>
 </view>
