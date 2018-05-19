@@ -1,42 +1,24 @@
-// pages/Task/Task.js
+// pages/memberList/memberList.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    //任务列表
-    tasklist: [
-        '待处理',
-        '执行中',
-    ],
-    //任务项
-    task: [
-      {
-        title: '任务一',
-        time: '6月1日 18:00', 
-        timestatus: 'green',
-      },
-      {
-        title: '任务二',
-        time: '6月1日 18:00',
-        timestatus: 'red',
-      },
-    ],
-    //任务图标描述
-    icon: [
-      "/img/me.png", 
-      "/img/task_list.png", 
-    ],
-
-  },
   
+  },
+
+  addMember:function(){
+    wx.navigateTo({
+      url: '/pages/addMember/addMember',
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**

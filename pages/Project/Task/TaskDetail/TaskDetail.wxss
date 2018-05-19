@@ -68,8 +68,18 @@
 .chat .chatperson .content{
   margin-left: 20rpx;
   background: #fff;
-  border-radius: 20rpx;
-  padding: 5rpx;
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  background: #fff;
+  border-radius:10rpx;
+  padding:15rpx;
   line-height: 50rpx;
 }
 
@@ -89,9 +99,19 @@
 
 .chat .chatperson-me .content{
   margin-right: 20rpx;
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 5rpx;
+  background: #fff; 
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson-me .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  background: #fff; 
+  border-radius:10rpx;
+  padding:15rpx;
   line-height: 50rpx;
 }
 
@@ -116,7 +136,7 @@
   height: 75rpx;
   width: 500rpx;
   background: #F2F2F2;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
 }
 
 .chat .input .face-icon{
