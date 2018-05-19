@@ -10,6 +10,7 @@ var Bmob = require('../utils/bmob.js')
  * 
  */
 function getAnnouncements(projId){
+
   var Annoucement = Bmob.Object.extend("annoucement")
   var annoucementQuery = new Bmob.Query(Annoucement)
 
@@ -37,10 +38,10 @@ function getAnnouncements(projId){
 
 /**
  * @autor mr.li
- * @parameter projId项目id， title公告标题， content公告内容，is_showmember是否显示已读和未读成员
+ * @parameter projId项目id， projName项目名称，title公告标题， content公告内容，is_showmember是否显示已读和未读成员
  * 添加公告
  */
-function createAnnouncement(projId, title, content, is_showmember){
+function createAnnouncement(projId, projName, title, content, is_showmember){
 
   var Announcement = Bmob.Object.extend("annoucement")  //数据库的名字拼错了，但是现在还是和后台的数据库是一样的
   var announcement = new Announcement()
@@ -61,6 +62,7 @@ function createAnnouncement(projId, title, content, is_showmember){
     content:content,
     is_showmember: is_showmember,
     proj_id: projId,
+    proj_name: projName,
     leader_id: leaderId,
     leader_nickname: leaderName,
     read_num: 0
@@ -87,6 +89,7 @@ function createAnnouncement(projId, title, content, is_showmember){
  * 保存指定公告的未读成员，限制50个成员
  */
 function saveUnread(projId, announceId){
+  
   var ProjMember = Bmob.Object.extend("proj_member")
   var projMemberQuery = new Bmob.Query(ProjMember)
   var Annoucement_read = Bmob.Object.extend("annoucement_read")
