@@ -66,10 +66,21 @@
 }
 
 .chat .chatperson .content{
+  max-width:73%;
   margin-left: 20rpx;
   background: #fff;
-  border-radius: 20rpx;
-  padding: 5rpx;
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  background: #fff;
+  border-radius:10rpx;
+  padding:15rpx;
   line-height: 50rpx;
 }
 
@@ -88,10 +99,21 @@
 }
 
 .chat .chatperson-me .content{
+  max-width:73%;
   margin-right: 20rpx;
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 5rpx;
+  background: #fff; 
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson-me .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  background: #fff; 
+  border-radius:10rpx;
+  padding:15rpx;
   line-height: 50rpx;
 }
 
@@ -106,27 +128,30 @@
 }
 
 .chat .input .template-icon{
-  width: 40rpx;
-  height: 40rpx;
-  margin-left: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
+  margin-left:20rpx;
 }
 
-.chat .input input{
-  margin-left: 30rpx;
-  height: 75rpx;
-  width: 500rpx;
+.chat .input textarea{
+  margin-left: 20rpx;
+  height: 46rpx;
+  width: 490rpx;
   background: #F2F2F2;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
+  padding: 10rpx;
+  fixed:true; 
+  auto-height:true;
 }
 
 .chat .input .face-icon{
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
   margin-left: 20rpx;
 }
 
 .chat .input .picture-icon{
-  width: 40rpx;
-  height: 40rpx;
-  margin-left: 20rpx;
+  width: 50rpx;
+  height: 50rpx;
+  margin-left:10rpx;
 }

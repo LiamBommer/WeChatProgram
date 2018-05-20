@@ -23,31 +23,104 @@ Page({
 
     //任务列表
     tasklist: [
-      '待处理',
-      '执行中',
+      {
+        title:'待处理',
+        //任务项
+        task: [
+          {
+            title: '任务一',
+            time: '6月1日 18:00',
+            timestatus: 'green',
+            //任务图标描述
+            icon: [
+              "/img/me.png",
+              "/img/task_list.png",
+            ],
+          },
+          {
+            title: '任务二',
+            time: '6月1日 18:00',
+            timestatus: 'red',
+            //任务图标描述
+            icon: [
+              "/img/me.png",
+              "/img/task_list.png",
+            ],
+          },
+        ]
+      },
+      {
+        title: '执行中',
+        //任务项
+        task: [
+          {
+            title: '任务一',
+            time: '6月1日 18:00',
+            timestatus: 'green',
+            //任务图标描述
+            icon: [
+              "/img/me.png",
+              "/img/task_list.png",
+            ],
+          },
+          {
+            title: '任务二',
+            time: '6月1日 18:00',
+            timestatus: 'red',
+            //任务图标描述
+            icon: [
+              "/img/me.png",
+              "/img/task_list.png",
+            ],
+          },
+        ],
+      },
     ],
 
-    //任务项
-    task: [
-      {
-        title: '任务一',
-        time: '6月1日 18:00',
-        timestatus: 'green',
-      },
-      {
-        title: '任务二',
-        time: '6月1日 18:00',
-        timestatus: 'red',
-      },
-    ],
+    //当前任务列表下标
+    index:'',
     
-    //任务图标描述
-    icon: [
-      "/img/me.png",
-      "/img/task_list.png",
-    ],
+  },
+  
+  // 修改任务列表名
+  ListNameInput: function(e){
+    var index = this.data.index; 
+    var newname = 'tasklist['+index+'].title';
+    this.setData({
+      [newname]: e.detail.value,
+    });
   },
 
+  // 修改任务列表名
+  ListNameClick: function (e) {
+    console.log(e.currentTarget.dataset.index);
+    this.setData({
+      index: e.currentTarget.dataset.index,
+    });
+  },
+  
+  // 添加任务列表
+  Taskmore: function () {
+    var that = this;
+    var tasklist = that.data.tasklist;
+
+    wx.showActionSheet({
+      itemList: ['添加任务列表'], 
+      success: function (res) {
+        tasklist.push({
+          title:"新增",
+          task:[],
+          });
+        that.setData({
+          tasklist: tasklist,
+        });
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+  
   // 导航栏选择任务
   selectTask: function () {
     var that = this;

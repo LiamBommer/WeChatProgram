@@ -8,11 +8,11 @@
               <view class='task-container'>
                 <!-- 标题 -->
                 <view class='tasktitle'>
-                    <view class='title'>{{item}}</view>
-                    <image class='more' src='/img/more.png'></image>
+                    <input class='title' value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/> 
+                    <image class='more' src='/img/more.png' bindtap='Taskmore'></image>
                 </view>
                 <!-- 任务项 -->
-                <block wx:for="{{task}}">
+                <block wx:for="{{item.task}}">
                   <view class='taskitem' bindtap='showTask'>
                       <!-- 内容上部分 -->
                       <view class='taskitem-top'>
@@ -22,7 +22,7 @@
                       <!-- 内容下部分 -->
                       <view class='taskitem-bottom'>
                           <view class='taskicon'>
-                              <block wx:for="{{icon}}">
+                              <block wx:for="{{item.icon}}">
                               <image class='icon' src='{{item}}'></image>
                               </block>
                           </view>

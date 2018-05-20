@@ -5,7 +5,7 @@
      <view class='title-view ver-align space-between'>
        <view class='title'>
           <checkbox class='item-checkbox'/>
-          <view class='title-text'>{{title}}</view>
+          <input class='title-text' value='{{title}}' />
        </view>
        <image src='{{icon_share}}'></image>
      </view>
@@ -13,19 +13,28 @@
 
   <!-- 内容 -->
   <view class="view-container">
-    <view class="item-view">
+
+    <view class="item-view" bindtap='MemberList'>
       <image class='header' src='{{icon_person}}'></image>
       <image src='{{icon_person}}'></image>
       <image src='{{icon_person}}'></image>
     </view>
+
     <view class="item-view">
       <image src='{{icon_deadline}}'></image>
-      <text class='desc'>5月8日 20:00 截至</text>
+      <view class='desc'>
+        <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+          <view class="picker">
+            {{deadline}} 截止
+          </view>
+        </picker>
+      </view>
     </view>
     <view class="item-view">
       <image src='{{icon_project}}'></image>
       <text class='desc'>鲨鱼派对/项目名</text>
     </view>
+
     <!-- 添加内容 -->
     <view class="item-view" bindtap='addMorecontent'>
       <image src='{{icon_add}}'></image>
@@ -34,20 +43,35 @@
     
     <!-- 内容隐藏 -->
     <view style='display:{{show? "" : "none"}}'>
-    <scroll-view style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+    <scroll-view style="height: 200px;" >
         <view class="scroll-view-item item-view">
           <image src='/img/alarm.png'></image>
-          <text class='desc'>任务提醒时间</text>
+          <view class='desc'>
+              <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
+                <view class="picker">
+                  {{remindtime}} 提醒
+                </view>
+              </picker>
+          </view>
         </view>
+
         <view class="scroll-view-item item-view">
           <image src='/img/feedback_time.png'></image>
-          <text class='desc'>反馈时间</text>
+          <view class='desc'>
+              <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
+                <view class="picker">
+                  {{feedbacktime}} 反馈
+                </view>
+              </picker>
+          </view>
         </view>
-        <view class="scroll-view-item item-view">
+
+        <view class="scroll-view-item item-view" bindtap='Feedback'>
           <image src='/img/feedback_model.png'></image>
           <text class='desc'>反馈模板</text>
         </view>
-        <view class="scroll-view-item item-view">
+
+        <view class="scroll-view-item item-view" bindtap='Describe'>
           <image src='/img/task_description.png'></image>
           <text class='desc'>任务描述</text>
         </view>
@@ -58,62 +82,71 @@
       <image src='{{icon_close}}'></image>
       <text class='desc delete-text'>删除任务</text>
     </view>
+
     <view class="item-view ver-align space-between">
       <view class='ver-align'>
         <image src='{{icon_task_list}}'></image>
         <text class='desc'>子任务</text>
       </view>
-      <image src='{{icon_add}}'></image>
+      <image src='{{icon_add}}' bindtap='AddChildTask'></image>
     </view>
-    <view class="item-view ver-align space-between">
-      <view class='childtask'>
-        <checkbox class='item-checkbox'/>
-        <text >任务 A</text>
+    
+    <block wx:for="{{ChildTask}}">
+      <view class="item-view ver-align space-between" bindtap='ChildTaskDetail'>
+        <view class='childtask'>
+          <checkbox class='item-checkbox'/>
+          <text >{{item.name}}</text>
+        </view>
+        <image src='{{item.icon}}'></image>
       </view>
-      <image src='{{icon_member}}'></image>
-    </view>
-    <view class="item-view ver-align space-between">
-      <view class='childtask'>
-        <checkbox class='item-checkbox'/>
-        <text >任务 B</text>
-      </view>
-      <image src='{{icon_member}}'></image>
-    </view>
-  </view>
+    </block>
+   </view>
 
   <!-- 聊天框 -->
   <view class='chat'>
-     <!-- 任务消息 -->
-     <view class='taskremind'>
-        <view class='text'>帅涛添加了子任务“个人访谈-金哥"</view>
-        <view class='time'>5月2日 20:00</view>
-     </view>
-     <!-- 任务消息 -->
-     <view class='taskremind'>
-        <view class='text'>帅涛添加了子任务“个人访谈-金哥"</view>
-        <view class='time'>5月2日 20:00</view>
-     </view>
-     <!-- 信息框 -->
-     <view class='chatperson'>
-        <image class='person-icon' src='{{icon_chatperson}}'></image>
-        <view class='content'>帅涛太帅了！</view>
-     </view>
-     <!-- 信息框（我发送） -->
-     <view class='chatperson-me'>
-        <view class='content'>我也觉得！</view>
-        <image class='person-icon' src='{{icon_chatperson}}'></image>
-     </view>
-     <!-- 信息框 -->
-     <view class='chatperson'>
-        <image class='person-icon' src='{{icon_chatperson}}'></image>
-        <view class='content'>帅涛太帅了！</view>
-     </view>
+     <scroll-view style="height: 400px;" scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
+        <!-- 任务消息 -->
+        <block wx:for = "{{taskremind}}">
+            <view class='taskremind' id="remind{{index}}">
+                <view class='text'>{{item.text}}</view>
+                <view class='time'>{{item.time}}</view>
+            </view>
+        </block>
+        
+        <!-- 信息框 -->
+        <block wx:for = "{{chat}}">
+            <block wx:if = "{{item.judgemine}}">
+              <block wx:if = "{{item.judgepictrue}}">
+              <!-- 图片信息框（我发送） -->
+              <view class='chatperson-me' id="chat{{index}}">
+                  <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
+                  <image class='person-icon' src='{{item.icon}}'></image>
+              </view>
+              </block>
+              <block wx:else>
+              <!-- 文字信息框（我发送） -->
+              <view class='chatperson-me' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
+                  <view class='content'>{{item.content}}</view>
+                  <image class='person-icon' src='{{item.icon}}'></image>
+              </view>
+              </block>
+            </block>
+            <block wx:else>
+                <!-- 信息框（其他人发送） -->
+                <view class='chatperson' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
+                    <image class='person-icon' src='{{item.icon}}'></image>
+                    <view class='content'>{{item.content}}</view>
+                </view>
+            </block>
+        </block> 
+     </scroll-view>
+
      <!-- 输入框 -->
      <view class='input'>
         <image class='template-icon' bindtap='CommModel' src='/img/communication_model.png'></image>
-        <input type='text' placeholder='在此输入文字...'></input>
+        <textarea fixed type='text' placeholder='在此输入文字...' bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}'></textarea>
         <image class='face-icon' src='/img/expression.png'></image>
-        <image class='picture-icon' src='/img/picture.png'></image>
+        <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
      </view>
   </view>
 </view>

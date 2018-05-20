@@ -8,7 +8,6 @@
 }
 
 .Task-container .task-container{
-  box-shadow: 5rpx 5rpx 1rpx #888888;
   border-radius: 10rpx;
   height: 960rpx;
   width: 690rpx;
@@ -29,7 +28,6 @@
 
 .Task-container .task-container .tasktitle .title{
    font-size: 34rpx;
-   color: #888888;
 }
 
 .Task-container .task-container .tasktitle .more{
@@ -39,7 +37,6 @@
 }
 
 .Task-container .task-container .taskitem{
-  box-shadow: 2rpx 2rpx 1rpx #888888;
   border-radius: 10rpx;
   background: #fff;
   width: 650rpx;

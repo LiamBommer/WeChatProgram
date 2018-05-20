@@ -1,0 +1,10 @@
+<!--pages/Project/Task/TaskDetail/CommModel/addModel/addModel.wxml-->
+<view class='ModelDetail-container'>
+
+   <view class='text'>
+     <textarea placeholder='填写反馈模板...'></textarea>
+   </view>
+
+    <button class='save'>保存</button>
+  
+</view>
