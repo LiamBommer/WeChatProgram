@@ -1,5 +1,6 @@
 // model/projectList.js
 var Bmob = require('../utils/bmob.js')
+var FAIL = "fail"
 
 /**
  *2018-05-18
@@ -9,6 +10,7 @@ var Bmob = require('../utils/bmob.js')
  * 
  */
 function getProjectList(){
+
   var Project = Bmob.Object.extend("project")
   var projectQuery = new Bmob.Query(Project)
   var member = Bmob.Object.extend("proj_member")
@@ -18,40 +20,60 @@ function getProjectList(){
   var user_id = "0"
   var project_id = []  //项目id数组
   var projectArr = []
-  if(currentUser)
-   user_id = currentUser.id
+  if(currentUser){
+    user_id = currentUser.id
+  }
 
   //查询当前用户所在的所有项目id，默认10条
-  memberQuery.equalTo("user_id", user_id)
   memberQuery.select("proj_id")
+  memberQuery.equalTo("user_id", user_id)
   memberQuery.find().then(function(results){
     //返回成功
-    console.log("共查询到 " + results.length + " 条记录");
+    console.log("共查询到用户所在项目 " + results.length + " 条记录");
     for (var i = 0; i < results.length; i++) {
-      var object = results[i];
-      project_id.push(object.get("proj_id"))
-      console.log("获取项目id",object.get('proj_id'));
+      var object = results[i]
+      project_id.push(object.get("proj_id").trim())
     }
-  })
-  
-  //查询当前用户所在的所有项目，默认10条
-  projectQuery.containedIn("objectId",project_id)
-  projectQuery.find({
-    success: function (results) {
-      console.log("共查询到项目 " + results.length + " 条记录");
-      // 循环处理查询到的数据
-      for (var i = 0; i < results.length; i++) {
-        var object = results[i];
-        projectArr.push(object)
-      }
-    },
-    error: function (error) {
-      console.log("查询失败: " + error.code + " " + error.message);
-    }
-  })
 
+    //查询当前用户所在的所有项目，默认10条
+    projectQuery.containedIn("objectId", project_id)
+    projectQuery.find({
+      success: function (results) {
+        //成功
+        console.log("共查询到项目 " + results.length + " 条记录");
+        // 循环处理查询到的数据
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i]
+          console.log(object)
+          projectArr.push(object)
+        }
+        console.log("projectArr", projectArr[0])
+        //todo: 在这里设置setdata
+
+
+
+
+
+      },
+      error: function (error) {
+        //失败
+        console.log("查询用户所在的所有项目失败: " + error.code + " " + error.message);
+        //失败情况
+
+
+
+
+
+      }
+    }
+    
+    )
+
+  })
   return projectArr
 }
+  
+  
 
 /**
  * 2018-05-18
@@ -72,7 +94,7 @@ function getProjectMembers(projId){
   
   //获取指定项目的所有成员id，50条
   memberQuery.equalTo("proj_id",projId)
-  memberQuery.select("user_id")
+  memberQuery.select("user_id","is_leader")
   memberQuery.find().then(function (results) {
     //返回成功
     console.log("共查询到 " + results.length + " 条记录");
@@ -89,32 +111,50 @@ function getProjectMembers(projId){
         memberId.push(object.get("user_id"))  //将成员id添加到数组
       }     
     }
-  })
+  }).then(function(result){
 
-  //获取指定项目的所有成员,默认10条
-  userQuery.select("nickName","userPic")  //查询出用户的昵称和头像
-  userQuery.limit(50)
-  userQuery.containedIn("objectId", userId)  
-  userQuery.find({
-    success: function (results) {
-      console.log("共查询到项目成员 " + results.length + " 条记录");
-      // 循环处理查询到的数据
-      for (var i = 0; i < results.length; i++) {
-        var object = results[i];
+    //获取指定项目的所有成员,默认10条
+    userQuery.select("nickName", "userPic")  //查询出用户的昵称和头像
+    userQuery.limit(50)
+    userQuery.containedIn("objectId", memberId)
 
-        if(object.id == leader_id){
-          //将项目领导放在数组的第一个位置
-          userArr.unshift(object)
-        }else
-          userArr.push(object)
+    // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
+    userQuery.find({
+      success: function (results) {
+        console.log("共查询到项目成员 " + results.length + " 条记录");
+        // 循环处理查询到的数据
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+
+          if (object.id == leader_id) {
+            //将项目领导放在数组的第一个位置
+            userArr.unshift(object)
+          } else
+            userArr.push(object)
+        }
+
+        //在这里设置setdata
+        //console.log(userArr)
+
+
+
+
+      },
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+        //失败情况
+
+
+
+
+
       }
-    },
-    error: function (error) {
-      console.log("查询失败: " + error.code + " " + error.message);
-    }
+    })
+
   })
 
-  return userArr
+  
+
 }
 
 module.exports.getProjectList = getProjectList

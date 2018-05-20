@@ -1,12 +1,12 @@
 {
-  "pages":[
+  "pages": [
     "pages/Project/Task/TaskDetail/TaskDetail",
     "pages/Project/Task/TaskDetail/memberList/memberList",
     "pages/Project/Task/TaskDetail/FeedBack/FeedBack",
     "pages/Project/Task/TaskDetail/Describe/Describe",
     "pages/Project/Project",
     "pages/Project/ProjectMore/ProjectMore",
-    "pages/Project/Schedule/scheduleDetail/scheduleDetail", 
+    "pages/Project/Schedule/scheduleDetail/scheduleDetail",
     "pages/Project/buildProject/buildProject",
     "pages/Project/ProjectDetail/ProjectDetail",
     "pages/Project/ProjectDetail/memberList/memberList",
@@ -33,13 +33,14 @@
     "pages/Notification/Notification",
     "pages/addMember/addMember",
     "pages/memberList/memberList",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/test/test"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "团队协作应用",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "backgroundColor": "#fff",
