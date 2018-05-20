@@ -1,18 +1,17 @@
-/* pages/buildProject/buildProject.wxss */
+/* pages/Task/buildTask/buildTask.wxss */
 
 .buildTask-container{
     width:100%; 
     font-size: 34rpx;
     display: flex;
     flex-direction: column;
-    margin-top: 40rpx;
 }
 
 .buildTask-container .item{
     background: #fff;
     color: #000;
     width: 100%;
-    height: 90rpx;
+    height: 120rpx;
     display: flex;
     align-items: center;
 }
@@ -22,22 +21,22 @@
 }
 
 .buildTask-container .item .item-content{
-  margin-left: 20rpx;
-  color: #b2b2b2;
+  margin-left: 40rpx;
+  font-size: 40rpx;
 }
 
-.buildTask-container .item .placeholder {
-  color: #b2b2b2;
+.buildTask-container .item .item-content{
+  margin-left: 40rpx;
+  font-size: 40rpx;
 }
 
 .buildTask-container .submit{
   width: 670rpx;
   height: 70rpx;
-  margin-left: 60rpx;
   border-radius:16rpx;
   border: 0rpx;
   line-height: 65rpx;
-  margin-top: 300rpx;
+  margin-top: 675rpx;
   color: #fff;
   background: #09BB07;
   font-size: 40rpx;
@@ -46,7 +45,6 @@
 .buildTask-container .cancel{
   width: 670rpx;
   height: 70rpx;
-  margin-left: 60rpx;
   border-radius:16rpx;
   border: 0rpx;
   line-height: 65rpx;

@@ -7,7 +7,8 @@
           <checkbox class='item-checkbox'/>
           <input class='title-text' value='{{title}}' />
        </view>
-       <image src='{{icon_share}}'></image>
+       <button class='share' hover-class="share-hover"  open-type="share"><image src='{{icon_share}}'></image></button>
+       
      </view>
   </view>
 
@@ -80,7 +81,7 @@
 
     <view class="item-view delete">
       <image src='{{icon_close}}'></image>
-      <text class='desc delete-text'>删除任务</text>
+      <view class='desc delete-text' bindtap='DeleteTask'>删除任务</view>
     </view>
 
     <view class="item-view ver-align space-between">
@@ -117,33 +118,42 @@
         <block wx:for = "{{chat}}">
             <block wx:if = "{{item.judgemine}}">
               <block wx:if = "{{item.judgepictrue}}">
-              <!-- 图片信息框（我发送） -->
-              <view class='chatperson-me' id="chat{{index}}">
-                  <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
-                  <image class='person-icon' src='{{item.icon}}'></image>
-              </view>
+                  <!-- 图片信息框（我发送） -->
+                  <view class='chatperson-me' id="chat{{index}}">
+                      <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
+                      <image class='person-icon' src='{{item.icon}}'></image>
+                  </view>
               </block>
               <block wx:else>
-              <!-- 文字信息框（我发送） -->
-              <view class='chatperson-me' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
-                  <view class='content'>{{item.content}}</view>
-                  <image class='person-icon' src='{{item.icon}}'></image>
-              </view>
+                  <!-- 文字信息框（我发送） -->
+                  <view class='chatperson-me' id="chat{{index}}" data-index='{{index}}' >
+                      <text class='content'>{{item.content}}</text>
+                      <image class='person-icon' src='{{item.icon}}'></image>
+                  </view>
               </block>
             </block>
             <block wx:else>
-                <!-- 信息框（其他人发送） -->
-                <view class='chatperson' id="chat{{index}}" data-index='{{index}}' bindtap='toView'>
+              <block wx:if = "{{item.judgepictrue}}">
+                  <!-- 图片信息框（其他人发送） -->
+                  <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
+                      <image class='person-icon' src='{{item.icon}}'></image>
+                      <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
+                  </view>
+                </block>
+                <block wx:else>
+                  <!-- 文字信息框（其他人发送） -->
+                  <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
                     <image class='person-icon' src='{{item.icon}}'></image>
-                    <view class='content'>{{item.content}}</view>
-                </view>
-            </block>
-        </block> 
+                    <text class='content'>{{item.content}}</text>
+                  </view>
+                </block>
+              </block>
+          </block> 
      </scroll-view>
 
      <!-- 输入框 -->
      <view class='input'>
-        <image class='template-icon' bindtap='CommModel' src='/img/communication_model.png'></image>
+        <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
         <textarea fixed type='text' placeholder='在此输入文字...' bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}'></textarea>
         <image class='face-icon' src='/img/expression.png'></image>
         <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>

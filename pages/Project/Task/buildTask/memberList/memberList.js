@@ -8,48 +8,28 @@ Page({
     //是否选中
     TaskIndex: "", 
     ProjectIndex: "", 
-    //任务负责人
-    principalName: "帅涛",
-    principalIicon: "/img/me.png", 
-    principalIndex: 0, 
-    principalChecked: true,
-    //任务成员
-    TaskMemember: [
-      { 
-        index: 0, 
-        icon:"/img/me.png",
-        name: '帅涛' ,
-        checked: true,
-      },
-      { 
-        index: 1 ,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: true,
-      },
-      { 
-        index: 2,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: true,
-      },
-    ],
     //项目成员
     ProjectMemember: [
       {
         index: 0,
         icon: "/img/me.png",
-        name: '钢铁侠',
+        name: '帅涛',
         checked: false
       },
       {
         index: 1,
         icon: "/img/me.png",
+        name: '钢铁侠',
+        checked: false
+      },
+      {
+        index: 2,
+        icon: "/img/me.png",
         name: '美国队长',
         checked: false,
       },
       {
-        index: 2,
+        index: 3,
         icon: "/img/me.png",
         name: '灭霸',
         checked: false,
@@ -60,13 +40,6 @@ Page({
     
   },
 
-  //选择任务成员
-  TaskMememberChange: function (e) {
-    this.setData({
-      TaskIndex: e.detail.value,
-    });
-  }, 
-
   //选择项目成员
   ProjectMememberChange: function (e) {
     this.setData({
@@ -74,25 +47,14 @@ Page({
     });
   }, 
   
-  //添加成员
+  //完成
   save:function(){
     var that = this;
-
     var ProjectIndex = that.data.ProjectIndex;
     var ProjectMemember = that.data.ProjectMemember;
-   
     for (var id in ProjectIndex) {
       console.log(ProjectMemember[ProjectIndex[id]]);//添加的项目成员
     }
-
-    var TaskMemember = that.data.TaskMemember;
-    var TaskIndex = that.data.TaskIndex;
-
-    for (var id in TaskMemember) {
-      console.log(TaskMemember[TaskIndex[id]]);//添加的任务成员
-    }
-
-
   }, 
 
   //删除成员

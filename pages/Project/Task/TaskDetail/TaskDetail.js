@@ -55,7 +55,7 @@ Page({
         content: '帅涛太帅了！',
         icon: '/img/me.png',
         judgemine: false,//其他人发的消息
-        judgepictrue:false,//判断输入的是文字还是图片
+        judgepictrue: false,//判断输入的是文字还是图片
       },
       {
         content: '我也觉得！',
@@ -67,7 +67,7 @@ Page({
 
     
   },
-  
+    
   //添加更多内容
   addMorecontent:function(){
      var that = this;
@@ -119,6 +119,23 @@ Page({
     })
   }, 
 
+  //删除任务
+  DeleteTask: function() {
+    wx.showModal({
+      title: '提示',
+      content: '是否删除该任务',
+      success: function (res) {//删除任务
+        if (res.confirm) {
+          wx.navigateBack({
+            url: '../../ProjectMore/ProjectMore',
+          })
+        }
+        else if (res.cancel) {
+        }
+      }
+    })
+  }, 
+
   //添加子任务
   AddChildTask: function() {
     wx.navigateTo({
@@ -133,16 +150,18 @@ Page({
     })
   }, 
 
-  //沟通模板
-  CommModel: function () {
+  //点击沟通模板
+  ClickCommModel: function () {
+    this.setData({
+      CommModel: true,
+    });
     wx.navigateTo({
       url: './CommModel/CommModel',
     })
-  }, 
-  
+  },
+
   //点击输入框
   ClickInput: function(e) {
-    
   },
 
   //聊天框按回车发送消息
@@ -167,6 +186,8 @@ Page({
   //聊天框发送图片
   PictrueSelect: function (e) {
     var that = this;
+    var scrollTop = that.data.scrollTop;
+    scrollTop += 200;
     var chat = that.data.chat;
     wx.chooseImage({
       success: function (res) {
@@ -181,6 +202,7 @@ Page({
         });
         that.setData({
           chat: chat,
+          scrollTop: scrollTop,
         });
 
       }
@@ -206,7 +228,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -220,7 +242,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+      //发送沟通模板
+      var scrollTop = that.data.scrollTop;
+      scrollTop += 200;
+      var chat = that.data.chat;
+      wx.getStorage({
+        key: 'CommModel',
+        success: function (res) {
+          var content = res.data;
+          console.log(content);
+          chat.push({
+            content: content, //我发送的内容
+            icon: '/img/me.png',//我的头像
+            judgemine: true,//我发的消息
+          });
+          that.setData({
+            chat: chat,
+            Inputcontent: "",
+            scrollTop: scrollTop,
+          });
+        }
+      })
+      wx.clearStorage();
+    
   },
 
   /**
@@ -254,7 +299,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+     
   }
 })

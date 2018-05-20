@@ -5,6 +5,25 @@
   align-items: center;
 }
 
+.title-view .share{
+  background-color: #fff;
+  border: none;
+  margin:0rpx;
+  padding:0rpx
+}
+
+button[class="share"]::after {
+  border: none;
+} 
+
+.title-view .share-hover{
+  border: none;
+}
+
+button[hover-class="share-hover"]::after {
+  border: none;
+} 
+
 .view-container .title-view .title .title-text{
   margin-left: 10rpx;
 }
@@ -86,7 +105,6 @@
 
 .chat .chatperson-me{
   margin-top: 40rpx;
-  height: 80rpx;
   width: 700rpx;
   display: flex;
   align-items: center;

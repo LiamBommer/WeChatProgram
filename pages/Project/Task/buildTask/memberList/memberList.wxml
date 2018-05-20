@@ -1,0 +1,38 @@
+<!--pages/memberList/memberList.wxml-->
+<view class='memberList-container'>
+    
+    <radio-group bindchange="ProjectMememberChange">
+      <block wx:for="{{ProjectMemember}}">
+          <block wx:if="{{index == 0}}">
+            <!-- 标题 -->
+            <view class='title'>项目负责人</view>
+            <!-- 列表项 -->
+            <view class='item'>
+                  <view class='item-one'>
+                    <image class='item-icon' src='{{item.icon}}'></image>
+                    <view class='item-text'>{{item.name}}</view>
+                  </view>
+                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+            </view>  
+            <!-- 标题 -->
+            <view class='title'>项目成员</view>
+          </block>
+
+          <block wx:else>
+            <!-- 列表项 -->
+              <view class='item'>
+                  <view class='item-one'>
+                    <image class='item-icon' src='{{item.icon}}'></image>
+                    <view class='item-text'>{{item.name}}</view>
+                  </view>
+                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+              </view>
+          </block>
+      </block>
+    </radio-group>
+    
+    <view class='button'>
+      <button class='addMember' bindtap='save'>完成</button>
+    </view>
+
+</view>

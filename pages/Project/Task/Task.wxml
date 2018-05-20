@@ -1,7 +1,7 @@
 <!--pages/Task/Task.wxml-->
 <view class='Task-container'>
 
-   <swiper class='swiper' indicator-dots="true">
+   <swiper class='swiper' indicator-dots="true" current="{{currentItem}}" bindchange='onSlideChangeEnd'>
         <!-- 任务列表 -->
         <block wx:for="{{tasklist}}">
           <swiper-item>

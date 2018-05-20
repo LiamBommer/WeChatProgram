@@ -21,14 +21,15 @@
       <view class='rightcontent'>
           <!-- 意见模板 -->
           <view style='display:{{exitComment? "" : "none"}}'>
-              <view class='model' bindtap='ModelDetail'>
-                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
-              <view class='model ' bindtap='ModelDetail'>
-                <view class='text'>模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
+            <radio-group bindchange="radioChange">
+              <block wx:for="{{ModelComment}}">
+                  <view class='model' >
+                    <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                    <radio class='item-radio' value="{{item.index}}"/>
+                  </view>
+              </block>
+            </radio-group>
+              
               <!-- 添加模板 -->
               <view class='add' bindtap='addModel'>
                   <image class='add-icon' src='/img/add.png'></image>
@@ -38,14 +39,14 @@
 
           <!-- 提问模板 -->
           <view style='display:{{exitQuestion? "" : "none"}}'>
-              <view class='model' bindtap='ModelDetail'>
-                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
-              <view class='model' bindtap='ModelDetail'>
-                <view class='text'>模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
+              <radio-group bindchange="radioChange">
+                  <block wx:for="{{ModelQuestion}}">
+                      <view class='model' >
+                        <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                        <radio class='item-radio' value="{{item.index}}"/>
+                      </view>
+                  </block>
+              </radio-group>
               <!-- 添加模板 -->
               <view class='add' bindtap='addModel'>
                   <image class='add-icon' src='/img/add.png'></image>
@@ -55,14 +56,14 @@
 
           <!-- 点赞模板 -->
           <view style='display:{{exitLike? "" : "none"}}'>
-              <view class='model' bindtap='ModelDetail'>
-                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
-              <view class='model' bindtap='ModelDetail'>
-                <view class='text'>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</view>
-                <checkbox class='item-checkbox'/>
-              </view>
+              <radio-group bindchange="radioChange">
+                  <block wx:for="{{ModelLike}}">
+                      <view class='model' >
+                        <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                        <radio class='item-radio' value="{{item.index}}"/>
+                      </view>
+                  </block>
+              </radio-group>
               <!-- 添加模板 -->
               <view class='add' bindtap='addModel'>
                   <image class='add-icon' src='/img/add.png'></image>
@@ -74,9 +75,9 @@
           
           <view class='button'>
             <!-- 删除 -->
-            <button class='delete'>删除</button> 
+            <button class='delete' bindtap='DeleteModel'>删除</button> 
             <!-- 发送 -->
-            <button class='submit'>发送</button>
+            <button class='submit' bindtap='SendModel'>发送</button>
           </view>
       </view>
 </view>

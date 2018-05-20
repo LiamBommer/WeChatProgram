@@ -2,7 +2,10 @@
 <view class='Project-container'>
 
     <!-- 置顶标题 -->
-    <view class='startitle'>星标项目</view>
+    <view class='startitle'>
+      <image src='/img/star.png'></image>
+      <text>星标项目</text>
+    </view>
     <!-- 置顶列表项 -->
     <view class='staritem'>
       <view class='staritem-one' bindtap='projectmore'>

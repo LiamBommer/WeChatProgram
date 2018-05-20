@@ -9,6 +9,143 @@ Page({
     exitComment: true,
     exitQuestion: false,
     exitLike: false,
+    //当前选择的模板
+    ModelIndex:"",
+    //意见模板
+    ModelComment: [
+      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
+      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
+    ],
+    //提问模板
+    ModelQuestion: [
+      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
+      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
+    ], 
+    //点赞模板
+    ModelLike: [
+      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
+      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
+    ],
+  },
+
+  // 选择模板
+  radioChange: function (e) {
+    this.setData({
+      ModelIndex: e.detail.value,
+    });
+  },
+
+  // 发送模板
+  SendModel: function () {
+    var that = this;
+    var index = that.data.ModelIndex;
+    var content;
+
+    var ModelComment = that.data.ModelComment;
+    var ModelQuestion = that.data.ModelQuestion;
+    var ModelLike = that.data.ModelLike;
+
+    var exitComment = that.data.exitComment;
+    var exitQuestion = that.data.exitQuestion;
+    var exitLike = that.data.exitLike;
+    
+    if(index){//选择了模板
+      if (exitComment) {//意见
+        content = "提意见：\n" + ModelComment[index].value;
+        wx.setStorage({
+            key: "CommModel",
+            data: content
+        })
+        that.setData({
+          ModelIndex: "",
+        });
+      }
+      if (exitQuestion) {//提问
+        content = "提问：\n" + ModelQuestion[index].value;
+        wx.setStorage({
+            key: "CommModel",
+            data: content
+        })
+        that.setData({
+          ModelIndex: "",
+        });
+      }
+      if (exitLike) {//点赞
+        content = "点赞：\n" + ModelLike[index].value;
+        wx.setStorage({
+            key: "CommModel",
+            data: content
+        })
+        that.setData({
+          ModelIndex: "",
+        });
+      }
+      wx.navigateTo({
+        url: '../TaskDetail',
+      })
+    }
+    else{//没有选择模板
+      wx.showToast({
+        title: '请选择一个模板',
+        icon: 'none',
+        duration: 1000,
+      })
+    }
+  },
+
+  // 删除模板
+  DeleteModel: function () {
+    var that = this;
+    var index = that.data.ModelIndex;
+    var ModelComment = that.data.ModelComment;
+    var ModelQuestion = that.data.ModelQuestion;
+    var ModelLike = that.data.ModelLike;
+
+    var exitComment = that.data.exitComment;
+    var exitQuestion = that.data.exitQuestion;
+    var exitLike = that.data.exitLike;
+    
+    if (index) {//选择了模板
+      wx.showModal({
+        title: '提示',
+        content: '是否删除该记录',
+        success: function (res) {//删除记录
+          if (res.confirm) {
+            if (exitComment) {//意见
+              ModelComment.splice(index,1);
+                that.setData({
+                  ModelComment: ModelComment,
+                  ModelIndex: "",
+                });
+            }
+            if (exitQuestion) {//提问
+              ModelQuestion.splice(index, 1);
+              that.setData({
+                ModelQuestion: ModelQuestion,
+                ModelIndex: "",
+              });
+            }
+            if (exitLike) {//点赞
+              ModelLike.splice(index, 1);
+              that.setData({
+                ModelLike: ModelLike,
+                ModelIndex: "",
+              });
+            }
+          } 
+          else if (res.cancel) {
+          }
+        }
+      })
+    }
+    else {//没有选择模板
+      wx.showToast({
+        title: '请选择一个模板',
+        icon: 'none',
+        duration: 1000,
+      })
+    }
+
   },
 
   // 导航栏选择意见

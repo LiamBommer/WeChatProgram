@@ -1,53 +1,49 @@
 <!--pages/memberList/memberList.wxml-->
 <view class='memberList-container'>
     
-    <!-- 标题 -->
-    <view class='title'>项目负责人</view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon'></image>
-        <view class='item-text'>帅涛</view>
+    <checkbox-group bindchange="TaskMememberChange">
+      <!-- 标题 -->
+      <view class='title'>任务负责人</view>
+      <!-- 列表项 -->
+      <view class='item'>
+            <view class='item-one'>
+              <image class='item-icon' src='{{principalIicon}}'></image>
+              <view class='item-text'>{{principalName}}</view>
+            </view>
+            <checkbox class='item-checkbox' value="{{principalIndex}}" checked='{{principalChecked}}'/>
       </view>
-      <checkbox class='item-checkbox'/>
-    </view>
 
-    <!-- 标题 -->
-    <view class='title'>项目成员</view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon'></image>
-        <view class='item-text'>帅涛</view>
-      </view>
-      <checkbox class='item-checkbox'/>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon'></image>
-        <view class='item-text'>帅涛</view>
-      </view>
-      <checkbox class='item-checkbox'/>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon'></image>
-        <view class='item-text'>帅涛</view>
-      </view>
-      <checkbox class='item-checkbox'/>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon'></image>
-        <view class='item-text'>帅涛</view>
-      </view>
-      <checkbox class='item-checkbox'/>
-    </view>
+      <!-- 标题 -->
+      <view class='title'>任务成员</view>
+      <!-- 列表项 -->
+      <block wx:for="{{TaskMemember}}">
+        <view class='item'>
+            <view class='item-one'>
+              <image class='item-icon' src='{{item.icon}}'></image>
+              <view class='item-text'>{{item.name}}</view>
+            </view>
+            <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+        </view>
+      </block>
+    </checkbox-group>
 
-    <button class='addMember' bindtap='addMember'>添加成员</button>
-    <button class='deleteMember'>删除成员</button>
+    <checkbox-group bindchange="ProjectMememberChange">
+      <!-- 标题 -->
+      <view class='title'>项目成员</view>
+      <!-- 列表项 -->
+      <block wx:for="{{ProjectMemember}}">
+        <view class='item'>
+            <view class='item-one'>
+              <image class='item-icon' src='{{item.icon}}'></image>
+              <view class='item-text'>{{item.name}}</view>
+            </view>
+            <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+        </view>
+      </block>
+    </checkbox-group>
+    
+    <view class='button'>
+      <button class='addMember' bindtap='save'>完成</button>
+    </view>
 
 </view>

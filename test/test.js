@@ -1,17 +1,22 @@
-// pages/Task/buildTask/buildTask.js
+// test/test.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    items: [
+      { name: 'USA', value: '美国美国美国美国美国美国美国美国美国美国' },
+      { name: 'CHN', value: '中国', checked: 'true' },
+      { name: 'BRA', value: '巴西' },
+      { name: 'JPN', value: '日本' },
+      { name: 'ENG', value: '英国' },
+      { name: 'TUR', value: '法国' },
+    ]
   },
 
-  AddMember:function(){
-    wx.navigateTo({
-      url: './memberList/memberList',
-    })
+  checkboxChange: function (e) {
+    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
   },
 
   /**

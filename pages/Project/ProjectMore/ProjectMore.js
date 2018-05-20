@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    currentItem:"",//当前swiper滑块的位置
     //隐藏判断
     exitTask: true,
     exitAnnouncement: false,
@@ -81,7 +82,16 @@ Page({
     index:'',
     
   },
-  
+
+  //获取当前swiper页的下标
+  onSlideChangeEnd: function (e) {
+    var that = this;
+    that.setData({
+      currentItem: e.detail.current
+    })
+    console.log(e.detail.current);
+  },  
+
   // 修改任务列表名
   ListNameInput: function(e){
     var index = this.data.index; 
@@ -105,15 +115,30 @@ Page({
     var tasklist = that.data.tasklist;
 
     wx.showActionSheet({
-      itemList: ['添加任务列表'], 
+      itemList: ['添加任务列表','删除该任务列表'], 
       success: function (res) {
-        tasklist.push({
-          title:"新增",
-          task:[],
+        //添加任务列表
+        if (res.tapIndex == 0){
+          var Length = 0;           //数组长度
+          for (var id in tasklist) {
+            Length++;
+          }
+
+          tasklist.push({
+            title: "新增",
+            task: [],
           });
-        that.setData({
-          tasklist: tasklist,
-        });
+          that.setData({
+            tasklist: tasklist,
+            currentItem: Length,
+          });
+        }
+
+        //删除该任务列表
+        if (res.tapIndex == 1){
+          var currentItem = that.data.currentItem;
+          console.log(currentItem);
+        }
       },
       fail: function (res) {
         console.log(res.errMsg)

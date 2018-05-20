@@ -10,6 +10,17 @@
     margin-left: 40rpx;
     margin-top: 40rpx;
     font-size: 40rpx;
+    display: flex;
+    align-items: center;
+}
+
+.Project-container .startitle image{
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.Project-container .startitle text{
+  padding-left: 20rpx;
 }
 
 .Project-container .staritem{
