@@ -50,7 +50,8 @@
 
 .memberList-container .addMember{
   width: 670rpx;
-  height: 70rpx;
+  height: 94rpx;
+  line-height:85rpx;
   border-radius:16rpx;
   border: 0rpx;
   line-height: 65rpx;

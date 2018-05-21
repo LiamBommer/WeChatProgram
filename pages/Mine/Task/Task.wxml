@@ -1,37 +1,22 @@
 <!--pages/Mine/Task/Task.wxml-->
 
 <view class='Mine-Task-container'>
+  <block wx:for="{{Task}}">
+    <!-- 列表项 -->
+    <view class='task-item' bindtap='TaskDetail'>
+      <!-- 列表左 -->
+      <view class='item-first'>
+        <checkbox class='item-checkbox'/>
+        <view class='item-text'>
+          <view class='item-title'>{{item.content}}</view>
+          <view class='item-content'>{{item.project}}</view>
+        </view>
+      </view>
+      <!-- 列表右 -->
+      <view class='item-second'>
+        <view class='item-time'>{{item.time}}</view>
+      </view>
+    </view>
+  </block>
   
-  <!-- 列表项 -->
-  <view class='task-item'>
-    <!-- 列表左 -->
-    <view class='item-first'>
-      <checkbox class='item-checkbox'/>
-      <view class='item-text'>
-        <view class='item-title'>请帅涛吃饭</view>
-        <view class='item-content'>鲨鱼派对</view>
-      </view>
-    </view>
-    <!-- 列表右 -->
-    <view class='item-second'>
-      <view class='item-time'>2月12日20:00截止</view>
-    </view>
-  </view>
-
-  <!-- 列表项 -->
-  <view class='task-item'>
-    <!-- 列表左 -->
-    <view class='item-first'>
-      <checkbox class='item-checkbox'/>
-      <view class='item-text'>
-        <view class='item-title'>请帅涛吃饭</view>
-        <view class='item-content'>鲨鱼派对</view>
-      </view>
-    </view>
-    <!-- 列表右 -->
-    <view class='item-second'>
-      <view class='item-time'>2月12日20:00截止</view>
-    </view>
-  </view>
-
 </view>

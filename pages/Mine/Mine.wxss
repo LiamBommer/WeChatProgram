@@ -18,6 +18,19 @@
   height: 140rpx;
 }
 
+.Mine-container .userinfo .taglist{
+    margin-left: 25rpx;
+}
+
+.Mine-container .userinfo .taglist .item-tag{
+    margin-left: 20rpx;
+    color: #fff;
+    font-size: 24rpx;
+    background: #09BB07;
+    padding: 5rpx;
+    border-radius: 10rpx;
+}
+
 .Mine-container .userinfo .userinfo-avatar {
   width: 120rpx;
   height: 120rpx;
@@ -36,7 +49,7 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 100rpx;
+    height: 90rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -49,13 +62,14 @@
 }
 
 .Mine-container .item .item-one .item-icon{
-    width: 48rpx;
-    height: 48rpx;
+    width: 40rpx;
+    height: 40rpx;
     margin-left: 40rpx;
 }
 
 .Mine-container .item .item-one .item-text{
     margin-left: 30rpx;
+    font-size: 28rpx;
 }
 
 .Mine-container .nav{
@@ -64,7 +78,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 34rpx;
+  font-size: 30rpx;
   background: #fff;
   color: #888888;
 }

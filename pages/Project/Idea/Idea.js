@@ -4,13 +4,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img_visible: true,
-    bg_img: '',
-    icon_avatar: '/img/member.png',
-    icon_share: '/img/share.png',
-    username: '绝世产品经理',
-    content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
-    task: '关联的任务'
   },
 
   /**

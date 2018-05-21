@@ -6,49 +6,35 @@
       <image src='/img/star.png'></image>
       <text>星标项目</text>
     </view>
-    <!-- 置顶列表项 -->
-    <view class='staritem'>
-      <view class='staritem-one' bindtap='projectmore'>
-        <image class='staritem-icon'  src='/img/logo.png'></image>
-        <view class='staritem-text'>鲨鱼不配对</view>
-      </view>
-      <view class='staritem-two' bindtap='showProjectDetail'>
-        <image class='staritemmore-icon' src='/img/more.png'></image>
-      </view>
-    </view>
-    <!-- 置顶列表项 --> 
-    <view class='staritem'>
-      <view class='staritem-one' bindtap='projectmore'>
-        <image class='staritem-icon'  src='/img/logo.png'></image>
-        <view class='staritem-text'>鲨鱼不配对</view>
-      </view>
-      <view class='staritem-two' bindtap='showProjectDetail'>
-        <image class='staritemmore-icon' src='/img/more.png'></image>
-      </view>
-    </view>
+    <block wx:for="{{StarProject}}">
+        <!-- 置顶列表项 -->
+        <view class='staritem'>
+          <view class='staritem-one' bindtap='projectmore'>
+            <image class='staritem-icon'  src='{{item.icon}}'></image>
+            <view class='staritem-text'>{{item.name}}</view>
+          </view>
+          <view class='staritem-two' bindtap='showProjectDetail'>
+            <image class='staritemmore-icon' src='/img/more.png'></image>
+          </view>
+        </view>
+    </block>
     
 
     <!-- 标题 -->
     <view class='title'>我的项目</view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon' src='/img/logo.png'></image>
-        <view class='item-text'>鲨鱼派对</view>
-      </view>
-      <image class='itemmore-icon' src='/img/more.png'></image>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-one'>
-        <image class='item-icon' src='/img/logo.png'></image>
-        <view class='item-text'>鲨鱼派对</view>
-      </view>
-      <image class='itemmore-icon' src='/img/more.png'></image>
-    </view>
-
+    <block wx:for="{{Project}}">
+        <!-- 列表项 -->
+        <view class='item'>
+          <view class='item-one' bindtap='projectmore'>
+            <image class='item-icon' src='{{item.icon}}'></image>
+            <view class='item-text'>{{item.name}}</view>
+          </view>
+          <image class='itemmore-icon' bindtap='showProjectDetail' src='/img/more.png'></image>
+        </view>
+    </block>
+   
     <!-- 添加项目 -->
-    <view class='addProject'>
+    <view class='addProject' bindtap='buildProject'>
         <image class='addProject-icon' src='/img/add.png'></image>
         <view class='addProject-text'>添加项目</view>
     </view>

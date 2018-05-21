@@ -11,7 +11,7 @@
     margin-left: 40rpx;
     margin-top: 16rpx;
     margin-bottom: 16rpx;
-    font-size: 34rpx;
+    font-size: 28rpx;
     width: 100%;
 }
 
@@ -19,8 +19,9 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 150rpx;
+    height: 110rpx;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -33,16 +34,15 @@
 }
 
 .Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-date{
-    font-size: 40rpx;
+    font-size: 34rpx;
     font-weight: bold;
 }
 
 .Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-time{
-    font-size: 34rpx;
+    font-size: 28rpx;
     color: #888888;
 }
 
 .Mine-Meeting-container .Meeting-item .Meeting-item-second{
-    font-size: 34rpx;
-    margin-left: 60rpx;
+    font-size: 28rpx;
 }

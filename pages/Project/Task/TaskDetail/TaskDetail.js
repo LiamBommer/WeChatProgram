@@ -10,7 +10,7 @@ Page({
     deadline: '',
     remindtime: "", 
     feedbacktime: "",
-    Inputcontent:'',
+    Inputcontent:'', 
     scrollTop: 0,//消息定位
 
     icon_chatperson: '/img/me.png',
@@ -162,6 +162,12 @@ Page({
 
   //点击输入框
   ClickInput: function(e) {
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: rect.bottom
+      })
+    }).exec()
   },
 
   //聊天框按回车发送消息
@@ -221,7 +227,13 @@ Page({
       urls: [chat[index].content] // 需要预览的图片http链接列表
     })
   },
- 
+
+  //事件处理函数
+  bindViewTap: function () {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
+  },
   
   
   /**

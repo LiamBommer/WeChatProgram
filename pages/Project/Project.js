@@ -5,15 +5,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    //星标项目
+    StarProject:[
+      {
+        icon:"/img/logo.png",
+        name:"鲨鱼不排队",
+      },
+      {
+        icon: "/img/logo.png",
+        name: "我爱大白鲨",
+      },
+    ],
+    //普通项目
+    Project: [
+      {
+        icon: "/img/logo.png",
+        name: "鲨鱼不排队",
+      },
+      {
+        icon: "/img/logo.png",
+        name: "我爱大白鲨",
+      },
+    ],
+  },
+  
+  //创建项目
+  buildProject:function(){
+    wx.navigateTo({
+      url: './buildProject/buildProject',
+    })
   },
 
+  //项目详情
   projectmore:function(){
     wx.navigateTo({
       url: './ProjectMore/ProjectMore',
     })
   },
 
+  //项目编辑
   showProjectDetail: function() {
     wx.navigateTo({
       url: './ProjectDetail/ProjectDetail',

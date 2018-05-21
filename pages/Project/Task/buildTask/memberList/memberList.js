@@ -6,7 +6,6 @@ Page({
    */
   data: {
     //是否选中
-    TaskIndex: "", 
     ProjectIndex: "", 
     //项目成员
     ProjectMemember: [

@@ -1,60 +1,30 @@
 <!--pages/Project/Schedule/Schedule.wxml-->
 <view class='Schedule-container'>
 
-  <!-- 标题 -->
-    <view class='title'>2019年5月</view>
-    <!-- 列表项 -->
-    <view class='item' bindtap='showScheduleDetail'>
-      <view class='item-first'>
-        <view class='item-time'>2日</view>
-        <view class='item-connect'>|</view>
-        <view class='item-time'>3日</view>
-      </view>
-      <view class='item-second'>
-        <view class='item-title'>召开全体大会</view>
-      </view>
-      <view class='item-third'>
-        <view class='item-text'>邀请帅涛</view>
-        <view class='item-text'>请帅涛致辞</view>
-        <view class='item-text'>给帅涛颁奖</view>
-      </view>
-    </view>
-
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-first'>
-        <view class='item-time'>4日</view>
-        <view class='item-connect'>|</view>
-        <view class='item-time'>5日</view>
-      </view>
-      <view class='item-second'>
-        <view class='item-title'>召开全体大会</view>
-      </view>
-      <view class='item-third'>
-        <view class='item-text'>邀请帅涛</view>
-        <view class='item-text'>请帅涛致辞</view>
-        <view class='item-text'>给帅涛颁奖</view>
-      </view>
-    </view>
-
-    <!-- 标题 -->
-    <view class='title'>2019年5月</view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-first'>
-        <view class='item-time'>2日</view>
-        <view class='item-connect'>|</view>
-        <view class='item-time'>3日</view>
-      </view>
-      <view class='item-second'>
-        <view class='item-title'>召开全体大会</view>
-      </view>
-      <view class='item-third'>
-        <view class='item-text'>邀请帅涛</view>
-        <view class='item-text'>请帅涛致辞</view>
-        <view class='item-text'>给帅涛颁奖</view>
-      </view>
-    </view>
+  <block wx:for="{{Schedule}}">
+      <block wx:if="{{item.month}}">
+      <!-- 标题 -->
+          <view class='title'>{{item.month}}</view>
+      </block>
+      <block wx:else>
+          <!-- 列表项 -->
+          <view class='item' bindtap='showScheduleDetail'>
+            <view class='item-first'>
+              <view class='item-time'>{{item.daystart}}</view>
+              <view class='item-connect'>|</view>
+              <view class='item-time'>{{item.dayend}}</view>
+            </view>
+            <view class='item-second'>
+              <view class='item-title'>{{item.title}}</view>
+            </view>
+            <view class='item-third'>
+              <block wx:for="{{item.task}}">
+                <view class='item-text'>任务{{item.id}}：{{item.content}}</view>
+              </block>
+            </view>
+          </view>
+      </block>
+  </block>
 
   <!-- 添加图标 -->
   <image class='buildicon' bindtap='createSchedule' src='/img/create.png'></image>

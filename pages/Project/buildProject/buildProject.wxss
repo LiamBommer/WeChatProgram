@@ -2,7 +2,6 @@
 
 .buildTask-container{
     width:100%; 
-    font-size: 34rpx;
     display: flex;
     flex-direction: column;
 }
@@ -22,33 +21,13 @@
 
 .buildTask-container .item .item-content{
   margin-left: 40rpx;
-  font-size: 40rpx;
+    font-size: 34rpx;
 }
 
-.buildTask-container .item .item-content{
-  margin-left: 40rpx;
-  font-size: 40rpx;
-}
 
 .buildTask-container .submit{
-  width: 670rpx;
-  height: 70rpx;
   border-radius:16rpx;
   border: 0rpx;
-  line-height: 65rpx;
-  margin-top: 675rpx;
   color: #fff;
   background: #09BB07;
-  font-size: 40rpx;
-}
-
-.buildTask-container .cancel{
-  width: 670rpx;
-  height: 70rpx;
-  border-radius:16rpx;
-  border: 0rpx;
-  line-height: 65rpx;
-  margin-top: 15rpx;
-  background: #fff;
-  font-size: 40rpx;
 }

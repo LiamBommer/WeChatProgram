@@ -1,7 +1,7 @@
 <!--pages/Project/Task/TaskDetail/TaskDetail.wxml-->
-<view>
+<view id='j_page'>
   <!-- 标题 -->
-  <view class="view-container">
+  <view class="view-container" >
      <view class='title-view ver-align space-between'>
        <view class='title'>
           <checkbox class='item-checkbox'/>
@@ -154,10 +154,12 @@
      <!-- 输入框 -->
      <view class='input'>
         <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
-        <textarea fixed type='text' placeholder='在此输入文字...' bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}'></textarea>
+        <input fixed="true" type='text' placeholder='在此输入文字...' cursor-spacing="20" bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送" confirm-hold="true" adjust-position="true"></input>
         <image class='face-icon' src='/img/expression.png'></image>
         <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
      </view>
+
+     <!-- 表情 -->
   </view>
 </view>
 

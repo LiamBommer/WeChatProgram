@@ -1,3 +1,4 @@
+/* pages/Project/ProjectDetail/ProjectBelong/ProjectBelong.wxss */
 /* pages/memberList/memberList.wxss */
 .memberList-container{
     width:100%; 
@@ -37,11 +38,6 @@
 
 .memberList-container .item .item-one .item-text{
     margin-left: 30rpx;
-}
-
-.memberList-container .item .item-one .item-text.addmemeber{
-    margin-left: 30rpx;
-    color: #888888;
 }
 
 .memberList-container .item .item-checkbox{

@@ -5,22 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentItem:"",//当前swiper滑块的位置
+    currentItem: "",//当前swiper滑块的位置
+    index: '',//当前任务列表下标
     //隐藏判断
     exitTask: true,
     exitAnnouncement: false,
     exitSchedule: false,
     exitMeeting: false,
     exitIdea: false,
-    idea: {
-      img_visible: true,
-      bg_img: '',
-      icon_avatar: '/img/member.png',
-      icon_share: '/img/share.png',
-      username: '绝世产品经理',
-      content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
-      task: '关联的任务'
-    },
 
     //任务列表
     tasklist: [
@@ -78,8 +70,122 @@ Page({
       },
     ],
 
-    //当前任务列表下标
-    index:'',
+    //公告列表
+    Announcement: [
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        read: "0人已读",
+      },
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        read: "0人已读",
+      },
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        read: "0人已读",
+      },
+    ],
+
+    //日程列表
+    Schedule: [
+      {
+        month: "2019年5月",
+      },
+      {
+        daystart: "2日",
+        dayend: "3日",
+        title: "召开全体大会",
+        task: [
+          { id: 1, content: "邀请帅涛 " },
+          { id: 2, content: "邀请帅涛 " },
+          { id: 3, content: "邀请帅涛 " },
+        ],
+      },
+      {
+        daystart: "2日",
+        dayend: "3日",
+        title: "召开全体大会",
+        task: [
+          { id: 1, content: "邀请帅涛 " },
+          { id: 2, content: "邀请帅涛 " },
+          { id: 3, content: "邀请帅涛 " },
+        ],
+      },
+      {
+        month: "2019年5月",
+      },
+      {
+        daystart: "2日",
+        dayend: "3日",
+        title: "召开全体大会",
+        task: [
+          { id: 1, content: "邀请帅涛 " },
+          { id: 2, content: "邀请帅涛 " },
+          { id: 3, content: "邀请帅涛 " },
+        ],
+      },
+      
+    ],
+
+    //会议列表
+    Meeting: [
+      {
+        month: "2019年5月",
+      },
+      {
+        day: "2日",
+        time: "21:00",
+        content: "第一次面基",
+      },
+      {
+        day: "2日",
+        time: "21:00",
+        content: "第一次面基",
+      },
+      {
+        month: "2019年6月",
+      },
+      {
+        day: "2日",
+        time: "21:00",
+        content: "第一次面基",
+      },
+    ],
+
+    //墙列表
+    idea: { img_visible: true, bg_img: '',},
+    Idea:[
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '绝世产品经理',
+        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
+        task: '关联的任务',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '绝世产品经理',
+        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
+        task: '关联的任务',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '绝世产品经理',
+        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
+        task: '关联的任务',
+      },
+    ],
     
   },
 

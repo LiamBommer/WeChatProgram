@@ -1,41 +1,27 @@
 <!--pages/Project/Meeting/Meeting.wxml-->
 <view class='Meeting-container'>
-
-  <!-- 标题 -->
-    <view class='title'>2019年5月</view>
-    <!-- 列表项 -->
-    <view class='item' bindtap='showMeetingDetail'>
-      <view class='item-first'>
-        <view class='item-date'>2日</view>
-        <view class='item-time'>21:00</view>
+    
+  <block wx:for="{{Meeting}}">
+    <block wx:if="{{item.month}}">
+      <!-- 标题 -->
+      <view class='title'>{{item.month}}</view>
+    </block>
+    <block wx:else>
+      <!-- 列表项 -->
+      <view class='item' bindtap='showMeetingDetail'>
+        <view class='item-first'>
+          <view class='item-date'>{{item.day}}</view>
+          <view class='item-time'>{{item.time}}</view>
+        </view>
+        <view class='item-second'>
+          <view class='item-title'>{{item.content}}</view>
+        </view>
+        <view></view>
       </view>
-      <view class='item-second'>
-        <view class='item-title'>召开鹏凯捐钱慈善会</view>
-      </view>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-first'>
-        <view class='item-date'>3日</view>
-        <view class='item-time'>21:00</view>
-      </view>
-      <view class='item-second'>
-        <view class='item-title'>召开鹏凯第二次捐钱慈善会</view>
-      </view>
-    </view>
-
-     <!-- 标题 -->
-    <view class='title'>2019年5月</view>
-    <!-- 列表项 -->
-    <view class='item'>
-      <view class='item-first'>
-        <view class='item-date'>4日</view>
-        <view class='item-time'>21:00</view>
-      </view>
-      <view class='item-second'>
-        <view class='item-title'>召开鹏凯第三次捐钱慈善会</view>
-      </view>
-    </view>
+    </block>
+  </block>
+  
+    
 
   <!-- 添加图标 -->
   <image class='buildicon' bindtap='createMeeting' src='/img/create.png'></image>

@@ -1,7 +1,6 @@
 /* pages/memberList/memberList.wxss */
 .memberList-container{
     width:100%; 
-    font-size: 34rpx;
     display: flex;
     flex-direction: column;
 }
@@ -17,7 +16,7 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 100rpx;
+    height: 80rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,16 +45,12 @@
 
 .memberList-container .button{
   padding-bottom: 40rpx;
+
 }
 
-.memberList-container .addMember{
-  width: 670rpx;
-  height: 70rpx;
+.memberList-container .button .addMember{
   border-radius:16rpx;
-  border: 0rpx;
-  line-height: 65rpx;
-  margin-top: 100rpx;
-  color: #fff;
-  background: #09BB07;
-  font-size: 40rpx;
+  border:0rpx;
+  color:#fff;
+  background:#09BB07;
 }

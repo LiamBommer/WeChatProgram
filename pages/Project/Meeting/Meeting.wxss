@@ -10,15 +10,16 @@
     margin-left: 40rpx;
     margin-top: 30rpx;
     margin-bottom: 16rpx;
-    font-size: 34rpx;
+    font-size: 28rpx;
 }
 
 .Meeting-container .item{
     background: #fff;
     color: #000;
     width: 100%;
-    height: 150rpx;
+    height: 100rpx;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -31,18 +32,17 @@
 }
 
 .Meeting-container .item .item-first .item-date{
-    font-size: 40rpx;
+    font-size: 34rpx;
     font-weight: bold;
 }
 
 .Meeting-container .item .item-first .item-time{
-    font-size: 34rpx;
+    font-size: 28rpx;
     color: #888888;
 }
 
 .Meeting-container .item .item-second{
-    font-size: 40rpx;
-    margin-left: 60rpx;
+    font-size: 30rpx;
 }
 
 .Meeting-container .buildicon{

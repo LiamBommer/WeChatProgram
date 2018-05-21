@@ -1,39 +1,24 @@
 <!--pages/Announcement/Announcement.wxml-->
 <view class='Announcement-container'>
 
-  <!-- 列表项 -->
-  <view class='item'>
-    <!-- 列表左 -->
-    <view class='item-first' bindtap='showAnnouncementDetail'>
-      <image class='item-icon'></image>
-      <view class='item-text'>
-        <view class='item-title'>我觉得ZHT太牛逼了</view>
-        <view class='item-content'>因为ZHT也很牛逼balabal ...</view>
+  <block wx:for="{{Announcement}}">
+      <!-- 列表项 -->
+      <view class='item'>
+        <!-- 列表左 -->
+        <view class='item-first' bindtap='showAnnouncementDetail'>
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>
+            <view class='item-title'>{{item.title}}</view>
+            <view class='item-content'>{{item.content}}</view>
+          </view>
+        </view>
+        <!-- 列表右 -->
+        <view class='item-second'>
+          <view class='item-time'>{{item.time}}</view>
+          <view class='item-read'>{{item.read}}</view>
+        </view>
       </view>
-    </view>
-    <!-- 列表右 -->
-    <view class='item-second'>
-      <view class='item-time'>5月1日</view>
-      <view class='item-read'>0人已读</view>
-    </view>
-  </view>
-
-  <!-- 列表项 -->
-  <view class='item'>
-    <!-- 列表左 -->
-    <view class='item-first'>
-      <image class='item-icon'></image>
-      <view class='item-text'>
-        <view class='item-title'>我觉得ZHT太牛逼了</view>
-        <view class='item-content'>因为ZHT也很牛逼balabal ...</view>
-      </view>
-    </view>
-    <!-- 列表右 -->
-    <view class='item-second'>
-      <view class='item-time'>5月1日</view>
-      <view class='item-read'>0人已读</view>
-    </view>
-  </view>
+  </block>
 
   <!-- 添加图标 -->
   <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image>

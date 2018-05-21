@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 100%;
   background-color: white;
+  align-items:center;
 }
 
 .bg-img {
@@ -13,18 +14,31 @@
 }
 
 .post-view {
-  width: 100%;
-  margin: 40rpx 40rpx 0rpx 40rpx;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  background-color: white;
+  width:100%;
+  margin-top:40rpx;
+  display:flex;
+  flex-wrap:wrap;
+  background-color:white;
+  justify-content:space-between;
 }
 
-.post-view .post {
+.post-view .post:nth-child(odd) {
   width: 291rpx;
   height: 256rpx;
-  margin: 10rpx;
+  margin-bottom: 30rpx;
+  margin-left: 35rpx;
+  padding: 16rpx;
+  display: flex;
+  flex-direction: column;
+  background-color: #567b95;
+  color: white;
+}
+
+.post-view .post:nth-child(even) {
+  width: 291rpx;
+  height: 256rpx;
+  margin-bottom: 30rpx;
+  margin-right: 35rpx;
   padding: 16rpx;
   display: flex;
   flex-direction: column;

@@ -17,7 +17,7 @@
         <input class='item-content' placeholder='输入截止时间...'></input>
     </view>
 
-    <button class='submit'>完成</button>
+    <button class='submit' size='default'>完成</button>
 
 </view>
 

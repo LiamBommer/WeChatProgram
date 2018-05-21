@@ -5,6 +5,30 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //通知列表
+    Notification:[
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        project: "鲨鱼派对项目",
+      },
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        project: "鲨鱼派对项目",
+      },
+      {
+        icon: "/img/me.png",
+        title: "我觉得ZHT太牛逼了",
+        content: "因为ZHT也很牛逼balabal ...",
+        time: "5月1日20:00",
+        project: "鲨鱼派对项目",
+      },
+    ],
   
   },
 

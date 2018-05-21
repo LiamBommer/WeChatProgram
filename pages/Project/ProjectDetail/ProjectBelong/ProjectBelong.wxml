@@ -1,7 +1,7 @@
-<!--pages/memberList/memberList.wxml-->
+<!--pages/Project/ProjectDetail/ProjectBelong/ProjectBelong.wxml-->
 <view class='memberList-container'>
 
-    <checkbox-group bindchange="ProjectMememberChange">
+    <radio-group bindchange="ProjectMememberChange">
       <block wx:for="{{ProjectMemember}}">
           <block wx:if="{{index == 0}}">
             <!-- 标题 -->
@@ -29,15 +29,8 @@
               </view>
           </block>
       </block>
-    </checkbox-group>
-
-    <!-- 添加新成员 -->
-    <view class='item' bindtap='Addmember'>
-        <view class='item-one'>
-            <image class='item-icon' src='/img/add.png'></image>
-            <view class='item-text addmemeber'>添加新成员</view>
-        </view>
-    </view>
+    </radio-group>
+    
 
     <button class='addMember' size='default' bindtap='Finish'>完成</button>
 
