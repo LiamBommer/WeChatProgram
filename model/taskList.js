@@ -20,6 +20,12 @@ function createTaskList(projId, title){
     success: function(result){
       //添加任务看板成功
       console.log("添加任务看板成功!")
+
+
+
+
+
+
     },
     error: function(result,error){
       //添加任务看板失败
@@ -58,10 +64,21 @@ function getTasks(listId){
         }
         taskArr.push(object)
       }
+
+
+
+
       return taskArr
     },
     error: function (error) {
       console.log("任务查询失败: " + error.code + " " + error.message);
+
+
+
+
+
+
+      
     }
   })
 }

@@ -29,7 +29,7 @@ function getAnnouncementDetail(announcementId){
       //   readObject: readObject
       // }
       //在这里设置setdata
-      
+
 
 
 
@@ -57,6 +57,8 @@ function getReadAnnounce(announcementId){
 
   var AnnouncementRead = Bmob.Objcet.extend("annoucement_read")
   var announcementReadQuery = new Bmob.Query(AnnouncementRead)
+  var User = Bmob.Object.extend("_User")
+  var userQuery = new Bmob.Query(User)
 
   var readObject = {}
   var read = []
@@ -77,23 +79,61 @@ function getReadAnnounce(announcementId){
       }
 
       if(read.length > 0){
-        readUser = getUser(read) 
-      }
-      if(unread.length > 0){
-        unreadUser = getUser(unread)
+        //根据id数组查询用户昵称和头像
+        userQuery.containedIn("objectId", userIds)
+        userQuery.find({
+          success: function (results) {
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i]
+              var object = {}
+              object = {
+                nickName: result.get("nickName"),
+                userPic: result.get("userPic")
+              }
+              readUser.push(object)
+              //在这里setdata
+
+
+
+
+
+
+            }
+          }
+        })
       }
 
-      readObject = {
-        readUser: readUser,
-        unreadUser: unreadUser
-      }
+      if(unread.length > 0){
+        //根据id数组查询用户昵称和头像
+        userQuery.containedIn("objectId", userIds)
+        userQuery.find({
+          success: function (results) {
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i]
+              var object = {}
+              object = {
+                nickName: result.get("nickName"),
+                userPic: result.get("userPic")
+              }
+              unreadUser.push(object)
+              //在这里setdata
+
+
+
+
+
+
+
+            }
+          }
+        })
+      }  
     },
     error: function (error) {
       console.log("查询失败: " + error.code + " " + error.message);
     }
   })
 
-  return readObject
 }
 
 /**
@@ -127,7 +167,6 @@ function getUser(userIds){
     }    
   })
 
-  return userObjects
 }
 
 /**

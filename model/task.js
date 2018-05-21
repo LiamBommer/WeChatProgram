@@ -28,10 +28,25 @@ function createTask(listId, title, memberIds, endTime){
       console.log("添加任务成功！")
       //添加任务成员信息
       addTaskMembers(result.id, leaderId, memberIds)
+
+
+
+
+
+
+
+
     },
     error: function(result,error){
       //添加失败
       console.log("添加任务成功！",error)
+
+
+
+
+
+
+
     }   
   })
 
