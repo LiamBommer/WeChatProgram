@@ -18,7 +18,8 @@ function getProjectDetail(projId){
 
   var detailObject = {}  //项目详情页面的所需信息
   //var memberPics = ProjectList.getProjectMembers(projId)   //调用函数获取成员数组（nickName，userPic），数组的第一个为项目领导人
-  
+  var memberPics = []
+
   var ProjectMember = Bmob.Object.extend("proj_member")
   var memberQuery = new Bmob.Query(ProjectMember)
   var User = Bmob.Object.extend("_User")
@@ -70,7 +71,8 @@ function getProjectDetail(projId){
         }
 
         //在这里设置setdata
-        //console.log(userArr)
+        console.log(userArr)
+        memberPics = userArr
 
 
 

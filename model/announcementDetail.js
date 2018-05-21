@@ -22,12 +22,19 @@ function getAnnouncementDetail(announcementId){
     success: function (result) {
       console.log("获取指定的公告内容成功！")
       var announcement = result
-      var readObject = getReadAnnounce(announcementId)
+      // var readObject = getReadAnnounce(announcementId)
       
-      detailObject = {
-        announcement: announcement,
-        readObject: readObject
-      }
+      // detailObject = {
+      //   announcement: announcement,
+      //   readObject: readObject
+      // }
+      //在这里设置setdata
+      
+
+
+
+
+
       
     },
     error: function (error) {
@@ -35,7 +42,7 @@ function getAnnouncementDetail(announcementId){
     }
   })
 
-  return detailObject
+
 }
 
 /**

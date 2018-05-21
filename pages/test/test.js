@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/projectList.js')
+var test = require('../../model/announcementDetail.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -29,7 +29,7 @@ Page({
 
     console.log("开始测试")
     // var r = test.getProjectList()
-    test.getProjectList()
+    test.createAnnouncement("374623ab99","鲨鱼派对","我真的是日了狗了","我觉得涛哥和PK都非常帅",true)
 
   },
 

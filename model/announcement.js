@@ -21,19 +21,27 @@ function getAnnouncements(projId){
   annoucementQuery.descending("createdDate")  //根据时间降序排列
   annoucementQuery.find({
     success: function (results) {
-      console.log("共查询到公告 " + results.length + " 条记录");
+      //console.log("共查询到公告 " + results.length + " 条记录");
       // 循环处理查询到的数据
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         annoucementArr.push(object)
       }
+
+      //在这里setdata
+      console.log("查询到的公告数组",annoucementArr)
+
+
+
+
+
+
     },
     error: function (error) {
       console.log("查询失败: " + error.code + " " + error.message);
     }
   })
 
-  return annoucementArr
 }
 
 /**
@@ -73,13 +81,29 @@ function createAnnouncement(projId, projName, title, content, is_showmember){
         announceId = result.id
         
         if(is_showmember){        
-          //保存未读成员列表 //可以开启另外一个线程处理？
+          //保存未读成员列表 
           saveUnread(projId,announceId)  //调用函数
-        }       
+        }
+
+        //在这里处理setdata
+
+
+
+
+
+
+
       },
       error: function (result, error) {
         // 添加失败
         console.log("创建公告失败！", error)
+        //在这里处理失败的情况
+
+
+
+
+
+
       }})     
 }
 
@@ -90,11 +114,12 @@ function createAnnouncement(projId, projName, title, content, is_showmember){
  */
 function saveUnread(projId, announceId){
   
+  var Annoucement_readObjects = new Array()  //构建一个本地的Bmob.Object数组
   var ProjMember = Bmob.Object.extend("proj_member")
   var projMemberQuery = new Bmob.Query(ProjMember)
   var Annoucement_read = Bmob.Object.extend("annoucement_read")
-  var annoucement_read = new Annoucement_read()
-  var memberObjects =[]  //构建一个本地的Bmob.Object数组
+  //var annoucement_read = new Annoucement_read()
+
 
   //查询指定项目的所有成员id,50条
   projMemberQuery.equalTo("proj_id", projId)
@@ -102,31 +127,34 @@ function saveUnread(projId, announceId){
   projMemberQuery.select("user_id")
   projMemberQuery.find().then(function (results) {
     //返回成功
-    console.log("共查询到 " + results.length + " 条记录");
+    //console.log("共查询到 " + results.length + " 条记录:",results);
     for (var i = 0; i < results.length; i++) {
       var result = results[i];
-      console.log("获取项目id", object.get('proj_id'));
-      var object = {}
-      object = {
-        user_id: result.get("user_id"),
-        annouce_id: announceId,
-        read: false
-      }
-      memberObjects.push(object)
+      
+      var object = new Annoucement_read()
+      object.set('annouce_id',announceId)
+      object.set('user_id',result.get('user_id'))
+      object.set('read',false)
+      Annoucement_readObjects.push(object)
+      
     }
+
+    if (Annoucement_readObjects.length > 0) {
+      //保存未读成员列表
+      Annoucement_read.saveAll(Annoucement_readObjects).then(function (Annoucement_readObjects) {
+        // 成功
+        console.log("保存未读成员列表成功！")
+      },
+        function (error) {
+          // 异常处理
+          console.log("保存未读成员列表失败！", error)
+        })
+    }
+
+    //console.log(memberObjects)
   })
 
-  if(memberIdArr.length > 0){
-    //保存未读成员列表
-    annoucement_read.saveAll(memberObjects).then(function (memberObjects) {
-      // 成功
-      console.log("保存未读成员列表成功！")
-    },
-      function (error) {
-        // 异常处理
-        console.log("保存未读成员列表失败！",error)
-      })
-  }
+  
   
 }
 module.exports.getAnnouncements = getAnnouncements
