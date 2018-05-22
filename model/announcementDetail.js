@@ -1,6 +1,7 @@
 //module/announcementDetail.js
 var Bmob = require('../utils/bmob.js')
 
+
 /**
  *2018-05-19
  *@author mr.li
