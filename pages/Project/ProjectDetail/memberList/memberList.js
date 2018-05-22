@@ -10,28 +10,11 @@ Page({
     //项目成员
     ProjectMemember: [
       {
+        id:"",
         index: 0,
         icon: "/img/me.png",
         name: '帅涛',
         checked: true
-      },
-      {
-        index: 1,
-        icon: "/img/me.png",
-        name: '钢铁侠',
-        checked: true
-      },
-      {
-        index: 2,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: true,
-      },
-      {
-        index: 3,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: true,
       },
     ],
   },
@@ -82,7 +65,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var memberList = wx.getStorageSync("ProjectDetail-memberList")
+    this.setData({
+      ProjectMemember: memberList
+    });
+
+
   },
 
   /**
@@ -96,7 +84,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
   },
 
   /**

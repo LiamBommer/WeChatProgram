@@ -72,12 +72,12 @@
     color: #888888;
     margin-left: 40rpx;
     margin-top: 40rpx;
-    font-size: 28rpx;
+    font-size: 30rpx;
     margin-bottom:16rpx;
 }
 
 .Project-container .item{
-    font-size: 28rpx;
+    font-size: 30rpx;
     background: #fff;
     color: #000;
     width: 100%;
@@ -114,7 +114,7 @@
   height: 100rpx;
   display: flex;
   align-items: center;
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #888888;
   margin-top: 16rpx;
   border: 0.5rpx dashed #b2b2b2;

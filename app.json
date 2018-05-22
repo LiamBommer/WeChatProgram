@@ -1,10 +1,10 @@
 {
   "pages":[
     "pages/Project/Project",
+    "pages/Project/buildProject/buildProject",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/ProjectDetail/ProjectDetail",
     "pages/Project/ProjectDetail/ProjectBelong/ProjectBelong",
-    "pages/Project/buildProject/buildProject",
     "pages/Project/Schedule/scheduleDetail/scheduleDetail", 
     "pages/Project/ProjectDetail/memberList/memberList",
     "pages/Project/Task/Task",
@@ -37,11 +37,11 @@
     "pages/logs/logs",
     "test/test"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "团队协作应用",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "backgroundColor": "#fff",

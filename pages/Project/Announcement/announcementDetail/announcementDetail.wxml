@@ -3,7 +3,9 @@
   <view class="view-container">
     <view class='title-view ver-align space-between'>
       <text class='title'>{{title}}</text>
-      <image src='{{icon_share}}'></image>
+       <button class='share' hover-class="share-hover"  open-type="share">
+          <image src='{{icon_share}}'></image>
+       </button>
     </view>
   </view>
   <view class="view-container">
@@ -29,14 +31,12 @@
 
   <text class='item-title'>未读成员</text>
   <view class='view-container'>
-    <view class="item-view">
-      <image src='{{icon_member}}'></image>
-      <text class='desc'>同学A</text>
-    </view>
-    <view class="item-view">
-      <image src='{{icon_member}}'></image>
-      <text class='desc'>同学A</text>
-    </view>
+    <block wx:for="{{read}}">
+        <view class="item-view">
+          <image src='{{item.icon}}'></image>
+          <text class='desc'>{{item.name}}</text>
+        </view>
+    </block>
   </view>
 
   <text class='item-title'>已读成员</text>

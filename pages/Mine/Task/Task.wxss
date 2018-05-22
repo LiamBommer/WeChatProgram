@@ -28,7 +28,7 @@
 }
 
 .Mine-Task-container .task-item .item-first .item-text .item-title{
-   font-size: 30rpx;
+   font-size: 34rpx;
 }
 
 .Mine-Task-container .task-item .item-first .item-text .item-content{

@@ -2,7 +2,7 @@
 
   <view class='view-container'>
     <view class='title-view ver-align'>
-      <image src='' class='project-img'></image>
+      <image src='{{project_img}}' class='project-img'></image>
       <text class='title' bindtap="modalinputTitle">{{project_name}}</text>
       <modal hidden="{{hiddenmodalputTitle}}" title="项目名称" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
         <input type='text'placeholder="请输入项目名称" />  
@@ -29,11 +29,9 @@
       <view class='intermediate-view'>
         <text class='des'>成员</text>
         <view class='member-view'>
-          <image src='{{icon_member}}'></image>
-          <image src='{{icon_member}}'></image>
-          <image src='{{icon_member}}'></image>
-          <image src='{{icon_member}}'></image>
-          <image src='{{icon_member}}'></image>
+          <block wx:for="{{member}}">
+            <image src='{{item.icon}}'></image>
+          </block>
         </view>
       </view>
       <image src='{{icon_more}}' bindtap='showMemberList'></image>

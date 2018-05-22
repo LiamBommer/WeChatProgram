@@ -24,13 +24,30 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "项目",
+					"pathName": "pages/Project/Project",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "测试model接口",
+					"pathName": "pages/test/test",
+					"query": ""
+				}
+			]
 		}
 	}
 }

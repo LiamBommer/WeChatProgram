@@ -44,5 +44,5 @@
 }
 
 .Mine-Meeting-container .Meeting-item .Meeting-item-second{
-    font-size: 28rpx;
+    font-size: 30rpx;
 }
