@@ -29,7 +29,7 @@ Page({
   //添加新成员
   Addmember: function () {
     wx.navigateTo({
-      url: '../../../addMember/addMember',
+      url: './addMember/addMember',
     })
   },
 

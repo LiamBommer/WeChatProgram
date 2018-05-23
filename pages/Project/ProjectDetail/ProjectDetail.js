@@ -189,7 +189,6 @@ Page({
 
   //项目成员
   showMemberList: function() {
-    wx.setStorageSync("ProjectDetail-memberList", this.data.member);
     wx.navigateTo({
       url: 'memberList/memberList'
     })
@@ -225,6 +224,7 @@ Page({
     var that = this
     var id = wx.getStorageSync("Project-id") 
     that.getProjectDetail(id)
+    wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
   /**

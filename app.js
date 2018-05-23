@@ -11,7 +11,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+    
     // 登录 mr.li 代码是Bmob封装好的接口
     //登录注册集合类，接口默认第一次注册，否则返回用户信息
     var user = new Bmob.User();//实例化

@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/Project/Project",
+    "pages/Project/ProjectDetail/memberList/addMember/addMember",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/Meeting/addMeeting/memberList/memberList",
     "pages/Project/Meeting/addMeeting/addMeeting",
@@ -35,7 +36,6 @@
     "pages/Mine/Meeting/Meeting",
     "pages/Mine/Idea/Idea",
     "pages/Notification/Notification",
-    "pages/addMember/addMember",
     "pages/memberList/memberList",
     "pages/logs/logs",
     "test/test"
