@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -46,6 +46,13 @@
 					"name": "测试model接口",
 					"pathName": "pages/test/test",
 					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "通过二维码加入项目",
+					"pathName": "pages/Mine/Mine",
+					"query": "projectid=3d3525ec0f",
+					"scene": "1012"
 				}
 			]
 		}

@@ -1,17 +1,18 @@
 //app.js
+//初始化bmob SDK
+const Bmob = require('./utils/bmob.js')
+Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
+
 App({
 
-  onLaunch: function () {
-
-    //初始化bmob SDK
-    const Bmob = require('./utils/bmob.js')
-    Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
+  onLaunch: function (options) {
 
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
+    
     // 登录 mr.li 代码是Bmob封装好的接口
     //登录注册集合类，接口默认第一次注册，否则返回用户信息
     var user = new Bmob.User();//实例化
@@ -28,6 +29,7 @@ App({
 
             //更新openid
             wx.setStorageSync('openid', openid)
+            wx.setStorageSync('userId', user.id)
           } else {//注册成功的情况
 
             var u = Bmob.Object.extend("_User");
@@ -35,6 +37,8 @@ App({
             query.get(user.id, {
               success: function (result) {
                 wx.setStorageSync('own', result.get("uid"));
+                //将userId，存储到缓存中
+                wx.setStorageSync('userId', user.id)
               },
               error: function (result, error) {
                 console.log("查询失败");
@@ -101,8 +105,78 @@ App({
       }
     })
 
-  },
+    //判断是否是被邀请加入项目
+    wx.showToast({
+      title: options.projectid,
+    })
+    if (options.projectid){
+      console.log("判断是否是被邀请加入项目。", Bmob.User.current().id)
+      wx.showToast({
+        title: '成功了一半！',
+      })
+      var projectId = options.projectid
+      this.joinProject(projectId, Bmob.User.current().id)
 
+    }
+  },
+  joinProject: function(projectId, userId){
+
+    var that = this
+    var Project = Bmob.Object.extend("project")
+    var projectQuery = new Bmob.Query(Project)
+
+
+    projectQuery.equalTo("objectId", projectId)
+    projectQuery.first({
+      success: function(result){
+        that.joinProject2(projectId,userId,result.get("name"))
+        
+      },
+      error: function(error){
+        wx.showToast({
+          title: '加入' + result.get('name') + '失败',
+        })
+      }
+    })
+    
+      
+  },
+  joinProject2: function (projectId, userId,projectName){
+
+    var ProjectMember = Bmob.Object.extend('proj_member')
+    var projectmember = new ProjectMember()
+    var projectmemberQuery = new Bmob.Query(ProjectMember)
+
+
+    projectmemberQuery.equalTo("proj_id", projectId)
+    projectmemberQuery.equalTo("user_id", userId)
+    projectmemberQuery.first({
+      success: function (result) {
+        if (result == null) {
+          projectmember.save({
+            proj_id: projectId,
+            user_id: userId,
+            is_leader: false
+
+          }, {
+              success: function (result) {
+                // 添加成功
+                wx.setStorageSync("Project-id", projectId)
+                wx.showToast({
+                  title: '加入' + projectName + '成功！',
+                })
+              },
+              error: function (result, error) {
+                // 添加失败
+              }
+            })
+        }
+      },
+      error: function (error) {
+
+      }
+    })
+  },
   globalData: {
     userInfo: null,
     projectId:null
