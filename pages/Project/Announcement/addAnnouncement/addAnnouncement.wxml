@@ -1,22 +1,24 @@
 <!-- addAnnouncement.wxml -->
  <view class="addAnnouncement-container">
+  
+   <form bindsubmit='BuildAnnouncement'>
+      <view class='view-container'>
+        <view  class='title-view ver-align'>
+          <input class='title' name="title" placeholder='公告标题'/>
+        </view>
+        <view class='content-view'>
+          <textarea class='content' name="content" placeholder='公告内容'/>
+        </view>
+      </view>
 
-   <view class='view-container'>
-     <view  class='title-view ver-align'>
-       <input class='title' placeholder='公告标题'/>
-     </view>
-     <view class='content-view'>
-       <textarea class='content' placeholder='公告内容'/>
-     </view>
-   </view>
+      <view class='view-container'>
+        <view class='item-view ver-align space-between'>
+          <text>显示已读和未读成员</text>
+          <switch />
+        </view>
+      </view>
 
-   <view class='view-container'>
-     <view class='item-view ver-align space-between'>
-       <text>显示已读和未读成员</text>
-       <switch />
-     </view>
-   </view>
-
-   <button type='primary' size='default'>完成</button>
+      <button type='primary' size='default' form-type='submit'>完成</button>
+   </form>
 
 </view>

@@ -25,7 +25,7 @@
       <image src='{{icon_deadline}}'></image>
       <view class='desc'>
         <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
-          <view class="picker">
+          <view>
             {{deadline}} 截止
           </view>
         </picker>

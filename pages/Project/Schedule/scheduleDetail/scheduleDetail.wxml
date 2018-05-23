@@ -3,17 +3,27 @@
    <view class="view-container">
      <view class='title-view ver-align space-between'>
        <text class='title'>{{title}}</text>
-       <image src='{{icon_share}}'></image>
+       <button class='share' hover-class="share-hover"  open-type="share">
+          <image src='{{icon_share}}'></image>
+       </button>
      </view>
   </view>
   <view class="view-container">
     <view class="item-view">
       <image src='{{icon_deadline}}'></image>
-      <text class='desc'>5月1日 开始</text>
+      <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+          <view>
+            {{stattime}} 开始
+          </view>
+      </picker>
     </view>
     <view class="item-view">
       <image src='{{icon_deadline}}'></image>
-      <text class='desc'>5月8日 截至</text>
+      <picker class='desc' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+          <view>
+            {{deadline}} 截止
+          </view>
+      </picker>
     </view>
     <view class="item-view ver-align space-between">
       <view class='ver-align'>
@@ -32,7 +42,7 @@
     </view>
     <view class="item-view">
       <image src='{{icon_close}}'></image>
-      <text class='desc delete-text'>删除日程</text>
+      <text class='desc delete-text' bindtap='Delete'>删除日程</text>
     </view>
   </view>
 </view>

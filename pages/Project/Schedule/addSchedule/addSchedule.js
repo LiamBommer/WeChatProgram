@@ -8,7 +8,29 @@ Page({
     icon_task_list: '/img/task_list.png',
     icon_add: '/img/add.png',
     icon_member: '/img/member.png',
+    deadline: '',
+    stattime: '', 
+  }, 
+  
+  //创建日程
+  BuildSchedule: function (e) {
+    var title = e.detail.value.title
+    console.log(title)
   },
+
+  // 截止时间
+  DeadLineChange: function (e) {
+    this.setData({
+      deadline: e.detail.value
+    })
+  },
+
+  // 开始时间
+  StatTimeChange: function (e) {
+    this.setData({
+      stattime: e.detail.value
+    })
+  }, 
 
   /**
    * 生命周期函数--监听页面加载

@@ -17,7 +17,7 @@
       <text class='note'>{{note_time}}</text>
     </view>
   </view>
-  <button type='primary' size='default'>让爸爸看看</button>
+  <button type='primary' size='default' bindtap='ClickRead'>收到</button>
   <view class="view-container">
     <view class="item-view">
       <image src='{{icon_belonging}}'></image>
@@ -25,13 +25,13 @@
     </view>
     <view class="item-view">
       <image src='{{icon_close}}'></image>
-      <text class='desc delete-text'>删除公告</text>
+      <text class='desc delete-text' bindtap='Delete'>删除公告</text>
     </view>
   </view>
 
   <text class='item-title'>未读成员</text>
   <view class='view-container'>
-    <block wx:for="{{read}}">
+    <block wx:for="{{noread}}">
         <view class="item-view">
           <image src='{{item.icon}}'></image>
           <text class='desc'>{{item.name}}</text>
@@ -43,13 +43,12 @@
   <view class='view-container'>
     <view class="item-view space-between">
       <view class="ver-align">
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_member}}'></image>
+        <block wx:for="{{read}}">
+          <image src='{{item.icon}}'></image>
+        </block>
       </view>
       <view class="ver-align">
-        <image src='{{icon_more}}'></image>
+        <image src='{{icon_more}}' bindtap='readMember'></image>
       </view>
     </view>
   </view>

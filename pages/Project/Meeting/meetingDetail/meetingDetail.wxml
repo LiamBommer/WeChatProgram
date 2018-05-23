@@ -3,7 +3,9 @@
    <view class="view-container">
      <view class='title-view ver-align space-between'>
        <text class='title'>{{title}}</text>
-       <image src='{{icon_share}}'></image>
+       <button class='share' hover-class="share-hover"  open-type="share">
+          <image src='{{icon_share}}'></image>
+       </button>
      </view>
   </view>
   <view class="view-container">
@@ -14,7 +16,11 @@
   <view class="view-container">
     <view class="item-view">
       <image src='{{icon_deadline}}'></image>
-      <text class='desc'>5/1</text>
+      <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+          <view>
+            {{stattime}} 开始
+          </view>
+      </picker>
     </view>
     <view class="item-view">
       <image src='{{icon_cycle}}'></image>
@@ -25,16 +31,16 @@
         <image src='{{icon_member}}'></image>
         <text class='desc'>成员</text>
       </view>
-      <view class="ver-align">
+      <view class="ver-align"bindtap='memberList'>
         <image src='{{icon_member}}'></image>
         <image src='{{icon_member}}'></image>
         <image src='{{icon_member}}'></image>
-        <image src='{{icon_create}}'></image>
+        <image src='{{icon_create}}' ></image>
       </view>
     </view>
     <view class="item-view">
       <image src='{{icon_close}}'></image>
-      <text class='desc delete-text'>Delete Meeting</text>
+      <text class='desc delete-text' bindtap='Delete'>删除会议</text>
     </view>
   </view>
 </view>

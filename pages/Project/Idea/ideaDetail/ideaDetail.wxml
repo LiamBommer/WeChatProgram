@@ -6,6 +6,9 @@
       <text class='content'>
         {{content}}
       </text>
+       <button class='share' hover-class="share-hover"  open-type="share">
+          <image src='{{icon_share}}'></image>
+       </button>
     </view>
     <view class="item-view ver-align space-between">
       <view class='ver-align'>
@@ -24,7 +27,7 @@
     </view>
     <view class="item-view">
       <image src='{{icon_close}}'></image>
-      <text class='desc delete-text'>删除点子</text>
+      <text class='desc delete-text 'bindtap='Delete'>删除点子</text>
     </view>
  </view>
 
