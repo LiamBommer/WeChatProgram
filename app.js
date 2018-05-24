@@ -105,20 +105,18 @@ App({
       }
     })
 
-    //判断是否是被邀请加入项目
-    wx.showToast({
-      title: options.projectid,
-    })
-    if (options.projectid){
+  },
+
+  onShow:function(options){
+    console.log(options)
+    if (options.query.projectid) {
       console.log("判断是否是被邀请加入项目。", Bmob.User.current().id)
-      wx.showToast({
-        title: '成功了一半！',
-      })
-      var projectId = options.projectid
+      var projectId = options.query.projectid
       this.joinProject(projectId, Bmob.User.current().id)
 
     }
   },
+
   joinProject: function(projectId, userId){
 
     var that = this
