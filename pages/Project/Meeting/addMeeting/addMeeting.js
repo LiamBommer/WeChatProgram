@@ -10,6 +10,29 @@ Page({
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
+    stattime: '', 
+  },
+
+  // 开始时间
+  StatTimeChange: function (e) {
+    this.setData({
+      stattime: e.detail.value
+    })
+  },
+
+  // 成员列表
+  memberList: function (e) {
+    wx.navigateTo({
+      url: './memberList/memberList',
+    })
+  },
+  
+  //创建会议
+  BuildMeeting: function (e) {
+    var title = e.detail.value.title
+    var content = e.detail.value.content
+    console.log(title)
+    console.log(content)
   },
 
   /**

@@ -6,6 +6,15 @@ Page({
   data: {
 
   },
+
+  //完成
+  BuildAnnouncement:function(e){
+    var title = e.detail.value.title
+    var content = e.detail.value.content
+    console.log(title);
+    console.log(content);
+  },
+  
   onLoad: function () {
 
   },

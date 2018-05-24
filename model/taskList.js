@@ -54,21 +54,24 @@ function getTasks(listId){
     success: function (results) {
       console.log("共查询到任务 " + results.length + " 条记录");
       // 循环处理查询到的数据
-      for (var i = 0; i < results.length; i++) {
-        var result = results[i];
-        var userPic = getUserPic(result.get("leader_id"))  //根据任务负责人的id获取其头像
-        var object = {}
-        object = {
-          task: result,
-          leaderPic: userPic
-        }
-        taskArr.push(object)
-      }
+      // for (var i = 0; i < results.length; i++) {
+      //   var result = results[i];
+      //   //var userPic = getUserPic(result.get("leader_id"))  //根据任务负责人的id获取其头像
+      //   var object = {}
+      //   object = {
+      //     task: result,
+      //     leaderPic: userPic
+      //   }
+      //   taskArr.push(object)
+      // }
+      //在这里设置setdata，选择放弃显示用户头像
 
 
 
 
-      return taskArr
+
+
+      
     },
     error: function (error) {
       console.log("任务查询失败: " + error.code + " " + error.message);
@@ -95,15 +98,58 @@ function getUserPic(userId){
   var userQuery = new Bmob.Query(User)
 
   //查询指定user的头像
-  userQuery.get(userId, {
+  userQuery.first(userId, {
     success: function (result) {
       // 查询成功，调用get方法获取对应属性的值
-      return result.userPic
+      //在这里设setdata
+
+
+      
     },
     error: function (object, error) {
       // 查询失败
-      return null
+      
     }
   })
+
+/**
+ * 2018-05-24
+ * 
+ */
+function getTaskLists(projId){
+
+  var that = this
+  var TaskList = Bmob.Object.extend('task_list')
+  var tasklistQuery = new Bmob.Query(TaskList)
+
+  //查询所有的任务列表
+  var taskLists = []
+  tasklistQuery.ascending('createdAt')
+  tasklistQuery.equalTo('proj_id')
+  tasklistQuery.find({
+    
+    success: function(results){
+      //这里设置setdata
+
+
+
+
+
+      //results的第一个是最早创建的
+      var result = results[0]
+      getTasks(result.id)
+
+
+
+
+
+    },
+    error: function(error){
+
+    }
+  })
+
+
+}
 
 }

@@ -9,6 +9,13 @@ Page({
     icon_add: '/img/add.png',
   },
 
+
+  //创建点子
+  BuildIdea: function (e) {
+    var content = e.detail.value.content
+    console.log(content)
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

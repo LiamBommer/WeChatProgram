@@ -10,7 +10,7 @@ Page({
     //项目成员
     ProjectMemember: [
       {
-        id:"",
+        id:"", 
         index: 0,
         icon: "/img/me.png",
         name: '帅涛',
@@ -29,7 +29,7 @@ Page({
   //添加新成员
   Addmember: function () {
     wx.navigateTo({
-      url: './addMember/addMember',
+      url: '../../../addMember/addMember',
     })
   },
 
@@ -104,8 +104,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
-    
-  }
   
+  }
 })

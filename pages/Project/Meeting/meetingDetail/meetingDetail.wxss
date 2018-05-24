@@ -5,6 +5,27 @@
   padding: 16rpx 0rpx;
 }
 
+
+.title-view .share{
+  background-color: #fff;
+  border: none;
+  margin:0rpx;
+  padding:0rpx
+}
+
+button[class="share"]::after {
+  border: none;
+} 
+
+.title-view .share-hover{
+  border: none;
+}
+
+button[hover-class="share-hover"]::after {
+  border: none;
+} 
+
+
 .view-container .content-view {
   height: 200rpx;
   padding: 16rpx 0rpx;

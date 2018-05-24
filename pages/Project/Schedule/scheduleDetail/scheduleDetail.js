@@ -12,6 +12,41 @@ Page({
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
+    deadline: '', 
+    stattime: '', 
+  },
+
+  // 截止时间
+  DeadLineChange: function (e) {
+    this.setData({
+      deadline: e.detail.value
+    })
+  }, 
+  
+  // 开始时间
+  StatTimeChange: function (e) {
+    this.setData({
+      stattime: e.detail.value
+    })
+  }, 
+
+  //删除
+  Delete: function () {
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此日程吗',
+      success: function (res) {
+        if (res.confirm) {//点击确定
+          wx.navigateBack({
+            url: '../../ProjectMore/ProjectMore',
+          })
+        }
+        else {//点击取消
+
+        }
+      }
+    })
+
   },
 
   /**

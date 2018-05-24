@@ -9,8 +9,26 @@ Page({
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
     icon_close: '/img/close.png',
+    icon_share: '/img/share.png',
   },
 
+  //删除
+  Delete: function () {
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除此点子吗',
+      success: function (res) {
+        if (res.confirm) {//点击确定
+          wx.navigateBack({
+            url: '../../ProjectMore/ProjectMore',
+          })
+        }
+        else {//点击取消
+
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

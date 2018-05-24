@@ -12,6 +12,7 @@
 page {
   background-color: #f2f2f2;
   font-size: 28rpx;
+  width: 100%;
 }
 
 /*

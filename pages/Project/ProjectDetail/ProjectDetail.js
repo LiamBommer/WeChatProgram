@@ -106,6 +106,7 @@ Page({
             project_response: userArr[0].name,
             member: userArr,
           });
+          wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
         },
         error: function (error) {
@@ -189,7 +190,6 @@ Page({
 
   //项目成员
   showMemberList: function() {
-    wx.setStorageSync("ProjectDetail-memberList", this.data.member);
     wx.navigateTo({
       url: 'memberList/memberList'
     })
@@ -225,6 +225,7 @@ Page({
     var that = this
     var id = wx.getStorageSync("Project-id") 
     that.getProjectDetail(id)
+    // wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
   /**

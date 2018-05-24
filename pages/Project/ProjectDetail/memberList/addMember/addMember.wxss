@@ -1,5 +1,4 @@
 .addMember-container {
-  margin-top: 40rpx;
 }
 
 .item {
@@ -18,10 +17,30 @@
   align-items: center;
 }
 
+.share{
+  background-color: #fff;
+  border: none;
+  margin:0rpx;
+  padding:0rpx;
+  text-align:left;
+  line-height:normal;
+}
+
+button[class="share"]::after {
+  border: none;
+} 
+
+.share-hover{
+  border: none;
+}
+
+button[hover-class="share-hover"]::after {
+  border: none;
+} 
+
 image {
   height: 80rpx;
   width: 80rpx;
-  background-color: #000;
 }
 
 .text-view {
