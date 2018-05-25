@@ -12,7 +12,7 @@
                     <image class='item-icon' src='{{item.icon}}'></image>
                     <view class='item-text'>{{item.name}}</view>
                   </view>
-                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
             </view>  
             <!-- 标题 -->
             <view class='title'>项目成员</view>
@@ -25,19 +25,12 @@
                     <image class='item-icon' src='{{item.icon}}'></image>
                     <view class='item-text'>{{item.name}}</view>
                   </view>
-                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
               </view>
           </block>
       </block>
     </checkbox-group>
 
-    <!-- 添加新成员 -->
-    <view class='item' bindtap='Addmember'>
-        <view class='item-one'>
-            <image class='item-icon' src='/img/add.png'></image>
-            <view class='item-text addmemeber'>添加新成员</view>
-        </view>
-    </view>
 
     <button class='addMember' size='default' bindtap='Finish'>完成</button>
 

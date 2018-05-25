@@ -11,6 +11,18 @@ Page({
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
     stattime: '', 
+    index:'',//选择重复时间
+    repeatTime: ["每天", "每周", "每月", "每年"],
+    memberIcon: [
+      "/img/create.png",
+    ],
+  },
+
+  // 重复时间
+  bindPickerChange: function (e) {
+    this.setData({
+      index: e.detail.value
+    })
   },
 
   // 开始时间
@@ -22,6 +34,8 @@ Page({
 
   // 成员列表
   memberList: function (e) {
+    var memberIcon = this.data.memberIcon
+    wx.setStorageSync("meetingDetail-membericon", memberIcon)
     wx.navigateTo({
       url: './memberList/memberList',
     })
@@ -53,7 +67,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    var icon = wx.getStorageSync("meetingDetail-memberList-icon")
+    if (icon == "") {
+      that.setData({
+        "memberIcon[0]": "/img/create.png"
+      })
+    }
+    else {
+      that.setData({
+        memberIcon: icon
+      })
+    }
   },
 
   /**
@@ -68,6 +93,7 @@ Page({
    */
   onUnload: function () {
 
+    wx.removeStorageSync("meetingDetail-memberList-icon")
   },
 
   /**

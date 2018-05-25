@@ -24,18 +24,21 @@
     </view>
     <view class="item-view">
       <image src='{{icon_cycle}}'></image>
-      <text class='desc'>重复</text>
+      <picker class='desc' bindchange="bindPickerChange" value="{{index}}" range="{{repeatTime}}">
+              <view class="picker">
+                {{repeatTime[index]}}重复
+              </view>
+      </picker>
     </view>
     <view class="item-view ver-align space-between">
       <view class="ver-align">
         <image src='{{icon_member}}'></image>
         <text class='desc'>成员</text>
       </view>
-      <view class="ver-align"bindtap='memberList'>
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_member}}'></image>
-        <image src='{{icon_create}}' ></image>
+      <view class="ver-align" bindtap='memberList'>
+        <block wx:for="{{memberIcon}}">
+          <image class='member' src='{{item}}'></image>
+        </block>
       </view>
     </view>
     <view class="item-view">

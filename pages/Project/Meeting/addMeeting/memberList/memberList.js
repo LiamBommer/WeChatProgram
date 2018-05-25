@@ -6,12 +6,11 @@ Page({
    */
   data: {
     //是否选中
-    ProjectIndex: "",
+    MemberId: "",
     //项目成员
     ProjectMemember: [
       {
         id:"", 
-        index: 0,
         icon: "/img/me.png",
         name: '帅涛',
         checked: true
@@ -22,25 +21,24 @@ Page({
   //选择项目成员
   ProjectMememberChange: function (e) {
     this.setData({
-      ProjectIndex: e.detail.value,
+      MemberId: e.detail.value,
     });
-  },
-
-  //添加新成员
-  Addmember: function () {
-    wx.navigateTo({
-      url: '../../../addMember/addMember',
-    })
   },
 
   //完成
   Finish: function () {
     var that = this;
-    var ProjectIndex = that.data.ProjectIndex;
+    var MemberId = that.data.MemberId;
     var ProjectMemember = that.data.ProjectMemember;
-    for (var id in ProjectIndex) {
-      console.log(ProjectMemember[ProjectIndex[id]]);//删除的项目成员
+    var icon = []
+    for (var id in ProjectMemember) {
+      for (var i in MemberId) {
+        if (ProjectMemember[id].id == MemberId[i]) {
+          icon.push(ProjectMemember[id].icon)
+        }
+      }
     }
+    wx.setStorageSync("meetingDetail-memberList-icon", icon)
     wx.navigateBack({
       url: '../ProjectDetail',
     })
@@ -65,11 +63,26 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
     var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    this.setData({
+    for (var i in memberList)
+      memberList[i].checked = false
+    that.setData({
       ProjectMemember: memberList
     });
 
+    var membericon = wx.getStorageSync("meetingDetail-membericon")
+    if (membericon != "") {
+      for (var i in memberList) {
+        for (var j in membericon)
+          if (memberList[i].icon == membericon[j]) {//初始化选中成员
+            memberList[i].checked = true
+            that.setData({
+              ProjectMemember: memberList,
+            });
+          }
+      }
+    }
 
   },
 
@@ -84,6 +97,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    wx.removeStorageSync("meetingDetail-membericon")
   },
 
   /**

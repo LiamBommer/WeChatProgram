@@ -26,7 +26,8 @@ Page({
   },
 
   //提交表单
-  BuildTask:function(){
+  BuildTask:function(e){
+    console.log(e.detail.value);
     wx.navigateBack({
       url:"../../ProjectMore/ProjectMore"
     })
@@ -75,7 +76,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+   wx.removeStorageSync("buildTask-memberList-membericon")
   },
 
   /**

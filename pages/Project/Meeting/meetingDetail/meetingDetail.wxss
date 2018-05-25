@@ -43,3 +43,8 @@ image {
   height: 40rpx;
   width: 40rpx;
 }
+
+.member{
+  border-radius: 50%;
+  margin-left: 10rpx;
+}

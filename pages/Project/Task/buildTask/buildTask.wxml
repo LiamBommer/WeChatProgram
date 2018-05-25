@@ -5,7 +5,7 @@
       <!-- 列表项 -->
       <view class='item'>
           <view class='item-title'>任务名称</view>
-          <input class='item-content' placeholder='输入任务名称...'></input>
+          <input class='item-content' name='name' placeholder='输入任务名称...'></input>
       </view>
       <!-- 列表项 -->
       <view class='item' >
@@ -15,7 +15,7 @@
       <!-- 列表项 -->
       <view class='item'>
           <view class='item-title'>截止时间</view>
-          <picker class='item-content' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+          <picker class='item-content' name='time'  mode="date" value="{{deadline}}" bindchange="DeadLineChange">
                 <view>
                   {{deadline}} 截止
                 </view>
