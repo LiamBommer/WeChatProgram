@@ -1,34 +1,32 @@
 // pages/Project/ProjectDetail/ProjectBelong/ProjectBelong.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    //是否选中
-    ProjectIndex: "",
+    memberId:'',//选中的成员
     //项目成员
     ProjectMemember: [
       {
-        index: 0,
+        id: 0,
         icon: "/img/me.png",
         name: '帅涛',
         checked: true,
       },
       {
-        index: 1,
+        id: 1,
         icon: "/img/me.png",
         name: '钢铁侠',
         checked: false
       },
       {
-        index: 2,
+        id: 2,
         icon: "/img/me.png",
         name: '美国队长',
         checked: false,
       },
       {
-        index: 3,
+        id: 3,
         icon: "/img/me.png",
         name: '灭霸',
         checked: false,
@@ -39,18 +37,16 @@ Page({
   //选择项目成员
   ProjectMememberChange: function (e) {
     this.setData({
-      ProjectIndex: e.detail.value,
+      memberId: e.detail.value,//选中的项目成员iD
     });
   },
 
   //添加成员
-  Finish: function () {
-    var that = this;
-    var ProjectIndex = that.data.ProjectIndex;
-    var ProjectMemember = that.data.ProjectMemember;
-    for (var id in ProjectIndex) {
-      console.log(ProjectMemember[ProjectIndex[id]]);//选中的项目成员
-    } 
+  Finish:function () {
+    var that = this
+    var memberId = that.data.memberId
+    console.log(memberId)
+    wx.setStorageSync("ProjectBelong-memberId", memberId)//选中的成员ID
     wx.navigateBack({
       url: '../ProjectDetail',
     })
@@ -79,6 +75,10 @@ Page({
    */
   onShow: function () {
     var ProjectMemember = wx.getStorageSync("ProjectDetail-memberList")
+    for (var i in ProjectMemember){
+      if(i != 0)
+        ProjectMemember[i].checked = false
+    }
     this.setData({
       ProjectMemember: ProjectMemember
     });

@@ -108,6 +108,7 @@ Page({
             project_response: userArr[0].name,
             member: userArr,
           });
+          wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
         },
         error: function (error) {
@@ -202,6 +203,8 @@ Page({
 
   //删除/退出项目
   DeleteProject: function () {
+    wx.removeStorageSync("ProjectDetail-memberList")
+    wx.removeStorageSync("Project- id")
     wx.navigateBack({
       url: '../Project'
     })
@@ -230,6 +233,7 @@ Page({
     var that = this
     var id = wx.getStorageSync("Project-id") 
     that.getProjectDetail(id)
+    console.log(that.data.member);
   },
 
   /**
@@ -244,7 +248,6 @@ Page({
    */
   onUnload: function () {
 
-    wx.removeStorageSync("ProjectDetail-memberList")
   },
 
   /**

@@ -35,7 +35,7 @@ Page({
       },
     ],
     //项目成员
-    ProjectMemember: [
+    ProjectMemember: [ 
       {
         index: 0,
         icon: "/img/me.png",

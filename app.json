@@ -14,6 +14,7 @@
     "pages/Project/Schedule/scheduleDetail/scheduleDetail", 
     "pages/Project/Task/Task",
     "pages/Project/Task/buildTask/buildTask",
+    "pages/Project/Task/buildTask/memberList/memberList",
     "pages/Project/Task/TaskDetail/TaskDetail",
     "pages/Project/Task/TaskDetail/memberList/memberList",
     "pages/Project/Task/TaskDetail/CommModel/addModel/addModel",

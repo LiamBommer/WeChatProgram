@@ -1,23 +1,28 @@
 <!--pages/Task/buildTask/buildTask.wxml-->
 <view class='buildTask-container'>
     
-    <!-- 列表项 -->
-    <view class='item'>
-        <view class='item-title'>任务名称</view>
-        <input class='item-content' placeholder='输入任务名称...'></input>
-    </view>
-    <!-- 列表项 -->
-    <view class='item' >
-        <view class='item-title'>任务成员</view>
-        <input class='item-content' bindtap='AddMember' placeholder='请选择任务成员...'></input>
-    </view>
-    <!-- 列表项 -->
-    <view class='item'>
-        <view class='item-title'>截止时间</view>
-        <input class='item-content' placeholder='输入截止时间...'></input>
-    </view>
+    <form bindsubmit='BuildTask'>
+      <!-- 列表项 -->
+      <view class='item'>
+          <view class='item-title'>任务名称</view>
+          <input class='item-content' placeholder='输入任务名称...'></input>
+      </view>
+      <!-- 列表项 -->
+      <view class='item' >
+          <view class='item-title'>任务成员</view>
+          <image class=' image' src= '{{icon}}' bindtap='AddMember'></image>
+      </view>
+      <!-- 列表项 -->
+      <view class='item'>
+          <view class='item-title'>截止时间</view>
+          <picker class='item-content' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+                <view>
+                  {{deadline}} 截止
+                </view>
+          </picker>
+      </view>
 
-    <button class='submit' size='default'>完成</button>
-
+      <button class='submit' size='default' form-type='submit'>完成</button>
+    </form>
 </view>
 

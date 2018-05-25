@@ -14,6 +14,12 @@
     display: flex;
     align-items: center;
 }
+.buildTask-container .item image{
+  width:50rpx;
+  height:50rpx;
+  margin-left:40rpx;
+  border-radius: 50%;
+}
 
 .buildTask-container .item .item-title{
    margin-left: 40rpx;
@@ -22,6 +28,7 @@
 .buildTask-container .item .item-content{
   margin-left: 40rpx;
   font-size:34rpx;
+  
 }
 
 .buildTask-container .submit{

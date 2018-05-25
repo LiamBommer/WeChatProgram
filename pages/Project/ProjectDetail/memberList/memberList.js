@@ -6,12 +6,11 @@ Page({
    */
   data: {
     //是否选中
-    ProjectIndex: "",
+    memberId: "",
     //项目成员
     ProjectMemember: [
       {
         id:"",
-        index: 0,
         icon: "/img/me.png",
         name: '帅涛',
         checked: true
@@ -21,8 +20,9 @@ Page({
 
   //选择项目成员
   ProjectMememberChange: function (e) {
+    var memberId = e.detail.value
     this.setData({
-      ProjectIndex: e.detail.value,
+      memberId: memberId,
     });
   },
 
@@ -36,11 +36,34 @@ Page({
   //完成
   Finish: function () {
     var that = this;
-    var ProjectIndex = that.data.ProjectIndex;
+    var memberId = that.data.memberId;
+    var memberIdLength = memberId.length;
+    var NomemberId = []
+    var NomemberIdLength = 0
     var ProjectMemember = that.data.ProjectMemember;
-    for (var id in ProjectIndex) {
-      console.log(ProjectMemember[ProjectIndex[id]]);//删除的项目成员
+    
+    
+    if (memberIdLength == 0) {//全部未选
+      for (var id in ProjectMemember)
+        NomemberId.push(ProjectMemember[id].id)
     }
+    else {//个别未选
+      for (var id in ProjectMemember) {
+
+        for (var i in memberId) {
+          if (ProjectMemember[id].id != memberId[i])
+            NomemberIdLength++
+
+          if (NomemberIdLength == memberIdLength)
+            NomemberId.push(ProjectMemember[id].id)//未选中的成员ID
+
+        }
+        NomemberIdLength = 0
+
+      }
+    }
+    
+    console.log(NomemberId);//未选中的成员ID
     wx.navigateBack({
       url: '../ProjectDetail',
     })

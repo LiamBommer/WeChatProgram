@@ -91,6 +91,7 @@
 .Project-container .item .item-one{
     display: flex;
     align-items: center;
+    width: 85%;
 }
 
 .Project-container .item .item-one .item-icon{

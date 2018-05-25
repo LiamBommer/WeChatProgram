@@ -5,12 +5,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    icon: '',//成员头像
+    deadline: '',//截止时间
   },
 
-  AddMember:function(){
+  // 截止时间
+  DeadLineChange: function (e) {
+    this.setData({
+      deadline: e.detail.value
+    })
+  },
+
+   // 添加成员
+  AddMember: function () {
+    var icon = this.data.icon
+    wx.setStorageSync("buildTask-membericon", icon)
     wx.navigateTo({
       url: './memberList/memberList',
+    })
+  },
+
+  //提交表单
+  BuildTask:function(){
+    wx.navigateBack({
+      url:"../../ProjectMore/ProjectMore"
     })
   },
 
@@ -32,7 +50,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var icon = wx.getStorageSync("buildTask-memberList-membericon")
+    console.log(icon)
+    if(icon == "")
+    this.setData({
+      icon: "/img/add_solid.png"
+    })
+    else{
+      this.setData({
+        icon: icon
+      })
+    }
+    
   },
 
   /**

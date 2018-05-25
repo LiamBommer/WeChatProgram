@@ -6,29 +6,29 @@ Page({
    */
   data: {
     //是否选中
-    ProjectIndex: "", 
+    MememberId: "", 
     //项目成员
     ProjectMemember: [
       {
-        index: 0,
+        id: "",
         icon: "/img/me.png",
         name: '帅涛',
         checked: false
       },
       {
-        index: 1,
+        id: "",
         icon: "/img/me.png",
         name: '钢铁侠',
         checked: false
       },
       {
-        index: 2,
+        id: '',
         icon: "/img/me.png",
         name: '美国队长',
         checked: false,
       },
       {
-        index: 3,
+        id: '',
         icon: "/img/me.png",
         name: '灭霸',
         checked: false,
@@ -42,18 +42,23 @@ Page({
   //选择项目成员
   ProjectMememberChange: function (e) {
     this.setData({
-      ProjectIndex : e.detail.value,
+      MememberId : e.detail.value,
     });
   }, 
   
   //完成
   save:function(){
     var that = this;
-    var ProjectIndex = that.data.ProjectIndex;
+    var MememberId = that.data.MememberId;//选中的成员ID
     var ProjectMemember = that.data.ProjectMemember;
-    for (var id in ProjectIndex) {
-      console.log(ProjectMemember[ProjectIndex[id]]);//添加的项目成员
-    }
+    for (var i in ProjectMemember)
+      if (ProjectMemember[i].id == MememberId){
+        wx.setStorageSync("buildTask-memberList-membericon", ProjectMemember[i].icon)
+      }
+
+    wx.navigateBack({
+      url:"../buildTask"
+    })
   }, 
 
   //删除成员
@@ -79,7 +84,29 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    var memberList = wx.getStorageSync("ProjectDetail-memberList") 
+    for (var i in memberList){
+      memberList[i].checked = false
+    }
+    that.setData({
+      ProjectMemember: memberList,
+    });
+
+    var membericon = wx.getStorageSync("buildTask-membericon") 
+    if (membericon != ""){
+      for (var i in memberList) {
+        if (memberList[i].icon == membericon) {//初始化选中成员
+          console.log(memberList[i])
+          memberList[i].checked = true
+          that.setData({
+            ProjectMemember: memberList,
+          });
+        }
+      }
+    }
+    
+    
   },
 
   /**
