@@ -22,7 +22,8 @@ Page({
       {
         id:"",
         icon: '/img/member.png',
-        name:'',
+        name: '',
+        checked: "",
       }
     ],
   },
@@ -91,7 +92,8 @@ Page({
             object = {
               id: result.id,
               icon: result.attributes.userPic,
-              name: result.attributes.nickName
+              name: result.attributes.nickName,
+              checked: true,
             }
             if (result.id == leader_id) {
               //将项目领导放在数组的第一个位置
@@ -181,14 +183,18 @@ Page({
   }, 
 
   //项目归属
-  ProjectBelong :function() {
+  ProjectBelong: function () {
+    var that = this
+    wx.setStorageSync("ProjectDetail-memberList", that.data.member)
     wx.navigateTo({
       url: 'ProjectBelong/ProjectBelong'
     })
   },
 
   //项目成员
-  showMemberList: function() {
+  showMemberList: function () {
+    var that = this
+    wx.setStorageSync("ProjectDetail-memberList", that.data.member)
     wx.navigateTo({
       url: 'memberList/memberList'
     })
@@ -224,7 +230,6 @@ Page({
     var that = this
     var id = wx.getStorageSync("Project-id") 
     that.getProjectDetail(id)
-    wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
   /**

@@ -113,4 +113,141 @@ function getProjectDetail(projId){
 
 }
 
+/**
+ * 2018-05-22
+ * @anthor mr.li
+ * @parameter projId项目id, memberIds 成员id数组
+ * 删除成员
+ */
+function deleteProjeceMember(projId, memberIds){
+
+  var Proj_Member = Bmob.Object.extend("proj_member")
+
+  var objects = new Array()
+  for(var i=0;i<memberIds.length;i++){
+    var proj_member = new Proj_Member()
+    proj_member.set("projId",projId)
+    proj_member.set("user_id",memberIds[i])
+    objects.push(proj_member)
+  }
+
+  Bmob.Object.destroyAll(objects).then(function(){
+    //成功
+
+
+
+  },function(error){
+    //失败
+
+
+
+  })
+  
+
+
+}
+
+/**
+ * 2018-05-22
+ * @parameter 项目id ,isFirst 是否置顶项目
+ * 
+ * 置顶项目
+ */
+
+function makeProjFirst(projId,isFirst){
+  var Project = Bmob.Object.extend("project")
+  var projectQuery = new Bmob.Query(Project)
+
+  projectQuery.first(projId,{
+    success: function(result){
+      result.set("is_first", isFirst)
+      result.save()
+      //成功的情况
+
+
+    },
+    error: function(object,error){
+      //失败的情况
+      //console.log(error)
+
+
+
+
+    }
+  })
+}
+
+/**
+ * 项目负责人的转让
+ * 
+ */
+function transferProject(projId, newleaderName,newleaderId,oldLeaderId){
+
+  var that = this
+  var Project = Bmob.Object.extend("project")
+  var projectQuery = new Bmob.Query(Project)
+
+  projectQuery.first(projId,{
+    success: function(result){
+      result.set("leader_id",leaderId)
+      result.set("leader_name",leaderName)
+      result.save()
+
+      //更改新项目成员中的领导属性
+      that.updateMemberLeader(projId, newleaderId, oldLeaderId)
+      //成功情况
+
+
+
+
+    },
+    error: function(object,error){
+      //失败情况
+      //console.log(error)
+
+
+
+
+    }
+  }) 
+}
+
+/**
+ * 更改新项目成员中的领导
+ */
+function updateMemberLeader(projId, newLeaderId, oldLeaderId){
+  var ProjMember = Bmob.Object.extend("proj_member")
+  var projmemberQuery = new Bmob.Query(ProjMember)
+
+  ids = [newLeaderId, oldLeaderId]
+  projmemberQuery.equalTo("proj_id", projId)
+  projmemberQuery.containedIn("user_id",ids)
+  projmemberQuery.find().then(function (todos) {
+    todos.forEach(function (todo) {
+      if(todo.get("user_id") == newLeaderId){
+        todo.set("is_leader",true)
+      }else{
+        todo.set("is_leader",false)
+      }
+    })
+    return bmob.Object.saveAll(todos);
+  }).then(function (todos) {
+    // 更新成功
+    console.log("updateMemberLeader","更改新项目成员中的领导成功!")
+  },
+    function (error) {
+      // 异常处理
+      console.log("updateMemberLeader", "更改新项目成员中的领导失败!")
+    })
+}
+
+/**
+ * 退出/解散项目
+ * 
+ */
+function deletePoject(projId,leaderId){
+  //涉及的东西挺多的，以后再弄
+
+  
+}
 module.exports.getProjectDetail = getProjectDetail

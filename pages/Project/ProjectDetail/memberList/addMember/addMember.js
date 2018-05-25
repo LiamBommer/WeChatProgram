@@ -34,7 +34,7 @@ Page({
     var projectId = wx.getStorageSync("Project-id") 
     return{
       title:'邀请你加入我的项目',
-      path:"pages/Project/Project?id="+projectId,
+      path:"pages/Project/Project?projectid="+projectId,
       success:function(res){
         wx.showToast({
           title: '分享成功',

@@ -51,7 +51,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
   },
 
   /**
@@ -65,12 +64,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
     var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    this.setData({
-      ProjectMemember: memberList
+    that.setData({
+      ProjectMemember: memberList,
     });
-
-
   },
 
   /**
@@ -104,6 +102,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
+  
 })

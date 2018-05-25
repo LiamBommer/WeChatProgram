@@ -61,6 +61,10 @@ Page({
    */
   onLoad: function (options) {
 
+    var ProjectMemember = wx.getStorageSync("ProjectDetail-memberList")
+    this.setData({
+      ProjectMemember: ProjectMemember
+    });
   },
 
   /**
