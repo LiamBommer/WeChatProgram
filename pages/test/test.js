@@ -42,10 +42,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // console.log("开始测试")
-    // // var r = test.getProjectList()
-    // test.receiveChatContent()
-
+    console.log("开始测试")
+    // var r = test.getProjectList()
+    test.receiveChatContent()
+    // test.chat("789","987","这是内容")
   },
 
   /**
