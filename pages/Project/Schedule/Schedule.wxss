@@ -22,7 +22,6 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-bottom: 0.5rpx solid #b2b2b2;
 }
 
 .Schedule-container .item .item-first{
