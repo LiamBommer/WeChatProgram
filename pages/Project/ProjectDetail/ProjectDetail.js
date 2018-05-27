@@ -8,13 +8,14 @@ Page({
    */
   data: {
     hiddenmodalput: true,//弹出项目描述模态框
-    hiddenmodalputTitle: true,//弹出项目描述模态框
+    hiddenmodalputTitle: true,//弹出项目名称模态框
     SwitchChecked: true,//是否置顶
-
+    title: "",//输入的项目名称
+    content: "",//输入的项目描述
+    project_name: '',//项目名称
+    project_desc: '',//项目描述
     project_img:"",
     icon_more: '/img/more.png',
-    project_name: '',
-    project_desc: '',
     project_response: '',
 
     //成员列表
@@ -160,9 +161,25 @@ Page({
   //确认  
   confirmTitle: function () {
     this.setData({
-      hiddenmodalputTitle: true
+      hiddenmodalputTitle: true,
+      project_name : this.data.title,
     })
   }, 
+
+  //项目名称
+  ProjectTitle: function (e) {
+    this.setData({
+      title : e.detail.value
+    })
+  },
+
+  //项目描述
+  ProjectContent: function (e) {
+    this.setData({
+      content: e.detail.value
+    })
+  }, 
+
 
   
   //点击按钮弹出指定的hiddenmodalput弹出框  
@@ -180,9 +197,17 @@ Page({
   //确认  
   confirm: function () {
     this.setData({
-      hiddenmodalput: true
+      hiddenmodalput: true,
+      project_desc:this.data.content,
     })
   }, 
+
+  //项目描述
+  ProjectContent: function(e) {
+    this.setData({
+      content: e.detail.value
+    })
+  },
 
   //项目归属
   ProjectBelong: function () {

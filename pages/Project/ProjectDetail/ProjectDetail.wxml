@@ -5,7 +5,7 @@
       <image src='{{project_img}}' class='project-img'></image>
       <text class='title' bindtap="modalinputTitle">{{project_name}}</text>
       <modal hidden="{{hiddenmodalputTitle}}" title="项目名称" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
-        <input type='text'placeholder="请输入项目名称" />  
+        <input bindinput='ProjectTitle' value='{{title}}' type='text'placeholder="请输入项目名称" />  
       </modal>  
     </view>
   </view>
@@ -15,7 +15,7 @@
       <text class='des'>项目描述</text>
       <text class='content' bindtap="modalinput">{{project_desc}}</text>
       <modal hidden="{{hiddenmodalput}}" title="项目描述" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm"> 
-        <textarea type='text'placeholder="请输入项目描述" />  
+        <textarea bindinput='ProjectContent' value='{{content}}' type='text'placeholder="请输入项目描述" />  
       </modal>  
     </view>
     <view class='item-view space-between'>

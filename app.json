@@ -1,9 +1,5 @@
 {
   "pages":[
-    "pages/Project/Schedule/scheduleDetail/scheduleDetail",
-    "pages/Project/Schedule/ScheduleTaskList/ScheduleTaskList",
-    "pages/Project/Schedule/addSchedule/addSchedule",
-    "pages/Project/Schedule/Schedule",
     "pages/Project/Project",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/buildProject/buildProject",
@@ -11,6 +7,10 @@
     "pages/Project/ProjectDetail/memberList/addMember/addMember",
     "pages/Project/ProjectDetail/ProjectDetail",
     "pages/Project/ProjectDetail/ProjectBelong/ProjectBelong",
+    "pages/Project/Schedule/scheduleDetail/scheduleDetail",
+    "pages/Project/Schedule/ScheduleTaskList/ScheduleTaskList",
+    "pages/Project/Schedule/addSchedule/addSchedule",
+    "pages/Project/Schedule/Schedule",
     "pages/Project/Idea/ideaDetail/ideaDetail",
     "pages/Project/Idea/ideaDetail/Content/Content",
     "pages/Project/Idea/addIdea/addIdea",
