@@ -89,9 +89,9 @@ Page({
     for (var i in memberList){
       memberList[i].checked = false
     }
-    that.setData({
-      ProjectMember: memberList,
-    });
+    // that.setData({
+    //   ProjectMember: memberList,
+    // });
 
     var membericon = wx.getStorageSync("buildTask-membericon")
     if (membericon != ""){
@@ -99,9 +99,9 @@ Page({
         if (memberList[i].icon == membericon) {//初始化选中成员
           console.log(memberList[i])
           memberList[i].checked = true
-          that.setData({
-            ProjectMember: memberList,
-          });
+          // that.setData({
+          //   ProjectMember: memberList,
+          // });
         }
       }
     }

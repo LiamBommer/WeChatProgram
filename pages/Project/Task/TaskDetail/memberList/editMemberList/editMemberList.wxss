@@ -1,4 +1,4 @@
-/* pages/memberList/memberList.wxss */
+/* pages/editMemberList/editMemberList.wxss */
 .memberList-container{
     width:100%;
     display: flex;

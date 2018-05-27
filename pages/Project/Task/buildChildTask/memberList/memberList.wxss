@@ -1,6 +1,6 @@
 /* pages/memberList/memberList.wxss */
 .memberList-container{
-    width:100%;
+    width:100%; 
     display: flex;
     flex-direction: column;
 }
@@ -43,6 +43,13 @@
     margin-right: 20rpx;
 }
 
-.addi-container {
-  margin-top: 40rpx;
+.memberList-container .button{
+  padding-bottom: 40rpx;
+}
+
+.memberList-container .addMember{
+  border-radius:16rpx;
+  border:0rpx;
+  color:#fff;
+  background:#09BB07;
 }

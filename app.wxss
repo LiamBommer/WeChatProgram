@@ -75,6 +75,7 @@ page {
  * - 宽670rpx （左右边距40rpx)
  */
 button[size="default"] {
+  /* border-radius:16rpx; */
   margin-top: 80rpx;
   margin-bottom: 40rpx;
   width: 620rpx;

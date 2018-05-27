@@ -1,53 +1,49 @@
 <!--pages/memberList/memberList.wxml-->
 <view class='memberList-container'>
 
-    <checkbox-group bindchange="TaskMememberChange">
-      <block wx:for="{{TaskMemember}}">
-          <block wx:if="{{index == 0}}">
-            <!-- 标题 -->
-            <view class='title'>任务负责人</view>
-            <!-- 列表项 -->
-            <view class='item'>
-                  <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
-                  </view>
-                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
-            </view>  
-            <!-- 标题 -->
-            <view class='title'>任务成员</view>
-          </block>
-
-          <block wx:else>
-            <!-- 列表项 -->
-              <view class='item'>
-                  <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
-                  </view>
-                  <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
-              </view>
-          </block>
-      </block>
-    </checkbox-group>
-
-    <checkbox-group bindchange="ProjectMememberChange">
+  <block wx:for="{{TaskMemember}}">
+    <block wx:if="{{index == 0}}">
       <!-- 标题 -->
-      <view class='title'>项目成员</view>
+      <view class='title'>任务负责人</view>
       <!-- 列表项 -->
-      <block wx:for="{{ProjectMemember}}">
-        <view class='item'>
-            <view class='item-one'>
-              <image class='item-icon' src='{{item.icon}}'></image>
-              <view class='item-text'>{{item.name}}</view>
-            </view>
-            <checkbox class='item-checkbox' value="{{item.index}}" checked='{{item.checked}}'/>
+      <view class='item'>
+        <view class='item-one'>
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>{{item.name}}</view>
         </view>
-      </block>
-    </checkbox-group>
-    
-    <view class='button'>
-      <button class='addMember' size="default" bindtap='save'>完成</button>
+      </view>
+      <!-- 标题 -->
+      <view class='title'>任务成员</view>
+    </block>
+
+    <block wx:else>
+      <!-- 列表项 -->
+      <view class='item'>
+        <view class='item-one'>
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>{{item.name}}</view>
+        </view>
+      </view>
+    </block>
+  </block>
+
+  <view class='addi-container'>
+    <view class='item' bindtap='showEditMemberList'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/more.png'></image>
+        <view class='item-text'>管理任务成员</view>
+      </view>
     </view>
+    <view class='item' bindtap='showChangePrinciple'>
+      <view class='item-one'>
+        <image class='item-icon' src='/img/pen.png'></image>
+        <view class='item-text'>变更任务负责人</view>
+      </view>
+    </view>
+  </view>
+
+  <block wx:if="{{ !isInTask }}">
+    <button type='primary' size="default" bindtap='joinTask'>加入任务</button>
+  </block>
 
 </view>

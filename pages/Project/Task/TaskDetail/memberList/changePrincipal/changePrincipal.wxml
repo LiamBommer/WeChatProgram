@@ -1,0 +1,22 @@
+<!--pages/editMemberList/editMemberList.wxml-->
+<view class='memberList-container'>
+
+  <!-- 标题 -->
+  <view class='title'>任务所有成员</view>
+
+  <radio-group bindchange='radioChange'>
+    <block wx:for="{{TaskMemember}}">
+      <!-- 列表项 -->
+      <view class='item'>
+        <view class='item-one'>
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>{{item.name}}</view>
+        </view>
+        <radio value='{{item.index}}' checked='{{item.checked}}' />
+      </view>
+    </block>
+  </radio-group>
+
+  <button type='primary' size="default" bindtap='save'>完成</button>
+
+</view>
