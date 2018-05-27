@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/announcementDetail.js')
+var test = require('../../model/taskChat.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -27,9 +27,7 @@ Page({
    */
   onLoad: function (options) {
 
-    console.log("开始测试")
-    // var r = test.getProjectList()
-    test.createAnnouncement("374623ab99","鲨鱼派对","我真的是日了狗了","我觉得涛哥和PK都非常帅",true)
+    
 
   },
 
@@ -44,7 +42,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    console.log("开始测试")
+    // var r = test.getProjectList()
+    test.receiveChatContent()
+    // test.chat("789","987","这是内容")
   },
 
   /**

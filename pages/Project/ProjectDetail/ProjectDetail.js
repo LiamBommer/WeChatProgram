@@ -60,7 +60,7 @@ Page({
   memberQuery.select("user_id", "is_leader")
   memberQuery.find().then(function (results) {
       //返回成功
-      
+
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get("is_leader")) {
@@ -84,7 +84,7 @@ Page({
       // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
       userQuery.find({
         success: function (results) {
-          
+
           // 循环处理查询到的数据
           for (var i = 0; i < results.length; i++) {
             var result = results[i];
@@ -144,44 +144,44 @@ Page({
 
   },
 
-  //点击按钮弹出指定的hiddenmodalput弹出框  
+  //点击按钮弹出指定的hiddenmodalput弹出框
   modalinputTitle: function () {
     this.setData({
       hiddenmodalputTitle: false
     })
   },
-  //取消按钮  
+  //取消按钮
   cancelTitle: function () {
     this.setData({
       hiddenmodalputTitle: true,
     });
   },
-  //确认  
+  //确认
   confirmTitle: function () {
     this.setData({
       hiddenmodalputTitle: true
     })
-  }, 
+  },
 
-  
-  //点击按钮弹出指定的hiddenmodalput弹出框  
+
+  //点击按钮弹出指定的hiddenmodalput弹出框
   modalinput: function () {
     this.setData({
       hiddenmodalput: false
     })
   },
-  //取消按钮  
+  //取消按钮
   cancel: function () {
     this.setData({
       hiddenmodalput: true,
     });
   },
-  //确认  
+  //确认
   confirm: function () {
     this.setData({
       hiddenmodalput: true
     })
-  }, 
+  },
 
   //项目归属
   ProjectBelong: function () {
@@ -210,8 +210,8 @@ Page({
     })
   },
 
-  
-  
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -231,9 +231,9 @@ Page({
    */
   onShow: function () {
     var that = this
-    var id = wx.getStorageSync("Project-id") 
+    var id = wx.getStorageSync("Project-id")
     that.getProjectDetail(id)
-    console.log(that.data.member);
+    // wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
   /**

@@ -2,6 +2,11 @@
 //初始化bmob SDK
 const Bmob = require('./utils/bmob.js')
 Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
+var BSI = require('./utils/bmobSocketIo.js')
+var BmobSocketIo = new BSI("acb853b88395063829cae5f88c29fb82")
+console.log(Bmob)
+//BmobSocketIo.initialize()
+// console.log(BSI)
 
 App({
 
@@ -13,7 +18,6 @@ App({
     wx.setStorageSync('logs', logs)
 
 
-    
     // 登录 mr.li 代码是Bmob封装好的接口
     //登录注册集合类，接口默认第一次注册，否则返回用户信息
     var user = new Bmob.User();//实例化
@@ -34,7 +38,7 @@ App({
           } else {//注册成功的情况
 
             var u = Bmob.Object.extend("_User");
-            var query = new Bmob.Query(u); 
+            var query = new Bmob.Query(u);
             query.get(user.id, {
               success: function (result) {
                 wx.setStorageSync('own', result.get("uid"));
@@ -129,7 +133,7 @@ App({
     projectQuery.first({
       success: function(result){
         that.joinProject2(projectId,userId,result.get("name"))
-        
+
       },
       error: function(error){
         wx.showToast({
@@ -137,8 +141,8 @@ App({
         })
       }
     })
-    
-      
+
+
   },
   joinProject2: function (projectId, userId,projectName){
 
