@@ -75,7 +75,7 @@ Page({
   
   // 关联任务
   connectTask: function(e) {
-    
+    //需要设置任务列表的任务名，执行者头像的缓存
     wx.navigateTo({
       url: '../ScheduleTaskList/ScheduleTaskList',
     })
@@ -118,7 +118,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var TaskId = wx.getStorageSync("ScheduleTaskList-TaskId")//关联的任务ID
+    //需要任务列表，通过任务ID取任务名和任务执行者
   },
 
   /**

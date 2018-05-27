@@ -6,6 +6,7 @@
 .title-view .project-img {
   width: 96rpx;
   height: 96rpx;
+  border-radius: 50%;
 }
 
 .title-view .title {

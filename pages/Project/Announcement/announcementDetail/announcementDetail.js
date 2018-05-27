@@ -34,14 +34,11 @@ Page({
 
     //已读成员
     read: [
-      {
-        id:"",
-        icon: '/img/member.png',
-      },
-      {
-        id:"",
-        icon: '/img/member.png',
-      },
+      // {
+      //   id:"",
+      //   icon: '',
+      //   name: '',
+      // },
     ],
   },
 
@@ -85,6 +82,44 @@ Page({
   //点击收到
   ClickRead:function(){
     var that = this
+    var hasRead = false//判断是否已点过“收到”
+    var CurrentMemberId = getApp().globalData.userId//当前用户ID
+    var CurrentMemberIcon = getApp().globalData.userPic//当前用户头像
+    var CurrentMemberName = getApp().globalData.nickName//当前用户姓名
+    
+    var read = that.data.read
+    for(var i in read){
+      if (read[i].id == CurrentMemberId)//已点击"收到"
+      {
+        wx.showToast({
+          title: '你已阅读过了',
+          icon:'none',
+        })
+        hasRead = true
+      }
+    }
+    if (hasRead == false) {//未点击"收到"
+    //删除未读成员
+      var memberList = wx.getStorageSync("ProjectDetail-memberList")//未读成员列表
+      for (var i in memberList ){
+        if (memberList[i].id == CurrentMemberId){
+          memberList.splice(i,1)
+        }
+      }
+      that.setData({
+        noread: memberList
+      })
+    //增加已读成员
+      read.push({
+        id: CurrentMemberId,
+        icon: CurrentMemberIcon,
+        name: CurrentMemberName,
+      })
+      that.setData({
+        read: read
+      })
+    }
+    
   },
 
   //已读成员列表
@@ -141,7 +176,6 @@ Page({
    })
 
    var memberList = wx.getStorageSync("ProjectDetail-memberList")//未读成员列表
-   console.log(memberList)
    that.setData({
      noread: memberList
    })

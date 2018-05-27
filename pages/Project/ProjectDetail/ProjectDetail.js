@@ -166,6 +166,29 @@ Page({
     })
   }, 
 
+//项目图片
+  PictrueSelect: function (e) {
+    var that = this;
+    var project_img = that.data.project_img;
+    wx.chooseImage({
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        var content = tempFilePaths[0];
+        // chat.push({
+        //   content: content,//我发送的内容
+        //   icon: '/img/me.png',//我的头像
+        //   judgemine: true,//我发的消息
+        //   judgepictrue: true,//判断输入的是文字还是图片
+        // });
+        that.setData({
+          project_img: content,
+        });
+
+      }
+    })
+  },
+
   //项目名称
   ProjectTitle: function (e) {
     this.setData({
