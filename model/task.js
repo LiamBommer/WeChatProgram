@@ -4,8 +4,8 @@ var Bmob = require('../utils/bmob.js')
 /**
  * 2018-05-19
  * @author mr.li
- * @parameter listId任务看板id，title任务名称，memberIds成员id数组，包括创建者自己，endTime截止时间
- * 创建任务，成员id数组里面只需要id，endTime 的数据类型还没决定是string 还是date好(目前是string)
+ * @parameter listId任务看板id，title任务名称，memberIds成员id数组，包括创建者自己（第一个），endTime截止时间
+ * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
  */
 function createTask(listId, title, memberIds, endTime){
   
@@ -13,24 +13,23 @@ function createTask(listId, title, memberIds, endTime){
   var task = new Task()
 
   var leaderId = memberIds.shift()  //删除并返回第一个任务负责人的id
-  var taskMembers = []  //存储任务成员相关数据，类型object
-
+  var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
+  //添加任务
   task.save({
     list_id: listId,
     title: title,
-    leader_id: leaderId,
+    leader: leader,  // 数据库关联，用id可以关联一个user
     end_time: endTime,
     is_finish: false,
     has_sub: false
   },{
     success: function(result){
       //添加成功
-      console.log("添加任务成功！")
       //添加任务成员信息
-      addTaskMembers(result.id, leaderId, memberIds)
+       addTaskMembers(result.id/*任务id*/, leaderId, memberIds)
+      // 提示用户添加成功
 
-
-
+      console.log("提示用户添加任务成功")
 
 
 
@@ -39,8 +38,8 @@ function createTask(listId, title, memberIds, endTime){
     },
     error: function(result,error){
       //添加失败
-      console.log("添加任务成功！",error)
-
+      console.log("添加任务失败！",error)
+      //提示用户添加失败
 
 
 
@@ -61,27 +60,25 @@ function createTask(listId, title, memberIds, endTime){
 function addTaskMembers(taskId, leaderId, memberIds){
 
   var TaskMember = Bmob.Object.extend("task_member")
-  var taskMember = new TaskMember()
 
+  var leader = Bmob.Object.createWithoutData("_User", leaderId);
   var memberObjects = []
-  var object = {}
-  objcet = {
-    user_id: leaderId,
-    task_id: taskId
-  }
-  memberObjects.push(object)  //添加任务负责人id
+  
+  var taskMember = new TaskMember()
+  taskMember.set('task_id',taskId)
+  taskMember.set('user_id', leader)
+  memberObjects.push(taskMember)  //添加任务负责人id
 
   for(var i=0;i<memberIds.length;i++){
-    object = {}
-    object = {
-      user_id: membersIds[i],
-      task_id: taskId
-    }
-    memberObjects.push(object)
+    var taskMember = new TaskMember()
+    var member = Bmob.Object.createWithoutData("_User", memberIds[i]);
+    taskMember.set('task_id', taskId)
+    taskMember.set('user_id', member)
+    memberObjects.push(taskMember)  //添加任务成员
   }
 
   //批量添加任务成员
-  taskMember.aveAll(memberObjects).then(function (memberObjects) {
+  Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
     // 成功
     console.log("批量添加任务成员成功！")
   },
@@ -96,8 +93,7 @@ function addTaskMembers(taskId, leaderId, memberIds){
  * 2018-05-18
  * @author mr.li
  * @parameter projId 项目id
- * @return 项目成员数组（nickName,userPic）
- * 创建任务时选任务成员,前端做判断，不显示创建任务人自己，因为自己是默认的任务负责人
+ * 创建任务时从项目成员中选任务成员
  */
 function getProjectMembers(projId) {
   var ProjectMember = Bmob.Object.extend("proj_member")
@@ -131,7 +127,7 @@ function getProjectMembers(projId) {
   }).then(function (result) {
 
     //获取指定项目的所有成员,默认10条
-    userQuery.select("nickName", "userPic")  //查询出用户的昵称和头像
+    //userQuery.select("nickName", "userPic")  //查询出用户的昵称和头像
     userQuery.limit(50)
     userQuery.containedIn("objectId", memberId)
 
@@ -149,9 +145,10 @@ function getProjectMembers(projId) {
           } else
             userArr.push(object)
         }
-
         //在这里设置setdata
-        //console.log(userArr)
+        console.log(userArr)
+
+
 
 
 
@@ -169,7 +166,7 @@ function getProjectMembers(projId) {
     })
 
   })
-
-
-
 }
+
+module.exports.createTask = createTask
+module.exports.getProjectMembers = getProjectMembers

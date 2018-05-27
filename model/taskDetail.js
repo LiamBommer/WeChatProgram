@@ -2,8 +2,9 @@
 var Bmob = require('../utils/bmob.js')
 
 /**
- * 获取任务详情
+ * 获取任务详情(已废弃)
  */
+/** 
 function getTaskDetail(taskId){
 
   var that = this
@@ -84,6 +85,19 @@ function getTaskDetail(taskId){
     }
   })
 }
+*/
+
+/**
+ * 获取任务详情
+ * 任务的一些必要信息，已经在taskList那个页面获得，那时候要设置缓存，而这个函数
+ * 主要是获取任务成员，评论信息，任务记录，子任务
+ */
+function getTaskDetail(taskId,leaderId){
+  var TaskMember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(TaskMember)
+
+  //查询任务成员
+}
 
 /**
  * 添加提醒时间
@@ -95,9 +109,11 @@ function addNotiTime(taskId,notiTime){
   //添加提醒时间
   taskQuery.get(taskId,{
     success: function(result){
-      //成功情况
+      //成功添加情况
       result.set('noti_time',notiTime)
       result.save()
+
+
     },
     error: function(object,error){
       //失败情况
