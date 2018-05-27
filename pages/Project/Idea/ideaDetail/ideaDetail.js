@@ -12,6 +12,14 @@ Page({
     icon_share: '/img/share.png',
   },
 
+  //点子内容
+  Content:function(){
+    wx.setStorageSync("ideaDetail-content", this.data.content)
+    wx.navigateTo({
+      url: './Content/Content',
+    })
+  },
+
   //删除
   Delete: function () {
     wx.showModal({
@@ -47,7 +55,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    var content = wx.getStorageSync("ideaDetail-Content-content")
+    that.setData({
+      content: content
+    })
   },
 
   /**
@@ -61,7 +73,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorageSync("ideaDetail-Content-content")
   },
 
   /**

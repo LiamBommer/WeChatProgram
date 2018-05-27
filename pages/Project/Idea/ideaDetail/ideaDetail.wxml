@@ -3,9 +3,9 @@
 
  <view class='view-container'>
     <view class='content-view'>
-      <text class='content'>
-        {{content}}
-      </text>
+      <view bindtap='Content' class='content'>
+          {{content}}
+      </view>
        <button class='share' hover-class="share-hover"  open-type="share">
           <image src='{{icon_share}}'></image>
        </button>

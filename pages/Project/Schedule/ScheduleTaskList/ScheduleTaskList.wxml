@@ -1,0 +1,23 @@
+<!--pages/memberList/memberList.wxml-->
+<view class='memberList-container'>
+
+    <checkbox-group bindchange="ProjectMememberChange">
+      <block wx:for="{{ProjectMemember}}">
+            <!-- 标题 -->
+            <view class='title'>{{item.title}}</view>
+            <!-- 列表项 -->
+            <block wx:for="{{item.list}}">
+              <view class='item'>
+                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
+                  <view class='item-one'>
+                    <view class='item-text'>{{item.name}}</view>
+                  </view>
+              </view>
+            </block>
+      </block>
+    </checkbox-group>
+
+
+    <button class='addMember' size='default' bindtap='Finish'>完成</button>
+
+</view>

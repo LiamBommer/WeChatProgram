@@ -1,36 +1,23 @@
-// pages/memberList/memberList.js
+// pages/Project/Task/TaskDetail/CommModel/addModel/addModel.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    //是否选中
-    ProjectIndex: "",
-    //项目成员
-    ProjectMemember: [
-      {
-        id:"",
-        icon: "/img/me.png",
-        name: '帅涛',
-      },
-    ],
+    record:'',//会议记录
   },
 
-  //选择项目成员
-  ProjectMememberChange: function (e) {
+  save:function(e){
+    var record = e.detail.value.record
+    wx.setStorageSync("announcementDetail-Content-content", record)
     this.setData({
-      ProjectIndex: e.detail.value,
-    });
-  },
-
-  //添加新成员
-  Addmember: function () {
-    wx.navigateTo({
-      url: '../../../addMember/addMember',
+      record:record
+    })
+    wx.navigateBack({
+      url:'../meetingDetail'
     })
   },
-  
 
   /**
    * 生命周期函数--监听页面加载
@@ -50,12 +37,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var memberList = wx.getStorageSync("announcementDetail-readMember")
-    this.setData({
-      ProjectMemember: memberList
-    });
-
-
+    var that = this
+    var record = wx.getStorageSync("announcementDetail-content")
+    that.setData({
+      record: record
+    })
   },
 
   /**
@@ -69,7 +55,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync("announcementDetail-readMember")
+    wx.removeStorageSync("announcementDetail-content")
   },
 
   /**

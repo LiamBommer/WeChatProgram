@@ -9,24 +9,42 @@ Page({
     MemberId: "",
     //项目成员
     ProjectMemember: [
-      {
-        id:"", 
-        icon: "/img/me.png",
-        name: '帅涛',
-        checked: true
+      {//任务列表
+        title:"待处理",
+        list:[
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '任务A',
+            checked: true
+          },
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '任务B',
+            checked: true
+          },
+        ]
       },
-      {
-        id: "",
-        icon: "/img/me.png",
-        name: '帅涛',
-        checked: true
+
+      {//任务列表
+        title: "已完成",
+        list: [
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '任务A',
+            checked: true
+          },
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '任务A',
+            checked: true
+          },
+        ]
       },
-      {
-        id: "",
-        icon: "/img/me.png",
-        name: '帅涛',
-        checked: true
-      },
+      
     ],
   },
 

@@ -20,6 +20,7 @@
   padding:0rpx
 }
 
+
 button[class="share"]::after {
   border: none;
 } 
@@ -53,9 +54,15 @@ button[hover-class="share-hover"]::after {
   color: #e64340;
 }
 
+
+
 image {
   height: 40rpx;
   width: 40rpx;
+}
+
+.radius{
+  border-radius: 50%;
 }
 
 button {

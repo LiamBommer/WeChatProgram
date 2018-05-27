@@ -4,7 +4,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '公告标题',
+    hiddenmodalputTitle: true,//弹出标题模态框
+    title: '公告标题',//标题
+    inputTitle:'',//输入的标题
     content: '因为 Mr.Li 也很牛逼balabal ...\n'+
             '我就不说什么了，大家都知道的。\n'+
             '请同学们抓紧时间做完原型图，做完了请大家吃鸡腿',
@@ -42,14 +44,52 @@ Page({
       },
     ],
   },
+
+
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: false
+    })
+  },
+  //取消按钮  
+  cancelTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: true,
+    });
+  },
+  //确认  
+  confirmTitle: function (e) {
+    this.setData({
+      hiddenmodalputTitle: true,
+      title: this.data.inputTitle
+    })
+  }, 
+
+  //标题
+  input: function (e){
+    var inputTitle = e.detail.value
+    this.setData({
+      inputTitle: inputTitle
+    })
+  },
   
+  //内容
+  Content: function (e) {
+    wx.setStorageSync("announcementDetail-content", this.data.content)
+    wx.navigateTo({
+      url: './Content/Content',
+    })
+  }, 
+
   //点击收到
   ClickRead:function(){
-
+    var that = this
   },
 
   //已读成员列表
   readMember: function () {
+    wx.setStorageSync("announcementDetail-readMember", this.data.read)
     wx.navigateTo({
       url: './memberList/memberList',
     })
@@ -93,7 +133,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+   var that = this
 
+   var content = wx.getStorageSync("announcementDetail-Content-content")//会议内容
+   that.setData({
+     content: content
+   })
+
+   var memberList = wx.getStorageSync("ProjectDetail-memberList")//未读成员列表
+   console.log(memberList)
+   that.setData({
+     noread: memberList
+   })
   },
 
   /**
@@ -107,7 +158,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorageSync("announcementDetail-Content-content")
   },
 
   /**

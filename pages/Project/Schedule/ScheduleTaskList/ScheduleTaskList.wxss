@@ -1,0 +1,56 @@
+/* pages/memberList/memberList.wxss */
+.memberList-container{
+    width:100%; 
+    display: flex;
+    flex-direction: column;
+}
+
+.memberList-container .title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 30rpx;
+    margin-bottom: 16rpx;
+}
+
+.memberList-container .item{
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.memberList-container .item .item-one{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.memberList-container .item .item-one .item-icon{
+    width: 48rpx;
+    height: 48rpx;
+    margin-left: 40rpx;
+    border-radius: 20rpx;
+}
+
+.memberList-container .item .item-one .item-text{
+    margin-left:20rpx;
+}
+
+.memberList-container .item .item-one .item-text.addmemeber{
+    margin-left: 30rpx;
+    color: #888888;
+}
+
+.memberList-container .item .item-checkbox{
+  margin-left:20px;
+}
+
+.memberList-container .addMember{
+  border-radius:16rpx;
+  border: 0rpx;
+  color: #fff;
+  background: #09BB07;
+}

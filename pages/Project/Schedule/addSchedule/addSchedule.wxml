@@ -7,7 +7,7 @@
         </view>
           <view class="item-view ver-align">
             <image src='{{icon_deadline}}'></image>
-            <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+            <picker class='desc' name='startTime' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
                 <view>
                   {{stattime}} 开始
                 </view>
@@ -15,7 +15,7 @@
           </view>
           <view class="item-view ver-align">
             <image src='{{icon_deadline}}'></image>
-            <picker class='desc' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+            <picker class='desc' name='endTime' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
                 <view>
                   {{deadline}} 截止
                 </view>

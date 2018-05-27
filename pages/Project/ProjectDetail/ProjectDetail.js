@@ -108,6 +108,7 @@ Page({
             project_response: userArr[0].name,
             member: userArr,
           });
+          //项目成员
           wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
         },

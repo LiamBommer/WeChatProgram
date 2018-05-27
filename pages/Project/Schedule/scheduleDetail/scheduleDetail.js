@@ -4,7 +4,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '日程标题',
+    hiddenmodalputTitle: true,//弹出标题模态框
+    title: '日程标题',//标题
+    inputTitle: '',//输入的标题
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_task_list: '/img/task_list.png',
@@ -14,6 +16,47 @@ Page({
     icon_create: '/img/create.png',
     deadline: '', 
     stattime: '', 
+
+    connectTask:[//关联任务
+     {
+      id:'',
+      name:'任务 A',
+      icon:'/img/member.png',
+      },
+      {
+        id: '',
+        name: '任务 B',
+        icon: '/img/member.png',
+      },
+    ],
+  },
+
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: false
+    })
+  },
+  //取消按钮  
+  cancelTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: true,
+    });
+  },
+  //确认  
+  confirmTitle: function (e) {
+    this.setData({
+      hiddenmodalputTitle: true,
+      title: this.data.inputTitle
+    })
+  },
+
+  //标题
+  input: function (e) {
+    var inputTitle = e.detail.value
+    this.setData({
+      inputTitle: inputTitle
+    })
   },
 
   // 截止时间
@@ -27,6 +70,14 @@ Page({
   StatTimeChange: function (e) {
     this.setData({
       stattime: e.detail.value
+    })
+  }, 
+  
+  // 关联任务
+  connectTask: function(e) {
+    
+    wx.navigateTo({
+      url: '../ScheduleTaskList/ScheduleTaskList',
     })
   }, 
 

@@ -15,7 +15,11 @@ Page({
   //创建日程
   BuildSchedule: function (e) {
     var title = e.detail.value.title
+    var startTime = e.detail.value.startTime
+    var endTime = e.detail.value.endTime
     console.log(title)
+    console.log(startTime)
+    console.log(endTime)
   },
 
   // 截止时间
