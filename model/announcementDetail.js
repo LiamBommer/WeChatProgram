@@ -6,8 +6,8 @@ var Bmob = require('../utils/bmob.js')
  *2018-05-19
  *@author mr.li
  @parameter announcementId公告id
- *@return 公告详情object类型，此object包含 object.announcement(公告内容），object.readObjcet 已读和未读成员
- *获取所需的公告详情，包括公告内容和已读未读成员
+ *获取公告详情object类型
+ *获取所需的公告详情
  * 
  */
 function getAnnouncementDetail(announcementId){
@@ -23,14 +23,9 @@ function getAnnouncementDetail(announcementId){
     success: function (result) {
       console.log("获取指定的公告内容成功！")
       var announcement = result
-      // var readObject = getReadAnnounce(announcementId)
       
-      // detailObject = {
-      //   announcement: announcement,
-      //   readObject: readObject
-      // }
-      //在这里设置setdata
-
+      //在这里设置setdata,获取已读和未读成员在函数function getReadAnnounce(announcementId)
+      console.log("获取指定的公告内容成功！",(announcement)
 
 
 
@@ -50,7 +45,7 @@ function getAnnouncementDetail(announcementId){
  *2018-05-19
  *@author mr.li
  @parameter announcementId公告id
- *@return 返回已读和未读成员 object类型，包括object.readUser(已读成员数组), object.unreadUser(未读成员数组)
+ * 获得一个数组，每个元素是 object类型，包括object.readUser(已读成员数组), object.unreadUser(未读成员数组)
  *根据公告id获取该公告的所有已读和未读成员
  * 
  */
@@ -92,7 +87,9 @@ function getReadAnnounce(announcementId){
                 userPic: result.get("userPic")
               }
               readUser.push(object)
-              //在这里setdata
+              //在这里setdata 
+              //readUser 是一个数组，每个元素是object，包括object.readUser(已读成员数组), object.unreadUser(未读成员数组)
+
 
 
 
@@ -137,38 +134,38 @@ function getReadAnnounce(announcementId){
 
 }
 
-/**
- *2018-05-19
- *@author mr.li
- @parameter userIds 用户id数组
- *@return 用户信息数组（nickName, userPic)
- *根据用户id数组 获取用户信息数组，每个元素都是要给object，每个object包括object.nickName, object.userPic
- * 
- */
-function getUser(userIds){
+// /**
+//  *2018-05-19   已废弃
+//  *@author mr.li 
+//  @parameter userIds 用户id数组
+//  *@return 用户信息数组（nickName, userPic)
+//  *根据用户id数组 获取用户信息数组，每个元素都是要给object，每个object包括object.nickName, object.userPic
+//  * 
+//  */ 已废弃
+// function getUser(userIds){
 
-  var User = Bmob.Object.extend("_User")
-  var userQuery = new Bmob.Query(User)
+//   var User = Bmob.Object.extend("_User")
+//   var userQuery = new Bmob.Query(User)
 
-  var userObjects = []
+//   var userObjects = []
 
-  //根据id数组查询用户昵称和头像
-  userQuery.containedIn("objectId",userIds)
-  userQuery.find({
-    success: function (results) {
-      for(var i=0;i<results.length;i++){
-        var result = results[i]
-        var object = {}
-        object = {
-          nickName: result.get("nickName"),
-          userPic: result.get("userPic")
-        }
-        userObjects.push(object)
-      }      
-    }    
-  })
+//   //根据id数组查询用户昵称和头像
+//   userQuery.containedIn("objectId",userIds)
+//   userQuery.find({
+//     success: function (results) {
+//       for(var i=0;i<results.length;i++){
+//         var result = results[i]
+//         var object = {}
+//         object = {
+//           nickName: result.get("nickName"),
+//           userPic: result.get("userPic")
+//         }
+//         userObjects.push(object)
+//       }      
+//     }    
+//   })
 
-}
+// }
 
 /**
  *2018-05-19
@@ -238,3 +235,8 @@ function deleteAnnouncement(announcementId){
     }
   })
 }
+
+module.exports.getAnnouncementDetail = getAnnouncementDetail
+module.exports.getReadAnnounce = getReadAnnounce
+module.exports.letMeSee = letMeSee
+module.exports.deleteAnnouncement = deleteAnnouncement

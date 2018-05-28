@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/task.js')
+var test = require('../../model/announcementDetail.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -58,9 +58,12 @@ Page({
     // })
     //test.createTaskList("463161c767","测试taskList")
     //test.createTask("3cdcdef9cf","晚上加鸡腿",["3976149b70"],"2018-05-27 20:00:00")
-    test.getProjectMembers("463161c767")
+    //test.getProjectMembers("463161c767")
     //test.getTaskLists("463161c767")
     //test.getTasks("3cdcdef9cf")
+    //test.createAnnouncement("3d3525ec0f","hei","mr.li测试公告题目","mr.li测试公告内容",true)
+   // test.getAnnouncements("3d3525ec0f")
+    test.getAnnouncementDetail("5f4eb84956")
   },
 
   /**
