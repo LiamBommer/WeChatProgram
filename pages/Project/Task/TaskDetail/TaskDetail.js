@@ -5,7 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+<<<<<<< HEAD
     title: '任务2',
+=======
+    hiddenmodalputTitle: true,//弹出标题模态框
+    title: '任务标题',//标题
+    inputTitle: '',//输入的标题
+    show: false,
+>>>>>>> dev-tao
     deadline: '',
     remindtime: "",
     feedbacktime: "",
@@ -80,6 +87,38 @@ Page({
 
   },
 
+<<<<<<< HEAD
+=======
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: false
+    })
+  },
+  //取消按钮  
+  cancelTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: true,
+    });
+  },
+  //确认  
+  confirmTitle: function (e) {
+    this.setData({
+      hiddenmodalputTitle: true,
+      title: this.data.inputTitle
+    })
+  },
+
+  //标题
+  input: function (e) {
+    var inputTitle = e.detail.value
+    this.setData({
+      inputTitle: inputTitle
+    })
+  },
+
+    
+>>>>>>> dev-tao
   //添加更多内容
   addMorecontent:function(){
      var that = this;

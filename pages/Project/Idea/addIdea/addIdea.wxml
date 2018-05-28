@@ -10,16 +10,14 @@
             <image src='{{icon_task_list}}'></image>
             <text class='desc'>关联任务</text>
           </view>
-          <image src='{{icon_add}}'></image>
+          <image src='{{icon_add}}'bindtap='connectTask'></image>
         </view>
-        <view class="item-view ver-align space-between">
-          <text >任务 A</text>
-          <image src='{{icon_member}}'></image>
-        </view>
-        <view class="item-view ver-align space-between">
-          <text >任务 B</text>
-          <image src='{{icon_member}}'></image>
-        </view>
+         <block wx:for="{{connectTask}}">
+          <view class="item-view ver-align space-between">
+            <text >{{item.name}}</text>
+            <image src='{{item.icon}}'></image>
+          </view>
+         </block>
     </view>
 
     <button type='primary' size='default' form-type='submit'>完成</button>

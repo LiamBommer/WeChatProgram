@@ -2,15 +2,19 @@
 <view>
    <view class="view-container">
      <view class='title-view ver-align space-between'>
-       <text class='title'>{{title}}</text>
+      <text class='title' bindtap="modalinputTitle">{{title}}</text>
+        <modal hidden="{{hiddenmodalputTitle}}" title="会议标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
+              <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入会议标题" />
+        </modal> 
+
        <button class='share' hover-class="share-hover"  open-type="share">
           <image src='{{icon_share}}'></image>
        </button>
      </view>
   </view>
   <view class="view-container">
-     <view class='content-view'>
-       <text class='content'>{{content}}</text>
+     <view class='content-view' bindtap='Content'>
+       <text class='content'>会议内容：{{content}}</text>
      </view>
   </view>
   <view class="view-container">
@@ -30,6 +34,12 @@
               </view>
       </picker>
     </view>
+
+    <view class="scroll-view-item item-view" bindtap='Record'>
+          <image src='/img/task_description.png'></image>
+          <text class='desc'>会议记录</text>
+    </view>
+
     <view class="item-view ver-align space-between">
       <view class="ver-align">
         <image src='{{icon_member}}'></image>

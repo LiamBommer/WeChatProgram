@@ -8,13 +8,14 @@ Page({
    */
   data: {
     hiddenmodalput: true,//弹出项目描述模态框
-    hiddenmodalputTitle: true,//弹出项目描述模态框
+    hiddenmodalputTitle: true,//弹出项目名称模态框
     SwitchChecked: true,//是否置顶
-
+    title: "",//输入的项目名称
+    content: "",//输入的项目描述
+    project_name: '',//项目名称
+    project_desc: '',//项目描述
     project_img:"",
     icon_more: '/img/more.png',
-    project_name: '',
-    project_desc: '',
     project_response: '',
 
     //成员列表
@@ -108,6 +109,7 @@ Page({
             project_response: userArr[0].name,
             member: userArr,
           });
+          //项目成员
           wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
         },
@@ -159,12 +161,56 @@ Page({
   //确认
   confirmTitle: function () {
     this.setData({
-      hiddenmodalputTitle: true
+      hiddenmodalputTitle: true,
+      project_name : this.data.title,
+    })
+  }, 
+
+//项目图片
+  PictrueSelect: function (e) {
+    var that = this;
+    var project_img = that.data.project_img;
+    wx.chooseImage({
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        var content = tempFilePaths[0];
+        // chat.push({
+        //   content: content,//我发送的内容
+        //   icon: '/img/me.png',//我的头像
+        //   judgemine: true,//我发的消息
+        //   judgepictrue: true,//判断输入的是文字还是图片
+        // });
+        that.setData({
+          project_img: content,
+        });
+
+      }
+    })
+  },
+
+  //项目名称
+  ProjectTitle: function (e) {
+    this.setData({
+      title : e.detail.value
+    })
+  },
+
+  //项目描述
+  ProjectContent: function (e) {
+    this.setData({
+      content: e.detail.value
     })
   },
 
 
+<<<<<<< HEAD
   //点击按钮弹出指定的hiddenmodalput弹出框
+=======
+
+  
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+>>>>>>> dev-tao
   modalinput: function () {
     this.setData({
       hiddenmodalput: false
@@ -179,7 +225,15 @@ Page({
   //确认
   confirm: function () {
     this.setData({
-      hiddenmodalput: true
+      hiddenmodalput: true,
+      project_desc:this.data.content,
+    })
+  },
+
+  //项目描述
+  ProjectContent: function(e) {
+    this.setData({
+      content: e.detail.value
     })
   },
 

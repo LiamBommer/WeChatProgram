@@ -10,6 +10,27 @@ Page({
     icon_add: '/img/add.png',
     icon_close: '/img/close.png',
     icon_share: '/img/share.png',
+
+    connectTask: [//关联任务
+      {
+        id: '',
+        name: '任务 A',
+        icon: '/img/member.png',
+      },
+      {
+        id: '',
+        name: '任务 B',
+        icon: '/img/member.png',
+      },
+    ],
+  },
+
+  //点子内容
+  Content:function(){
+    wx.setStorageSync("ideaDetail-content", this.data.content)
+    wx.navigateTo({
+      url: './Content/Content',
+    })
   },
 
   //删除
@@ -29,6 +50,15 @@ Page({
       }
     })
   },
+
+  // 关联任务
+  connectTask: function (e) {
+    //需要设置任务列表的任务名，执行者头像的缓存
+    wx.navigateTo({
+      url: '../IdeaTaskList/IdeaTaskList',
+    })
+  }, 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -47,7 +77,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
+    var content = wx.getStorageSync("ideaDetail-Content-content")
+    that.setData({
+      content: content
+    })
 
+    var TaskId = wx.getStorageSync("ScheduleTaskList-TaskId")//关联的任务ID
+    //需要任务列表，通过任务ID取任务名和任务执行者
   },
 
   /**
@@ -61,7 +98,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorageSync("ideaDetail-Content-content")
   },
 
   /**

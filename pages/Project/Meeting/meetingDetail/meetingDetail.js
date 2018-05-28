@@ -5,8 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '会议标题',
-    content: "会议内容：jalkejflskjeflksjdflks ",
+    hiddenmodalputTitle: true,//弹出标题模态框
+    title: '会议标题',//标题
+    inputTitle: '',//输入的标题
+    content: "jalkejflskjeflksjdflks ",//会议内容
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_cycle: '/img/cycle.png',
@@ -18,6 +20,33 @@ Page({
     memberIcon:[
       "/img/create.png",
     ],
+  },
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: false
+    })
+  },
+  //取消按钮  
+  cancelTitle: function () {
+    this.setData({
+      hiddenmodalputTitle: true,
+    });
+  },
+  //确认  
+  confirmTitle: function (e) {
+    this.setData({
+      hiddenmodalputTitle: true,
+      title: this.data.inputTitle
+    })
+  },
+
+  //标题
+  input: function (e) {
+    var inputTitle = e.detail.value
+    this.setData({
+      inputTitle: inputTitle
+    })
   },
 
   // 重复时间
@@ -31,6 +60,21 @@ Page({
   StatTimeChange: function (e) {
     this.setData({
       stattime: e.detail.value
+    })
+  }, 
+
+  //会议记录
+  Record: function (e) {
+    wx.navigateTo({
+      url: './Record/Record',
+    })
+  }, 
+  
+  //会议内容
+  Content: function (e) {
+    wx.setStorageSync("meetingDetail-content", this.data.content)
+    wx.navigateTo({
+      url: './Content/Content',
     })
   }, 
 
@@ -80,6 +124,11 @@ Page({
    */
   onShow: function () {
     var that = this
+    var content = wx.getStorageSync("meetingDetail-Content-content")
+    that.setData({
+      content: content
+    })
+
     var icon = wx.getStorageSync("meetingDetail-memberList-icon")
     if(icon == ""){
       that.setData({
@@ -105,6 +154,7 @@ Page({
    */
   onUnload: function () {
     wx.removeStorageSync("meetingDetail-memberList-icon")
+    wx.removeStorageSync("meetingDetail-Content-content")
   },
 
   /**

@@ -1,0 +1,22 @@
+/* pages/Project/Task/TaskDetail/CommModel/addModel/addModel.wxss */
+.ModelDetail-container{
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding-bottom: 40rpx;
+}
+
+.ModelDetail-container .text{
+  padding-left:40rpx; 
+  padding-top:40rpx; 
+  height: 1000rpx;
+}
+
+.ModelDetail-container .save{
+   width:146rpx;
+   height:68rpx;
+   background: #09BB07;
+   color: #fff;
+   line-height: 60rpx;
+   margin-right: 20rpx;
+}

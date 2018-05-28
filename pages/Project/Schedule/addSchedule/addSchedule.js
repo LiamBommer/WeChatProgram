@@ -10,12 +10,29 @@ Page({
     icon_member: '/img/member.png',
     deadline: '',
     stattime: '', 
+
+    connectTask: [//关联任务
+      {
+        id: '',
+        name: '任务 A',
+        icon: '/img/member.png',
+      },
+      {
+        id: '',
+        name: '任务 B',
+        icon: '/img/member.png',
+      },
+    ],
   }, 
   
   //创建日程
   BuildSchedule: function (e) {
     var title = e.detail.value.title
+    var startTime = e.detail.value.startTime
+    var endTime = e.detail.value.endTime
     console.log(title)
+    console.log(startTime)
+    console.log(endTime)
   },
 
   // 截止时间
@@ -29,6 +46,14 @@ Page({
   StatTimeChange: function (e) {
     this.setData({
       stattime: e.detail.value
+    })
+  },
+
+  // 关联任务
+  connectTask: function (e) {
+    //需要设置任务列表的任务名，执行者头像的缓存
+    wx.navigateTo({
+      url: '../ScheduleTaskList/ScheduleTaskList',
     })
   }, 
 
@@ -50,7 +75,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var TaskId = wx.getStorageSync("ScheduleTaskList-TaskId")//关联的任务ID
+    //需要任务列表，通过任务ID取任务名和任务执行者
   },
 
   /**

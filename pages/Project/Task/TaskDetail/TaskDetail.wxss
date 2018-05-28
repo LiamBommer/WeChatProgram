@@ -1,5 +1,5 @@
 /* pages/Project/Task/TaskDetail/TaskDetail.wxss */
-.view-container .title-view .title {
+.view-container .title-view .titlenav {
   display: flex;
   font-size: 40rpx;
   align-items: center;

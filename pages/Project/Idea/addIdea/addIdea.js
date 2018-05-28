@@ -7,8 +7,29 @@ Page({
     icon_task_list: '/img/task_list.png',
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
+
+    connectTask: [//关联任务
+      {
+        id: '',
+        name: '任务 A',
+        icon: '/img/member.png',
+      },
+      {
+        id: '',
+        name: '任务 B',
+        icon: '/img/member.png',
+      },
+    ],
   },
 
+
+  // 关联任务
+  connectTask: function (e) {
+    //需要设置任务列表的任务名，执行者头像的缓存
+    wx.navigateTo({
+      url: '../IdeaTaskList/IdeaTaskList',
+    })
+  }, 
 
   //创建点子
   BuildIdea: function (e) {

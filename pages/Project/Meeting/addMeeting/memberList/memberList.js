@@ -15,6 +15,18 @@ Page({
         name: '帅涛',
         checked: true
       },
+      {
+        id: "",
+        icon: "/img/me.png",
+        name: '帅涛',
+        checked: true
+      },
+      {
+        id: "",
+        icon: "/img/me.png",
+        name: '帅涛',
+        checked: true
+      },
     ],
   },
 
@@ -64,18 +76,25 @@ Page({
    */
   onShow: function () {
     var that = this
+    //初始化成员列表
     var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    for (var i in memberList)
-      memberList[i].checked = false
-    that.setData({
-      ProjectMemember: memberList
-    });
+    if (memberList != "") {
+      for (var i in memberList)
+        memberList[i].checked = false
+      that.setData({
+        ProjectMemember: memberList
+      });
+    }
+    else{
+      
+    }
 
+    //初始化选中成员
     var membericon = wx.getStorageSync("meetingDetail-membericon")
     if (membericon != "") {
       for (var i in memberList) {
         for (var j in membericon)
-          if (memberList[i].icon == membericon[j]) {//初始化选中成员
+          if (memberList[i].icon == membericon[j]) {
             memberList[i].checked = true
             that.setData({
               ProjectMemember: memberList,

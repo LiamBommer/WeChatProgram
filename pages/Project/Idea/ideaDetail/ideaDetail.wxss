@@ -6,6 +6,11 @@
   justify-content:space-between;
 }
 
+.view-container .content-view .content{
+  width: 90%;
+  padding-top: 20rpx
+}
+
 .content-view .share{
   background-color: #fff;
   border: none;
