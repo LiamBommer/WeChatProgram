@@ -14,7 +14,7 @@ Page({
     content: "",//输入的项目描述
     project_name: '',//项目名称
     project_desc: '',//项目描述
-    project_img:"",
+    project_img:"/img/more.png",
     icon_more: '/img/more.png',
     project_response: '',
 
@@ -168,8 +168,12 @@ Page({
 
 //项目图片
   PictrueSelect: function (e) {
-    var that = this;
-    var project_img = that.data.project_img;
+    var that = this
+    // var projectImg = []
+    // projectImg.push(that.data.project_img)
+    // wx.previewImage({
+    //   urls: projectImg // 需要预览的图片http链接列表  
+    // })  
     wx.chooseImage({
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
