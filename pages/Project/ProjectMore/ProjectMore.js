@@ -404,14 +404,14 @@ Page({
 
   /**
    *2018-05-18
-  *@author mr.li
-  @parameter projId 项目id
-  *@return 指定项目的所有公告数组
-  *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
-  * 
-  */
+   *@author mr.li
+   @parameter projId 项目id
+   *@return 指定项目的所有公告数组
+   *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
+   * 
+   */
   getAnnouncements:function (projId){
-  var that = this
+   var that = this
     var Annoucement = Bmob.Object.extend("annoucement")
   var annoucementQuery = new Bmob.Query(Annoucement)
 
@@ -419,15 +419,12 @@ Page({
 
   //查询出此项目中的所有公告，默认10条
   annoucementQuery.equalTo("proj_id", projId)
+  annoucementQuery.include("publisher")
   annoucementQuery.descending("createdDate")  //根据时间降序排列
   annoucementQuery.find({
       success: function (results) {
         //console.log("共查询到公告 " + results.length + " 条记录");
         // 循环处理查询到的数据
-        // for (var i = 0; i < results.length; i++) {
-        //   var object = results[i];
-        //   annoucementArr.push(object)
-        // }
         for (var i = 0; i < results.length; i++) {
           var result = results[i]
           console.log(result)
@@ -438,6 +435,8 @@ Page({
             content: result.attributes.content,
             read: result.attributes.read_num,
             time: result.createdAt,
+            icon: result.changed.publisher.userPic,
+            memberName: result.changed.publisher.nickName,
           }
           annoucementArr.push(object)
         }
@@ -445,34 +444,9 @@ Page({
         //在这里setdata
         console.log("查询到的公告数组", annoucementArr)
         that.setData({
-          Announcement : annoucementArr
+          Announcement: annoucementArr
         })
-   
-        // //公告列表
-        // Announcement: [
-        //   {
-        //     icon: "/img/me.png",
-        //     title: "我觉得ZHT太牛逼了",
-        //     content: "因为ZHT也很牛逼balabal ...",
-        //     time: "5月1日20:00",
-        //     read: "0人已读",
-        //     memberName: '',
-        //   },
-        //   {
-        //     icon: "/img/me.png",
-        //     title: "我觉得ZHT太牛逼了",
-        //     content: "因为ZHT也很牛逼balabal ...",
-        //     time: "5月1日20:00",
-        //     read: "0人已读",
-        //   },
-        //   {
-        //     icon: "/img/me.png",
-        //     title: "我觉得ZHT太牛逼了",
-        //     content: "因为ZHT也很牛逼balabal ...",
-        //     time: "5月1日20:00",
-        //     read: "0人已读",
-        //   },
-        // ],
+        
 
 
 
@@ -483,6 +457,7 @@ Page({
     })
 
   },
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -506,6 +481,7 @@ Page({
     //获取项目ID
     var ProjectId = wx.getStorageSync("Project-id")
     that.getAnnouncements(ProjectId)
+    wx.startPullDownRefresh()
   },
 
   /**

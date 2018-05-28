@@ -10,9 +10,9 @@ Page({
     //项目成员
     ProjectMemember: [
       {
-        id:"",
-        icon: "/img/me.png",
-        name: '帅涛',
+        objectId: "",
+        userPic: '/img/member.png',
+        nickName: "同学A",
       },
     ],
   },

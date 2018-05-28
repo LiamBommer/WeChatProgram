@@ -37,8 +37,8 @@
   <view class='view-container'>
     <block wx:for="{{noread}}">
         <view class="item-view">
-          <image class='radius' src='{{item.icon}}'></image>
-          <text class='desc'>{{item.name}}</text>
+          <image class='radius' src='{{item.userPic}}'></image>
+          <text class='desc'>{{item.nickName}}</text>
         </view>
     </block>
   </view>
@@ -48,7 +48,7 @@
     <view class="item-view space-between">
       <view class="ver-align">
         <block wx:for="{{read}}">
-          <image class='radius' src='{{item.icon}}'></image>
+          <image class='radius' src='{{item.userPic}}'></image>
         </block>
       </view>
       <view class="ver-align">
