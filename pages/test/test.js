@@ -63,7 +63,10 @@ Page({
     //test.getTasks("3cdcdef9cf")
     //test.createAnnouncement("3d3525ec0f","hei","mr.li测试公告题目","mr.li测试公告内容",true)
    // test.getAnnouncements("3d3525ec0f")
-    test.getAnnouncementDetail("5f4eb84956")
+    //test.getAnnouncementDetail("5f4eb84956")
+    //test.getReadAnnounce("5f4eb84956")
+    //test.letMeSee("5b2cad79f6","52037db54b")
+    test.deleteAnnouncement("52037db54b")
   },
 
   /**
