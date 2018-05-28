@@ -5,14 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-<<<<<<< HEAD
-    title: '任务2',
-=======
     hiddenmodalputTitle: true,//弹出标题模态框
     title: '任务标题',//标题
     inputTitle: '',//输入的标题
     show: false,
->>>>>>> dev-tao
     deadline: '',
     remindtime: "",
     feedbacktime: "",
@@ -87,8 +83,6 @@ Page({
 
   },
 
-<<<<<<< HEAD
-=======
   //点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function () {
     this.setData({
@@ -117,8 +111,6 @@ Page({
     })
   },
 
-    
->>>>>>> dev-tao
   //添加更多内容
   addMorecontent:function(){
      var that = this;

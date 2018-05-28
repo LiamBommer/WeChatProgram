@@ -53,7 +53,7 @@ App({
               }
             });
 
-
+            
             //保存用户其他信息，比如昵称头像之类的
             wx.getSetting({
               success: res => {
@@ -105,8 +105,6 @@ App({
       }
     });
     // user.auth()   //这行代码可以替换上面的wx.login
-
-
 
   },
 
@@ -181,7 +179,6 @@ App({
   globalData: {
     userInfo: null,
     userId:null,
-    userPic:null,
     nickName:null
   }
 })

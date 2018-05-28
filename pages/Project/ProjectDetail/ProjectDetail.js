@@ -203,14 +203,7 @@ Page({
     })
   },
 
-
-<<<<<<< HEAD
   //点击按钮弹出指定的hiddenmodalput弹出框
-=======
-
-  
-  //点击按钮弹出指定的hiddenmodalput弹出框  
->>>>>>> dev-tao
   modalinput: function () {
     this.setData({
       hiddenmodalput: false
