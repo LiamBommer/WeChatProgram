@@ -18,6 +18,7 @@ function getAnnouncements(projId){
 
   //查询出此项目中的所有公告，默认10条
   annoucementQuery.equalTo("proj_id",projId)
+  annoucementQuery.include("publisher")
   annoucementQuery.descending("createdDate")  //根据时间降序排列
   annoucementQuery.find({
     success: function (results) {
@@ -47,6 +48,7 @@ function getAnnouncements(projId){
 /**
  * @autor mr.li
  * @parameter projId项目id， projName项目名称，title公告标题， content公告内容，is_showmember是否显示已读和未读成员
+ * （userId和nickName在函数里面已经获取）
  * 添加公告
  */
 function createAnnouncement(projId, projName, title, content, is_showmember){
@@ -54,14 +56,10 @@ function createAnnouncement(projId, projName, title, content, is_showmember){
   var Announcement = Bmob.Object.extend("annoucement")  //数据库的名字拼错了，但是现在还是和后台的数据库是一样的
   var announcement = new Announcement()
   var currentUser = Bmob.User.current()  //获取当前用户
-  var leaderId = "0"
-  var leaderName = "0"
-
   var announceId = "0"  //用来存储创建成功后的公告id
-
+  var user
   if(currentUser){
-    leaderId = currentUser.id
-    leaderName = currentUser.get("nickName")
+    user = Bmob.Object.createWithoutData("_User", currentUser.id);
   }
 
   //保存公告
@@ -71,22 +69,19 @@ function createAnnouncement(projId, projName, title, content, is_showmember){
     is_showmember: is_showmember,
     proj_id: projId,
     proj_name: projName,
-    leader_id: leaderId,
-    leader_nickname: leaderName,
+    publisher: user,  //发布人信息，与_User表关联
     read_num: 0
   }, {
       success: function (result) {
         // 添加成功
-        console.log("创建公告成功！",result.id)
-        announceId = result.id
-        
+        announceId = result.id      
         if(is_showmember){        
           //保存未读成员列表 
           saveUnread(projId,announceId)  //调用函数
         }
 
-        //在这里处理setdata
-
+        //提示用户创建公告成功
+        console.log("提示用户创建公告成功！", result.id)
 
 
 
@@ -96,9 +91,8 @@ function createAnnouncement(projId, projName, title, content, is_showmember){
       },
       error: function (result, error) {
         // 添加失败
-        console.log("创建公告失败！", error)
         //在这里处理失败的情况
-
+        console.log("创建公告失败！", error)
 
 
 
@@ -118,7 +112,6 @@ function saveUnread(projId, announceId){
   var ProjMember = Bmob.Object.extend("proj_member")
   var projMemberQuery = new Bmob.Query(ProjMember)
   var Annoucement_read = Bmob.Object.extend("annoucement_read")
-  //var annoucement_read = new Annoucement_read()
 
 
   //查询指定项目的所有成员id,50条
@@ -131,9 +124,10 @@ function saveUnread(projId, announceId){
     for (var i = 0; i < results.length; i++) {
       var result = results[i];
       
-      var object = new Annoucement_read()
+      var object = new Annoucement_read()  //未读成员表信息
+      var user = Bmob.Object.createWithoutData("_User", result.get('user_id'))
       object.set('annouce_id',announceId)
-      object.set('user_id',result.get('user_id'))
+      object.set('user',user)
       object.set('read',false)
       Annoucement_readObjects.push(object)
       
@@ -151,7 +145,6 @@ function saveUnread(projId, announceId){
         })
     }
 
-    //console.log(memberObjects)
   })
 
   
