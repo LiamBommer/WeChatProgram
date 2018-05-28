@@ -39,8 +39,8 @@
     margin-left: 30rpx;
 }
 
-.memberList-container .item .item-checkbox{
-    margin-right: 20rpx;
+.memberList-container .item radio{
+    margin-right: 40rpx;
 }
 
 .addi-container {

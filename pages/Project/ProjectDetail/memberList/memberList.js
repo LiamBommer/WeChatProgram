@@ -41,8 +41,8 @@ Page({
     var NomemberId = []
     var NomemberIdLength = 0
     var ProjectMemember = that.data.ProjectMemember;
-    
-    
+
+
     if (memberIdLength == 0) {//全部未选
       for (var id in ProjectMemember)
         NomemberId.push(ProjectMemember[id].id)
@@ -62,13 +62,13 @@ Page({
 
       }
     }
-    
+
     console.log(NomemberId);//未选中的成员ID
     wx.navigateBack({
       url: '../ProjectDetail',
     })
   },
-  
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -80,7 +80,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -98,7 +98,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
@@ -111,14 +111,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -126,6 +126,7 @@ Page({
    */
   onShareAppMessage: function () {
 
+    
   }
-  
+
 })

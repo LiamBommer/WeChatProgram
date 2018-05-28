@@ -14,7 +14,7 @@
       <view class='view-container'>
         <view class='item-view ver-align space-between'>
           <text>显示已读和未读成员</text>
-          <switch />
+          <switch checked bindchange="switch1Change"/>
         </view>
       </view>
 

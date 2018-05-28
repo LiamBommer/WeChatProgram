@@ -5,7 +5,7 @@
       <!-- 列表项 -->
       <view class='item'>
         <!-- 列表左 -->
-        <view class='item-first' bindtap='showAnnouncementDetail'>
+        <view class='item-first' bindtap='showAnnouncementDetail'data-index="{{index}}">
           <image class='item-icon' src='{{item.icon}}'></image>
           <view class='item-text'>
             <view class='item-title'>{{item.title}}</view>
@@ -15,7 +15,7 @@
         <!-- 列表右 -->
         <view class='item-second'>
           <view class='item-time'>{{item.time}}</view>
-          <view class='item-read'>{{item.read}}</view>
+          <view class='item-read'>{{item.read}}人已读</view>
         </view>
       </view>
   </block>

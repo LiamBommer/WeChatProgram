@@ -10,10 +10,17 @@ Page({
     inputTitle: '',//输入的标题
     show: false,
     deadline: '',
-    remindtime: "", 
+    remindtime: "",
     feedbacktime: "",
-    Inputcontent:'', 
+    Inputcontent:'',
     scrollTop: 0,//消息定位
+    isInputing: false,  // 输入时将图片换成发送按钮
+
+    // 添加更多内容的显示属性
+    showRemindTime: false,
+    showFeedbackTime: false,
+    showFeedbackModel: false,
+    showDescription: false,
 
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
@@ -25,8 +32,8 @@ Page({
     icon_add: '/img/add.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
-    icon_create: '/img/create.png', 
-    
+    icon_create: '/img/create.png',
+
     //子任务循环列表
     ChildTask:[
       {
@@ -65,9 +72,15 @@ Page({
         judgemine: true,//我发的消息
         judgepictrue: false,//判断输入的是文字还是图片
       },
+      {
+        content: '长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. ',
+        icon: '/img/me.png',
+        judgemine: true,//我发的消息
+        judgepictrue: false,//判断输入的是文字还是图片
+      },
     ],
 
-    
+
   },
 
   //点击按钮弹出指定的hiddenmodalput弹出框  
@@ -98,14 +111,46 @@ Page({
     })
   },
 
-    
   //添加更多内容
   addMorecontent:function(){
      var that = this;
-     var show = !that.data.show;
-     that.setData({
-       show: show
+
+     wx.showActionSheet({
+       itemList: ['提醒时间', '反馈时间', '反馈模板', '任务描述'],
+       success: function(res) {
+         // 提醒时间
+         if(res.tapIndex == 0) {
+           that.setData({
+             showRemindTime: true
+           });
+         }
+
+         // 反馈时间
+         if(res.tapIndex == 1) {
+           that.setData({
+             showFeedbackTime: true
+           });
+         }
+
+         // 反馈模板
+         if(res.tapIndex == 2) {
+           that.setData({
+             showFeedbackModel: true
+           });
+         }
+
+         // 任务描述
+         if(res.tapIndex == 3) {
+           that.setData({
+             showDescription: true
+           });
+         }
+       },
+       fail: function(res) {
+        console.log(res.errMsg)
+       }
      });
+
   },
 
   // 成员列表
@@ -114,7 +159,7 @@ Page({
       url: './memberList/memberList',
     })
   },
-  
+
   // 截止时间
   DeadLineChange: function (e) {
     this.setData({
@@ -148,7 +193,7 @@ Page({
     wx.navigateTo({
       url: './FeedBack/FeedBack',
     })
-  }, 
+  },
 
   //删除任务
   DeleteTask: function() {
@@ -165,21 +210,14 @@ Page({
         }
       }
     })
-  }, 
+  },
 
   //添加子任务
   AddChildTask: function() {
     wx.navigateTo({
-      url: '../buildTask/buildTask',
+      url: '../buildChildTask/buildChildTask',
     })
   },
-
-  //子任务详情
-  ChildTaskDetail: function () {
-    wx.navigateTo({
-      url: './TaskDetail',
-    })
-  }, 
 
   //点击沟通模板
   ClickCommModel: function () {
@@ -193,12 +231,45 @@ Page({
 
   //点击输入框
   ClickInput: function(e) {
+    var that = this;
+    that.setData({
+      isInputing: true
+    });
     wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
       // 使页面滚动到底部
       wx.pageScrollTo({
         scrollTop: rect.bottom
       })
     }).exec()
+  },
+
+  // 输入框失去焦点，发送按钮变回图片
+  inputBlur: function() {
+    this.setData({
+      isInputing: false
+    });
+  },
+
+  // 点击发送按钮发送消息
+  sendMessage: function() {
+    var content = this.Inputcontent;
+    var chat = this.data.chat;
+
+    console.log(content);
+    if(content == undefined) {
+      // 发送内容为空则不发送
+    } else {
+      chat.push({
+        content: content, //我发送的内容
+        icon: '/img/me.png',//我的头像
+        judgemine: true,//我发的消息
+      });
+      that.setData({
+        chat : chat,
+        Inputcontent : "",
+        scrollTop: scrollTop,
+      });
+    }
   },
 
   //聊天框按回车发送消息
@@ -208,16 +279,22 @@ Page({
     scrollTop += 200;
     var content = e.detail.value;
     var chat = that.data.chat;
-    chat.push({
-      content: content, //我发送的内容
-      icon: '/img/me.png',//我的头像
-      judgemine: true,//我发的消息
-    });
-    that.setData({
-      chat : chat,
-      Inputcontent : "",
-      scrollTop: scrollTop,
-    });
+
+    console.log(content);
+    if(content == undefined) {
+      // 发送内容为空则不发送
+    } else {
+      chat.push({
+        content: content, //我发送的内容
+        icon: '/img/me.png',//我的头像
+        judgemine: true,//我发的消息
+      });
+      that.setData({
+        chat : chat,
+        Inputcontent : "",
+        scrollTop: scrollTop,
+      });
+    }
   },
 
   //聊天框发送图片
@@ -265,13 +342,13 @@ Page({
       url: '../logs/logs'
     })
   },
-  
-  
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -308,7 +385,7 @@ Page({
         }
       })
       wx.clearStorage();
-    
+
   },
 
   /**
@@ -343,6 +420,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-     
+
   }
 })

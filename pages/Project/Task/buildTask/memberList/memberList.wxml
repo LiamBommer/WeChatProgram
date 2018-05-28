@@ -1,8 +1,8 @@
 <!--pages/memberList/memberList.wxml-->
 <view class='memberList-container'>
-    
-    <radio-group bindchange="ProjectMememberChange">
-      <block wx:for="{{ProjectMemember}}">
+
+    <radio-group bindchange="ProjectMemberChange">
+      <block wx:for="{{ProjectMember}}">
           <block wx:if="{{index == 0}}">
             <!-- 标题 -->
             <view class='title'>项目负责人</view>
@@ -13,7 +13,7 @@
                     <view class='item-text'>{{item.name}}</view>
                   </view>
                   <radio class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
-            </view>  
+            </view>
             <!-- 标题 -->
             <view class='title'>项目成员</view>
           </block>
@@ -30,7 +30,7 @@
           </block>
       </block>
     </radio-group>
-    
+
     <view class='button'>
       <button class='addMember' size='default' bindtap='save'>完成</button>
     </view>

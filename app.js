@@ -17,7 +17,7 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     var that = this
-    
+
     // 登录 mr.li 代码是Bmob封装好的接口
     //登录注册集合类，接口默认第一次注册，否则返回用户信息
     var user = new Bmob.User();//实例化
@@ -41,7 +41,7 @@ App({
 
             //注册成功的情况
             var u = Bmob.Object.extend("_User");
-            var query = new Bmob.Query(u); 
+            var query = new Bmob.Query(u);
             query.get(user.id, {
               success: function (result) {
                 wx.setStorageSync('own', result.get("uid"));
@@ -106,8 +106,6 @@ App({
     });
     // user.auth()   //这行代码可以替换上面的wx.login
 
-    
-
   },
 
   onShow:function(options){
@@ -131,7 +129,7 @@ App({
     projectQuery.first({
       success: function(result){
         that.joinProject2(projectId,userId,result.get("name"))
-        
+
       },
       error: function(error){
         wx.showToast({
@@ -139,8 +137,8 @@ App({
         })
       }
     })
-    
-      
+
+
   },
   joinProject2: function (projectId, userId,projectName){
 
@@ -181,7 +179,6 @@ App({
   globalData: {
     userInfo: null,
     userId:null,
-    userPic:null,
     nickName:null
   }
 })

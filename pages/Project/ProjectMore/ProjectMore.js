@@ -1,4 +1,5 @@
 // pages/ProjectMore/ProjectMore.js
+var Bmob = require('../../../utils/bmob.js')
 Page({
 
   /**
@@ -73,25 +74,22 @@ Page({
     //公告列表
     Announcement: [
       {
+        id:'',
         icon: "/img/me.png",
         title: "我觉得ZHT太牛逼了",
         content: "因为ZHT也很牛逼balabal ...",
         time: "5月1日20:00",
         read: "0人已读",
+        memberName: '',
       },
       {
+        id: '',
         icon: "/img/me.png",
         title: "我觉得ZHT太牛逼了",
         content: "因为ZHT也很牛逼balabal ...",
         time: "5月1日20:00",
         read: "0人已读",
-      },
-      {
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        read: "0人已读",
+        memberName: '',
       },
     ],
 
@@ -378,7 +376,9 @@ Page({
   /**
    * 显示会议详情页面
    */
-  showAnnouncementDetail: function() {
+  showAnnouncementDetail: function(e) {
+    var index = e.currentTarget.dataset.index
+    wx.setStorageSync("AnnouncementDetail", this.data.Announcement[index])
     wx.navigateTo({
       url: '../Announcement/announcementDetail/announcementDetail'
     });
@@ -394,12 +394,94 @@ Page({
   },
 
   /**
-   * 显示电子详情页面
+   * 显示点子详情页面
    */
   showIdeaDetail: function() {
     wx.navigateTo({
       url: '../Idea/ideaDetail/ideaDetail'
     });
+  },
+
+  /**
+   *2018-05-18
+  *@author mr.li
+  @parameter projId 项目id
+  *@return 指定项目的所有公告数组
+  *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
+  * 
+  */
+  getAnnouncements:function (projId){
+  var that = this
+    var Annoucement = Bmob.Object.extend("annoucement")
+  var annoucementQuery = new Bmob.Query(Annoucement)
+
+  var annoucementArr = []  //所有公告数组
+
+  //查询出此项目中的所有公告，默认10条
+  annoucementQuery.equalTo("proj_id", projId)
+  annoucementQuery.descending("createdDate")  //根据时间降序排列
+  annoucementQuery.find({
+      success: function (results) {
+        //console.log("共查询到公告 " + results.length + " 条记录");
+        // 循环处理查询到的数据
+        // for (var i = 0; i < results.length; i++) {
+        //   var object = results[i];
+        //   annoucementArr.push(object)
+        // }
+        for (var i = 0; i < results.length; i++) {
+          var result = results[i]
+          console.log(result)
+          var object = {}
+          object = {
+            id: result.id,
+            title: result.attributes.title,
+            content: result.attributes.content,
+            read: result.attributes.read_num,
+            time: result.createdAt,
+          }
+          annoucementArr.push(object)
+        }
+
+        //在这里setdata
+        console.log("查询到的公告数组", annoucementArr)
+        that.setData({
+          Announcement : annoucementArr
+        })
+   
+        // //公告列表
+        // Announcement: [
+        //   {
+        //     icon: "/img/me.png",
+        //     title: "我觉得ZHT太牛逼了",
+        //     content: "因为ZHT也很牛逼balabal ...",
+        //     time: "5月1日20:00",
+        //     read: "0人已读",
+        //     memberName: '',
+        //   },
+        //   {
+        //     icon: "/img/me.png",
+        //     title: "我觉得ZHT太牛逼了",
+        //     content: "因为ZHT也很牛逼balabal ...",
+        //     time: "5月1日20:00",
+        //     read: "0人已读",
+        //   },
+        //   {
+        //     icon: "/img/me.png",
+        //     title: "我觉得ZHT太牛逼了",
+        //     content: "因为ZHT也很牛逼balabal ...",
+        //     time: "5月1日20:00",
+        //     read: "0人已读",
+        //   },
+        // ],
+
+
+
+      },
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+      }
+    })
+
   },
 
   /**
@@ -420,7 +502,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    //获取项目ID
+    var ProjectId = wx.getStorageSync("Project-id")
+    that.getAnnouncements(ProjectId)
   },
 
   /**

@@ -12,7 +12,7 @@
           </modal>   
        </view>
        <button class='share' hover-class="share-hover"  open-type="share"><image src='{{icon_share}}'></image></button>
-       
+
      </view>
   </view>
 
@@ -40,47 +40,47 @@
       <text class='desc'>鲨鱼派对/项目名</text>
     </view>
 
+    <!-- 内容隐藏 -->
+    <view style='display:{{showRemindTime? "" : "none"}}'
+      class="scroll-view-item item-view">
+      <image src='/img/alarm.png'></image>
+      <view class='desc'>
+          <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
+            <view class="picker">
+              {{remindtime}} 提醒
+            </view>
+          </picker>
+      </view>
+    </view>
+
+      <view style='display:{{showFeedbackTime? "" : "none"}}'
+        class="scroll-view-item item-view">
+        <image src='/img/feedback_time.png'></image>
+        <view class='desc'>
+            <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
+              <view class="picker">
+                {{feedbacktime}} 反馈
+              </view>
+            </picker>
+        </view>
+      </view>
+
+      <view style='display:{{showFeedbackModel? "" : "none"}}'
+        class="scroll-view-item item-view" bindtap='Feedback'>
+        <image src='/img/feedback_model.png'></image>
+        <text class='desc'>反馈模板</text>
+      </view>
+
+      <view style='display:{{showDescription? "" : "none"}}'
+        class="scroll-view-item item-view" bindtap='Describe'>
+        <image src='/img/task_description.png'></image>
+        <text class='desc'>任务描述</text>
+      </view>
+
     <!-- 添加内容 -->
     <view class="item-view" bindtap='addMorecontent'>
       <image src='{{icon_add}}'></image>
       <text class='desc'>添加更多内容</text>
-    </view>
-    
-    <!-- 内容隐藏 -->
-    <view style='display:{{show? "" : "none"}}'>
-    <scroll-view style="height: 200px;" >
-        <view class="scroll-view-item item-view">
-          <image src='/img/alarm.png'></image>
-          <view class='desc'>
-              <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
-                <view class="picker">
-                  {{remindtime}} 提醒
-                </view>
-              </picker>
-          </view>
-        </view>
-
-        <view class="scroll-view-item item-view">
-          <image src='/img/feedback_time.png'></image>
-          <view class='desc'>
-              <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
-                <view class="picker">
-                  {{feedbacktime}} 反馈
-                </view>
-              </picker>
-          </view>
-        </view>
-
-        <view class="scroll-view-item item-view" bindtap='Feedback'>
-          <image src='/img/feedback_model.png'></image>
-          <text class='desc'>反馈模板</text>
-        </view>
-
-        <view class="scroll-view-item item-view" bindtap='Describe'>
-          <image src='/img/task_description.png'></image>
-          <text class='desc'>任务描述</text>
-        </view>
-  </scroll-view>
     </view>
 
     <view class="item-view delete">
@@ -95,9 +95,9 @@
       </view>
       <image src='{{icon_add}}' bindtap='AddChildTask'></image>
     </view>
-    
+
     <block wx:for="{{ChildTask}}">
-      <view class="item-view ver-align space-between" bindtap='ChildTaskDetail'>
+      <view class="item-view ver-align space-between">
         <view class='childtask'>
           <checkbox class='item-checkbox'/>
           <text >{{item.name}}</text>
@@ -105,65 +105,60 @@
         <image src='{{item.icon}}'></image>
       </view>
     </block>
+
    </view>
 
-  <!-- 聊天框 -->
-  <view class='chat'>
-     <scroll-view style="height: 400px;" scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
-        <!-- 任务消息 -->
-        <block wx:for = "{{taskremind}}">
-            <view class='taskremind' id="remind{{index}}">
-                <view class='text'>{{item.text}}</view>
-                <view class='time'>{{item.time}}</view>
-            </view>
-        </block>
-        
-        <!-- 信息框 -->
-        <block wx:for = "{{chat}}">
-            <block wx:if = "{{item.judgemine}}">
-              <block wx:if = "{{item.judgepictrue}}">
-                  <!-- 图片信息框（我发送） -->
-                  <view class='chatperson-me' id="chat{{index}}">
-                      <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
-                      <image class='person-icon' src='{{item.icon}}'></image>
-                  </view>
-              </block>
-              <block wx:else>
-                  <!-- 文字信息框（我发送） -->
-                  <view class='chatperson-me' id="chat{{index}}" data-index='{{index}}' >
-                      <text class='content'>{{item.content}}</text>
-                      <image class='person-icon' src='{{item.icon}}'></image>
-                  </view>
-              </block>
-            </block>
-            <block wx:else>
-              <block wx:if = "{{item.judgepictrue}}">
-                  <!-- 图片信息框（其他人发送） -->
-                  <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
-                      <image class='person-icon' src='{{item.icon}}'></image>
-                      <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image> 
-                  </view>
-                </block>
-                <block wx:else>
-                  <!-- 文字信息框（其他人发送） -->
-                  <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
-                    <image class='person-icon' src='{{item.icon}}'></image>
-                    <text class='content'>{{item.content}}</text>
-                  </view>
-                </block>
-              </block>
-          </block> 
+   <!-- 聊天框 -->
+   <view class='chat'>
+     <scroll-view scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
+       <!-- 信息框 -->
+       <view class='desc-title'>评论</view>
+       <block wx:for = "{{chat}}">
+         <block wx:if = "{{item.judgepictrue}}">
+           <!-- 图片信息框 -->
+           <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
+             <image class='person-icon' src='{{item.icon}}'></image>
+             <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image>
+           </view>
+         </block>
+
+         <block wx:else>
+           <!-- 文字信息框 -->
+           <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
+             <view class='person-icon-view'>
+               <image class='person-icon' src='{{item.icon}}'></image>
+             </view>
+             <text class='content'>{{item.content}}</text>
+           </view>
+         </block>
+       </block>
      </scroll-view>
+
+     <!-- 任务消息 -->
+     <block wx:for = "{{taskremind}}">
+       <view class='taskremind' id="remind{{index}}">
+         <view class='text'>{{item.text}}</view>
+         <view class='time'>{{item.time}}</view>
+       </view>
+     </block>
 
      <!-- 输入框 -->
      <view class='input'>
         <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
-        <input fixed="true" type='text' placeholder='在此输入文字...' cursor-spacing="20" bindtap='ClickInput' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送" confirm-hold="true" adjust-position="true"></input>
-        <image class='face-icon' src='/img/expression.png'></image>
-        <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
+        <input fixed="true" type='text' placeholder='在此输入文字...' cursor-spacing="20"
+        bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送"
+        confirm-hold="true" adjust-position="true"></input>
+        <!-- <image class='face-icon' src='/img/expression.png'></image> -->
+        <!-- 判断是否为操作系统类型 -->
+        <block wx:if="{{isInputing}}">
+          <!-- 正在输入时显示发送按钮，否则显示图片 -->
+          <button id='send-btn' bindtap='sendMessage'>发送</button>
+        </block>
+        <block wx:else>
+          <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
+        </block>
      </view>
 
-     <!-- 表情 -->
   </view>
-</view>
 
+</view>
