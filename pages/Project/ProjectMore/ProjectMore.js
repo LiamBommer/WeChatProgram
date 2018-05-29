@@ -423,7 +423,6 @@ Page({
     var tasklistQuery = new Bmob.Query(TaskList)
 
     //查询所有的任务列表
-    var taskLists = []
     tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
     tasklistQuery.equalTo('proj_id')
     tasklistQuery.find({
@@ -431,16 +430,19 @@ Page({
       success: function(results){
         //这里设置setdata
         console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
-        that.setData({
-          tasklist: results
-        });
+        // that.setData({
+        //   tasklist: results
+        // });
 
         //results的第一个是最早创建的
         var listIndex = 0;
-        var firstTaskListId = results[listIndex].id
 
+        console.log('results number: '+results.length)
         //获取第一个任务看板的任务
-        that.getTasks(firstTaskListId, listIndex)
+        for(var i=0; i<results.length; i++) {
+          console.log('listId from results[i]'+results[i].id)
+          that.getTasks(results[i].id, i, results)
+        }
 
       },
       error: function(error){
@@ -453,16 +455,20 @@ Page({
   /**
    * 2018-05-19
    * @author mr.li
-   * @parameter listId 任务看板对应的id
+   * @parameter
+      listId 任务看板对应的id
+      listIndex 任务看板所在数组下标
+      tasklists 任务看板列表
    * 获取对应任务看板的所有任务（20条），数组
    * 每个任务为object类型
    */
-  getTasks: function(listId, listIndex){
+  getTasks: function(listId, listIndex, tasklists){
+
+    console.log('查询任务信息：\nlistId: '+listId+'\nlistIndex: '+listIndex)
 
     var that = this
     var Task = Bmob.Object.extend("task")
     var taskQuery = new Bmob.Query(Task)
-    var taskArr = []
 
     //查询出对应的任务看板的所有任务
     taskQuery.limit(20)
@@ -472,7 +478,6 @@ Page({
     taskQuery.find({
       success: function (tasks) {
         console.log("共查询到任务 " + tasks.length + " 条记录");
-        console.log("获取到的任务",tasks)  //已限定20个以内
 
         // 改日期格式
 
@@ -481,11 +486,24 @@ Page({
           var timeStatus = that.timeStatus(tasks[i].end_time)
           tasks[i]['attributes']['timeStatus'] = timeStatus
         }
-          console.log(tasks)
+        console.log('tasks: ')
+        console.log(tasks)
+
+        // 将任务插入到对应看板列表中
+        tasklists[listIndex]['attributes']['tasks'] = []
+        for(var i in tasks) {
+          tasks[i]['attributes']['objectId'] = tasks[i].id
+          tasks[i]['attributes']['createdAt'] = tasks[i].createdAt
+          tasks[i]['attributes']['updatedAt'] = tasks[i].updatedAt
+          tasklists[listIndex]['attributes']['tasks'].push(tasks[i]['attributes'])
+        }
 
         that.setData({
-          tasks: tasks
+          tasklist: tasklists
         })
+        that.update()
+        console.log("This's tasklists: ")
+        console.log(that.data.tasklist)
 
       },
       error: function (error) {

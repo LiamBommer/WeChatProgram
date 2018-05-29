@@ -14,22 +14,22 @@
                 <!-- 任务项 -->
                   <!-- 只显示本list_id下的任务 -->
                   <!-- CODE HERE -->
-                <block wx:for="{{tasks}}" wx:key="{{objectId}}">
+                <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
                   <view class='taskitem' bindtap='showTask'>
                       <!-- 内容上部分 -->
                       <view class='taskitem-top'>
                           <checkbox class='item-checkbox'/>
-                          <view class='task'>{{item.title}}</view>
+                          <view class='task'>{{tasks.title}}</view>
                       </view>
                       <!-- 内容下部分 -->
                       <view class='taskitem-bottom'>
                           <view class='taskicon'>
-                              <block wx:if="{{item.has_sub}}">
+                              <block wx:if="{{tasks.has_sub}}">
                                   <image class='icon' src='/img/task_list.png'></image>
                               </block>
                           </view>
                           <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
-                          <view class='tasktime-{{item.timeStatus}}'>{{item.end_time}} 截止</view>
+                          <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
                       </view>
                   </view>
                 </block>

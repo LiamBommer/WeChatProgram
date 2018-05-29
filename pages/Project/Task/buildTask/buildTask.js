@@ -1,4 +1,6 @@
 // pages/Task/buildTask/buildTask.js
+var Bmob = require('../../../../utils/bmob.js')
+
 Page({
 
   /**
@@ -39,8 +41,10 @@ Page({
     }
 
     // data submit
-    var memberIds = {}
-    that.createTask(that.list_id, name, memberIds, end_time)
+    var myId = getApp().globalData.userId
+    var memberIds = []
+    memberIds.push(myId)
+    that.createTask(that.data.list_id, name, memberIds, end_time)
 
     wx.navigateBack({
       url:"../../ProjectMore/ProjectMore"
@@ -61,6 +65,8 @@ Page({
 
     var Task = Bmob.Object.extend("task")
     var task = new Task()
+
+    console.log('创建任务信息： \nListId: '+listId+'\nTitle: '+title+'\nMemberIds: '+memberIds+'\nEndTime: '+endTime)
 
     var leaderId = memberIds.shift()  //删除并返回第一个任务负责人的id
     var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
