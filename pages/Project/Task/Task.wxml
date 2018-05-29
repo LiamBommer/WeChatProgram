@@ -3,35 +3,38 @@
 
    <swiper class='swiper' indicator-dots="true" current="{{currentItem}}" bindchange='onSlideChangeEnd'>
         <!-- 任务列表 -->
-        <block wx:for="{{tasklist}}">
+        <block wx:for="{{tasklist}}" wx:key="{{objectId}}">
           <swiper-item>
               <view class='task-container'>
                 <!-- 标题 -->
                 <view class='tasktitle'>
-                    <input class='title' value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/> 
+                    <input class='title' value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/>
                     <image class='more' src='/img/more.png' bindtap='Taskmore'></image>
                 </view>
                 <!-- 任务项 -->
-                <block wx:for="{{item.task}}">
+                  <!-- 只显示本list_id下的任务 -->
+                  <!-- CODE HERE -->
+                <block wx:for="{{tasks}}" wx:key="{{objectId}}">
                   <view class='taskitem' bindtap='showTask'>
                       <!-- 内容上部分 -->
                       <view class='taskitem-top'>
                           <checkbox class='item-checkbox'/>
-                          <view class='task'>{{item.title}}</view>   
+                          <view class='task'>{{item.title}}</view>
                       </view>
                       <!-- 内容下部分 -->
                       <view class='taskitem-bottom'>
                           <view class='taskicon'>
-                              <block wx:for="{{item.icon}}">
-                              <image class='icon' src='{{item}}'></image>
+                              <block wx:if="{{item.has_sub}}">
+                                  <image class='icon' src='/img/task_list.png'></image>
                               </block>
                           </view>
-                          <view class='tasktime-{{item.timestatus}}'>{{item.time}} 截止</view>   
+                          <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
+                          <view class='tasktime-{{item.timeStatus}}'>{{item.end_time}} 截止</view>
                       </view>
                   </view>
                 </block>
                 <!-- 添加任务 -->
-                <view class='addTask' bindtap='createTask'>
+                <view class='addTask' bindtap='createTask' data-list-id='{{item.objectId}}'>
                     <image class='addTask-icon' src='/img/add.png'></image>
                     <view class='addTask-text'>添加任务</view>
                 </view>

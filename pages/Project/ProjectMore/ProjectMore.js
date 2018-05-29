@@ -1,4 +1,6 @@
 // pages/ProjectMore/ProjectMore.js
+var Bmob = require('../../../utils/bmob.js')
+
 Page({
 
   /**
@@ -16,58 +18,63 @@ Page({
 
     //任务列表
     tasklist: [
-      {
-        title:'待处理',
-        //任务项
-        task: [
-          {
-            title: '任务一',
-            time: '6月1日 18:00',
-            timestatus: 'green',
-            //任务图标描述
-            icon: [
-              "/img/me.png",
-              "/img/task_list.png",
-            ],
-          },
-          {
-            title: '任务二',
-            time: '6月1日 18:00',
-            timestatus: 'red',
-            //任务图标描述
-            icon: [
-              "/img/me.png",
-              "/img/task_list.png",
-            ],
-          },
-        ]
-      },
-      {
-        title: '执行中',
-        //任务项
-        task: [
-          {
-            title: '任务一',
-            time: '6月1日 18:00',
-            timestatus: 'green',
-            //任务图标描述
-            icon: [
-              "/img/me.png",
-              "/img/task_list.png",
-            ],
-          },
-          {
-            title: '任务二',
-            time: '6月1日 18:00',
-            timestatus: 'red',
-            //任务图标描述
-            icon: [
-              "/img/me.png",
-              "/img/task_list.png",
-            ],
-          },
-        ],
-      },
+      // {
+      //   title:'待处理',
+      //   //任务项
+      //   task: [
+      //     {
+      //       title: '任务一',
+      //       time: '6月1日 18:00',
+      //       timestatus: 'green',
+      //       //任务图标描述
+      //       icon: [
+      //         "/img/me.png",
+      //         "/img/task_list.png",
+      //       ],
+      //     },
+      //     {
+      //       title: '任务二',
+      //       time: '6月1日 18:00',
+      //       timestatus: 'red',
+      //       //任务图标描述
+      //       icon: [
+      //         "/img/me.png",
+      //         "/img/task_list.png",
+      //       ],
+      //     },
+      //   ]
+      // },
+      // {
+      //   title: '执行中',
+      //   //任务项
+      //   task: [
+      //     {
+      //       title: '任务一',
+      //       time: '6月1日 18:00',
+      //       timestatus: 'green',
+      //       //任务图标描述
+      //       icon: [
+      //         "/img/me.png",
+      //         "/img/task_list.png",
+      //       ],
+      //     },
+      //     {
+      //       title: '任务二',
+      //       time: '6月1日 18:00',
+      //       timestatus: 'red',
+      //       //任务图标描述
+      //       icon: [
+      //         "/img/me.png",
+      //         "/img/task_list.png",
+      //       ],
+      //     },
+      //   ],
+      // },
+    ],
+
+    // 任务
+    tasks: [
+
     ],
 
     //公告列表
@@ -133,7 +140,7 @@ Page({
           { id: 3, content: "邀请帅涛 " },
         ],
       },
-      
+
     ],
 
     //会议列表
@@ -186,7 +193,7 @@ Page({
         task: '关联的任务',
       },
     ],
-    
+
   },
 
   //获取当前swiper页的下标
@@ -196,11 +203,11 @@ Page({
       currentItem: e.detail.current
     })
     console.log(e.detail.current);
-  },  
+  },
 
   // 修改任务列表名
   ListNameInput: function(e){
-    var index = this.data.index; 
+    var index = this.data.index;
     var newname = 'tasklist['+index+'].title';
     this.setData({
       [newname]: e.detail.value,
@@ -214,14 +221,14 @@ Page({
       index: e.currentTarget.dataset.index,
     });
   },
-  
+
   // 添加任务列表
   Taskmore: function () {
     var that = this;
     var tasklist = that.data.tasklist;
 
     wx.showActionSheet({
-      itemList: ['添加任务列表','删除该任务列表'], 
+      itemList: ['添加任务列表','删除该任务列表'],
       success: function (res) {
         //添加任务列表
         if (res.tapIndex == 0){
@@ -251,7 +258,7 @@ Page({
       }
     })
   },
-  
+
   // 导航栏选择任务
   selectTask: function () {
     var that = this;
@@ -315,9 +322,10 @@ Page({
   /**
    * 打开创建任务页面
    */
-  createTask: function () {
+  createTask: function (event) {
+    var listId = event.currentTarget.dataset.listId
     wx.navigateTo({
-      url: '../Task/buildTask/buildTask',
+      url: '../Task/buildTask/buildTask?list_id='+listId
     })
   },
 
@@ -356,7 +364,7 @@ Page({
       url: '../Idea/addIdea/addIdea'
     });
   },
-  
+
   /**
    * 显示任务详情页面
    */
@@ -365,7 +373,7 @@ Page({
       url: '../Task/TaskDetail/TaskDetail'
     });
   },
-  
+
   /**
    * 显示会议详情页面
    */
@@ -403,6 +411,98 @@ Page({
   },
 
   /**
+   * 获取任务列表
+   * 2018-05-24
+   * 根据项目id获取所有任务看板的id和标题
+   * （函数内还默认会获取第一个看板的所有任务）
+   */
+  getTaskLists: function(projId){
+
+    var that = this
+    var TaskList = Bmob.Object.extend('task_list')
+    var tasklistQuery = new Bmob.Query(TaskList)
+
+    //查询所有的任务列表
+    var taskLists = []
+    tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
+    tasklistQuery.equalTo('proj_id')
+    tasklistQuery.find({
+
+      success: function(results){
+        //这里设置setdata
+        console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
+        that.setData({
+          tasklist: results
+        });
+
+        //results的第一个是最早创建的
+        var listIndex = 0;
+        var firstTaskListId = results[listIndex].id
+
+        //获取第一个任务看板的任务
+        that.getTasks(firstTaskListId, listIndex)
+
+      },
+      error: function(error){
+
+      }
+    })
+
+  },
+
+  /**
+   * 2018-05-19
+   * @author mr.li
+   * @parameter listId 任务看板对应的id
+   * 获取对应任务看板的所有任务（20条），数组
+   * 每个任务为object类型
+   */
+  getTasks: function(listId, listIndex){
+
+    var that = this
+    var Task = Bmob.Object.extend("task")
+    var taskQuery = new Bmob.Query(Task)
+    var taskArr = []
+
+    //查询出对应的任务看板的所有任务
+    taskQuery.limit(20)
+    taskQuery.equalTo("list_id",listId)
+    taskQuery.include("leader")  //可以查询出leader
+    taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
+    taskQuery.find({
+      success: function (tasks) {
+        console.log("共查询到任务 " + tasks.length + " 条记录");
+        console.log("获取到的任务",tasks)  //已限定20个以内
+
+        // 改日期格式
+
+        // 添加属性：日期状态
+        for(var i=0; i<tasks.length; i++) {
+          var timeStatus = that.timeStatus(tasks[i].end_time)
+          tasks[i]['attributes']['timeStatus'] = timeStatus
+        }
+          console.log(tasks)
+
+        that.setData({
+          tasks: tasks
+        })
+
+      },
+      error: function (error) {
+        console.log("提示用户任务查询失败: " + error.code + " " + error.message);
+
+      }
+    })
+  },
+
+  timeStatus: function(end_time) {
+    // 比较当前时间与截止时间的差值
+    var today = new Date().toLocaleString()
+    // 以返回不同的颜色
+    return 'red'
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -420,7 +520,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    console.log('Page task list opened. ');
+    // Get project id from storage
+    var projId = wx.getStorageSync("Project-id");
+    // Get task lists in this project
+    that.getTaskLists(projId);
   },
 
   /**
