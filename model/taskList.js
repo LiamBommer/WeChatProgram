@@ -120,19 +120,23 @@ function getTaskLists(projId){
     
     success: function(results){
       //这里设置setdata
-      console.log(results)
+      
       /**
        * that.setData({
             taskList: 
           })
        */
-
+      console.log("查询出任务列表"+results.length+"条")
+      console.log(results)
 
 
 
       //results的第一个是最早创建的
-      var taskListId = results[0].id
-      getTasks(taskListId)  //获取第一个任务看板的任务
+      if(results != null){
+        var taskListId = results[0].id
+        getTasks(taskListId)  //获取第一个任务看板的任务
+      }
+      
 
     },
     error: function(error){

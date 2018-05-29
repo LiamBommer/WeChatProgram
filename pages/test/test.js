@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/taskDetail.js')
+var test = require('../../model/taskList.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -56,7 +56,7 @@ Page({
     //     console.log(res.data)
     //   }
     // })
-    //test.createTaskList("3cdcdef9cf","PKtaskList")
+    test.createTaskList("3d3525ec0f","PKtaskList")
     //test.createTask("3cdcdef9cf","晚上加鸡腿",["3976149b70"],"2018-05-27 20:00:00")
     //test.getProjectMembers("463161c767")
     //test.getTaskLists("463161c767")
@@ -72,7 +72,8 @@ Page({
     //test.createSubTask("bcb7155f39", "mrli测试子任务","46afed01fb")
     //test.getSubtasks("bcb7155f39")
    // test.addTaskRecord("bcb7155f39","Mr.Li","mrli在测试record")
-    test.getTaskRecord("bcb7155f39")
+    //test.getTaskRecord("bcb7155f39")
+    test.getTaskLists("3d3525ec0f")
   },
 
   /**
