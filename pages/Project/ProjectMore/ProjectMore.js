@@ -18,63 +18,7 @@ Page({
 
     //任务列表
     tasklist: [
-      // {
-      //   title:'待处理',
-      //   //任务项
-      //   task: [
-      //     {
-      //       title: '任务一',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'green',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //     {
-      //       title: '任务二',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'red',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //   ]
-      // },
-      // {
-      //   title: '执行中',
-      //   //任务项
-      //   task: [
-      //     {
-      //       title: '任务一',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'green',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //     {
-      //       title: '任务二',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'red',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //   ],
-      // },
-    ],
-
-    // 任务
-    tasks: [
-
+      
     ],
 
     //公告列表

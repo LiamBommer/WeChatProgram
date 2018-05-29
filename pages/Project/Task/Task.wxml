@@ -29,7 +29,9 @@
                               </block>
                           </view>
                           <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
-                          <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
+                          <block wx:if="{{tasks.end_time.length != 0}}">
+                            <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
+                          </block>
                       </view>
                   </view>
                 </block>
