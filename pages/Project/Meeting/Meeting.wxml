@@ -1,31 +1,42 @@
 <!--pages/Project/Meeting/Meeting.wxml-->
 <view class='Meeting-container'>
-    
-  <block wx:for="{{Meeting}}">
-    <block wx:if="{{item.month}}">
-      <!-- 标题 -->
-      <view class='title'>{{item.month}}</view>
-    </block>
-    <block wx:else>
-      <!-- 列表项 -->
-      <view class='item' bindtap='showMeetingDetail'>
-        <view class='item-first'>
-          <view class='item-date'>{{item.day}}</view>
-          <view class='item-time'>{{item.time}}</view>
-        </view>
-        <view class='item-second'>
-          <view class='item-title'>{{item.content}}</view>
-        </view>
-        <view></view>
-      </view>
-    </block>
-  </block>
-  
-    
+  <!-- 无内容 -->
+  <view style='display:{{Announcement.length==0? "":"none"}}'>
+    <view class='noitem'>
+      <image class='noitem-icon' src='/img/noMeeting.png'></image>
+      <view class='noitem-title'>召开会议</view>
+      <view class='noitem-content'>让大家出来一起开会吧</view>
+      <button class='noitem-create' bindtap='createMeeting' size='default'>创建会议</button>
+    </view>
+  </view>
+  <!-- 有内容 -->
+  <view style='display:{{Announcement.length==0? "none":""}}'>
+      <block wx:for="{{Meeting}}">
+        <block wx:if="{{item.month}}">
+          <!-- 标题 -->
+          <view class='title'>{{item.month}}</view>
+        </block>
+        <block wx:else>
+          <!-- 列表项 -->
+          <view class='item' bindtap='showMeetingDetail'>
+            <view class='item-first'>
+              <view class='item-date'>{{item.day}}</view>
+              <view class='item-time'>{{item.time}}</view>
+            </view>
+            <view class='item-second'>
+              <view class='item-title'>{{item.content}}</view>
+            </view>
+            <view></view>
+          </view>
+        </block>
+      </block>
+      
+        
 
-  <!-- 添加图标 -->
-  <image class='buildicon' bindtap='createMeeting' src='/img/create.png'></image>
+      <!-- 添加图标 -->
+      <image class='buildicon' bindtap='createMeeting' src='/img/create.png'></image>
 
+  </view>
 
 
 </view>

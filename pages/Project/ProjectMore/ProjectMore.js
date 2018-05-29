@@ -428,13 +428,15 @@ Page({
         for (var i = 0; i < results.length; i++) {
           var result = results[i]
           console.log(result)
+          var createdAt = result.createdAt.substring(0,16)
+          
           var object = {}
           object = {
             id: result.id,
             title: result.attributes.title,
             content: result.attributes.content,
             read: result.attributes.read_num,
-            time: result.createdAt,
+            time: createdAt,
             icon: result.changed.publisher.userPic,
             memberName: result.changed.publisher.nickName,
           }

@@ -203,7 +203,6 @@ Page({
           }
         }
         //在这里设置setData
-        console.log("已读成员", readUser, "未读成员", unreadUser)
         that.setData({
           read: readUser,
           noread: unreadUser

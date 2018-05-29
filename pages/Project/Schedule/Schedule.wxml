@@ -1,34 +1,47 @@
 <!--pages/Project/Schedule/Schedule.wxml-->
 <view class='Schedule-container'>
 
-  <block wx:for="{{Schedule}}">
-      <block wx:if="{{item.month}}">
-      <!-- 标题 -->
-          <view class='title'>{{item.month}}</view>
-      </block>
-      <block wx:else>
-          <!-- 列表项 -->
-          <view class='item' bindtap='showScheduleDetail'>
-            <view class='item-first'>
-              <view class='item-time'>{{item.daystart}}</view>
-              <view class='item-connect'>|</view>
-              <view class='item-time'>{{item.dayend}}</view>
-            </view>
-            <view class='item-second'>
-              <view class='item-title'>{{item.title}}</view>
-            </view>
-            <view class='item-third'>
-              <block wx:for="{{item.task}}">
-                <view class='item-text'>任务{{item.id}}：{{item.content}}</view>
-              </block>
-            </view>
-          </view>
-      </block>
-  </block>
+  <!-- 无内容 -->
+  <view style='display:{{Announcement.length==0? "":"none"}}'>
+    <view class='noitem'>
+      <image class='noitem-icon' src='/img/noSchedule.png'></image>
+      <view class='noitem-title'>发布日程</view>
+      <view class='noitem-content'>让所有成员都能了解项目的时间推进</view>
+      <button class='noitem-create' bindtap='createSchedule' size='default'>创建日程</button>
+    </view>
+  </view>
 
-  <!-- 添加图标 -->
-  <image class='buildicon' bindtap='createSchedule' src='/img/create.png'></image>
+  <!-- 有内容 -->
+  <view style='display:{{Announcement.length==0? "none":""}}'>
+    <block wx:for="{{Schedule}}">
+        <block wx:if="{{item.month}}">
+        <!-- 标题 -->
+            <view class='title'>{{item.month}}</view>
+        </block>
+        <block wx:else>
+            <!-- 列表项 -->
+            <view class='item' bindtap='showScheduleDetail'>
+              <view class='item-first'>
+                <view class='item-time'>{{item.daystart}}</view>
+                <view class='item-connect'>|</view>
+                <view class='item-time'>{{item.dayend}}</view>
+              </view>
+              <view class='item-second'>
+                <view class='item-title'>{{item.title}}</view>
+              </view>
+              <view class='item-third'>
+                <block wx:for="{{item.task}}">
+                  <view class='item-text'>任务{{item.id}}：{{item.content}}</view>
+                </block>
+              </view>
+            </view>
+        </block>
+    </block>
 
+    <!-- 添加图标 -->
+    <image class='buildicon' bindtap='createSchedule' src='/img/create.png'></image>
+
+  </view>
 
 
 </view>

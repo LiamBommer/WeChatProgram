@@ -85,3 +85,35 @@
   width: 80rpx;
   height: 80rpx;
 }
+
+
+.idea-container .noitem{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:40rpx;
+}   
+
+.idea-container .noitem .noitem-icon{
+  width:150rpx;
+  height:150rpx;
+}
+
+.idea-container .noitem  .noitem-title{
+  font-size: 40rpx;
+  color: #888888;
+  margin-top:20rpx;
+}
+
+.idea-container .noitem  .noitem-content{
+  font-size: 30rpx;
+  color: #b2b2b2;
+  margin-top:10rpx;
+}
+
+.idea-container .noitem  .noitem-create{
+  color: #fff;
+  background: #09BB07;
+  margin-top: 40rpx;
+}

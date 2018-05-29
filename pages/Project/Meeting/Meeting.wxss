@@ -5,6 +5,39 @@
   flex-direction: column;
 }
 
+
+.Meeting-container .noitem{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:260rpx;
+}   
+
+.Meeting-container .noitem .noitem-icon{
+  width:130rpx;
+  height:130rpx;
+}
+
+.Meeting-container .noitem  .noitem-title{
+  font-size: 40rpx;
+  color: #888888;
+  margin-top:20rpx;
+}
+
+.Meeting-container .noitem  .noitem-content{
+  font-size: 30rpx;
+  color: #b2b2b2;
+  margin-top:10rpx;
+}
+
+.Meeting-container .noitem  .noitem-create{
+  color: #fff;
+  background: #09BB07;
+  margin-top: 40rpx;
+}
+
+
 .Meeting-container .title{
     color: #888888;
     margin-left: 40rpx;

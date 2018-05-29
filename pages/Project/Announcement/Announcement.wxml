@@ -1,26 +1,36 @@
 <!--pages/Announcement/Announcement.wxml-->
 <view class='Announcement-container'>
-
-  <block wx:for="{{Announcement}}">
-      <!-- 列表项 -->
-      <view class='item'>
-        <!-- 列表左 -->
-        <view class='item-first' bindtap='showAnnouncementDetail'data-index="{{index}}">
-          <image class='item-icon' src='{{item.icon}}'></image>
-          <view class='item-text'>
-            <view class='item-title'>{{item.title}}</view>
-            <view class='item-content'>{{item.content}}</view>
+  <!-- 无内容 -->
+  <view style='display:{{Announcement.length==0? "":"none"}}'>
+    <view class='noitem'>
+      <image class='noitem-icon' src='/img/noAnnouncement.png'></image>
+      <view class='noitem-title'>发布公告</view>
+      <view class='noitem-content'>发布公告后，所有参与者都会收到通知</view>
+      <button class='noitem-create' bindtap='createAnnoun' size='default'>创建公告</button>
+    </view>
+  </view>
+  <!-- 有内容 -->
+  <view style='display:{{Announcement.length==0? "none":""}}'>
+      <block wx:for="{{Announcement}}">
+          <!-- 列表项 -->
+          <view class='item'>
+            <!-- 列表左 -->
+            <view class='item-first' bindtap='showAnnouncementDetail'data-index="{{index}}">
+              <image class='item-icon' src='{{item.icon}}'></image>
+              <view class='item-text'>
+                <view class='item-title'>{{item.title}}</view>
+                <view class='item-content'>{{item.content}}</view>
+              </view>
+            </view>
+            <!-- 列表右 -->
+            <view class='item-second'>
+              <view class='item-time'>{{item.time}}</view>
+              <view class='item-read'>{{item.read}}人已读</view>
+            </view>
           </view>
-        </view>
-        <!-- 列表右 -->
-        <view class='item-second'>
-          <view class='item-time'>{{item.time}}</view>
-          <view class='item-read'>{{item.read}}人已读</view>
-        </view>
-      </view>
-  </block>
+      </block>
 
-  <!-- 添加图标 -->
-  <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image>
-
+      <!-- 添加图标 -->
+      <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image>
+  </view>
 </view>
