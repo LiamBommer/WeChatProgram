@@ -107,7 +107,7 @@ function getTasks(listId){
  * （函数内还默认会获取第一个看板的所有任务）
  */
 function getTaskLists(projId){
-
+ 
   var that = this
   var TaskList = Bmob.Object.extend('task_list')
   var tasklistQuery = new Bmob.Query(TaskList)
