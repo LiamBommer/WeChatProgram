@@ -1,8 +1,8 @@
 //model/taskChat.js
 var Bmob = require('../utils/bmob.js')
-var BSI = require('../utils/bmobSocketIo.js')
-var BmobSocketIo = new BSI("acb853b88395063829cae5f88c29fb82")
-console.log(BmobSocketIo)
+// var BSI = require('../utils/bmobSocketIo.js')
+// var BmobSocketIo = new BSI("acb853b88395063829cae5f88c29fb82")
+// console.log(BmobSocketIo)
 /**
  * 存储聊天内容
  */

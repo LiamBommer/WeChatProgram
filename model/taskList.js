@@ -115,7 +115,7 @@ function getTaskLists(projId){
   //查询所有的任务列表
   var taskLists = []
   tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
-  tasklistQuery.equalTo('proj_id')
+  tasklistQuery.equalTo('proj_id', projId)
   tasklistQuery.find({
     
     success: function(results){
