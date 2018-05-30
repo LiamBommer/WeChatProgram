@@ -18,7 +18,7 @@ Page({
 
     //任务列表
     tasklist: [
-      
+
     ],
 
     //公告列表
@@ -384,7 +384,6 @@ Page({
         console.log('results number: '+results.length)
         //获取第一个任务看板的任务
         for(var i=0; i<results.length; i++) {
-          console.log('listId from results[i]'+results[i].id)
           that.getTasks(results[i].id, i, results)
         }
 
@@ -445,9 +444,8 @@ Page({
         that.setData({
           tasklist: tasklists
         })
-        that.update()
-        console.log("This's tasklists: ")
-        console.log(that.data.tasklist)
+        // console.log("This's tasklists: ")
+        // console.log(that.data.tasklist)
 
       },
       error: function (error) {
