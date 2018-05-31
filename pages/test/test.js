@@ -75,8 +75,9 @@ Page({
    // test.addTaskRecord("bcb7155f39","Mr.Li","mrli在测试record")
     //test.getTaskRecord("bcb7155f39")
     //test.getTaskLists("3d3525ec0f")
-     test.makeProjectFirst("3d3525ec0f",true)
-   
+     //test.makeProjectFirst("3d3525ec0f",true)
+     //test.cancelProjectFirst("3d3525ec0f", false)
+     //test.transferProject("05b1b947d7", "Mr.Li", "46afed01fb","5b2cad79f6")   
 
   },
 

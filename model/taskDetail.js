@@ -672,7 +672,23 @@ function deleteSubTask(subTaskId, userName, subTaskTitle) {
     }
   })
 }
+/**
+ * 获取某个任务的基本信息
+ */
+function getTaskDetail(taskId){
 
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  taskQuery.get(taskId,{
+    success: function(result){
+      //成功
+    },
+    error: function(error){
+      //失败
+    }
+  })
+}
 //下面是发布函数用的，你们不用复制
 module.exports.getTaskMember = getTaskMember
 module.exports.addNotiTime = addNotiTime
