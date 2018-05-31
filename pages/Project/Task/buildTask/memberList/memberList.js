@@ -9,30 +9,7 @@ Page({
     MemberId: "",
     //项目成员
     ProjectMember: [
-      {
-        id: "",
-        icon: "/img/me.png",
-        name: '帅涛',
-        checked: false
-      },
-      {
-        id: "",
-        icon: "/img/me.png",
-        name: '钢铁侠',
-        checked: false
-      },
-      {
-        id: '',
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: false,
-      },
-      {
-        id: '',
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: false,
-      },
+      
     ],
 
 
@@ -89,6 +66,9 @@ Page({
     for (var i in memberList){
       memberList[i].checked = false
     }
+
+    console.log('Member list: '+memberList)
+
     that.setData({
       ProjectMember: memberList,
     });
