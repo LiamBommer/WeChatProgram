@@ -119,7 +119,7 @@ function getProjectDetail(projId){
  * @parameter projId项目id, memberIds 成员id数组
  * 删除成员
  */
-function deleteProjeceMember(projId, memberIds){
+function deleteProjectMember(projId, memberIds){
 
   var Proj_Member = Bmob.Object.extend("proj_member")
 
@@ -130,40 +130,40 @@ function deleteProjeceMember(projId, memberIds){
     proj_member.set("user_id",memberIds[i])
     objects.push(proj_member)
   }
-
-  Bmob.Object.destroyAll(objects).then(function(){
-    //成功
-
-
-
-  },function(error){
-    //失败
+  //若数组非空，则开始删除成员
+  if(objects != null && objects.length > 0){
+    Bmob.Object.destroyAll(objects).then(function () {
+      //成功
+      //console.log("删除项目成员成功！")
 
 
+    }, function (error) {
+      //失败
 
-  })
-  
 
+
+    })
+  }
 
 }
 
 /**
  * 2018-05-22
- * @parameter 项目id ,isFirst 是否置顶项目
+ * @parameter 项目id ,isFirst 是否置顶项目，设置为true
  * 
  * 置顶项目
  */
 
-function makeProjFirst(projId,isFirst){
+function makeProjectFirst(projId,isFirst){
   var Project = Bmob.Object.extend("project")
   var projectQuery = new Bmob.Query(Project)
 
-  projectQuery.first(projId,{
+  projectQuery.get(projId,{
     success: function(result){
       result.set("is_first", isFirst)
       result.save()
       //成功的情况
-
+      console.log("设置星标项目成功")
 
     },
     error: function(object,error){
@@ -178,8 +178,37 @@ function makeProjFirst(projId,isFirst){
 }
 
 /**
- * 项目负责人的转让
+ * 2018-05-22
+ * @parameter 项目id ,isFirst 是否置顶项目，设置为false
  * 
+ * 取消置顶项目
+ */
+function cancelProjectFirst(projId,isFirst){
+  var Project = Bmob.Object.extend("project")
+  var projectQuery = new Bmob.Query(Project)
+
+  projectQuery.get(projId, {
+    success: function (result) {
+      result.set("is_first", isFirst)
+      result.save()
+      //成功的情况
+
+
+    },
+    error: function (object, error) {
+      //失败的情况
+      //console.log(error)
+
+
+
+
+    }
+  })
+}
+
+/**
+ * 项目负责人的转让
+ * （内部用到函数updateMemberLeader）
  */
 function transferProject(projId, newleaderName,newleaderId,oldLeaderId){
 
@@ -187,14 +216,14 @@ function transferProject(projId, newleaderName,newleaderId,oldLeaderId){
   var Project = Bmob.Object.extend("project")
   var projectQuery = new Bmob.Query(Project)
 
-  projectQuery.first(projId,{
+  projectQuery.get(projId,{
     success: function(result){
-      result.set("leader_id",leaderId)
-      result.set("leader_name",leaderName)
+      result.set("leader_id",newleaderId)
+      result.set("leader_name", newleaderName)
       result.save()
 
       //更改新项目成员中的领导属性
-      that.updateMemberLeader(projId, newleaderId, oldLeaderId)
+      updateMemberLeader(projId, newleaderId, oldLeaderId)
       //成功情况
 
 
@@ -219,7 +248,7 @@ function updateMemberLeader(projId, newLeaderId, oldLeaderId){
   var ProjMember = Bmob.Object.extend("proj_member")
   var projmemberQuery = new Bmob.Query(ProjMember)
 
-  ids = [newLeaderId, oldLeaderId]
+  var ids = [newLeaderId, oldLeaderId]
   projmemberQuery.equalTo("proj_id", projId)
   projmemberQuery.containedIn("user_id",ids)
   projmemberQuery.find().then(function (todos) {
@@ -230,10 +259,11 @@ function updateMemberLeader(projId, newLeaderId, oldLeaderId){
         todo.set("is_leader",false)
       }
     })
-    return bmob.Object.saveAll(todos);
+    return Bmob.Object.saveAll(todos);
   }).then(function (todos) {
     // 更新成功
-    console.log("updateMemberLeader","更改新项目成员中的领导成功!")
+    //console.log("updateMemberLeader","更改新项目成员中的领导成功!")
+   
   },
     function (error) {
       // 异常处理
@@ -242,12 +272,117 @@ function updateMemberLeader(projId, newLeaderId, oldLeaderId){
 }
 
 /**
+ * @parameter projId项目id，newName 新的项目名
+ * 修改项目名称
+ */
+function modifyProjectTitle(projId,newName){
+  var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+
+  //修改项目名称
+  projectQuery.get(projId, {
+    success: function (result) {
+      result.set("name", newName)  //修改项目名称
+      result.save()
+      //console.log("项目标题修改成功")
+    },
+    error: function (error) {
+      //项目删除失败
+    }
+  })
+}
+
+/**
+ * @parameter projId项目id，newDescrip 新的项目描述
+ * 修改项目描述
+ */
+function modifyProjectDescrep(projId,newDescrip){
+  var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+
+  //修改项目描述
+  projectQuery.get(projId, {
+    success: function (result) {
+      result.set("desc", newDescrip)  //修改项目描述
+      result.save()
+      //console.log("项目描述修改成功")
+    },
+    error: function (error) {
+      //项目删除失败
+    }
+  })
+}
+
+/**
+ * 修改项目图片
+ */
+function modifyProjcetImg(projId){
+
+  var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+
+  wx.chooseImage({
+    count: 1, // 默认9
+    sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+    success: function (res) {
+      var tempFilePaths = res.tempFilePaths;
+      if (tempFilePaths.length > 0) {
+        var name = "1.jpg";//上传的图片的别名，建议可以用日期命名
+        var file = new Bmob.File(name, tempFilePaths);
+        file.save().then(function (res) {
+
+          //res.url()是上传图片后的 url
+          //console.log(res.url());
+          //更改项目图片
+          projectQuery.get(projId,{
+            success: function(result){
+              result.set('img_url',res.url())
+              result.save() 
+
+
+
+
+
+
+
+            }
+          })
+        }, function (error) {
+          console.log(error);
+        })
+      }
+
+    }
+  })
+}
+/**
+ * @parameter projId项目id 
  * 退出/解散项目
+ * 利用了字段is_delete 来判断项目是否被删除。
+ * 额，这个函数等我把你们的分支里面的某些project的函数添加了一行代码后
+ * ，我告诉你们加的时候再加吧。么么哒。
  * 
  */
-function deletePoject(projId,leaderId){
-  //涉及的东西挺多的，以后再弄
-
+function deletePoject(projId){
   
+  var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+  
+  //将 project 表的 is_delete 字段修改为true
+  projectQuery.get(projId,{
+    success: function(result){
+      result.set("is_delete",true)  //删除项目。不可修复。
+      result.save()
+      //console.log("项目删除成功")
+    },
+    error: function(error){
+      //项目删除失败
+    }
+  })
 }
 module.exports.getProjectDetail = getProjectDetail
+module.exports.deleteProjectMember = deleteProjectMember
+module.exports.makeProjectFirst = makeProjectFirst
+module.exports.cancelProjectFirst = cancelProjectFirst
+module.exports.transferProject = transferProject
