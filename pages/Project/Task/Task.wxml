@@ -1,45 +1,51 @@
 <!--pages/Task/Task.wxml-->
 <view class='Task-container'>
 
-   <swiper class='swiper' indicator-dots="true" current="{{currentItem}}" bindchange='onSlideChangeEnd'>
+   <swiper class='swiper' indicator-dots="true" current="{{currentItem}}" bindchange='onSlideChangeEnd'skip-hidden-item-layout='true' next-margin='60rpx' >
         <!-- 任务列表 -->
+       
         <block wx:for="{{tasklist}}" wx:key="{{objectId}}">
           <swiper-item>
-              <view class='task-container'>
-                <!-- 标题 -->
-                <view class='tasktitle'>
-                    <input class='title' value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/>
-                    <image class='more' src='/img/more.png' bindtap='Taskmore'></image>
-                </view>
-                <!-- 任务项 -->
-                  <!-- 只显示本list_id下的任务 -->
-                  <!-- CODE HERE -->
-                <block wx:for="{{tasks}}" wx:key="{{objectId}}">
-                  <view class='taskitem' bindtap='showTask'>
-                      <!-- 内容上部分 -->
-                      <view class='taskitem-top'>
-                          <checkbox class='item-checkbox'/>
-                          <view class='task'>{{item.title}}</view>
-                      </view>
-                      <!-- 内容下部分 -->
-                      <view class='taskitem-bottom'>
-                          <view class='taskicon'>
-                              <block wx:if="{{item.has_sub}}">
-                                  <image class='icon' src='/img/task_list.png'></image>
-                              </block>
-                          </view>
-                          <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
-                          <view class='tasktime-{{item.timeStatus}}'>{{item.end_time}} 截止</view>
-                      </view>
+                <view class='task-container'>
+                  <!-- 标题 -->
+                  <view class='tasktitle'>
+                      <input class='title' placeholder="输入任务列表名..." value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/>
+                      <image class='more' src='/img/more.png' bindtap='Taskmore'></image>
                   </view>
-                </block>
-                <!-- 添加任务 -->
-                <view class='addTask' bindtap='createTask' data-list-id='{{item.objectId}}'>
-                    <image class='addTask-icon' src='/img/add.png'></image>
-                    <view class='addTask-text'>添加任务</view>
+          
+                  <!-- 任务项 -->
+                    <!-- 只显示本list_id下的任务 -->
+                    <!-- CODE HERE -->
+              <scroll-view scroll-y="true" style="height: 900rpx">
+                  <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
+                    <view class='taskitem' bindtap='showTask'>
+                        <!-- 内容上部分 -->
+                        <view class='taskitem-top'>
+                            <checkbox class='item-checkbox'/>
+                            <view class='task'>{{tasks.title}}</view>
+                        </view>
+                        <!-- 内容下部分 -->
+                        <view class='taskitem-bottom'>
+                            <view class='taskicon'>
+                                <block wx:if="{{tasks.has_sub}}">
+                                    <image class='icon' src='/img/task_list.png'></image>
+                                </block>
+                            </view>
+                            <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
+                            <block wx:if="{{tasks.end_time.length != 0}}">
+                              <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
+                            </block>
+                        </view>
+                    </view>
+                  </block>
+                  <!-- 添加任务 -->
+                  <view class='addTask' bindtap='createTask' data-list-id='{{item.objectId}}'>
+                      <image class='addTask-icon' src='/img/add.png'></image>
+                      <view class='addTask-text'>添加任务</view>
+                  </view>
+               </scroll-view>
                 </view>
-              </view>
-          </swiper-item>
+            </swiper-item>
         </block>
    </swiper>
 </view>

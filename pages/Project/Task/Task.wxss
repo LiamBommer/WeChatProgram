@@ -5,14 +5,14 @@
 .swiper{
   height: 1050rpx;
   width: 100%;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
 }
 
 .Task-container .task-container{
   border-radius: 10rpx;
   height: 960rpx;
   width: 690rpx;
-  margin-top: 30rpx;
-  margin-left: 30rpx;
   display: flex;
   flex-direction: column;
   background: #EDEDED;
@@ -22,8 +22,8 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   margin-top: 16rpx;
    margin-left: 20rpx;
+   height: 100rpx;
 }
 
 .Task-container .task-container .tasktitle .title{
@@ -79,7 +79,8 @@
    margin-right: 10rpx;
    line-height: 45rpx;
    padding: 0rpx 6rpx;
-   font-size: 24rpx
+   font-size: 24rpx;
+   height:45rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -89,7 +90,8 @@
    margin-right: 10rpx;
    line-height: 45rpx;
    padding: 0rpx 6rpx;
-   font-size: 24rpx
+   font-size: 24rpx;
+   height:45rpx;
 }
 
 .Task-container .task-container .addTask{
@@ -101,6 +103,7 @@
   color: #888888;
   margin-left: 20rpx;
   margin-top: 30rpx;
+  margin-bottom:10px;
   border: 0.5rpx dashed #b2b2b2;
 }
 
