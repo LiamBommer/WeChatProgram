@@ -14,6 +14,7 @@ var DELETE_NOTI_TIME = "删除了提醒时间"
 var ADD_FEEDBACK_MOD = "添加了反馈模板"
 var MODIFY_FEEDBACK_MOD = "修改了反馈模板"
 
+var DELETE_FEEDBACK_TIME = "删除了反馈时间"
 var ADD_FEEDBACK_TIME = "添加了反馈时间"
 var MODIFY_FEEDBACK_TIME = "修改了反馈时间"
 
@@ -22,9 +23,12 @@ var MODIFY_DESCRIPTION = "修改了任务描述"
 
 var ADD_END_TIME = "添加了截止时间"
 var MODIFY_END_TIME = "修改了截止时间"
+var DELETE_END_TIME = "删除了截止时间"
+
 var ADD_SUB_TASK = "添加了子任务"
 var MODIFY_SUB_TASK = "修改了子任务"
 var REDO_SUB_TASK = "重做了子任务"
+var DELETE_SUB_TASK = "删除了子任务"
 var FINISH_SUB_TASK = "完成了子任务"
 var MODIFY_SUB_TASK_TITLE = "修改了子任务标题"
 
@@ -549,6 +553,124 @@ function getTaskRecord(taskId){
   })
 
   
+}
+
+/**
+ * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * 删除提醒时间
+ */
+function deleteNotiTime(taskId,userName){
+
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  //删除提醒时间
+  taskQuery.get(taskId,{
+    success: function(result){
+      result.set('noti_time','')  //设为‘’ 空
+      result.save()
+      //console.log("删除提醒时间成功")
+      addTaskRecord(taskId,userName,DELETE_NOTI_TIME)
+    },
+    error: function(error){
+
+    }
+  })
+
+}
+
+/**
+ * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * 删除截止时间
+ */
+function deleteEndTime(taskId, userName) {
+
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  //删除截止时间
+  taskQuery.get(taskId, {
+    success: function (result) {
+      result.set('end_time', '')  //设为‘’ 空
+      result.save()
+      //console.log("删除截止时间成功")
+      addTaskRecord(taskId, userName, DELETE_END_TIME)
+    },
+    error: function (error) {
+
+    }
+  })
+}
+
+/**
+ * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * 删除截止时间
+ */
+function deleteFeedbackTime(taskId, userName) {
+
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  //删除反馈时间
+  taskQuery.get(taskId, {
+    success: function (result) {
+      result.set('feedback_time', '')  //设为‘’ 空
+      result.save()
+      //console.log("删除反馈时间成功")
+      addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+    },
+    error: function (error) {
+
+    }
+  })
+}
+
+/**
+ * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * 删除任务
+ */
+function deleteTask(taskId, userName) {
+
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  //删除反馈时间
+  taskQuery.get(taskId, {
+    success: function (result) {
+      result.set('is_delete',true)  //设为‘’ 空
+      result.save()
+      //console.log("删除反馈时间成功")
+      //不用记录操作
+
+    },
+    error: function (error) {
+
+    }
+  })
+}
+
+/**
+ * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
+ * 删除子任务
+ */
+function deleteSubTask(subTaskId, userName, subTaskTitle) {
+
+  var Subtask = Bmob.Object.extend('sub_task')
+  var subtaskQuery = new Bmob.Query(Subtask)
+
+  //删除子任务
+  subtaskQuery.equalTo('objectId',subTaskId)
+  subtaskQuery.destroyAll({
+    success: function () {
+      //删除成功
+      console.log("删除子任务成功！")
+      //记录操作
+      addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+    },
+    error: function (err) {
+      // 删除失败
+    }
+  })
 }
 
 //下面是发布函数用的，你们不用复制
