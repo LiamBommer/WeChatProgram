@@ -119,7 +119,7 @@ function getProjectDetail(projId){
  * @parameter projId项目id, memberIds 成员id数组
  * 删除成员
  */
-function deleteProjeceMember(projId, memberIds){
+function deleteProjectMember(projId, memberIds){
 
   var Proj_Member = Bmob.Object.extend("proj_member")
 
@@ -130,20 +130,20 @@ function deleteProjeceMember(projId, memberIds){
     proj_member.set("user_id",memberIds[i])
     objects.push(proj_member)
   }
-
-  Bmob.Object.destroyAll(objects).then(function(){
-    //成功
-
-
-
-  },function(error){
-    //失败
+  //若数组非空，则开始删除成员
+  if(objects != null && objects.length > 0){
+    Bmob.Object.destroyAll(objects).then(function () {
+      //成功
+      console.log("删除项目成员成功！")
 
 
+    }, function (error) {
+      //失败
 
-  })
-  
 
+
+    })
+  }
 
 }
 
@@ -154,16 +154,16 @@ function deleteProjeceMember(projId, memberIds){
  * 置顶项目
  */
 
-function makeProjFirst(projId,isFirst){
+function makeProjectFirst(projId,isFirst){
   var Project = Bmob.Object.extend("project")
   var projectQuery = new Bmob.Query(Project)
 
-  projectQuery.first(projId,{
+  projectQuery.get(projId,{
     success: function(result){
       result.set("is_first", isFirst)
       result.save()
       //成功的情况
-
+      console.log("设置星标项目成功")
 
     },
     error: function(object,error){
@@ -178,8 +178,37 @@ function makeProjFirst(projId,isFirst){
 }
 
 /**
- * 项目负责人的转让
+ * 2018-05-22
+ * @parameter 项目id ,isFirst 是否置顶项目
  * 
+ * 取消置顶项目
+ */
+function cancelProjectFirst(projId,isFirst){
+  var Project = Bmob.Object.extend("project")
+  var projectQuery = new Bmob.Query(Project)
+
+  projectQuery.get(projId, {
+    success: function (result) {
+      result.set("is_first", isFirst)
+      result.save()
+      //成功的情况
+
+
+    },
+    error: function (object, error) {
+      //失败的情况
+      //console.log(error)
+
+
+
+
+    }
+  })
+}
+
+/**
+ * 项目负责人的转让
+ * （内部用到函数updateMemberLeader）
  */
 function transferProject(projId, newleaderName,newleaderId,oldLeaderId){
 
@@ -234,6 +263,7 @@ function updateMemberLeader(projId, newLeaderId, oldLeaderId){
   }).then(function (todos) {
     // 更新成功
     console.log("updateMemberLeader","更改新项目成员中的领导成功!")
+   
   },
     function (error) {
       // 异常处理
@@ -251,3 +281,6 @@ function deletePoject(projId,leaderId){
   
 }
 module.exports.getProjectDetail = getProjectDetail
+module.exports.deleteProjectMember = deleteProjectMember
+module.exports.makeProjectFirst = makeProjectFirst
+module.exports.cancelProjectFirst = cancelProjectFirst

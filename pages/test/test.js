@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/taskList.js')
+var test = require('../../model/projectDetail.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -27,7 +27,6 @@ Page({
    */
   onLoad: function (options) {
 
-    
 
   },
 
@@ -42,7 +41,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // console.log("开始测试")
+
+     console.log("开始测试")
+     //test.deleteProjectMember("05b1b947d7", ["5b2cad79f6"])
     // // var r = test.getProjectList()
     // test.receiveChatContent()
     // // test.chat("789","987","这是内容")
@@ -56,7 +57,7 @@ Page({
     //     console.log(res.data)
     //   }
     // })
-    test.createTaskList("3d3525ec0f","PKtaskList")
+   // test.createTaskList("3d3525ec0f","PKtaskList")
     //test.createTask("3cdcdef9cf","晚上加鸡腿",["3976149b70"],"2018-05-27 20:00:00")
     //test.getProjectMembers("463161c767")
     //test.getTaskLists("463161c767")
@@ -73,7 +74,10 @@ Page({
     //test.getSubtasks("bcb7155f39")
    // test.addTaskRecord("bcb7155f39","Mr.Li","mrli在测试record")
     //test.getTaskRecord("bcb7155f39")
-    test.getTaskLists("3d3525ec0f")
+    //test.getTaskLists("3d3525ec0f")
+     test.makeProjectFirst("3d3525ec0f",true)
+   
+
   },
 
   /**

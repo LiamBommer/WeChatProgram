@@ -422,7 +422,7 @@ function finishSubTask(subTaskId,is_finish){
   var subtaskQuery = new Bmob.Query(Subtask)
 
   //更改子任务为完成状态
-  subtaskQuery.first(subTaskId,{
+  subtaskQuery.get(subTaskId,{
     success: function(result){
       //成功
       result.set("is_finish", is_finish)
@@ -449,7 +449,7 @@ function redoSubTask(subTaskId,is_finish){
   var subtaskQuery = new Bmob.Query(Subtask)
 
   //更改子任务为完成状态
-  subtaskQuery.first(subTaskId, {
+  subtaskQuery.get(subTaskId, {
     success: function (result) {
       //成功
       result.set("is_finish", is_finish)
@@ -476,7 +476,7 @@ function modifySubTaskTitle(subTaskId, newTitle){
   var subtaskQuery = new Bmob.Query(Subtask)
 
   //更改子任务为完成状态
-  subtaskQuery.first(subTaskId, {
+  subtaskQuery.get(subTaskId, {
     success: function (result) {
       //成功
       result.set("title", newTitle)

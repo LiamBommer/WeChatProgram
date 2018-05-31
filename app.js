@@ -2,11 +2,6 @@
 //初始化bmob SDK
 const Bmob = require('./utils/bmob.js')
 Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
-// var BSI = require('./utils/bmobSocketIo.js')
-// var BmobSocketIo = new BSI("acb853b88395063829cae5f88c29fb82")
-//console.log(Bmob)
-//BmobSocketIo.initialize()
-// console.log(BSI)
 
 App({
 
