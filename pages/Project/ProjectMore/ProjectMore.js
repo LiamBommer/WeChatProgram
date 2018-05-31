@@ -482,7 +482,8 @@ Page({
   //添加任务看板
   taskList.save({
       title: title,
-      proj_id: projId
+      proj_id: projId,
+      is_delete: false
     }, {
         success: function (result) {
           //添加任务看板成功
@@ -515,7 +516,8 @@ Page({
 
     //查询所有的任务列表
     tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
-    tasklistQuery.equalTo('proj_id',projId)
+    tasklistQuery.equalTo('proj_id', projId)
+    tasklistQuery.notEqualTo("is_delete", true)
     tasklistQuery.find({
 
       success: function(results){
