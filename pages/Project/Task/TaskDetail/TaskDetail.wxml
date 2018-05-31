@@ -37,7 +37,7 @@
     </view>
     <view class="item-view">
       <image src='{{icon_project}}'></image>
-      <text class='desc'>鲨鱼派对/项目名</text>
+      <text class='desc'>{{projectName}}/项目名</text>
     </view>
 
     <!-- 内容隐藏 -->

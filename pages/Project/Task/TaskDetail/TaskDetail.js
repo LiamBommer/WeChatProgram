@@ -1,4 +1,6 @@
 // pages/Project/Task/TaskDetail/TaskDetail.js
+
+var Bmob = require('../../../../utils/bmob.js')
 Page({
 
   /**
@@ -6,6 +8,8 @@ Page({
    */
   data: {
     hiddenmodalputTitle: true,//弹出标题模态框
+    projectName:"",//项目名
+    taskId:"",//任务ID
     title: '任务标题',//标题
     inputTitle: '',//输入的标题
     show: false,
@@ -97,6 +101,10 @@ Page({
   },
   //确认  
   confirmTitle: function (e) {
+    var that = this
+    console.log("confirmTitle", that.data.taskId)
+    console.log("confirmTitle", that.data.inputTitle)
+    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle)
     this.setData({
       hiddenmodalputTitle: true,
       title: this.data.inputTitle
@@ -343,6 +351,55 @@ Page({
     })
   },
 
+  /**
+  * 获取某个任务的基本信息
+  */
+  getTaskDetail:function (taskId){
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    taskQuery.get(taskId, {
+      success: function (result) {
+        console.log("任务详情：",result)
+        that.setData({
+          projectName: that.data.projectName,
+          title: result.attributes.title,
+          deadline: result.attributes.end_time,
+        })
+        //成功
+      },
+      error: function (error) {
+        //失败
+      }
+    })
+  },
+
+  /**
+ * 2018-05-29
+ * 更改任务标题
+ */
+  modifyTaskTitle: function (taskId, newTitle) {
+
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    //完成任务
+    taskQuery.get(taskId, {
+      success: function (result) {
+        //成功情况
+        result.set('title ', newTitle)
+        result.save()
+        //记录操作
+        addTaskRecord(taskId, userName, MODIFY_TASK_TITLE) 
+        console.log("modifyTaskTitle:", result)
+
+      },
+      error: function (object, error) {
+        //失败情况
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -363,6 +420,14 @@ Page({
    */
   onShow: function () {
     var that = this;
+    //获取任务详情信息
+    var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
+    var projectName = wx.getStorageSync("Project-name")//项目名
+    that.setData({
+      taskId: taskId,
+      projectName: projectName
+    })
+    that.getTaskDetail(taskId);
       //发送沟通模板
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
@@ -387,6 +452,7 @@ Page({
       wx.clearStorage();
 
   },
+  
 
   /**
    * 生命周期函数--监听页面隐藏

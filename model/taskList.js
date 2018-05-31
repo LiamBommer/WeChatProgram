@@ -115,28 +115,24 @@ function getTaskLists(projId){
   //查询所有的任务列表
   var taskLists = []
   tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
-  tasklistQuery.equalTo('proj_id', projId)
+  tasklistQuery.equalTo('proj_id')
   tasklistQuery.find({
     
     success: function(results){
       //这里设置setdata
-      
+      console.log(results)
       /**
        * that.setData({
             taskList: 
           })
        */
-      console.log("查询出任务列表"+results.length+"条")
-      console.log(results)
+
 
 
 
       //results的第一个是最早创建的
-      if(results != null){
-        var taskListId = results[0].id
-        getTasks(taskListId)  //获取第一个任务看板的任务
-      }
-      
+      var taskListId = results[0].id
+      getTasks(taskListId)  //获取第一个任务看板的任务
 
     },
     error: function(error){

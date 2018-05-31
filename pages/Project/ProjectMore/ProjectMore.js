@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentItem: "",//当前swiper滑块的位置
+    currentItem: 0,//当前swiper滑块的位置
     index: '',//当前任务列表下标
     //隐藏判断
     exitTask: true,
@@ -72,12 +72,6 @@ Page({
       //     },
       //   ],
       // },
-    ],
-
-    // 任务
-    tasks: [
-
-
     ],
 
     //公告列表
@@ -362,11 +356,15 @@ Page({
       url: '../Idea/addIdea/addIdea'
     });
   },
+  
 
   /**
    * 显示任务详情页面
    */
-  showTask: function() {
+  showTask: function(e) {
+    var taskListIndex = this.data.currentItem
+    var index = e.currentTarget.dataset.index
+    wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
     });
@@ -578,6 +576,7 @@ Page({
         }
         console.log('tasks: ')
         console.log(tasks)
+        
 
         // 将任务插入到对应看板列表中
         tasklists[listIndex]['attributes']['tasks'] = []

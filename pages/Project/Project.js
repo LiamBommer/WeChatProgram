@@ -29,6 +29,7 @@ Page({
     var index = e.currentTarget.dataset.index
     wx.setStorageSync("Project-id", this.data.Project[index].id)
     wx.setStorageSync("Project-name", this.data.Project[index].name)
+    console.log("点击项目：",this.data.Project[index].name)
   },
 
   //创建项目

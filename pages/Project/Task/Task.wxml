@@ -18,7 +18,7 @@
                     <!-- CODE HERE -->
               <scroll-view scroll-y="true" style="height: 900rpx">
                   <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
-                    <view class='taskitem' bindtap='showTask'>
+                    <view class='taskitem' bindtap='showTask' data-index="{{index}}">
                         <!-- 内容上部分 -->
                         <view class='taskitem-top'>
                             <checkbox class='item-checkbox'/>

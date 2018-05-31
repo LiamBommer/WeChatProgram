@@ -9,8 +9,8 @@ radio-group{
 }
 
 .icon{
-  width: 60rpx;
-  height: 60rpx;
+  width: 50rpx;
+  height: 50rpx;
   padding-top: 20rpx;
   padding-left: 8rpx;
 }
@@ -22,7 +22,6 @@ radio-group{
   flex-direction: column;
   align-items: center;
   border-right: 1rpx solid #b2b2b2;
-  font-size: 34rpx;
 }
 
 .CommModel-container .leftnav .navitem{
@@ -51,7 +50,7 @@ radio-group{
 .CommModel-container .rightcontent .model{
   width:97.5%;
   display:flex;
-  font-size:30rpx;
+  font-size:32rpx;
   align-items:center;
   justify-content:space-between;
   padding-bottom: 60rpx;
@@ -59,7 +58,6 @@ radio-group{
 
 .CommModel-container .rightcontent .text{
   padding-right: 20rpx;
-  font-size: 40rpx;
 }
 
  .CommModel-container .rightcontent .add{
@@ -67,7 +65,6 @@ radio-group{
   height: 100rpx;
   display: flex;
   align-items: center;
-  font-size: 30rpx;
   color: #888888;
   margin-left: -40rpx;
   border-top: 0.5rpx dashed #b2b2b2;
@@ -100,7 +97,6 @@ radio-group{
   margin-top: 300rpx;
   margin-left: -40rpx;
   padding-bottom: 40rpx;
-  font-size: 34rpx;
 }
 
 .CommModel-container  .rightcontent .button .delete{
