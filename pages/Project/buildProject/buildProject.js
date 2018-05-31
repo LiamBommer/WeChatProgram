@@ -50,6 +50,7 @@ Page({
       leader_id: leader_id,
       leader_name: leader_name,
       is_first: false,
+      is_delete: false,
       img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/05/18/ff3371c040fe5b6380011eb3cb1770a4.png"  //涛哥找的默认图片
     }, {
         success: function (result) {

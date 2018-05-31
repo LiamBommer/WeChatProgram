@@ -72,6 +72,7 @@ Page({
     //查询当前用户所在的所有项目id，默认10条
     memberQuery.select("proj_id")
     memberQuery.equalTo("user_id", user_id)
+    memberQuery.notEqualTo("is_delete",true)
     memberQuery.find().then(function(results) {
       //返回成功
       console.log("共查询到用户所在项目 " + results.length + " 条记录");
