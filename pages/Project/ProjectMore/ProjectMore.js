@@ -627,22 +627,40 @@ Page({
     tasklistQuery.ascending('createdAt')   //最先创建的排序最前面
     tasklistQuery.equalTo('proj_id', projId)
     tasklistQuery.notEqualTo("is_delete", true)
+
+    //第一次默认添加任务看板
+    // var taskList = new TaskList()
+    console.log("taskList", TaskList)
+    // if (taskList)
+    // taskList.save({
+    //   title: "新增",
+    //   proj_id: projId,
+    //   is_delete: false
+    // },
     tasklistQuery.find({
 
       success: function(results){
         //这里设置setdata
         console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
-
+        
         console.log("getTaskLists:",results)
-
         //results的第一个是最早创建的
         var listIndex = 0;
+        console.log('results number: ' + results.length)
 
-        console.log('results number: '+results.length)
-        //获取第一个任务看板的任务
-        for(var i=0; i<results.length; i++) {
-          that.getTasks(results[i].id, i, results)
+        if (results.length == 0) {//第一次进入任务列表
+          results.length = 1
+          // that.setData({
+          //   tasklist: tasklists
+          // })
         }
+        else {
+          //获取第一个任务看板的任务
+          for (var i = 0; i < results.length; i++) {
+            that.getTasks(results[i].id, i, results)
+          }
+        }
+        
 
       },
       error: function(error){

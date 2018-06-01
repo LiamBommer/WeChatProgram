@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    taskId:"",//当前任务ID
     content:"",//内容
   },
 
@@ -19,8 +20,8 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = wx.getStorageSync("TaskDetail-taskId")
     var feedbackMod = content
-    console.log("feedback:", taskId, userName, feedbackMod)
     that.modifyFeedbackMod(taskId, feedbackMod, userName)
+    wx.setStorageSync("FeedBack-content", content)
     wx.navigateBack({
       url: '../TaskDetail',
     })
@@ -79,6 +80,32 @@ Page({
   },
 
   /**
+* 获取某个任务的基本信息
+*/
+  getTaskDetail: function (taskId) {
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    taskQuery.get(taskId, {
+      success: function (result) {
+        //反馈模板
+        console.log("getTaskDetail:",result.attributes.feedback_mod)
+        if (result.attributes.feedback_mod != null && result.attributes.feedback_mod != '') {
+          that.setData({
+            content: result.attributes.feedback_mod,
+          })
+        }
+
+        //成功
+      },
+      error: function (error) {
+        //失败
+      }
+    })
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -97,10 +124,21 @@ Page({
    */
   onShow: function () {
     var that = this
-    var content = wx.getStorageSync("TaskDetail-feedback")
+    var taskId = wx.getStorageSync("TaskDetail-taskId")
     that.setData({
-      content: content
+      taskId: taskId
     })
+    that.getTaskDetail(that.data.taskId)
+    var content = wx.getStorageSync("TaskDetail-feedbackMod")
+    console.log("onshow:",content)
+    if (content != "") {
+      that.setData({
+        content: content
+      })
+    }
+    else{
+      
+    }
   },
 
   /**

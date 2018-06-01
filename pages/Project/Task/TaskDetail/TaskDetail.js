@@ -218,6 +218,12 @@ Page({
 
   // 截止时间
   DeadLineChange: function (e) {
+    var that = this
+    var userName = getApp().globalData.nickName
+    var taskId = that.data.taskId
+    var endTime = e.detail.value
+    that.modifyEndTime(taskId, endTime, userName)
+    
     this.setData({
       deadline: e.detail.value
     })
@@ -229,7 +235,6 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
     var notiTime = e.detail.value
-    console.log(userName)
     that.modifyNotiTime(taskId, notiTime, userName)
     that.setData({
       showRemindTime: true,
@@ -255,16 +260,21 @@ Page({
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
     wx.setStorageSync("TaskDetail-desc", that.data.taskDesc)
+    that.setData({
+      showDescription: true,
+    })
     wx.navigateTo({
       url: './Describe/Describe',
     })
   },
 
-  //回馈模板
+  //反馈模板
   Feedback: function () {
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
-    wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
+    // wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
+    //获取反馈模板
+    wx.setStorageSync("TaskDetail-feedbackMod", that.data.feedbackMod)
     that.setData({
       showFeedbackModel: true,
     })
@@ -274,16 +284,21 @@ Page({
   },
 
   //删除任务
-  DeleteTask: function() {
+  DeleteTask: function () {
+    var that = this
+    var taskId = that.data.taskId
     wx.showModal({
       title: '提示',
       content: '是否删除该任务',
       success: function (res) {//删除任务
         if (res.confirm) {
-          wx.removeStorageSync("TaskDetail-taskId")
-          wx.navigateBack({
-            url: '../../ProjectMore/ProjectMore',
-          })
+          var userName = getApp().globalData.nickName
+          console.log("DeleteTasktaskId", taskId)
+          console.log("DeleteTaskuserName", userName)
+          that.deleteTask(taskId, userName)
+          // wx.navigateBack({
+          //   url: '../../ProjectMore/ProjectMore',
+          // })
         }
         else if (res.cancel) {
         }
@@ -439,7 +454,6 @@ Page({
           projectName: that.data.projectName,
           title: result.attributes.title,
           deadline: result.attributes.end_time,
-
         })
         //提醒时间
         if (result.attributes.noti_time != null && result.attributes.noti_time!=''){
@@ -459,7 +473,7 @@ Page({
         if (result.attributes.feedback_mod != null && result.attributes.feedback_mod != '') {
           that.setData({
             showFeedbackModel: true,
-            feedbackMod: result.attributes.feedback_mod,
+            feedback_mod: result.attributes.feedback_mod,
           })
         }
         //任务描述
@@ -606,10 +620,10 @@ Page({
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
-        result.set('end_time ', endTime)
+        result.set('end_time', endTime)
         result.save()
         //记录操作
-        addTaskRecord(taskId, userName, MODIFY_END_TIME)
+        that.addTaskRecord(taskId, userName, MODIFY_END_TIME)
       },
       error: function (object, error) {
         //失败情况
@@ -666,35 +680,36 @@ Page({
         //失败情况
       }
     })
-  }
-,
-
-  
+  },
 
   /**
- *  @parameter taskId任务id，feedbackMod反馈时间，userName操作人的昵称（用来存在历史操作记录表用）
- * 修改反馈模板
- * 
+ * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * 删除任务
  */
-  modifyFeedbackMod: function (taskId, feedbackMod, userName) {
+  deleteTask:function (taskId, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
-    //添加反馈模板
+    //删除反馈时间
     taskQuery.get(taskId, {
       success: function (result) {
-        //成功情况
-        result.set('feedback_mod ', feedbackMod)
+        result.set('is_delete', true)  //设为‘’ 空
         result.save()
-        //记录操作
-        addTaskRecord(taskId, userName, MODIFY_FEEDBACK_MOD)
+        //console.log("删除反馈时间成功")
+        //不用记录操作
+        console.log("deleteTask")
+        wx.removeStorageSync("TaskDetail-taskId")
       },
-      error: function (object, error) {
-        //失败情况
+      error: function (error) {
+
       }
     })
   },
+
+
+  
+
 
 
   /**
@@ -724,19 +739,23 @@ Page({
     //获取任务详情信息
     that.setData({
       taskId: wx.getStorageSync("ProjectMore-Task-id"),
-      member: projectMember
-      // projectName: wx.getStorageSync("Project-name")
+      member: projectMember,
+      projectName: wx.getStorageSync("Project-name")
     })
-    console.log("onshow:")
-    console.log(wx.getStorageSync("ProjectMore-Task-id"))
-    console.log(wx.getStorageSync("Project-name"))
-    that.getTaskDetail(wx.getStorageSync("ProjectMore-Task-id"));
+    that.getTaskDetail(taskId);
 
     //获取任务成员
-    // console.log("onshow:")
-    // console.log(taskId)
-    // console.log(leaderId)
-    // that.getTaskMember(taskId, leaderId)
+    console.log("onshow:")
+    console.log("taskId:",taskId)
+    console.log("leaderId:",leaderId)
+    that.getTaskMember(taskId, leaderId)
+
+    //反馈模板
+    var feedbackMod = wx.getStorageSync("FeedBack-content")
+    console.log("Feedback:", feedbackMod)
+    that.setData({
+      feedbackMod: feedbackMod
+    })
 
     //发送沟通模板
       var scrollTop = that.data.scrollTop;
@@ -775,7 +794,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    //  wx.removeStorageSync("FeedBack-content")
   },
 
   /**
