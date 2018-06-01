@@ -12,7 +12,7 @@ var Bmob = require('../utils/bmob.js')
  * 成功返回创建项目的id， 失败返回"fail"
  */
 function buildProject(title, desc){
-
+ 
   var Project = Bmob.Object.extend("project")
   var project = new Project()
   var currentUser = Bmob.User.current()
