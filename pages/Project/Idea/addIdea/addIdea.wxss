@@ -1,0 +1,12 @@
+.content-view {
+  min-height: 460rpx;
+  width: 100%;
+  padding-top: 10rpx;
+  border-bottom: 2rpx solid #f2f2f2;
+}
+
+.content-view .content {
+  font-size: 40rpx;
+  /* height: 100%; */
+  padding: 20rpx 0rpx;
+}

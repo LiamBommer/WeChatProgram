@@ -1,0 +1,41 @@
+<!-- addSchedule.wxml -->
+<view class="schedule-container">
+  <form bindsubmit='BuildSchedule'>
+      <view class='view-container'>
+        <view class='title-view ver-align'>
+          <input class='title' name='title' placeholder='日程内容'/>
+        </view>
+          <view class="item-view ver-align">
+            <image src='{{icon_deadline}}'></image>
+            <picker class='desc' name='startTime' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+                <view>
+                  {{stattime}} 开始
+                </view>
+            </picker>
+          </view>
+          <view class="item-view ver-align">
+            <image src='{{icon_deadline}}'></image>
+            <picker class='desc' name='endTime' mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+                <view>
+                  {{deadline}} 截止
+                </view>
+            </picker>
+          </view>
+          <view class="item-view task-view ver-align">
+            <view class='ver-align'>
+              <image src='{{icon_task_list}}'></image>
+              <text class='desc'>关联任务</text>
+            </view>
+            <image src='{{icon_add}}' bindtap='connectTask'></image>
+          </view>
+          <block wx:for="{{connectTask}}">
+            <view class="item-view ver-align space-between">
+              <text >{{item.name}}</text>
+              <image src='{{item.icon}}'></image>
+            </view>
+          </block>
+      </view>
+
+      <button type='primary' size='default' form-type='submit'>完成</button>
+ </form>
+</view>

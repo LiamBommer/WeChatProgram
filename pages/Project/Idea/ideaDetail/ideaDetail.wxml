@@ -1,0 +1,32 @@
+<!-- ideaDetail.wxml -->
+<view class="idea-detail-container">
+
+ <view class='view-container'>
+    <view class='content-view'>
+      <view bindtap='Content' class='content'>
+          点子内容：{{content}}
+      </view>
+       <button class='share' hover-class="share-hover"  open-type="share">
+          <image src='{{icon_share}}'></image>
+       </button>
+    </view>
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='{{icon_task_list}}'></image>
+        <text class='desc' >关联任务</text>
+      </view>
+      <image src='{{icon_add}}'bindtap='connectTask'></image>
+    </view>
+     <block wx:for="{{connectTask}}">
+          <view class="item-view ver-align space-between">
+            <text >{{item.name}}</text>
+            <image src='{{item.icon}}'></image>
+          </view>
+      </block>
+    <view class="item-view">
+      <image src='{{icon_close}}'></image>
+      <text class='desc delete-text 'bindtap='Delete'>删除点子</text>
+    </view>
+ </view>
+
+</view>

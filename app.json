@@ -1,12 +1,86 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/Project/Project",
+    "pages/Project/ProjectMore/ProjectMore",
+    "pages/Project/buildProject/buildProject",
+    "pages/Project/ProjectDetail/memberList/memberList",
+    "pages/Project/ProjectDetail/memberList/addMember/addMember",
+    "pages/Project/ProjectDetail/ProjectDetail",
+    "pages/Project/ProjectDetail/ProjectBelong/ProjectBelong",
+    "pages/Project/Meeting/Meeting",
+    "pages/Project/Meeting/meetingDetail/meetingDetail",
+    "pages/Project/Meeting/meetingDetail/Content/Content",
+    "pages/Project/Meeting/meetingDetail/Record/Record",
+    "pages/Project/Meeting/meetingDetail/memberList/memberList",
+    "pages/Project/Meeting/addMeeting/addMeeting",
+    "pages/Project/Meeting/addMeeting/memberList/memberList",
+    "pages/Project/Task/Task",
+    "pages/Project/Task/buildTask/buildTask",
+    "pages/Project/Task/buildTask/memberList/memberList",
+    "pages/Project/Task/buildChildTask/buildChildTask",
+    "pages/Project/Task/buildChildTask/memberList/memberList",
+    "pages/Project/Task/TaskDetail/TaskDetail",
+    "pages/Project/Task/TaskDetail/memberList/memberList",
+    "pages/Project/Task/TaskDetail/memberList/editMemberList/editMemberList",
+    "pages/Project/Task/TaskDetail/memberList/changePrincipal/changePrincipal",
+    "pages/Project/Task/TaskDetail/CommModel/addModel/addModel",
+    "pages/Project/Task/TaskDetail/CommModel/ModelDetail/ModelDetail",
+    "pages/Project/Task/TaskDetail/FeedBack/FeedBack",
+    "pages/Project/Task/TaskDetail/Describe/Describe",
+    "pages/Project/Task/TaskDetail/CommModel/CommModel",
+    "pages/Project/Idea/addIdea/addIdea",
+    "pages/Project/Idea/ideaDetail/ideaDetail",
+    "pages/Project/Idea/ideaDetail/Content/Content",
+    "pages/Project/Idea/IdeaTaskList/IdeaTaskList",
+    "pages/Project/Idea/Idea",
+    "pages/Project/Schedule/addSchedule/addSchedule",
+    "pages/Project/Schedule/scheduleDetail/scheduleDetail",
+    "pages/Project/Schedule/ScheduleTaskList/ScheduleTaskList",
+    "pages/Project/Schedule/Schedule",
+    "pages/Project/Announcement/Announcement",
+    "pages/Project/Announcement/announcementDetail/announcementDetail",
+    "pages/Project/Announcement/addAnnouncement/addAnnouncement",
+    "pages/Project/Announcement/announcementDetail/memberList/memberList",
+    "pages/Project/Announcement/announcementDetail/Content/Content",
+    "pages/Mine/Mine",
+    "pages/Mine/Task/Task",
+    "pages/Mine/Meeting/Meeting",
+    "pages/Mine/Idea/Idea",
+    "pages/Notification/Notification",
+    "pages/memberList/memberList",
+    "pages/logs/logs",
+    "pages/test/test",
+    "test/test"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "团队协作应用",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "selectedColor": "#09BB07",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/Project/Project",
+        "iconPath": "img/project.png",
+        "selectedIconPath": "img/project_selected.png",
+        "text": "项目"
+      },
+      {
+        "pagePath": "pages/Notification/Notification",
+        "iconPath": "img/notification.png",
+        "selectedIconPath": "img/notification_selected.png",
+        "text": "通知"
+      },
+      {
+        "pagePath": "pages/Mine/Mine",
+        "iconPath": "img/me.png",
+        "selectedIconPath": "img/me_selected.png",
+        "text": "我"
+      }
+    ]
   }
 }

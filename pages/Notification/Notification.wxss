@@ -1,0 +1,53 @@
+/* pages/Notification/Notification.wxss */
+.Announcement-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Announcement-container .item{
+  width: 100%;
+  height: 135rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.Announcement-container .item .item-first{
+  width: 584rpx;
+  display: flex;
+  align-items: center;
+}
+
+.Announcement-container .item .item-first .item-icon{
+   width: 60rpx;
+   height: 60rpx;
+   border-radius: 200rpx;
+   margin-left: 40rpx;
+}
+
+.Announcement-container .item .item-first .item-text{
+   margin-left: 30rpx;
+}
+
+.Announcement-container .item .item-first .item-text .item-title{
+   font-size: 34rpx;
+}
+
+.Announcement-container .item .item-first .item-text .item-content{
+   font-size: 28rpx;
+   color: #888888;
+}
+
+.Announcement-container .item .item-second{
+   font-size: 26rpx;
+   color: #b2b2b2;
+}
+
+.Announcement-container .item .item-second .item-time{
+   font-size: 25rpx;
+}
+
+.Announcement-container .item .item-second .item-read{
+   font-size: 28rpx;
+}

@@ -1,0 +1,83 @@
+<!--pages/Project/Task/TaskDetail/CommModel/CommModel.wxml-->
+<view class='CommModel-container'>
+
+    <!-- 顶部导航栏 -->
+      <view class='leftnav'>
+        <view class='navitem {{exitComment? "nav-select" : ""}}' bindtap='selectComment'>
+          <image class='icon' src='{{exitComment? "/img/comment_selected.png" : "/img/comment.png"}}'></image>
+          <view class='text'>意见</view>
+        </view>
+        <view class='navitem {{exitQuestion? "nav-select" : ""}}' bindtap='selectQuestion'>
+          <image class='icon' src='{{exitQuestion? "/img/question_selected.png" : "/img/question.png"}}'></image>
+          <view class='text'>提问</view>
+        </view>
+        <view class='navitem {{exitLike? "nav-select" : ""}}' bindtap='selectLike'>
+          <image class='icon' src='{{exitLike? "/img/like_selected.png" : "/img/like.png"}}'></image>
+          <view class='text'>点赞</view>
+        </view>
+      </view>
+
+
+      <view class='rightcontent'>
+          <!-- 意见模板 -->
+          <view style='display:{{exitComment? "" : "none"}}'>
+            <radio-group bindchange="radioChange">
+              <block wx:for="{{ModelComment}}">
+                  <view class='model' >
+                    <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                    <radio class='item-radio' value="{{item.index}}"/>
+                  </view>
+              </block>
+            </radio-group>
+              
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          <!-- 提问模板 -->
+          <view style='display:{{exitQuestion? "" : "none"}}'>
+              <radio-group bindchange="radioChange">
+                  <block wx:for="{{ModelQuestion}}">
+                      <view class='model' >
+                        <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                        <radio class='item-radio' value="{{item.index}}"/>
+                      </view>
+                  </block>
+              </radio-group>
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          <!-- 点赞模板 -->
+          <view style='display:{{exitLike? "" : "none"}}'>
+              <radio-group bindchange="radioChange">
+                  <block wx:for="{{ModelLike}}">
+                      <view class='model' >
+                        <view class='text' bindtap='ModelDetail'>{{item.value}}</view>
+                        <radio class='item-radio' value="{{item.index}}"/>
+                      </view>
+                  </block>
+              </radio-group>
+              <!-- 添加模板 -->
+              <view class='add' bindtap='addModel'>
+                  <image class='add-icon' src='/img/add.png'></image>
+                  <view class='add-text'>添加模板</view>
+              </view>
+          </view>
+
+          
+          
+          <view class='button'>
+            <!-- 删除 -->
+            <button class='delete' bindtap='DeleteModel'>删除</button> 
+            <!-- 发送 -->
+            <button class='submit' bindtap='SendModel'>发送</button>
+          </view>
+      </view>
+</view>

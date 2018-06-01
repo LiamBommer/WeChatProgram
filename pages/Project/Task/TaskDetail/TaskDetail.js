@@ -52,6 +52,7 @@ Page({
     feedbacktime: "",
     feedbackMod: "",
     taskDesc: "",
+
     Inputcontent:'',
     scrollTop: 0,//消息定位
     isInputing: false,  // 输入时将图片换成发送按钮
@@ -123,6 +124,7 @@ Page({
 
   },
 
+<<<<<<< HEAD
   //勾选任务
   checkboxChange : function(){
     var that = this
@@ -138,6 +140,11 @@ Page({
     var that = this
     that.setData({
       inputTitle: that.data.title,
+=======
+  //点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function () {
+    this.setData({
+>>>>>>> dev-tao
       hiddenmodalputTitle: false
     })
   },
@@ -147,12 +154,21 @@ Page({
       hiddenmodalputTitle: true,
     });
   },
+<<<<<<< HEAD
 
   //确认  
   confirmTitle: function (e) {
     var that = this
     var userName = getApp().globalData.nickName
     that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
+=======
+  //确认  
+  confirmTitle: function (e) {
+    var that = this
+    console.log("confirmTitle", that.data.taskId)
+    console.log("confirmTitle", that.data.inputTitle)
+    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle)
+>>>>>>> dev-tao
     this.setData({
       hiddenmodalputTitle: true,
       title: this.data.inputTitle
@@ -225,6 +241,7 @@ Page({
 
   // 提醒时间
   RemindTimeChange: function (e) {
+<<<<<<< HEAD
     var that = this
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
@@ -233,12 +250,16 @@ Page({
     that.modifyNotiTime(taskId, notiTime, userName)
     that.setData({
       showRemindTime: true,
+=======
+    this.setData({
+>>>>>>> dev-tao
       remindtime: e.detail.value
     })
   },
 
   // 反馈时间
   FeedBacktimeChange: function(e) {
+<<<<<<< HEAD
     var that = this
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
@@ -246,15 +267,21 @@ Page({
     that.modifyFeedbackTime(taskId, feedBackTime, userName)
     this.setData({
       showFeedbackTime:true,
+=======
+    this.setData({
+>>>>>>> dev-tao
       feedbacktime: e.detail.value
     })
   },
 
   //任务描述
   Describe: function () {
+<<<<<<< HEAD
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
     wx.setStorageSync("TaskDetail-desc", that.data.taskDesc)
+=======
+>>>>>>> dev-tao
     wx.navigateTo({
       url: './Describe/Describe',
     })
@@ -262,12 +289,15 @@ Page({
 
   //回馈模板
   Feedback: function () {
+<<<<<<< HEAD
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
     wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
     that.setData({
       showFeedbackModel: true,
     })
+=======
+>>>>>>> dev-tao
     wx.navigateTo({
       url: './FeedBack/FeedBack',
     })
@@ -280,7 +310,10 @@ Page({
       content: '是否删除该任务',
       success: function (res) {//删除任务
         if (res.confirm) {
+<<<<<<< HEAD
           wx.removeStorageSync("TaskDetail-taskId")
+=======
+>>>>>>> dev-tao
           wx.navigateBack({
             url: '../../ProjectMore/ProjectMore',
           })
@@ -434,6 +467,7 @@ Page({
       success: function (result) {
         console.log("任务详情：",result)
         that.setData({
+<<<<<<< HEAD
           leaderId:result.attributes.leader.id,
           checked: result.attributes.is_finish,
           projectName: that.data.projectName,
@@ -470,6 +504,12 @@ Page({
           })
         }
         
+=======
+          projectName: that.data.projectName,
+          title: result.attributes.title,
+          deadline: result.attributes.end_time,
+        })
+>>>>>>> dev-tao
         //成功
       },
       error: function (error) {
@@ -477,6 +517,7 @@ Page({
       }
     })
   },
+<<<<<<< HEAD
   
   /**
  *添加任务记录
@@ -501,14 +542,21 @@ Page({
         }
       })
   },
+=======
+>>>>>>> dev-tao
 
   /**
  * 2018-05-29
  * 更改任务标题
  */
+<<<<<<< HEAD
   modifyTaskTitle: function (taskId, newTitle, userName) {
 
     var that = this
+=======
+  modifyTaskTitle: function (taskId, newTitle) {
+
+>>>>>>> dev-tao
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
@@ -516,10 +564,18 @@ Page({
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
+<<<<<<< HEAD
         result.set('title', newTitle)
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
+=======
+        result.set('title ', newTitle)
+        result.save()
+        //记录操作
+        addTaskRecord(taskId, userName, MODIFY_TASK_TITLE) 
+        console.log("modifyTaskTitle:", result)
+>>>>>>> dev-tao
 
       },
       error: function (object, error) {
@@ -529,6 +585,7 @@ Page({
   },
 
   /**
+<<<<<<< HEAD
  * @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）
  * 完成任务
  */
@@ -698,6 +755,8 @@ Page({
 
 
   /**
+=======
+>>>>>>> dev-tao
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -716,6 +775,7 @@ Page({
    */
   onShow: function () {
     var that = this;
+<<<<<<< HEAD
     var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
     var projectName = wx.getStorageSync("Project-name")//项目名
     var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
@@ -739,6 +799,17 @@ Page({
     // that.getTaskMember(taskId, leaderId)
 
     //发送沟通模板
+=======
+    //获取任务详情信息
+    var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
+    var projectName = wx.getStorageSync("Project-name")//项目名
+    that.setData({
+      taskId: taskId,
+      projectName: projectName
+    })
+    that.getTaskDetail(taskId);
+      //发送沟通模板
+>>>>>>> dev-tao
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
       var chat = that.data.chat;

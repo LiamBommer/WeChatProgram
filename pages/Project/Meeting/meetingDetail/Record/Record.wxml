@@ -1,0 +1,11 @@
+<!--pages/Project/Task/TaskDetail/CommModel/addModel/addModel.wxml-->
+<view class='ModelDetail-container'>
+   
+   <form bindsubmit='save'>
+   <view class='text'>
+     <textarea name='record' placeholder='填写会议记录...'>{{record}}</textarea>
+   </view>
+
+    <button class='save' form-type='submit'>保存</button>
+  </form>
+</view>

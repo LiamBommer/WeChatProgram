@@ -1,0 +1,10 @@
+<!--pages/Project/Task/TaskDetail/CommModel/ModelDetail/ModelDetail.wxml-->
+<view class='ModelDetail-container'>
+
+   <view class='text'>
+     <textarea>模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库</textarea>
+   </view>
+
+    <button class='save'>保存</button>
+  
+</view>

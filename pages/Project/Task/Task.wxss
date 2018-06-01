@@ -1,0 +1,119 @@
+/* pages/Task/Task.wxss */
+.Task-container{
+}
+
+.swiper{
+  height: 1050rpx;
+  width: 100%;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+}
+
+.Task-container .task-container{
+  border-radius: 10rpx;
+  height: 960rpx;
+  width: 690rpx;
+  display: flex;
+  flex-direction: column;
+  background: #EDEDED;
+}
+
+.Task-container .task-container .tasktitle{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-left: 20rpx;
+   height: 100rpx;
+}
+
+.Task-container .task-container .tasktitle .title{
+   font-size: 28rpx;
+}
+
+.Task-container .task-container .tasktitle .more{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.Task-container .task-container .taskitem{
+  border-radius: 10rpx;
+  background: #fff;
+  width: 650rpx;
+  height: 130rpx;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-top{
+  display: flex;
+  margin-left: 20rpx;
+  margin-top: 10rpx;
+  font-size:30rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom{
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .taskicon{
+  margin-left: 40rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .taskicon .icon{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 15rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .tasktime-green{
+   background: #09BB07;
+   color: #fff;
+   border-radius: 10rpx;
+   margin-right: 10rpx;
+   line-height: 45rpx;
+   padding: 0rpx 6rpx;
+   font-size: 24rpx;
+   height:45rpx;
+}
+
+.Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
+   background: #E64340;
+   color: #fff;
+   border-radius: 10rpx;
+   margin-right: 10rpx;
+   line-height: 45rpx;
+   padding: 0rpx 6rpx;
+   font-size: 24rpx;
+   height:45rpx;
+}
+
+.Task-container .task-container .addTask{
+  width: 650rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  font-size: 34rpx;
+  color: #888888;
+  margin-left: 20rpx;
+  margin-top: 30rpx;
+  margin-bottom:10px;
+  border: 0.5rpx dashed #b2b2b2;
+}
+
+.Task-container .task-container .addTask .addTask-icon{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .addTask .addTask-text{
+  margin-left: 17rpx;
+  font-size: 28rpx;
+}

@@ -1,0 +1,132 @@
+/* pages/Project/Project.wxss */
+.Project-container{
+    width:100%; 
+    display: flex;
+    flex-direction: column;
+}
+
+.Project-container .startitle{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 40rpx;
+    margin-bottom:16rpx;
+    font-size: 34rpx;
+    display: flex;
+    align-items: center;
+}
+
+.Project-container .startitle image{
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.Project-container .startitle text{
+  padding-left: 20rpx;
+}
+
+.Project-container .staritem{
+    font-size: 34rpx;
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:15rpx 0rpx;
+}
+
+.Project-container .staritem .staritem-one{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.Project-container .staritem .staritem-two{
+    display: flex;
+    align-items: center;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    height: 100%;
+}
+
+.Project-container .staritem .staritem-one .staritem-icon{
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 10rpx;
+    margin-left:40rpx;
+}
+
+.Project-container .staritem .staritem-one .staritem-text{
+    margin-left: 30rpx;
+}
+
+.Project-container .staritem .staritemmore-icon{
+    
+    width: 40rpx;
+    height: 40rpx;
+}
+
+
+.Project-container .title{
+    color: #888888;
+    margin-left: 40rpx;
+    margin-top: 40rpx;
+    font-size: 30rpx;
+    margin-bottom:16rpx;
+}
+
+.Project-container .item{
+    font-size: 30rpx;
+    background: #fff;
+    color: #000;
+    width: 100%;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:15rpx 0rpx;
+}
+
+.Project-container .item .item-one{
+    display: flex;
+    align-items: center;
+    width: 85%;
+}
+
+.Project-container .item .item-one .item-icon{
+    width: 100rpx;
+    height: 100rpx;
+    margin-left: 40rpx;
+    border-radius: 10rpx;
+}
+
+.Project-container .item .item-one .item-text{
+    margin-left: 30rpx;
+}
+
+.Project-container .item .itemmore-icon{
+    margin-right: 40rpx;
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.Project-container .addProject{
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: #888888;
+  margin-top: 16rpx;
+  border: 0.5rpx dashed #b2b2b2;
+}
+
+.Project-container .addProject .addProject-icon{
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 40rpx;
+}
+
+.Project-container .addProject .addProject-text{
+  margin-left: 30rpx;
+}

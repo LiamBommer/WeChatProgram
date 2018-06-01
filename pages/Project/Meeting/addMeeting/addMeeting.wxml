@@ -1,0 +1,44 @@
+<!-- addMeeting.wxml -->
+<view>
+  <form bindsubmit='BuildMeeting'>
+      <view class='view-container'>
+        <view  class='title-view ver-align'>
+          <input class='title' name='title' placeholder='会议标题'/>
+        </view>
+        <view class='content-view'>
+          <textarea class='content'  name='content' placeholder='会议内容'/>
+        </view>
+
+        <view class="item-view ver-align">
+          <image src='{{icon_deadline}}'></image>
+          <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+              <view>
+                {{stattime}} 开始
+              </view>
+          </picker>
+        </view>
+        <view class="item-view">
+          <image src='{{icon_cycle}}'></image>
+          <picker class='desc' bindchange="bindPickerChange" value="{{index}}" range="{{repeatTime}}">
+              <view class="picker">
+                {{repeatTime[index]}}重复
+              </view>
+          </picker>
+        </view>
+        <view class="item-view ver-align space-between">
+          <view class="ver-align">
+            <image src='{{icon_member}}'></image>
+            <text class='desc'>成员</text>
+          </view>
+          <view class="ver-align" bindtap='memberList'>
+            <block wx:for="{{memberIcon}}">
+               <image class='member' src='{{item}}'></image>
+            </block>
+          </view>
+        </view>
+
+      </view>
+
+      <button type='primary' size='default' form-type='submit'>完成</button>
+  </form>
+</view>

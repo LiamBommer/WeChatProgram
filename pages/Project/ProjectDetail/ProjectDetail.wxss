@@ -1,0 +1,41 @@
+
+.title-view {
+  height: 160rpx;
+}
+
+.title-view .project-img {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 10rpx;
+}
+
+.title-view .title {
+  font-size: 40rpx;
+  margin-left: 30rpx;
+}
+
+.list {
+  margin-top: 40rpx;
+}
+
+.item-view .des {
+  color: #888888;
+  width: 170rpx;
+  margin-right: 10rpx;
+}
+
+.item-view .content {
+  width: 490rpx;
+}
+
+.item-view .intermediate-view {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+image {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+}
