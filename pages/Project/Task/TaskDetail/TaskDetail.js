@@ -50,17 +50,8 @@ Page({
     deadline: '2018-06-01',
     remindtime: "",
     feedbacktime: "",
-<<<<<<< HEAD
-<<<<<<< HEAD
     feedbackMod: "",
     taskDesc: "",
-
-=======
->>>>>>> parent of 3161bd2... 静态
-=======
-    feedbackMod: "",
-    taskDesc: "",
->>>>>>> parent of 0806b78... Revert "静态"
     Inputcontent:'',
     scrollTop: 0,//消息定位
     isInputing: false,  // 输入时将图片换成发送按钮
@@ -450,10 +441,6 @@ Page({
           deadline: result.attributes.end_time,
 
         })
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 0806b78... Revert "静态"
         //提醒时间
         if (result.attributes.noti_time != null && result.attributes.noti_time!=''){
           that.setData({
@@ -482,12 +469,6 @@ Page({
             taskDesc: result.attributes.desc,
           })
         }
-<<<<<<< HEAD
-=======
->>>>>>> parent of 3161bd2... 静态
-=======
-        
->>>>>>> parent of 0806b78... Revert "静态"
         //成功
       },
       error: function (error) {
@@ -756,10 +737,6 @@ Page({
       member: projectMember
       // projectName: wx.getStorageSync("Project-name")
     })
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 0806b78... Revert "静态"
     console.log("onshow:")
     console.log(wx.getStorageSync("ProjectMore-Task-id"))
     console.log(wx.getStorageSync("Project-name"))
@@ -771,9 +748,6 @@ Page({
     // console.log(leaderId)
     // that.getTaskMember(taskId, leaderId)
 
-    //发送沟通模板
-<<<<<<< HEAD
-// =======
 //     //获取任务详情信息
 //     var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
 //     var projectName = wx.getStorageSync("Project-name")//项目名
@@ -783,13 +757,8 @@ Page({
 //     })
 //     that.getTaskDetail(taskId);
 //       //发送沟通模板
-// >>>>>>> dev-tao
-=======
     that.getTaskDetail(taskId);
       //发送沟通模板
->>>>>>> parent of 3161bd2... 静态
-=======
->>>>>>> parent of 0806b78... Revert "静态"
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
       var chat = that.data.chat;

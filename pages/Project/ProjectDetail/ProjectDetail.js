@@ -29,9 +29,6 @@ Page({
     ],
   },
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   /**
  * @author mr.li
  * @parameter projId 项目id
@@ -149,10 +146,7 @@ Page({
 
   },
 
->>>>>>> parent of 3161bd2... 静态
-=======
- 
->>>>>>> parent of 0806b78... Revert "静态"
+
   //点击按钮弹出指定的hiddenmodalput弹出框
   modalinputTitle: function () {
     this.setData({
