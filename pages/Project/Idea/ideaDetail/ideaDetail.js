@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    content: '富民贼牛逼',
+    content: '学长说可以做明星专场！通过学校，老师，新媒体各种渠道去寻找',
     icon_task_list: '/img/task_list.png',
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
@@ -14,12 +14,7 @@ Page({
     connectTask: [//关联任务
       {
         id: '',
-        name: '任务 A',
-        icon: '/img/member.png',
-      },
-      {
-        id: '',
-        name: '任务 B',
+        name: '邀请嘉宾',
         icon: '/img/member.png',
       },
     ],
@@ -80,7 +75,7 @@ Page({
     var that = this
     var content = wx.getStorageSync("ideaDetail-Content-content")
     that.setData({
-      content: content
+      //视频 content: content
     })
 
     var TaskId = wx.getStorageSync("ScheduleTaskList-TaskId")//关联的任务ID

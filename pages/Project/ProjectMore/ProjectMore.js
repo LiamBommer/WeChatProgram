@@ -1,5 +1,7 @@
 // pages/ProjectMore/ProjectMore.js
 var Bmob = require('../../../utils/bmob.js')
+var FINISH_TASK = "完成任务"
+var REDO_TASK = "重做任务"
 
 Page({
 
@@ -9,6 +11,7 @@ Page({
   data: {
     currentItem: 0,//当前swiper滑块的位置
     index: '',//当前任务列表下标
+    check:[],//任务勾选
     //隐藏判断
     exitTask: true,
     exitAnnouncement: false,
@@ -19,59 +22,76 @@ Page({
     //任务列表
     tasklist: [
 
-      "",//任务列表标题
-      // {
-      //   title:'待处理',
-      //   //任务项
-      //   task: [
-      //     {
-      //       title: '任务一',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'green',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //     {
-      //       title: '任务二',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'red',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //   ]
-      // },
-      // {
-      //   title: '执行中',
-      //   //任务项
-      //   task: [
-      //     {
-      //       title: '任务一',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'green',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //     {
-      //       title: '任务二',
-      //       time: '6月1日 18:00',
-      //       timestatus: 'red',
-      //       //任务图标描述
-      //       icon: [
-      //         "/img/me.png",
-      //         "/img/task_list.png",
-      //       ],
-      //     },
-      //   ],
-      // },
+      // "",//任务列表标题
+      {
+        title:'待处理',
+        //任务项
+        tasks: [
+          {
+            is_finish: false,
+            title: '寻找嘉宾',
+            has_sub:'true',
+            end_time: '2018-06-01',
+            timeStatus: 'red',
+          },
+          {
+            is_finish: false,
+            title: '发送邀请函',
+            has_sub: 'true',
+            end_time: '2018-06-02',
+            timeStatus: 'red',
+          },
+          {
+            is_finish: false,
+            title: '物资申请与采购',
+            has_sub: 'true',
+            end_time: '2018-06-03',
+            timeStatus: 'green',
+          },
+          {
+            is_finish: false,
+            title: '场地申请与摆摊',
+            has_sub: 'true',
+            end_time: '2018-06-05',
+            timeStatus: 'green',
+          },
+          {
+            is_finish: false,
+            title: '活动执行',
+            has_sub: 'true',
+            end_time: '2018-06-10',
+            timeStatus: 'green',
+          },
+        ]
+      },
+
+      {
+        title: '已完成',
+        //任务项
+        tasks: [
+          {
+            is_finish: 'true',
+            title: '调研同学们需求',
+            has_sub: 'true',
+            end_time: '2018-05-01',
+            timeStatus: 'green',
+          },
+          {
+            is_finish: 'true',
+            title: '撰写策划书',
+            has_sub: 'true',
+            end_time: '2018-05-07',
+            timeStatus: 'green',
+          },
+          {
+            is_finish: 'true',
+            title: '完成策划书审核',
+            has_sub: 'true',
+            end_time: '2018-05-10',
+            timeStatus: 'green',
+          },
+        ]
+      },
     ],
 
     //公告列表
@@ -99,39 +119,50 @@ Page({
     //日程列表
     Schedule: [
       {
-        month: "2019年5月",
+        month: "2018-05",
       },
       {
-        daystart: "2日",
-        dayend: "3日",
-        title: "召开全体大会",
+        daystart: "18日",
+        dayend: "25日",
+        title: "撰写策划书",
         task: [
-          { id: 1, content: "邀请帅涛 " },
-          { id: 2, content: "邀请帅涛 " },
-          { id: 3, content: "邀请帅涛 " },
+          { id: 1, content: "调研需求 " },
+          { id: 2, content: "开会讨论 " },
+          { id: 3, content: "策划审核 " },
         ],
       },
       {
-        daystart: "2日",
-        dayend: "3日",
-        title: "召开全体大会",
+        daystart: "26日",
+        dayend: "31日",
+        title: "物资申请",
         task: [
-          { id: 1, content: "邀请帅涛 " },
-          { id: 2, content: "邀请帅涛 " },
-          { id: 3, content: "邀请帅涛 " },
+          { id: 1, content: "填写物资申请单 " },
+          { id: 2, content: "审核物资清单" },
+          { id: 3, content: "采购物资" },
         ],
       },
       {
-        month: "2019年5月",
+        month: "2018-06",
       },
       {
-        daystart: "2日",
-        dayend: "3日",
-        title: "召开全体大会",
+        daystart: "1日",
+        dayend: "10日",
+        title: "场地申请",
         task: [
-          { id: 1, content: "邀请帅涛 " },
-          { id: 2, content: "邀请帅涛 " },
-          { id: 3, content: "邀请帅涛 " },
+          { id: 1, content: "填写场地申请单 " },
+          { id: 2, content: "审核场地" },
+          { id: 3, content: "到场踩点" },
+        ],
+      },
+      {
+        daystart: "11日",
+        dayend: "18日",
+        title: "活动进行",
+        task: [
+          { id: 1, content: "邀请嘉宾 " },
+          { id: 2, content: "发邀请函" },
+          { id: 3, content: "清点物资" },
+          { id: 3, content: "审核主持人，PPT" },
         ],
       },
 
@@ -143,22 +174,22 @@ Page({
         month: "2019年5月",
       },
       {
-        day: "2日",
+        day: "22日",
         time: "21:00",
-        content: "第一次面基",
+        content: "策划讨论",
       },
       {
-        day: "2日",
-        time: "21:00",
-        content: "第一次面基",
+        day: "28日",
+        time: "22:30",
+        content: "讨论嘉宾人选",
       },
       {
         month: "2019年6月",
       },
       {
-        day: "2日",
+        day: "1日",
         time: "21:00",
-        content: "第一次面基",
+        content: "讨论活动备案",
       },
     ],
 
@@ -168,23 +199,51 @@ Page({
       {
         icon_avatar: '/img/member.png',
         icon_share: '/img/share.png',
-        username: '绝世产品经理',
-        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
-        task: '关联的任务',
+        username: '点子狂想者',
+        content: '学长说可以做明星专场！通过学校，老师，新媒体各种渠道去寻找。',
+        task: '邀请嘉宾',
       },
       {
         icon_avatar: '/img/member.png',
         icon_share: '/img/share.png',
-        username: '绝世产品经理',
-        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
-        task: '关联的任务',
+        username: '我不是蚂蚁',
+        content: '希望学长说能设计很好看的宣传品，从而一直流传下去',
+        task: '设计宣传品',
       },
       {
         icon_avatar: '/img/member.png',
         icon_share: '/img/share.png',
-        username: '绝世产品经理',
-        content: '灭霸打了一个响指，所有人都灰飞烟灭了，太可怕了，奇异博士为何不用时间宝石制止一下灭霸？因为there was no other way!',
-        task: '关联的任务',
+        username: '组织大佬',
+        content: '这次预热活动就不要搞那么多花里胡哨的东西啦',
+        task: '预热活动',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '患者',
+        content: '宣传品应该加一些复仇者联盟的元素',
+        task: '设计宣传品',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '策划大师',
+        content: '策划的时候应该把握好方向，不能随意乱跑',
+        task: '策划活动',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '钢铁侠',
+        content: '可以借拖车搬物资',
+        task: '活动当天',
+      },
+      {
+        icon_avatar: '/img/member.png',
+        icon_share: '/img/share.png',
+        username: '灭霸',
+        content: 'ppt可以考虑加入灭霸的元素',
+        task: '活动当天',
       },
     ],
 
@@ -197,6 +256,57 @@ Page({
       currentItem: e.detail.current
     })
     console.log(e.detail.current);
+  },
+
+  //点击任务项
+  ClickTask:function(e){
+    var that = this
+    var index = e.currentTarget.dataset.index
+    var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
+    console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
+    that.setData({
+      "that.data.tasklist[0].tasks[0].is_finish": !that.data.tasklist[0].tasks[index].is_finish
+    })
+    console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
+  },
+
+  // 勾选任务
+  checkboxChange: function (e) {
+    // var index = e.detail.value
+    // var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
+    // console.log("checkboxChange",tasklist)
+    // this.setData({
+    //   [tasklist]:false
+    // })
+    // console.log("checkboxChange", this.data.tasklist[0].tasks[index].is_finish)
+
+    //视频
+    // var that = this
+    // var userName = getApp().globalData.nickName
+    // var taskListIndex = that.data.currentItem
+    // var index = e.detail.value
+    // // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
+    // // var checked = that.data.tasklist[taskListIndex].attributes.tasks[index].is_finish
+    // // console.log(checked)
+    // if (index == "")//取消勾选
+    // {
+    //   // var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
+    //   // console.log("taskId", taskId)
+    //   // that.finishTask(taskId, false, userName)
+
+    //   // console.log("取消勾选", taskId, userName)
+    // }
+    // else {//勾选
+    //   var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
+    //   var is_finish = "tasklist["+taskListIndex+"].attributes.tasks["+index+"].is_finish"
+    //   that.setData({
+    //     [is_finish]:true,
+    //     })
+    //   console.log("taskId", taskId)
+    //   that.finishTask(taskId, true, userName)
+    //   console.log("勾选", taskId, userName)
+    // }
+ 
   },
 
   // 修改任务列表名
@@ -362,9 +472,10 @@ Page({
    * 显示任务详情页面
    */
   showTask: function(e) {
-    var taskListIndex = this.data.currentItem
-    var index = e.currentTarget.dataset.index
-    wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
+    // var taskListIndex = this.data.currentItem
+    // var index = e.currentTarget.dataset.index
+    // wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
+    // wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
     });
@@ -420,16 +531,16 @@ Page({
   getAnnouncements:function (projId){
    var that = this
     var Annoucement = Bmob.Object.extend("annoucement")
-  var annoucementQuery = new Bmob.Query(Annoucement)
+      var annoucementQuery = new Bmob.Query(Annoucement)
 
-  var annoucementArr = []  //所有公告数组
+      var annoucementArr = []  //所有公告数组
 
-  //查询出此项目中的所有公告，默认10条
-  annoucementQuery.equalTo("proj_id", projId)
-  annoucementQuery.include("publisher")
-  annoucementQuery.descending("createdDate")  //根据时间降序排列
-  annoucementQuery.find({
-      success: function (results) {
+      //查询出此项目中的所有公告，默认10条
+      annoucementQuery.equalTo("proj_id", projId)
+      annoucementQuery.include("publisher")
+      annoucementQuery.descending("createdDate")  //根据时间降序排列
+      annoucementQuery.find({
+          success: function (results) {
         //console.log("共查询到公告 " + results.length + " 条记录");
         // 循环处理查询到的数据
         for (var i = 0; i < results.length; i++) {
@@ -474,12 +585,12 @@ Page({
  */
   createTaskList:function (projId, title){
   
-    var TaskList = Bmob.Object.extend("task_list")
-  var taskList = new TaskList()
+      var TaskList = Bmob.Object.extend("task_list")
+    var taskList = new TaskList()
 
-  //添加任务看板
-  taskList.save({
-      title: title,
+    //添加任务看板
+    taskList.save({
+        title: title,
       proj_id: projId,
       is_delete: false
     }, {
@@ -580,7 +691,8 @@ Page({
 
         // 将任务插入到对应看板列表中
         tasklists[listIndex]['attributes']['tasks'] = []
-        for(var i in tasks) {
+        for (var i in tasks) {
+          tasks[i]['attributes']['is_finish'] = tasks[i].attributes.is_finish
           tasks[i]['attributes']['objectId'] = tasks[i].id
           tasks[i]['attributes']['createdAt'] = tasks[i].createdAt
           tasks[i]['attributes']['updatedAt'] = tasks[i].updatedAt
@@ -588,10 +700,10 @@ Page({
         }
 
         that.setData({
-          tasklist: tasklists
+          // tasklist: tasklists
         })
-        // console.log("This's tasklists: ")
-        // console.log(that.data.tasklist)
+        console.log("This's tasklists: ")
+        console.log(that.data.tasklist)
 
       },
       error: function (error) {
@@ -620,6 +732,56 @@ Page({
   },
 
   /**
+* @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）
+* 完成任务
+*/
+  finishTask: function (taskId, isFinish, userName) {
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    //完成任务
+    taskQuery.get(taskId, {
+      success: function (result) {
+        //成功情况
+        result.set('is_finish', isFinish)
+        result.save()
+        //记录操作
+        that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+
+      },
+      error: function (object, error) {
+        //失败情况
+      }
+    })
+  },
+
+  /**
+ *添加任务记录
+ */
+  addTaskRecord: function (taskId, userName, record) {
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecord = new TaskRecord()
+
+    //存储任务记录
+    taskrecord.save({
+      user_name: userName,
+      task_id: taskId,
+      record: userName + record
+    }, {
+        success: function (result) {
+          //添加成功
+
+        },
+        error: function (result, error) {
+          //添加失败
+
+        }
+      })
+  },
+
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -638,12 +800,26 @@ Page({
    */
   onShow: function () {
     var that = this
-    
+    wx.startPullDownRefresh()//刷新
+  
     var ProjectId = wx.getStorageSync("Project-id")//获取项目ID
     that.getAnnouncements(ProjectId)//获取公告ID
-    console.log('Page task list opened. ');
     that.getTaskLists(ProjectId);//获取任务ID
-    wx.startPullDownRefresh()//刷新
+    
+
+    // var taskList = that.data.taskList
+    // var taskindex = that.data.currentItem
+    //  console.log("onshow", taskindex)
+    //  if (taskList != undefined) {
+    //    console.log("onshow", taskList)
+    //   if (taskList[taskindex] != "") {//当前任务列表有任务时
+    //     for (var i in taskList[taskindex]) {
+
+    //     }
+    //  }
+    // }
+
+   
 
   },
 

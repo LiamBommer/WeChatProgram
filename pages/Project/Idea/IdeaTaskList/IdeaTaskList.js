@@ -10,19 +10,25 @@ Page({
     //项目成员
     TaskList: [
       {//任务列表
-        title:"待处理",
-        list:[
+        title: "待处理",
+        list: [
           {
             id: "",
             icon: "/img/me.png",
-            name: '任务A',
-            checked: true
+            name: '开会讨论',
+            checked: false
           },
           {
             id: "",
             icon: "/img/me.png",
-            name: '任务B',
-            checked: true
+            name: '策划审核',
+            checked: false
+          },
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '邀请嘉宾',
+            checked: false
           },
         ]
       },
@@ -33,13 +39,7 @@ Page({
           {
             id: "",
             icon: "/img/me.png",
-            name: '任务A',
-            checked: true
-          },
-          {
-            id: "",
-            icon: "/img/me.png",
-            name: '任务A',
+            name: '调研需求',
             checked: true
           },
         ]

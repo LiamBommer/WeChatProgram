@@ -6,16 +6,16 @@ Page({
    */
   data: {
     hiddenmodalputTitle: true,//弹出标题模态框
-    title: '会议标题',//标题
+    title: '策划讨论',//标题
     inputTitle: '',//输入的标题
-    content: "jalkejflskjeflksjdflks ",//会议内容
+    content: " 讨论如何创新活动，增加活动趣味性",//会议内容
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_cycle: '/img/cycle.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
-    stattime: '', //开始时间
-    index: '',//选择重复时间
+    stattime: '2018-05-22 21:00', //开始时间
+    index: '不',//选择重复时间
     repeatTime: ["每天", "每周", "每月", "每年"],
     memberIcon:[
       "/img/create.png",
@@ -125,9 +125,10 @@ Page({
   onShow: function () {
     var that = this
     var content = wx.getStorageSync("meetingDetail-Content-content")
-    that.setData({
-      content: content
-    })
+    //视频
+    // that.setData({
+    //   content: content
+    // })
 
     var icon = wx.getStorageSync("meetingDetail-memberList-icon")
     if(icon == ""){

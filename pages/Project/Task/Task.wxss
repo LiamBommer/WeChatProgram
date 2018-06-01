@@ -40,17 +40,17 @@
   border-radius: 10rpx;
   background: #fff;
   width: 650rpx;
-  height: 130rpx;
   display: flex;
   flex-direction: column;
   margin-top: 20rpx;
   margin-left: 20rpx;
 }
 
+
 .Task-container .task-container .taskitem .taskitem-top{
   display: flex;
-  margin-left: 20rpx;
-  margin-top: 10rpx;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
   font-size:30rpx;
 }
 
@@ -58,8 +58,8 @@
   display: flex;
   justify-content: space-between;
   font-size: 26rpx;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
+  padding-top: 20rpx;
+  padding-left: 20rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .taskicon{
@@ -67,8 +67,8 @@
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .taskicon .icon{
-  width: 30rpx;
-  height: 30rpx;
+  width: 33rpx;
+  height: 36rpx;
   margin-left: 15rpx;
 }
 
@@ -81,6 +81,7 @@
    padding: 0rpx 6rpx;
    font-size: 24rpx;
    height:45rpx;
+   margin-bottom:15rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -92,6 +93,54 @@
    padding: 0rpx 6rpx;
    font-size: 24rpx;
    height:45rpx;
+   margin-bottom:15rpx;
+}
+
+
+.Task-container .task-container .taskitemDone{
+  border-radius: 10rpx;
+  background: #fff;
+  width: 650rpx;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+
+.Task-container .task-container .taskitemDone .taskitem-top{
+  display: flex;
+  margin-left: 20rpx;
+  margin-top: 10rpx;
+  font-size:30rpx;
+}
+
+.Task-container .task-container .taskitemDone .taskitem-top .item-checkbox{
+
+}
+.Task-container .task-container .taskitemDone .taskitem-top .task{
+  color: #888888;
+  text-decoration:line-through;
+}
+
+.Task-container .task-container .taskitemDone .taskitem-bottom{
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.Task-container .task-container .taskitemDone .taskitem-bottom .taskicon{
+  display: none;
+}
+
+.Task-container .task-container .taskitemDone .taskitem-bottom .tasktime-green{
+  display: none;
+}
+
+.Task-container .task-container .taskitemDone .taskitem-bottom .tasktime-red{
+  display: none;
 }
 
 .Task-container .task-container .addTask{
