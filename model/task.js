@@ -21,7 +21,8 @@ function createTask(listId, title, memberIds, endTime){
     leader: leader,  // 数据库关联，用id可以关联一个user
     end_time: endTime,
     is_finish: false,
-    has_sub: false
+    has_sub: false,
+    is_delete: false
   },{
     success: function(result){
       //添加成功
