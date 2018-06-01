@@ -5,9 +5,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    content: "",//内容
   },
 
+  //保存
+  save: function (e) {
+    var that = this
+    var content = e.detail.value.content
+    wx.setStorageSync("ModelDetail-content", content)
+   
+    wx.navigateBack({
+      url: '../TaskDetail',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -26,7 +36,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    console.log("12")
+    wx.getStorage({
+      key: 'CommModel',
+      success: function (res) {
+        var content = res.data;
+        console.log(res.data)
+        that.setData({
+          content: content
+        })
+      }
+    })
+
   },
 
   /**

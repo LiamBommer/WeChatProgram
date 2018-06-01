@@ -701,13 +701,6 @@ Page({
 
 
   /**
-<<<<<<< HEAD
-=======
->>>>>>> dev-tao
-=======
->>>>>>> parent of 3161bd2... 静态
-=======
->>>>>>> parent of 0806b78... Revert "静态"
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -755,8 +748,6 @@ Page({
 //       taskId: taskId,
 //       projectName: projectName
 //     })
-//     that.getTaskDetail(taskId);
-//       //发送沟通模板
     that.getTaskDetail(taskId);
       //发送沟通模板
       var scrollTop = that.data.scrollTop;

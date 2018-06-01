@@ -13,18 +13,18 @@ Page({
     ModelIndex:"",
     //意见模板
     ModelComment: [
-      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
-      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
+      { index: 0, value: "我认为你说得很有道理，但我有一个小小的建议" },
+      { index: 1, value: "哇，说的很好，但我还想补充一下" },
     ],
     //提问模板
     ModelQuestion: [
-      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
-      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
+      { index: 0, value: "这么布置我觉得很好，但我有一个小小的疑问"},
+      { index: 1, value: "不好意思，不是很懂你的意思，可以再说一遍吗？"},
     ], 
     //点赞模板
     ModelLike: [
-      { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
-      { index: 1, value: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
+      { index: 0, value: "哇，说得太好啦，惊呆了" },
+      { index: 1, value: "我觉得你说得很对，我表示认同" },
     ],
   },
 
@@ -210,7 +210,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    var content = wx.getStorageSync("ModelDetail-content")
+    console.log(content)
+    // that.setData({
+    //   "ModelComment[0].value": content
+    // })
   },
 
   /**

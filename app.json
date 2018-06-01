@@ -1,5 +1,8 @@
 {
   "pages":[
+    "pages/Project/Task/TaskDetail/CommModel/CommModel",
+    "pages/Project/Task/TaskDetail/CommModel/ModelDetail/ModelDetail",
+    "pages/Project/Task/TaskDetail/CommModel/addModel/addModel",
     "pages/Project/Project",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/buildProject/buildProject",
@@ -23,11 +26,8 @@
     "pages/Project/Task/TaskDetail/memberList/memberList",
     "pages/Project/Task/TaskDetail/memberList/editMemberList/editMemberList",
     "pages/Project/Task/TaskDetail/memberList/changePrincipal/changePrincipal",
-    "pages/Project/Task/TaskDetail/CommModel/addModel/addModel",
-    "pages/Project/Task/TaskDetail/CommModel/ModelDetail/ModelDetail",
     "pages/Project/Task/TaskDetail/FeedBack/FeedBack",
     "pages/Project/Task/TaskDetail/Describe/Describe",
-    "pages/Project/Task/TaskDetail/CommModel/CommModel",
     "pages/Project/Idea/addIdea/addIdea",
     "pages/Project/Idea/ideaDetail/ideaDetail",
     "pages/Project/Idea/ideaDetail/Content/Content",
