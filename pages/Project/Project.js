@@ -11,7 +11,7 @@ Page({
     StarProject: [
       {
         icon: "/img/logo.png",
-        name: "鲨鱼不排队"
+        name: "学长说系列分享活动"
       }
     ],
     //普通项目
@@ -140,12 +140,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
 <<<<<<< HEAD
+<<<<<<< HEAD
   onLoad: function(options) {
     
   },
 =======
   onLoad: function(options) {},
 >>>>>>> parent of 3161bd2... 静态
+=======
+  onLoad: function (options) {
+    },
+>>>>>>> parent of 0806b78... Revert "静态"
 
   /**
    * 生命周期函数--监听页面初次渲染完成

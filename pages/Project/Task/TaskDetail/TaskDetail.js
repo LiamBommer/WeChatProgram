@@ -1,6 +1,36 @@
 // pages/Project/Task/TaskDetail/TaskDetail.js
 
 var Bmob = require('../../../../utils/bmob.js')
+var FINISH_TASK = "完成任务"
+var REDO_TASK = "重做任务"
+var MODIFY_TASK_TITLE = "更改了任务名称"
+
+var ADD_NOTI_TIME = "添加了提醒时间"
+var MODIFY_NOTI_TIME = "修改了提醒时间"
+var DELETE_NOTI_TIME = "删除了提醒时间"
+
+var ADD_FEEDBACK_MOD = "添加了反馈模板"
+var MODIFY_FEEDBACK_MOD = "修改了反馈模板"
+
+var DELETE_FEEDBACK_TIME = "删除了反馈时间"
+var ADD_FEEDBACK_TIME = "添加了反馈时间"
+var MODIFY_FEEDBACK_TIME = "修改了反馈时间"
+
+var ADD_DESCRIPTION = "添加了任务描述"
+var MODIFY_DESCRIPTION = "修改了任务描述"
+
+var ADD_END_TIME = "添加了截止时间"
+var MODIFY_END_TIME = "修改了截止时间"
+var DELETE_END_TIME = "删除了截止时间"
+
+var ADD_SUB_TASK = "添加了子任务"
+var MODIFY_SUB_TASK = "修改了子任务"
+var REDO_SUB_TASK = "重做了子任务"
+var DELETE_SUB_TASK = "删除了子任务"
+var FINISH_SUB_TASK = "完成了子任务"
+var MODIFY_SUB_TASK_TITLE = "修改了子任务标题"
+
+
 Page({
 
   /**
@@ -8,20 +38,29 @@ Page({
    */
   data: {
     hiddenmodalputTitle: true,//弹出标题模态框
-    projectName:"",//项目名
+    projectName:"学长说系列分享活动",//项目名
     taskId:"",//任务ID
-    title: '任务标题',//标题
+    checked:false,//勾选任务
+    title: '寻找嘉宾',//标题
     inputTitle: '',//输入的标题
+    leaderId:'',//任务负责人ID
+    member:[],//任务成员
+
     show: false,
-    deadline: '',
+    deadline: '2018-06-01',
     remindtime: "",
     feedbacktime: "",
+<<<<<<< HEAD
 <<<<<<< HEAD
     feedbackMod: "",
     taskDesc: "",
 
 =======
 >>>>>>> parent of 3161bd2... 静态
+=======
+    feedbackMod: "",
+    taskDesc: "",
+>>>>>>> parent of 0806b78... Revert "静态"
     Inputcontent:'',
     scrollTop: 0,//消息定位
     isInputing: false,  // 输入时将图片换成发送按钮
@@ -47,11 +86,11 @@ Page({
     //子任务循环列表
     ChildTask:[
       {
-         name:'任务 A',
+         name:'寻找通讯录',
          icon:'/img/member.png',
       },
       {
-        name: '任务 B',
+        name: '筛选嘉宾',
         icon: '/img/member.png',
       },
     ],
@@ -59,31 +98,31 @@ Page({
     //消息循环列表
     taskremind: [
       {
-        text: '帅涛添加了子任务“个人访谈-金哥"',
-        time: '5月2日 20:00',
+        text: '朱宏涛添加了子任务“寻找通讯录"',
+        time: '6月1日 20:00',
       },
       {
-        text: '帅凯添加了子任务“个人访谈-金哥"',
-        time: '5月2日 20:00',
+        text: '朱宏涛添加了子任务“筛选嘉宾"',
+        time: '6月1日 20:00',
       },
     ],
 
     //他人聊天循环列表
     chat: [
       {
-        content: '帅涛太帅了！',
+        content: '嘉宾应该邀请哪种类型呢？',
         icon: '/img/me.png',
         judgemine: false,//其他人发的消息
         judgepictrue: false,//判断输入的是文字还是图片
       },
       {
-        content: '我也觉得！',
+        content: '感觉竞赛类的嘉宾比较有同学喜欢',
         icon: '/img/me.png',
         judgemine: true,//我发的消息
         judgepictrue: false,//判断输入的是文字还是图片
       },
       {
-        content: '长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. 长度测试 Length Test. ',
+        content: '选嘉宾的标准应该是能引起同学们兴趣的',
         icon: '/img/me.png',
         judgemine: true,//我发的消息
         judgepictrue: false,//判断输入的是文字还是图片
@@ -93,9 +132,21 @@ Page({
 
   },
 
+  //勾选任务
+  checkboxChange : function(){
+    var that = this
+    var userName = getApp().globalData.nickName
+    that.finishTask(that.data.taskId, !that.data.checked, userName)
+    // that.setData({
+    //   checked: !this.data.checked
+    // })
+  },
+
   //点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function () {
-    this.setData({
+    var that = this
+    that.setData({
+      inputTitle: that.data.title,
       hiddenmodalputTitle: false
     })
   },
@@ -105,12 +156,12 @@ Page({
       hiddenmodalputTitle: true,
     });
   },
+
   //确认  
   confirmTitle: function (e) {
     var that = this
-    console.log("confirmTitle", that.data.taskId)
-    console.log("confirmTitle", that.data.inputTitle)
-    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle)
+    var userName = getApp().globalData.nickName
+    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
     this.setData({
       hiddenmodalputTitle: true,
       title: this.data.inputTitle
@@ -183,20 +234,36 @@ Page({
 
   // 提醒时间
   RemindTimeChange: function (e) {
-    this.setData({
+    var that = this
+    var userName = getApp().globalData.nickName
+    var taskId = that.data.taskId
+    var notiTime = e.detail.value
+    console.log(userName)
+    that.modifyNotiTime(taskId, notiTime, userName)
+    that.setData({
+      showRemindTime: true,
       remindtime: e.detail.value
     })
   },
 
   // 反馈时间
   FeedBacktimeChange: function(e) {
+    var that = this
+    var userName = getApp().globalData.nickName
+    var taskId = that.data.taskId
+    var feedBackTime = e.detail.value
+    that.modifyFeedbackTime(taskId, feedBackTime, userName)
     this.setData({
+      showFeedbackTime:true,
       feedbacktime: e.detail.value
     })
   },
 
   //任务描述
   Describe: function () {
+    var that = this
+    wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
+    wx.setStorageSync("TaskDetail-desc", that.data.taskDesc)
     wx.navigateTo({
       url: './Describe/Describe',
     })
@@ -204,6 +271,12 @@ Page({
 
   //回馈模板
   Feedback: function () {
+    var that = this
+    wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
+    wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
+    that.setData({
+      showFeedbackModel: true,
+    })
     wx.navigateTo({
       url: './FeedBack/FeedBack',
     })
@@ -216,6 +289,7 @@ Page({
       content: '是否删除该任务',
       success: function (res) {//删除任务
         if (res.confirm) {
+          wx.removeStorageSync("TaskDetail-taskId")
           wx.navigateBack({
             url: '../../ProjectMore/ProjectMore',
           })
@@ -369,11 +443,17 @@ Page({
       success: function (result) {
         console.log("任务详情：",result)
         that.setData({
+          leaderId:result.attributes.leader.id,
+          checked: result.attributes.is_finish,
           projectName: that.data.projectName,
           title: result.attributes.title,
           deadline: result.attributes.end_time,
+
         })
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 0806b78... Revert "静态"
         //提醒时间
         if (result.attributes.noti_time != null && result.attributes.noti_time!=''){
           that.setData({
@@ -402,8 +482,12 @@ Page({
             taskDesc: result.attributes.desc,
           })
         }
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 3161bd2... 静态
+=======
+        
+>>>>>>> parent of 0806b78... Revert "静态"
         //成功
       },
       error: function (error) {
@@ -411,13 +495,38 @@ Page({
       }
     })
   },
+  
+  /**
+ *添加任务记录
+ */
+  addTaskRecord:function (taskId, userName, record){
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecord = new TaskRecord()
+
+    //存储任务记录
+    taskrecord.save({
+      user_name: userName,
+      task_id: taskId,
+      record: userName + record
+    }, {
+        success: function (result) {
+          //添加成功
+
+        },
+        error: function (result, error) {
+          //添加失败
+
+        }
+      })
+  },
 
   /**
  * 2018-05-29
  * 更改任务标题
  */
-  modifyTaskTitle: function (taskId, newTitle) {
+  modifyTaskTitle: function (taskId, newTitle, userName) {
 
+    var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
@@ -425,11 +534,10 @@ Page({
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
-        result.set('title ', newTitle)
+        result.set('title', newTitle)
         result.save()
         //记录操作
-        addTaskRecord(taskId, userName, MODIFY_TASK_TITLE) 
-        console.log("modifyTaskTitle:", result)
+        that.addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
 
       },
       error: function (object, error) {
@@ -440,6 +548,9 @@ Page({
 
   /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 0806b78... Revert "静态"
  * @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）
  * 完成任务
  */
@@ -609,10 +720,13 @@ Page({
 
 
   /**
+<<<<<<< HEAD
 =======
 >>>>>>> dev-tao
 =======
 >>>>>>> parent of 3161bd2... 静态
+=======
+>>>>>>> parent of 0806b78... Revert "静态"
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -631,14 +745,21 @@ Page({
    */
   onShow: function () {
     var that = this;
-    //获取任务详情信息
     var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
     var projectName = wx.getStorageSync("Project-name")//项目名
+    var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
+    var projectMember = wx.getStorageSync("ProjectDetail-memberList")//项目成员
+    console.log("onshow:",projectMember)
+    //获取任务详情信息
     that.setData({
-      taskId: taskId,
-      projectName: projectName
+      taskId: wx.getStorageSync("ProjectMore-Task-id"),
+      member: projectMember
+      // projectName: wx.getStorageSync("Project-name")
     })
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 0806b78... Revert "静态"
     console.log("onshow:")
     console.log(wx.getStorageSync("ProjectMore-Task-id"))
     console.log(wx.getStorageSync("Project-name"))
@@ -651,6 +772,7 @@ Page({
     // that.getTaskMember(taskId, leaderId)
 
     //发送沟通模板
+<<<<<<< HEAD
 // =======
 //     //获取任务详情信息
 //     var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
@@ -666,6 +788,8 @@ Page({
     that.getTaskDetail(taskId);
       //发送沟通模板
 >>>>>>> parent of 3161bd2... 静态
+=======
+>>>>>>> parent of 0806b78... Revert "静态"
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
       var chat = that.data.chat;

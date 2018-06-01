@@ -4,7 +4,7 @@
  <view class='view-container'>
     <view class='content-view'>
       <view bindtap='Content' class='content'>
-          点子内容：{{content}}
+          {{content}}
       </view>
        <button class='share' hover-class="share-hover"  open-type="share">
           <image src='{{icon_share}}'></image>

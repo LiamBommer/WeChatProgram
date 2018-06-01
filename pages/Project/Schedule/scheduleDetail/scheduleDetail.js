@@ -5,7 +5,7 @@ Page({
    */
   data: {
     hiddenmodalputTitle: true,//弹出标题模态框
-    title: '日程标题',//标题
+    title: '撰写策划书',//标题
     inputTitle: '',//输入的标题
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
@@ -14,20 +14,25 @@ Page({
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
-    deadline: '', 
-    stattime: '', 
+    deadline: '2018-05-18', 
+    stattime: '2018-05-25', 
 
     connectTask:[//关联任务
      {
       id:'',
-      name:'任务 A',
+      name:'调研需求',
       icon:'/img/member.png',
       },
       {
-        id: '',
-        name: '任务 B',
-        icon: '/img/member.png',
-      },
+      id: '',
+      name: '策划审核',
+      icon: '/img/member.png',
+     },
+     {
+       id: '',
+       name: '开会讨论',
+       icon: '/img/member.png',
+     },
     ],
   },
 

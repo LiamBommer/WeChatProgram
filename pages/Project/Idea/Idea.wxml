@@ -5,7 +5,7 @@
     style='display: {{idea.img_visible ? "" : "none"}}'></image>
 
  <!-- 无内容 -->
-  <view style='display:{{Announcement.length==0? "":"none"}}'>
+  <view style='display:{{Idea.length==0? "":"none"}}'>
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noIdea1.png'></image>
       <view class='noitem-title'></view>
@@ -14,7 +14,7 @@
     </view>
   </view>
   <!-- 有内容 -->
-  <view style='display:{{Announcement.length==0? "none":""}}'>
+  <view style='display:{{Idea.length==0? "none":""}}'>
     <view class='post-view'>
       <block wx:for="{{Idea}}">
           <view class='post' bindtap='showIdeaDetail'>

@@ -1,7 +1,7 @@
 <!--pages/Project/Meeting/Meeting.wxml-->
 <view class='Meeting-container'>
   <!-- 无内容 -->
-  <view style='display:{{Announcement.length==0? "":"none"}}'>
+  <view style='display:{{Meeting.length==0? "":"none"}}'>
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noMeeting.png'></image>
       <view class='noitem-title'>召开会议</view>
@@ -10,7 +10,7 @@
     </view>
   </view>
   <!-- 有内容 -->
-  <view style='display:{{Announcement.length==0? "none":""}}'>
+  <view style='display:{{Meeting.length==0? "none":""}}'>
       <block wx:for="{{Meeting}}">
         <block wx:if="{{item.month}}">
           <!-- 标题 -->
