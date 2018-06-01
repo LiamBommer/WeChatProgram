@@ -1,0 +1,201 @@
+/* pages/Project/Task/TaskDetail/TaskDetail.wxss */
+.view-container .title-view .titlenav {
+  display: flex;
+  font-size: 40rpx;
+  align-items: center;
+}
+
+.title-view .share{
+  background-color: #fff;
+  border: none;
+  margin:0rpx;
+  padding:0rpx
+}
+
+button[class="share"]::after {
+  border: none;
+}
+
+.title-view .share-hover{
+  border: none;
+}
+
+button[hover-class="share-hover"]::after {
+  border: none;
+}
+
+.membericon{
+  border-radius: 50%;
+  margin-left: 7rpx;
+}
+
+.view-container .title-view .title .title-text{
+  margin-left: 10rpx;
+}
+
+.view-container .title-view {
+  border-bottom: 2rpx solid #f2f2f2;
+  height: 120rpx;
+  padding: 16rpx 0rpx;
+}
+
+.view-container .item-view.delete{
+  border-bottom:1rpx solid #888888;
+}
+
+.view-container .item-view .header{
+  padding-right: 30rpx;
+}
+
+.desc.delete-text {
+  color: #e64340;
+}
+
+.title-view image {
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.item-checkbox{
+  margin-right: 10rpx;
+}
+
+/*
+ * 聊天区
+ */
+.chat{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 140rpx;
+}
+
+.chat .desc-title {
+  color: #888888;
+  margin-left: 40rpx;
+  margin-top: 30rpx;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+}
+
+.chat .taskremind{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888888;
+  margin-top: 40rpx;
+}
+
+.chat .chatperson{
+  width: 670rpx;
+  padding: 16rpx 40rpx;
+  min-height: 90rpx;
+  background-color: white;
+  border-bottom: solid 2rpx #f2f2f2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chat .person-icon-view {
+  height: 100%;
+}
+
+.chat .person-icon{
+  width: 40rpx;
+  height: 40rpx;
+  top: 9rpx;
+}
+
+.chat .chatperson .content{
+  margin-left: 20rpx;
+  line-height: 50rpx;
+  width: 100%;
+}
+
+.chat .chatperson .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  background: #fff;
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson-me{
+  margin-top: 40rpx;
+  width: 700rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.chat .chatperson-me .content{
+  max-width:73%;
+  margin-right: 20rpx;
+  background: #fff;
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+.chat .chatperson-me .content-img{
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+  background: #fff;
+  border-radius:10rpx;
+  padding:15rpx;
+  line-height: 50rpx;
+}
+
+/*
+ * 输入区
+ */
+.chat .input{
+  position: fixed;
+  bottom: 0rpx;
+  background: #fff;
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.chat .input .template-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left:20rpx;
+}
+
+.chat .input input{
+  margin-left:20rpx;
+  height:49rpx;
+  width:550rpx;
+  background:#F2F2F2;
+  border-radius:10rpx;
+  padding:10rpx 16rpx;
+}
+
+.chat .input .face-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+}
+
+.chat .input .picture-icon{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left:20rpx;
+}
+
+#send-btn {
+  width: 70rpx;
+  height: 72rpx;
+  margin-left: 10rpx;
+  padding: 0rpx;
+  font-size: 28rpx;
+  background-color: #09bb07;
+  color: white;
+  border: none;
+}
