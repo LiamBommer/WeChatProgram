@@ -18,25 +18,53 @@
                     <!-- CODE HERE -->
               <scroll-view scroll-y="true" style="height: 900rpx">
                   <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
-                    <view class='taskitem' bindtap='showTask' data-index="{{index}}">
-                        <!-- 内容上部分 -->
-                        <view class='taskitem-top'>
-                            <checkbox class='item-checkbox'/>
-                            <view class='task'>{{tasks.title}}</view>
-                        </view>
-                        <!-- 内容下部分 -->
-                        <view class='taskitem-bottom'>
-                            <view class='taskicon'>
-                                <block wx:if="{{tasks.has_sub}}">
-                                    <image class='icon' src='/img/task_list.png'></image>
-                                </block>
-                            </view>
-                            <!-- <view class='tasktime-{{item.timestatus}}'>{{item.end_time}} 截止</view> -->
-                            <block wx:if="{{tasks.end_time.length != 0}}">
-                              <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
-                            </block>
-                        </view>
-                    </view>
+                    <block wx:if="{{tasks.is_finish}}">
+                      <view class='taskitemDone' data-index="{{index}}" bindtap="ClickTask">
+                          <!-- 内容上部分 -->
+                          <view class='taskitem-top'>
+                          <!-- data-index="{{index}}" bindtap="ClickTask" -->
+                              <checkbox-group bindchange="checkboxChange" >
+                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                              </checkbox-group>
+                              <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                          </view>
+                          <!-- 内容下部分 -->
+                          <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
+                              <view class='taskicon'>
+                                  <block wx:if="{{tasks.has_sub}}">
+                                      <image class='icon' src='/img/task_list.png'></image>
+                                  </block>
+                              </view>
+                              <block wx:if="{{tasks.end_time.length != 0}}">
+                                <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
+                              </block>
+                          </view>
+                      </view>
+                    </block>
+                    
+                    <block wx:else>
+                      <view class='taskitem' data-index="{{index}}" bindtap="ClickTask">
+                          <!-- 内容上部分 -->
+                          <view class='taskitem-top'>
+                          <!-- data-index="{{index}}" bindtap="ClickTask" -->
+                              <checkbox-group bindchange="checkboxChange" >
+                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                              </checkbox-group>
+                              <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                          </view>
+                          <!-- 内容下部分 -->
+                          <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
+                              <view class='taskicon'>
+                                  <block wx:if="{{tasks.has_sub}}">
+                                      <image class='icon' src='/img/task_list.png'></image>
+                                  </block>
+                              </view>
+                              <block wx:if="{{tasks.end_time.length != 0}}">
+                                <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>
+                              </block>
+                          </view>
+                      </view>
+                    </block>
                   </block>
                   <!-- 添加任务 -->
                   <view class='addTask' bindtap='createTask' data-list-id='{{item.objectId}}'>
