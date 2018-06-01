@@ -7,16 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    projId:'',//项目ID
     hiddenmodalput: true,//弹出项目描述模态框
     hiddenmodalputTitle: true,//弹出项目名称模态框
-    SwitchChecked: true,//是否置顶
+    SwitchChecked: "",//是否置顶
     title: "",//输入的项目名称
     content: "",//输入的项目描述
     project_name: '学长说系列分享活动',//项目名称
     project_desc: '邀请优秀的学长回校宣讲',//项目描述
     project_img:"/img/logo.png",
     icon_more: '/img/more.png',
-    project_response: '',
+    project_response: '',//项目归属人名
 
     //成员列表
     member:[
@@ -33,6 +34,7 @@ Page({
   //点击按钮弹出指定的hiddenmodalput弹出框
   modalinputTitle: function () {
     this.setData({
+      title: this.data.project_name, 
       hiddenmodalputTitle: false
     })
   },
@@ -44,44 +46,28 @@ Page({
   },
   //确认
   confirmTitle: function () {
-    this.setData({
-      hiddenmodalputTitle: true,
-      project_name : this.data.title,
-    })
-  }, 
-
-//项目图片
-  PictrueSelect: function (e) {
     var that = this
-    // var projectImg = []
-    // projectImg.push(that.data.project_img)
-    // wx.previewImage({
-    //   urls: projectImg // 需要预览的图片http链接列表  
-    // })  
-    wx.chooseImage({
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths;
-        var content = tempFilePaths[0];
-        // chat.push({
-        //   content: content,//我发送的内容
-        //   icon: '/img/me.png',//我的头像
-        //   judgemine: true,//我发的消息
-        //   judgepictrue: true,//判断输入的是文字还是图片
-        // });
-        that.setData({
-          project_img: content,
-        });
-
-      }
+    var projId = that.data.projId
+    var title = that.data.title
+    that.modifyProjectTitle(projId, title)
+    that.setData({
+      hiddenmodalputTitle: true,
+      project_name: title,
     })
   },
 
   //项目名称
   ProjectTitle: function (e) {
     this.setData({
-      title : e.detail.value
+      title: e.detail.value
     })
+  },
+
+//项目图片
+  PictrueSelect: function (e) {
+    var that = this
+    var projId = that.data.projId
+    that.modifyProjcetImg(projId)
   },
 
   //项目描述
@@ -94,6 +80,7 @@ Page({
   //点击按钮弹出指定的hiddenmodalput弹出框
   modalinput: function () {
     this.setData({
+      content: this.data.project_desc,
       hiddenmodalput: false
     })
   },
@@ -105,12 +92,16 @@ Page({
   },
   //确认
   confirm: function () {
+    var that = this
+    var projId = that.data.projId
+    var content = that.data.content
+    that.modifyProjectDescrep(projId, content)
     this.setData({
       hiddenmodalput: true,
-      project_desc:this.data.content,
+      project_desc: content,
     })
   },
-
+ 
   //项目描述
   ProjectContent: function(e) {
     this.setData({
@@ -136,13 +127,39 @@ Page({
     })
   },
 
+  //置顶项目
+  switchChange:function(e){
+    var that = this
+    var projId = that.data.projId
+    var switchChecked = e.detail.value
+    if (switchChecked == true)
+    that.makeProjectFirst(projId, true)//置顶
+    if (switchChecked == false)
+      that.cancelProjectFirst(projId, false)//取消置顶
+  },
+
   //删除/退出项目
   DeleteProject: function () {
-    wx.removeStorageSync("ProjectDetail-memberList")
-    wx.removeStorageSync("Project- id")
-    wx.navigateBack({
-      url: '../Project'
+    var that = this
+    wx.showModal({
+      title: '删除项目',
+      content: '确定要这么做吗？',
+      success:function(res){
+        if (res.confirm) {
+          var projId = that.data.projId
+          that.deletePoject(projId)
+          wx.removeStorageSync("ProjectDetail-memberList")
+          wx.removeStorageSync("Project- id")
+          wx.navigateBack({
+            url: '../Project'
+          })
+        } else if (res.cancel) {
+
+        }
+        
+      },
     })
+    
   },
 
   /**
@@ -222,9 +239,13 @@ Page({
           //在这里设置setdata
           console.log("项目成员", userArr)
           that.setData({
-            project_response: userArr[0].name,
             member: userArr,
-          });
+          })
+          if (that.data.project_response == null || that.data.project_response == "") {
+            that.setData({
+              project_response: userArr[0].name,
+            })
+          }
           //项目成员
           wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
@@ -249,10 +270,10 @@ Page({
         console.log("项目详情", detailObject)
         //todo：在这里设置setdata
         that.setData({
-          //拍视频
-          //  project_img : detailObject.attributes.img_url,
-          //  project_name: detailObject.attributes.name,
-          //  project_desc: detailObject.attributes.desc,
+           project_img : detailObject.attributes.img_url,
+           project_name: detailObject.attributes.name,
+           project_desc: detailObject.attributes.desc,
+           SwitchChecked: detailObject.attributes.is_first,
         });
 
       },
@@ -261,6 +282,182 @@ Page({
       }
     })
 
+  },
+
+  /**
+   * 修改项目图片
+   */
+  modifyProjcetImg:function (projId){
+    var that = this
+    var Project = Bmob.Object.extend('project')
+    var projectQuery = new Bmob.Query(Project)
+
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths;
+        if (tempFilePaths.length > 0) {
+          var name = "1.jpg";//上传的图片的别名，建议可以用日期命名
+          var file = new Bmob.File(name, tempFilePaths);
+          file.save().then(function (res) {
+
+            //res.url()是上传图片后的 url
+            //console.log(res.url());
+            //更改项目图片
+            projectQuery.get(projId, {
+              success: function (result) {
+                result.set('img_url', res.url())
+                result.save()
+                console.log("modifyProjcetImg",result)
+
+                // var tempFilePaths = result.tempFilePaths;
+                // var content = tempFilePaths[0];
+                that.setData({
+                  project_img: result.attributes.img_url,
+                });
+
+
+
+
+
+              }
+            })
+          }, function (error) {
+            console.log(error);
+          })
+        }
+
+      }
+    })
+  },
+
+  /**
+ * @parameter projId项目id，newName 新的项目名
+ * 修改项目名称
+ */
+  modifyProjectTitle:function (projId, newName){
+    var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+
+  //修改项目名称
+  projectQuery.get(projId, {
+      success: function (result) {
+        result.set("name", newName)  //修改项目名称
+        result.save()
+        //console.log("项目标题修改成功")
+      },
+      error: function (error) {
+        //项目删除失败
+      }
+    })
+  },
+
+  /**
+ * @parameter projId项目id，newDescrip 新的项目描述
+ * 修改项目描述
+ */
+  modifyProjectDescrep:function (projId, newDescrip){
+    var that = this
+    var Project = Bmob.Object.extend('project')
+    var projectQuery = new Bmob.Query(Project)
+
+    //修改项目描述
+    projectQuery.get(projId, {
+      success: function (result) {
+        result.set("desc", newDescrip)  //修改项目描述
+        result.save()
+        //console.log("项目描述修改成功")
+      },
+      error: function (error) {
+        //项目删除失败
+      }
+    })
+  },
+  /**
+   * 2018-05-22
+   * @parameter 项目id ,isFirst 是否置顶项目，设置为true
+   * 
+   * 置顶项目
+   */
+
+  makeProjectFirst:function (projId, isFirst){
+    var Project = Bmob.Object.extend("project")
+  var projectQuery = new Bmob.Query(Project)
+
+  projectQuery.get(projId, {
+      success: function (result) {
+        result.set("is_first", isFirst)
+        result.save()
+        //成功的情况
+        console.log("设置星标项目成功")
+
+      },
+      error: function (object, error) {
+        //失败的情况
+        //console.log(error)
+
+
+
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-22
+ * @parameter 项目id ,isFirst 是否置顶项目，设置为false
+ * 
+ * 取消置顶项目
+ */
+cancelProjectFirst:function (projId, isFirst) {
+    var Project = Bmob.Object.extend("project")
+    var projectQuery = new Bmob.Query(Project)
+
+    projectQuery.get(projId, {
+      success: function (result) {
+        result.set("is_first", isFirst)
+        result.save()
+        //成功的情况
+
+
+      },
+      error: function (object, error) {
+        //失败的情况
+        //console.log(error)
+
+
+
+
+      }
+    })
+  },
+ 
+  /**
+   * @parameter projId项目id 
+   * 退出/解散项目
+   * 利用了字段is_delete 来判断项目是否被删除。
+   * 额，这个函数等我把你们的分支里面的某些project的函数添加了一行代码后
+   * ，我告诉你们加的时候再加吧。么么哒。
+   * 
+   */
+  deletePoject:function (projId){
+  
+    var Project = Bmob.Object.extend('project')
+  var projectQuery = new Bmob.Query(Project)
+
+  //将 project 表的 is_delete 字段修改为true
+  projectQuery.get(projId, {
+      success: function (result) {
+        result.set("is_delete", true)  //删除项目。不可修复。
+        result.save()
+        //console.log("项目删除成功")
+      },
+      error: function (error) {
+        //项目删除失败
+      }
+    })
   },
 
 
@@ -283,9 +480,13 @@ Page({
    */
   onShow: function () {
     var that = this
-    var id = wx.getStorageSync("Project-id")
-    console.log("onshow")
-    that.getProjectDetail(id)
+    var projId = wx.getStorageSync("Project-id")
+    var leaderName = wx.getStorageSync("ProjectBelong-memberName")
+    that.getProjectDetail(projId)
+    that.setData({
+      projId: projId,
+      project_response: leaderName
+    })
     // wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
@@ -300,7 +501,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorageSync("ProjectBelong-memberName")
   },
 
   /**

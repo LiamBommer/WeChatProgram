@@ -22,76 +22,76 @@ Page({
     //任务列表
     tasklist: [
 
-      // "",//任务列表标题
-      {
-        title:'待处理',
-        //任务项
-        tasks: [
-          {
-            is_finish: false,
-            title: '寻找嘉宾',
-            has_sub:'true',
-            end_time: '2018-06-01',
-            timeStatus: 'red',
-          },
-          {
-            is_finish: false,
-            title: '发送邀请函',
-            has_sub: 'true',
-            end_time: '2018-06-02',
-            timeStatus: 'red',
-          },
-          {
-            is_finish: false,
-            title: '物资申请与采购',
-            has_sub: 'true',
-            end_time: '2018-06-03',
-            timeStatus: 'green',
-          },
-          {
-            is_finish: false,
-            title: '场地申请与摆摊',
-            has_sub: 'true',
-            end_time: '2018-06-05',
-            timeStatus: 'green',
-          },
-          {
-            is_finish: false,
-            title: '活动执行',
-            has_sub: 'true',
-            end_time: '2018-06-10',
-            timeStatus: 'green',
-          },
-        ]
-      },
+       "",//任务列表标题
+      // {
+      //   title:'待处理',
+      //   //任务项
+      //   tasks: [
+      //     {
+      //       is_finish: false,
+      //       title: '寻找嘉宾',
+      //       has_sub:'true',
+      //       end_time: '2018-06-01',
+      //       timeStatus: 'red',
+      //     },
+      //     {
+      //       is_finish: false,
+      //       title: '发送邀请函',
+      //       has_sub: 'true',
+      //       end_time: '2018-06-02',
+      //       timeStatus: 'red',
+      //     },
+      //     {
+      //       is_finish: false,
+      //       title: '物资申请与采购',
+      //       has_sub: 'true',
+      //       end_time: '2018-06-03',
+      //       timeStatus: 'green',
+      //     },
+      //     {
+      //       is_finish: false,
+      //       title: '场地申请与摆摊',
+      //       has_sub: 'true',
+      //       end_time: '2018-06-05',
+      //       timeStatus: 'green',
+      //     },
+      //     {
+      //       is_finish: false,
+      //       title: '活动执行',
+      //       has_sub: 'true',
+      //       end_time: '2018-06-10',
+      //       timeStatus: 'green',
+      //     },
+      //   ]
+      // },
 
-      {
-        title: '已完成',
-        //任务项
-        tasks: [
-          {
-            is_finish: 'true',
-            title: '调研同学们需求',
-            has_sub: 'true',
-            end_time: '2018-05-01',
-            timeStatus: 'green',
-          },
-          {
-            is_finish: 'true',
-            title: '撰写策划书',
-            has_sub: 'true',
-            end_time: '2018-05-07',
-            timeStatus: 'green',
-          },
-          {
-            is_finish: 'true',
-            title: '完成策划书审核',
-            has_sub: 'true',
-            end_time: '2018-05-10',
-            timeStatus: 'green',
-          },
-        ]
-      },
+      // {
+      //   title: '已完成',
+      //   //任务项
+      //   tasks: [
+      //     {
+      //       is_finish: 'true',
+      //       title: '调研同学们需求',
+      //       has_sub: 'true',
+      //       end_time: '2018-05-01',
+      //       timeStatus: 'green',
+      //     },
+      //     {
+      //       is_finish: 'true',
+      //       title: '撰写策划书',
+      //       has_sub: 'true',
+      //       end_time: '2018-05-07',
+      //       timeStatus: 'green',
+      //     },
+      //     {
+      //       is_finish: 'true',
+      //       title: '完成策划书审核',
+      //       has_sub: 'true',
+      //       end_time: '2018-05-10',
+      //       timeStatus: 'green',
+      //     },
+      //   ]
+      // },
     ],
 
     //公告列表
@@ -260,14 +260,14 @@ Page({
 
   //点击任务项
   ClickTask:function(e){
-    var that = this
-    var index = e.currentTarget.dataset.index
-    var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
-    console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
-    that.setData({
-      "that.data.tasklist[0].tasks[0].is_finish": !that.data.tasklist[0].tasks[index].is_finish
-    })
-    console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
+    // var that = this
+    // var index = e.currentTarget.dataset.index
+    // var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
+    // console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
+    // that.setData({
+    //   "that.data.tasklist[0].tasks[0].is_finish": !that.data.tasklist[0].tasks[index].is_finish
+    // })
+    // console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
   },
 
   // 勾选任务
@@ -280,43 +280,44 @@ Page({
     // })
     // console.log("checkboxChange", this.data.tasklist[0].tasks[index].is_finish)
 
-    //视频
-    // var that = this
-    // var userName = getApp().globalData.nickName
-    // var taskListIndex = that.data.currentItem
-    // var index = e.detail.value
-    // // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    // // var checked = that.data.tasklist[taskListIndex].attributes.tasks[index].is_finish
-    // // console.log(checked)
-    // if (index == "")//取消勾选
-    // {
-    //   // var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
-    //   // console.log("taskId", taskId)
-    //   // that.finishTask(taskId, false, userName)
+    
+    var that = this
+    var userName = getApp().globalData.nickName
+    var taskListIndex = that.data.currentItem
+    var index = e.detail.value
+    // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
+    // var checked = that.data.tasklist[taskListIndex].attributes.tasks[index].is_finish
+    // console.log(checked)
+    if (index == "")//取消勾选
+    {
+      // var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
+      // console.log("taskId", taskId)
+      // that.finishTask(taskId, false, userName)
 
-    //   // console.log("取消勾选", taskId, userName)
-    // }
-    // else {//勾选
-    //   var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
-    //   var is_finish = "tasklist["+taskListIndex+"].attributes.tasks["+index+"].is_finish"
-    //   that.setData({
-    //     [is_finish]:true,
-    //     })
-    //   console.log("taskId", taskId)
-    //   that.finishTask(taskId, true, userName)
-    //   console.log("勾选", taskId, userName)
-    // }
+      // console.log("取消勾选", taskId, userName)
+    }
+    else {//勾选
+      var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
+      var is_finish = "tasklist["+taskListIndex+"].attributes.tasks["+index+"].is_finish"
+      that.setData({
+        [is_finish]:true,
+        })
+      console.log("taskId", taskId)
+      that.finishTask(taskId, true, userName)
+      console.log("勾选", taskId, userName)
+    }
  
   },
 
   // 修改任务列表名
   ListNameInput: function(e){
     var index = this.data.index;
-    var newname = 'tasklist['+index+']';
-    console.log("ListNameInput:",newname)
-    this.setData({
-      [newname]: e.detail.value,
-    });
+    var newname = 'tasklist[' + index + ']';
+    // console.log("ListNameInput-index:", index)
+    // console.log("ListNameInput-:", e.detail.value)
+    // this.setData({
+    //   [newname]: e.detail.value,
+    // });
   },
 
   // 修改任务列表名
@@ -472,10 +473,10 @@ Page({
    * 显示任务详情页面
    */
   showTask: function(e) {
-    // var taskListIndex = this.data.currentItem
-    // var index = e.currentTarget.dataset.index
-    // wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
-    // wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
+    var taskListIndex = this.data.currentItem
+    var index = e.currentTarget.dataset.index
+    wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
+    wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
     });
@@ -520,7 +521,6 @@ Page({
   },
 
   /**
-<<<<<<< HEAD
    *2018-05-18
    *@author mr.li
    @parameter projId 项目id
@@ -700,7 +700,7 @@ Page({
         }
 
         that.setData({
-          // tasklist: tasklists
+          tasklist: tasklists
         })
         console.log("This's tasklists: ")
         console.log(that.data.tasklist)
@@ -730,6 +730,8 @@ Page({
 
     
   },
+
+  
 
   /**
 * @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）

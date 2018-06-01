@@ -15,7 +15,7 @@
       <text class='des'>项目描述</text>
       <text class='content' bindtap="modalinput">{{project_desc}}</text>
       <modal hidden="{{hiddenmodalput}}" title="项目描述" confirm-text="提交" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm"> 
-        <textarea bindinput='ProjectContent' value='{{content}}' type='text'placeholder="请输入项目描述" />  
+        <textarea bindinput='ProjectContent' bindtap='ClickDesc' value='{{content}}' type='text'placeholder="请输入项目描述" />  
       </modal>  
     </view>
     <view class='item-view space-between'>
@@ -38,7 +38,7 @@
     </view>
     <view class='item-view space-between'>
       <text class='des'>置顶项目</text>
-      <switch checked="{{SwitchChecked}}"/>
+      <switch checked="{{SwitchChecked}}" bindchange="switchChange"/>
     </view>
   </view>
 
