@@ -20,7 +20,7 @@ Page({
         id: "",
         icon: "",
         name: ""
-      }
+      },
     ]
   },
 
@@ -95,7 +95,7 @@ Page({
             var object = {}
             object = {
               icon: result.attributes.img_url,
-              name: result.attributes.name,
+              name: "学长说系列分享活动",
               id: result.id
             }
             projectArr.push(object)
@@ -140,8 +140,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    that.getProjectList()
     },
 
   /**
