@@ -1,6 +1,5 @@
 //model/taskDetail.js
 var Bmob = require('../utils/bmob.js')
-var notification = require('../utils/notification.js')
 
 //下面的变量是操作记录用的，要全部复制过去 。
 //下面的每个函数几乎都用到了 addTaskRecord 函数，用来记录用户的操作记录

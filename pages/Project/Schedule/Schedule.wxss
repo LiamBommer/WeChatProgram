@@ -61,8 +61,6 @@
     flex-direction: column;
     justify-content: space-around;
     font-size: 34rpx;
-    width:11%;
-
 }
 
 .Schedule-container .item .item-first .item-time{
@@ -75,17 +73,11 @@
 
 .Schedule-container .item .item-second{
     font-size: 30rpx;
-    width:9%;
-
 }
 
 .Schedule-container .item .item-third{
     font-size: 28rpx;
     color: #b2b2b2;
-    width: 30%;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
 }
 
 .Schedule-container .buildicon{

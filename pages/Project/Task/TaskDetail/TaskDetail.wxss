@@ -24,11 +24,6 @@ button[hover-class="share-hover"]::after {
   border: none;
 }
 
-.membericon{
-  border-radius: 50%;
-  margin-left: 7rpx;
-}
-
 .view-container .title-view .title .title-text{
   margin-left: 10rpx;
 }

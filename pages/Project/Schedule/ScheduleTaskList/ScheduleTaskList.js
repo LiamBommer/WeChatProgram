@@ -15,14 +15,14 @@ Page({
           {
             id: "",
             icon: "/img/me.png",
-            name: '开会讨论',
-            checked: false
+            name: '任务A',
+            checked: true
           },
           {
             id: "",
             icon: "/img/me.png",
-            name: '策划审核',
-            checked: false
+            name: '任务B',
+            checked: true
           },
         ]
       },
@@ -33,7 +33,13 @@ Page({
           {
             id: "",
             icon: "/img/me.png",
-            name: '调研需求',
+            name: '任务A',
+            checked: true
+          },
+          {
+            id: "",
+            icon: "/img/me.png",
+            name: '任务A',
             checked: true
           },
         ]
