@@ -78,8 +78,8 @@ Page({
      //test.makeProjectFirst("3d3525ec0f",true)
      //test.cancelProjectFirst("3d3525ec0f", false)
      //test.transferProject("05b1b947d7", "Mr.Li", "46afed01fb","5b2cad79f6")   
-     test.addProjectNotification('3d3525ec0f','test',1,'213')
-     //test.addTaskNotification('ecf39929e8','测试')
+     //test.addProjectNotification('3d3525ec0f','test',1,'213')
+     test.addTaskNotification('	81c2ae2e31','ecf39929e8','测试')
   },
 
   /**

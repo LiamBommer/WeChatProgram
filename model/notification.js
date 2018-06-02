@@ -84,32 +84,35 @@ function addProjectNotification(projId,content,_type,requestId){
       }
       if(toUserIds != null && toUserIds.length > 0){
         for(var i=0;i<toUserIds.length;i++){
-          var notification = new Notification()
-          notification.set('to_user_id', toUserIds[i])
-          notification.set('content',content)
-          notification.set('type',_type)
-          notification.set('is_read',false)
-          notification.set('request_id',requestId)
-          notification.set('project',project)
-          notification.set('from_user',fromUser)
+          //无需通知操作人本身
+          if (toUserIds[i] != Bmob.User.current().id){
+            var notification = new Notification()
+            notification.set('to_user_id', toUserIds[i])
+            notification.set('content', content)
+            notification.set('type', _type)
+            notification.set('is_read', false)
+            notification.set('request_id', requestId)
+            notification.set('project', project)
+            notification.set('from_user', fromUser)
 
-          notificationObjects.push(notification)  //存储本地通知对象
+            notificationObjects.push(notification)  //存储本地通知对象
+          }         
         }
 
         if(notificationObjects!=null && notificationObjects.length > 0){
           Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
-            // 成功
+            // 通知添加成功
             console.log("添加项目成员通知成功！")
           },
             function (error) {
-              // 异常处理
+              // 通知添加失败处理
             })
         }
       }
 
     },
     error: function(error){
-      //失败
+      //项目成员查询失败
     }
   })
 }
@@ -126,6 +129,7 @@ function addTaskNotification(projId,taskId,  content){
   var Taskmember = Bmob.Object.extend('task_member')
   var taskmemberQuery = new Bmob.Query(Taskmember)
   var toUserIds = []  //需要通知到的任务成员id数组
+  var Notification = Bmob.Object.extend('notification')
   var notificationObjects = []
 
   //查询任务成员
@@ -137,33 +141,39 @@ function addTaskNotification(projId,taskId,  content){
       toUserIds.push(results[i].id)
     }
     
-    if (memberIds!= null && memberIds.length > 0){
+    if (toUserIds != null && toUserIds.length > 0){
       var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
       var project = Bmob.Object.createWithoutData("project", projId)
 
       for (var i = 0; i < toUserIds.length; i++) {
-        var notification = new Notification()
-        notification.set('to_user_id', toUserIds[i])
-        notification.set('content', content)
-        notification.set('type', _type)
-        notification.set('is_read', false)
-        notification.set('request_id', taskId)
-        notification.set('project', project)
-        notification.set('from_user', fromUser)
+        //无需通知操作人本身
+        if (toUserIds[i] != Bmob.User.current().id){
+          var notification = new Notification()
+          notification.set('to_user_id', toUserIds[i])
+          notification.set('content', content)
+          notification.set('type', _type)
+          notification.set('is_read', false)
+          notification.set('request_id', taskId)
+          notification.set('project', project)
+          notification.set('from_user', fromUser)
 
-        notificationObjects.push(notification)  //存储本地通知对象
-
-        if (notificationObjects != null && notificationObjects.length > 0) {
-          Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
-            // 成功
-            console.log("添加任务成员通知成功！")
-          },
-            function (error) {
-              // 异常处理
-            })
+          notificationObjects.push(notification)  //存储本地通知对象
         }
       }
+      if (notificationObjects != null && notificationObjects.length > 0) {
+        //在数据库添加通知
+        Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+          // 成功
+          console.log("添加任务成员通知成功！")
 
+
+        },
+          function (error) {
+            // 异常处理
+            console.log("添加任务成员通知失败!",error)
+
+          })
+      }
     }
   })
 

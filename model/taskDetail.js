@@ -32,6 +32,11 @@ var DELETE_SUB_TASK = "删除了子任务"
 var FINISH_SUB_TASK = "完成了子任务"
 var MODIFY_SUB_TASK_TITLE = "修改了子任务标题"
 
+var ADD_TASK_MEMBER = "添加了新的任务成员"
+var DELETE_TASK_MEMBER = "删除了任务成员"
+
+var MODIFY_TASK_LEADER = "变更了任务负责人"
+
 /**
  * 2018-05-29
  * @parameter taskId任务id，leaderId任务负责人的id
@@ -394,6 +399,7 @@ function getSubtasks(taskId){
   subtaskQuery.equalTo("task_id",taskId)
   subtaskQuery.include("user")
   subtaskQuery.ascending("createdAt")
+  subtaskQuery.limit(20)
   subtaskQuery.find({
     success: function(results){
       //成功,results即为结果数组
@@ -523,7 +529,7 @@ function modifyTaskTitle(taskId,newTitle){
 /**
  * 2018-05-29
  * @parameter taskId 任务id
- * 获取任务记录 , 一次20条,时间越久远的排在越后面
+ * 获取任务记录 , 一次50条,时间越久远的排在越后面
  */
 function getTaskRecord(taskId){
 
@@ -534,6 +540,7 @@ function getTaskRecord(taskId){
   taskrecordQuery.select("record")
   taskrecordQuery.equalTo("task_id",taskId)
   taskrecordQuery.descending("createdAt")
+  taskrecordQuery.limit(50)
   taskrecordQuery.find({
     success: function(results){
       //成功
@@ -689,6 +696,93 @@ function getTaskDetail(taskId){
     }
   })
 }
+
+/**
+ * 2018-06-02
+ * @parameter taskId 任务id,memberIds任务成员数组,userName用户昵称（记录操作用）
+ * 额外添加任务成员
+ */
+function addTaskMember(taskId,memberIds,userName){
+
+  var Taskmember = Bmob.Object.extend('task_member')
+  var memberObjects = []
+  
+  if(memberIds!=null && memberIds.length > 0){
+    for(var i=0;i<memberIds.length;i++){
+      var user = Bmob.Object.createWithoutData("_User",memberIds[i])
+      var taskmember = new Taskmember()
+      taskmember.set('user_id',user)
+      taskmember.set('task_id',taskId)
+      memberObjects.push(taskmember)
+    }
+    if(memberObject!=null && memberObjects.length > 0){
+      bmob.Object.saveAll(objects).then(function (objects) {
+        // 成功
+        //记录操作
+        addTaskRecord(taskId, userName, ADD_TASK_MEMBER)
+
+        console.log("添加任务成员成功！")
+
+      },
+        function (error) {
+          // 异常处理
+      })
+    }
+    
+    
+  }
+}
+
+/**
+ * 2018-06-02
+ *  @parameter taskId 任务id,memberIds任务成员数组,userName用户昵称（记录操作用）
+ * 删除任务成员
+ */
+function taskMemberDelete(taskId,memberIds,userName){
+
+  var Taskmember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(Taskmember)
+
+  //删除任务成员
+  taskmemberQuery.destroyAll({
+    success: function () {
+      //删除成功
+      //记录操作
+      addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
+
+    },
+    error: function (err) {
+      // 删除失败
+    }
+  })
+}
+
+/**
+ * 2018-06-02
+ * 变更任务负责人
+ */
+function transferTaskLeader(taskId,newLeaderId){
+
+  var Task = Bmob.object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+  var user = Bmob.Object.createWithoutData("_User", newLeaderId)
+
+  //变更任务负责人
+  taskQuery.get(taskId,{
+    success: function(result){
+      //成功
+      //记录操作
+      addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
+
+      console.log("变更任务负责人成功！")
+    },
+    error: function(error){
+      //失败
+      console.log("变更任务负责人失败！")
+    }
+  })
+}
+
 //下面是发布函数用的，你们不用复制
 module.exports.getTaskMember = getTaskMember
 module.exports.addNotiTime = addNotiTime
