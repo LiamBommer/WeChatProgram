@@ -6,42 +6,77 @@ Page({
    */
   data: {
     //是否选中
-    TaskIndex: "",
-    ProjectIndex: "",
-    //任务负责人
-    principalName: "帅涛",
-    principalIicon: "/img/me.png",
-    principalIndex: 0,
-    principalChecked: true,
+    memberId: "",
+    checked:true,//成员默认选中
     //项目成员
     ProjectMemember: [
-      {
-        index: 0,
-        icon: "/img/me.png",
-        name: '钢铁侠',
-        checked: false
-      },
-      {
-        index: 1,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: true,
-      },
-      {
-        index: 2,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: false,
-      },
+      // {
+      //   index: 0,
+      //   icon: "/img/me.png",
+      //   name: '钢铁侠',
+      //   checked: false
+      // },
+      // {
+      //   index: 1,
+      //   icon: "/img/me.png",
+      //   name: '美国队长',
+      //   checked: true,
+      // },
+      // {
+      //   index: 2,
+      //   icon: "/img/me.png",
+      //   name: '灭霸',
+      //   checked: false,
+      // },
     ],
 
   },
 
-  //选择任务成员
-  TaskMememberChange: function (e) {
+  //选择项目成员
+  ProjectMememberChange: function (e) {
+    var memberId = e.detail.value
     this.setData({
-      TaskIndex: e.detail.value,
+      memberId: memberId,
     });
+  },
+
+
+  //完成
+  save: function () {
+    var that = this;
+    var memberId = that.data.memberId;
+    var memberIdLength = memberId.length;
+    var NomemberId = []
+    var NomemberIdLength = 0
+    var ProjectMemember = that.data.ProjectMemember;
+    var projId = wx.getStorageSync("Project-id")
+
+    if (memberIdLength == 0) {//全部未选
+      for (var id in ProjectMemember)
+        NomemberId.push(ProjectMemember[id].id)
+    }
+    else {//个别未选
+      for (var id in ProjectMemember) {
+
+        for (var i in memberId) {
+          if (ProjectMemember[id].id != memberId[i])
+            NomemberIdLength++
+
+          if (NomemberIdLength == memberIdLength)
+            NomemberId.push(ProjectMemember[id].id)//未选中的成员ID
+
+        }
+        NomemberIdLength = 0
+
+      }
+    }
+
+    console.log("NomemberId", NomemberId);//未选中的成员ID
+    // that.deleteProjectMember(projId, NomemberId)
+
+    wx.navigateBack({
+      url: '../ProjectDetail',
+    })
   },
 
   /**
@@ -62,7 +97,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.getStorage({
+      key: 'TaskDetail-member',
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          ProjectMemember: res.data
+        })
+      }
+    })
   },
 
   /**

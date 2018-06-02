@@ -38,15 +38,23 @@ Page({
    */
   data: {
 
-
-    hiddenmodalputTitle: true,//弹出标题模态框
-    projectName:"学长说系列分享活动",//项目名
+    startX: 0, //删除开始坐标
+    startY: 0,//删除
+    hiddenmodalputTitle: true,//弹出任务标题模态框
+    hiddenmodalputChildTitle: true,//弹出子任务标题模态框
+    childIndex:"",//当前子任务下标
+    childtaskId:'',//当前子任务ID
+    projectName:"",//项目名
     taskId:"",//任务ID
     checked:false,//勾选任务
-    title: '寻找嘉宾',//标题
+    childChecked:false,//勾选子任务
+    title: '',//任务标题
+    childTitle:"",//子任务标题
     inputTitle: '',//输入的标题
+    inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID
     member:[],//任务成员
+
 
     show: false,
     deadline: '2018-06-01',
@@ -78,14 +86,15 @@ Page({
 
     //子任务循环列表
     ChildTask:[
-      {
-         name:'寻找通讯录',
-         icon:'/img/member.png',
-      },
-      {
-        name: '筛选嘉宾',
-        icon: '/img/member.png',
-      },
+      // {
+      //    name:'寻找通讯录',
+      //    icon:'/img/member.png',
+      //    clickChild:0,//勾选子任务次数
+      // },
+      // {
+      //   name: '筛选嘉宾',
+      //   icon: '/img/member.png',
+      // },
     ],
 
     //消息循环列表
@@ -124,18 +133,33 @@ Page({
 
 
   },
+  //点击子任务
+  checkTest: function (e) {
+    var that = this
+    var index = e.currentTarget.dataset.index//当前下标
+    var childTaskId = e.currentTarget.id//当前子任务ID
+    var userName = getApp().globalData.nickName//当前操作用户
+    var childTakChecked = !e.currentTarget.dataset.checked//当前子任务是否被选中
+    
+    that.finishSubTask(that.data.taskId, childTaskId, childTakChecked, userName)
+
+    var ChildTask = "ChildTask[" + index + "].is_finish"
+    var ChildTask_isfinish = that.data.ChildTask[index].is_finish
+    that.setData({
+      [ChildTask]: !ChildTask_isfinish
+    })
+
+  },
+
 
   //勾选任务
-  checkboxChange : function(){
+  checkboxChange: function () {
     var that = this
     var userName = getApp().globalData.nickName
     that.finishTask(that.data.taskId, !that.data.checked, userName)
-    // that.setData({
-    //   checked: !this.data.checked
-    // })
   },
 
-  //点击按钮弹出指定的hiddenmodalput弹出框  
+  //任务标题：点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function () {
     var that = this
     that.setData({
@@ -160,12 +184,56 @@ Page({
       title: this.data.inputTitle
     })
   },
-
-  //标题
+  //任务标题输入
   input: function (e) {
     var inputTitle = e.detail.value
     this.setData({
       inputTitle: inputTitle
+    })
+  },
+
+
+  //子任务标题： 点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputChildTitle: function (e) {
+    var that = this
+    var childtitle = e.currentTarget.dataset.childtitle
+    var checked = e.currentTarget.dataset.checked
+    var childtaskId = e.currentTarget.dataset.taskid
+    var childIndex = e.currentTarget.dataset.index
+    if (checked == false){
+      that.setData({
+        inputChildTitle: childtitle,
+        childIndex: childIndex,
+        childtaskId:childtaskId,
+        hiddenmodalputChildTitle: false
+      })
+    }
+  },
+  //取消按钮  
+  cancelChildTitle: function () {
+    this.setData({
+      hiddenmodalputChildTitle: true,
+    });
+  },
+
+  //确认  
+  confirmChildTitle: function (e) {
+    var that = this
+    var subtaskId = that.data.childtaskId//当前子任务ID
+    var index = that.data.childIndex//当前子任务下标
+    var userName = getApp().globalData.nickName
+    that.modifySubTaskTitle(subtaskId, that.data.inputChildTitle, userName)
+    var childTitle = "ChildTask[" + index + "].childTitle"
+    this.setData({
+      hiddenmodalputChildTitle: true,
+      [childTitle]: that.data.inputChildTitle
+    })
+  },
+  //子任务标题输入
+  childInput: function (e) {
+    var inputChildTitle = e.detail.value
+    this.setData({
+      inputChildTitle: inputChildTitle
     })
   },
 
@@ -213,6 +281,11 @@ Page({
 
   // 成员列表
   MemberList: function(e) {
+    console.log("MemberList:", this.data.member)
+    wx.setStorage({
+      key: 'TaskDetail-member',
+      data: this.data.member,
+    })
     wx.navigateTo({
       url: './memberList/memberList',
     })
@@ -310,6 +383,15 @@ Page({
 
   //添加子任务
   AddChildTask: function() {
+    var that = this
+    wx.setStorage({
+      key: 'TaskDetail-taskId',
+      data: that.data.taskId,
+    })
+    wx.setStorage({
+      key: 'TaskDetail-member',
+      data: that.data.member,
+    })
     wx.navigateTo({
       url: '../buildChildTask/buildChildTask',
     })
@@ -716,21 +798,238 @@ Page({
 
 
   
+ 
 
+  /**
+   * 2018-05-29
+   * @parameter taskId 为父任务id
+   * 获取某一任务下的子任务（默认20个）,最先创建的排在最前面
+   */
+  getSubtasks:function (taskId){
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
 
+    //获取子任务（20个）
+    subtaskQuery.equalTo("task_id", taskId)
+    subtaskQuery.include("user")
+    subtaskQuery.ascending("createdAt")
+    subtaskQuery.limit(20)
 
+    subtaskQuery.find({
+      success: function (results) {
+        //成功,results即为结果数组
+        if (results != null) {
+          //在这里设置setData
+          console.log("getSubtasks:", results)
+          var ChildTask = []
+          for (var i in results){
+            var object = {}
+            object = {
+              subtask_id: results[i].id,
+              is_finish: results[i].attributes.is_finish,
+              childTitle: results[i].attributes.title,
+              userPic: results[i].attributes.user.userPic,
+              clickChild:0,
+              isTouchMove:false,
+            }
+            ChildTask.push(object)
+          }
+          that.setData({
+            ChildTask: ChildTask
+          })
+          console.log("ChildTask:", that.data.ChildTask)
+        }
+      },
+      error: function (error) {
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId 子任务的id，is_finish 为true
+ * 完成某个子任务
+ */
+  finishSubTask: function (taskId, subTaskId, is_finish ,userName) {
+      var that = this
+      var Subtask = Bmob.Object.extend('sub_task')
+      var subtaskQuery = new Bmob.Query(Subtask)
+
+      //更改子任务为完成状态
+      subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("is_finish", is_finish)
+        result.save()
+        //记录
+        that.addTaskRecord(taskId, userName, FINISH_SUB_TASK + result.get('title'))
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId 子任务的id，is_finish 为false
+ * 重做某个子任务
+ */
+redoSubTask:function (subTaskId, is_finish) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //更改子任务为完成状态
+    subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("is_finish", is_finish)
+        result.save()
+        //记录
+        addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId子任务的id ， newTitle 新任务标题
+ * 修改子任务标题
+ */
+  modifySubTaskTitle: function (subTaskId, newTitle, userName) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //更改子任务为完成状态
+    subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("title", newTitle)
+        result.save()
+        //记录
+        that.addTaskRecord(subTaskId, userName, MODIFY_SUB_TASK_TITLE)
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
+ * 删除子任务
+ */
+deleteSubTask:function (subTaskId, userName, subTaskTitle) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //删除子任务
+    subtaskQuery.equalTo('objectId', subTaskId)
+    subtaskQuery.destroyAll({
+      success: function () {
+        //删除成功
+        console.log("删除子任务成功！")
+        //记录操作
+        addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+      },
+      error: function (err) {
+        // 删除失败
+      }
+    })
+  },
+
+//手指触摸动作开始 记录起点X坐标
+  touchstart: function(e) {
+     //开始触摸时 重置所有删除
+    this.data.ChildTask.forEach(function (v, i) {
+        if (v.isTouchMove)//只操作为true的
+           v.isTouchMove = false;
+    
+  })
+     this.setData({
+        startX: e.changedTouches[0].clientX,
+        startY: e.changedTouches[0].clientY,
+        ChildTask: this.data.ChildTask
+   })
+  
+},
+  //滑动事件处理
+  touchmove: function (e) {
+     var that = this,
+      index = e.currentTarget.dataset.index,//当前索引
+        startX = that.data.startX,//开始X坐标
+          startY = that.data.startY,//开始Y坐标
+           touchMoveX = e.changedTouches[0].clientX,//滑动变化坐标
+              touchMoveY = e.changedTouches[0].clientY,//滑动变化坐标
+               //获取滑动角度
+      angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+     that.data.ChildTask.forEach(function (v, i) {
+        v.isTouchMove = false
+        //滑动超过30度角 return
+        if (Math.abs(angle) > 30) return;
+        if (i == index) {
+           if (touchMoveX > startX) //右滑
+              v.isTouchMove = false
+           else //左滑
+            v.isTouchMove = true
+    
+  }
+   })
+   //更新数据
+   that.setData({
+     ChildTask: that.data.ChildTask
+   })
+  },
+  /**
+   * 计算滑动角度
+   * @param {Object} start 起点坐标
+   * @param {Object} end 终点坐标
+   */
+  angle: function (start, end) {
+     var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+     //返回角度 /Math.atan()返回数字的反正切值
+     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+  
+},
+  //删除事件
+  del: function (e) {
+    this.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
+     this.setData({
+       ChildTask: this.data.ChildTask
+   })
+  
+},
+
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    // var projectName = wx.getStorageSync("Project-name")//项目名
-    // var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
-    // //获取任务详情信息
-    // that.setData({
-    //   taskId: taskId,
-    //   projectName: projectName
-    // })
+    for (var i = 0; i < 10; i++) {
+      this.data.ChildTask.push({
+             content: i + " 向左滑动删除哦,向左滑动删除哦,向左滑动删除哦,向左滑动删除哦,向左滑动删除哦",
+             isTouchMove: false //默认全隐藏删除
+    })
+      
+    }
+  //      this.setData({
+  //         ChildTask: this.data.ChildTask
+  //  })
   },
 
   /**
@@ -745,22 +1044,31 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    var projectName = wx.getStorageSync("Project-name")//项目名
-    var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
-    var projectMember = wx.getStorageSync("ProjectDetail-memberList")//项目成员
-    that.setData({
-      taskId: taskId
+    //任务
+    wx.getStorage({
+      key: 'ProjectMore-Task',
+      success: function(res) {
+        var taskId = res.data.objectId//任务id
+        var leaderId = res.data.leader.objectId//任务负责人id
+        that.setData({
+          taskId: taskId
+        })
+        that.getTaskDetail(taskId);//获取任务详情
+        that.getTaskMember(taskId, leaderId)//获取任务成员
+        that.getSubtasks(taskId);//获取子任务列表
+      },
     })
+    //项目
+    wx.getStorage({
+      key: "Project-detail",
+      success: function (res) {
+        that.setData({
+          projectName: res.data.name
+        })
+      },
+    })
+    
 
-    that.getTaskDetail(taskId);
-
-    //获取任务成员
-    console.log("onshow:")
-    console.log("taskId:", wx.getStorageSync("ProjectMore-Task-id"))
-    console.log("leaderId:", wx.getStorageSync("ProjectMore-LeaderId"))
-    console.log("projectname:", wx.getStorageSync("Project-name"))
-    that.getTaskMember(taskId, leaderId)
 
     //反馈模板
     var feedbackMod = wx.getStorageSync("FeedBack-content")

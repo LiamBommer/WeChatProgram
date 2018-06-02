@@ -259,56 +259,25 @@ Page({
   },
 
   //点击任务项
-  ClickTask:function(e){
-    // var that = this
-    // var index = e.currentTarget.dataset.index
-    // var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
-    // console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
-    // that.setData({
-    //   "that.data.tasklist[0].tasks[0].is_finish": !that.data.tasklist[0].tasks[index].is_finish
-    // })
-    // console.log("checkboxChange", that.data.tasklist[0].tasks[index].is_finish)
-  },
-
-  // 勾选任务
-  checkboxChange: function (e) {
-    // var index = e.detail.value
-    // var tasklist = " tasklist[0].tasks[" + index + "].is_finish"
-    // console.log("checkboxChange",tasklist)
-    // this.setData({
-    //   [tasklist]:false
-    // })
-    // console.log("checkboxChange", this.data.tasklist[0].tasks[index].is_finish)
-
-    
+  ClickTask: function (e) {
     var that = this
-    var userName = getApp().globalData.nickName
-    var taskListIndex = that.data.currentItem
-    var index = e.detail.value
-    // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    // var checked = that.data.tasklist[taskListIndex].attributes.tasks[index].is_finish
-    // console.log(checked)
-    if (index == "")//取消勾选
-    {
-      // var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
-      // console.log("taskId", taskId)
-      // that.finishTask(taskId, false, userName)
+    var currentItem = that.data.currentItem//当前任务列表下标
+    var index = e.currentTarget.dataset.index//当前任务下标
+    var taskId = e.currentTarget.id//当前任务ID
+    var userName = getApp().globalData.nickName//当前操作用户
+    var TakChecked = !e.currentTarget.dataset.checked//当前任务是否被选中
+    that.finishTask(taskId, TakChecked, userName)
 
-      // console.log("取消勾选", taskId, userName)
-    }
-    else {//勾选
-      var taskId = that.data.tasklist[taskListIndex].attributes.tasks[index].objectId
-      var is_finish = "tasklist["+taskListIndex+"].attributes.tasks["+index+"].is_finish"
-      that.setData({
-        [is_finish]:true,
-        })
-      console.log("taskId", taskId)
-      that.finishTask(taskId, true, userName)
-      console.log("勾选", taskId, userName)
-    }
- 
+    var Task = " tasklist[" + currentItem + "].attributes.tasks[" + index + "].is_finish"
+    console.log("Task", Task)
+    var Task_isfinish = that.data.tasklist[currentItem].attributes.tasks[index].is_finish//获取选中任务项的勾选判断
+    console.log("Task_isfinish", that.data.tasklist[currentItem].attributes.tasks[index].is_finish)
+    that.setData({
+      [Task]: !Task_isfinish
+    })
   },
 
+ 
   // 修改任务列表名
   ListNameInput: function(e){
     var index = this.data.index;
@@ -475,8 +444,12 @@ Page({
   showTask: function(e) {
     var taskListIndex = this.data.currentItem
     var index = e.currentTarget.dataset.index
-    wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
-    wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
+    // wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
+    wx.setStorage({
+      key: "ProjectMore-Task",
+      data: this.data.tasklist[taskListIndex].attributes.tasks[index],
+    })
+    // wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
     });
@@ -822,10 +795,16 @@ Page({
   onShow: function () {
     var that = this
     wx.startPullDownRefresh()//刷新
-  
-    var ProjectId = wx.getStorageSync("Project-id")//获取项目ID
-    that.getAnnouncements(ProjectId)//获取公告ID
-    that.getTaskLists(ProjectId);//获取任务ID
+
+    wx.getStorage({
+      key: "Project-detail",
+      success: function (res) {
+        console.log("onshow:project", res.data)
+        var ProjectId = res.data.id//获取项目ID
+        that.getAnnouncements(ProjectId)//获取公告ID
+        that.getTaskLists(ProjectId);//获取任务ID
+      },
+    })
     
 
     // var taskList = that.data.taskList

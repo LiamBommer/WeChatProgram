@@ -480,11 +480,18 @@ cancelProjectFirst:function (projId, isFirst) {
    */
   onShow: function () {
     var that = this
-    var projId = wx.getStorageSync("Project-id")
+    //项目
+    wx.getStorage({
+      key: "Project-detail",
+      success: function (res) {
+        that.setData({
+          projId: res.data.id,
+        })
+        that.getProjectDetail(res.data.id)
+      },
+    })
     var leaderName = wx.getStorageSync("ProjectBelong-memberName")
-    that.getProjectDetail(projId)
     that.setData({
-      projId: projId,
       project_response: leaderName
     })
     // wx.setStorageSync("ProjectDetail-memberList", this.data.member)

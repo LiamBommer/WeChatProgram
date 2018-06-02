@@ -99,15 +99,29 @@
       <image src='{{icon_add}}' bindtap='AddChildTask'></image>
     </view>
 
-    <block wx:for="{{ChildTask}}">
-      <view class="item-view ver-align space-between">
-        <view class='childtask'>
-          <checkbox class='item-checkbox'/>
-          <text >{{item.name}}</text>
+     
+        <view wx:for="{{ChildTask}}" class="touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
+            <view class="contentminddle item-view ver-align space-between" 
+            style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}'>
+              <view class='childtask'>
+                  <checkbox-group bindchange="childCheckboxChange"> 
+                      <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' 
+                      class='item-checkbox' checked='{{item.is_finish}}' value='{{item.subtask_id}}'/>
+                  </checkbox-group> 
+                  <text id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" 
+                  bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" 
+                  data-checked='{{item.is_finish}}'>{{item.childTitle}}</text>
+                  <modal  hidden="{{hiddenmodalputChildTitle}}" 
+                  title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" bindconfirm="confirmChildTitle"> 
+                      <input id='childTitle' bindinput='childInput' type='text' 
+                      value='{{inputChildTitle}}' placeholder="子任务标题" />
+                  </modal> 
+              </view>
+              <image class='radius' src='{{item.userPic}}'></image>
+            </view>
+            <view class="del" catchtap="del" data-index="{{index}}">删除</view>
         </view>
-        <image src='{{item.icon}}'></image>
-      </view>
-    </block>
+    
 
    </view>
 

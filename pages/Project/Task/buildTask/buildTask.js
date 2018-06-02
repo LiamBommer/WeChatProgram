@@ -47,7 +47,11 @@ Page({
     that.createTask(that.data.list_id, name, memberIds, end_time)
 
     wx.navigateBack({
-      url:"../../ProjectMore/ProjectMore"
+      url: "../../ProjectMore/ProjectMore"
+    })
+    wx.showToast({
+      title: '添加任务成功',
+      icon: 'success',
     })
   },
 
@@ -70,6 +74,7 @@ Page({
 
     var leaderId = memberIds.shift()  //删除并返回第一个任务负责人的id
     var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
+
     //添加任务
     task.save({
       list_id: listId,

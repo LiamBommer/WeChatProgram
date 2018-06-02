@@ -9,10 +9,10 @@
       <!-- 列表项 -->
       <view class='item'>
         <view class='item-one'>
-          <image class='item-icon' src='{{item.icon}}'></image>
-          <view class='item-text'>{{item.name}}</view>
+          <image class='item-icon' src='{{item.userPic}}'></image>
+          <view class='item-text'>{{item.nickName}}</view>
         </view>
-        <radio value='{{item.index}}' checked='{{item.checked}}' />
+        <radio value='{{item.objectId}}' checked='' />
       </view>
     </block>
   </radio-group>

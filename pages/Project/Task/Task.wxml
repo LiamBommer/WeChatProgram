@@ -19,12 +19,13 @@
               <scroll-view scroll-y="true" style="height: 900rpx">
                   <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
                     <block wx:if="{{tasks.is_finish}}">
-                      <view class='taskitemDone' data-index="{{index}}" bindtap="ClickTask">
+                      <view class='taskitemDone'>
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
                           <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                                <checkbox class='item-checkbox' value='{{index}}'  data-index="{{index}}" bindtap="ClickTask" 
+                                checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
                               <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
@@ -43,12 +44,13 @@
                     </block>
                     
                     <block wx:else>
-                      <view class='taskitem' data-index="{{index}}" bindtap="ClickTask">
+                      <view class='taskitem' >
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
                           <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                                <checkbox class='item-checkbox' id='{{tasks.objectId}}' value='{{index}}' checked='{{tasks.is_finish}}'
+                                data-index="{{index}}" data-checked="{{tasks.is_finish}}" bindtap="ClickTask"/>
                               </checkbox-group>
                               <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
