@@ -23,7 +23,7 @@
     <view class="item-view" bindtap='MemberList'>
       <!-- <image class='header' src='{{icon_person}}'></image> -->
       <block wx:for="{{member}}">
-         <image class='membericon' src='{{item.icon}}'></image>
+         <image class='membericon' src='{{item.userPic}}'></image>
       </block>
     </view>
 

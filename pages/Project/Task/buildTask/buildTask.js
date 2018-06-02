@@ -62,7 +62,7 @@ Page({
    * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
    */
   createTask: function(listId, title, memberIds, endTime){
-
+    var that = this
     var Task = Bmob.Object.extend("task")
     var task = new Task()
 
@@ -77,12 +77,13 @@ Page({
       leader: leader,  // 数据库关联，用id可以关联一个user
       end_time: endTime,
       is_finish: false,
-      has_sub: false
+      has_sub: false,
+      is_delete: false
     },{
       success: function(result){
         //添加成功
         //添加任务成员信息
-        // addTaskMembers(result.id/*任务id*/, leaderId, memberIds)
+        that.addTaskMembers(result.id/*任务id*/, leaderId, memberIds)
         // 提示用户添加成功
         console.log("添加任务成功")
       },
@@ -94,6 +95,43 @@ Page({
     })
 
   },
+
+  /**
+ * 2018-05-19
+ * @author mr.li
+ * @parameter taskId任务id，leaderId任务负责人id，memberIds除负责人以外的任务成员id数组
+ * 为任务添加成员
+ */
+  addTaskMembers:function (taskId, leaderId, memberIds){
+    var that = this
+    var TaskMember = Bmob.Object.extend("task_member")
+
+    var leader = Bmob.Object.createWithoutData("_User", leaderId);
+      var memberObjects = []
+    
+    var taskMember = new TaskMember()
+    taskMember.set('task_id', taskId)
+    taskMember.set('user_id', leader)
+    memberObjects.push(taskMember)  //添加任务负责人id
+
+    for(var i= 0;i<memberIds.length;i++){
+    var taskMember = new TaskMember()
+    var member = Bmob.Object.createWithoutData("_User", memberIds[i]);
+    taskMember.set('task_id', taskId)
+    taskMember.set('user_id', member)
+    memberObjects.push(taskMember)  //添加任务成员
+}
+
+//批量添加任务成员
+Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
+  // 成功
+  console.log("批量添加任务成员成功！")
+},
+  function (error) {
+    // 异常处理
+    console.log("批量添加任务成员成功！", error)
+  })
+},
 
   /**
    * 生命周期函数--监听页面加载

@@ -37,6 +37,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+
+
     hiddenmodalputTitle: true,//弹出标题模态框
     projectName:"学长说系列分享活动",//项目名
     taskId:"",//任务ID
@@ -296,9 +298,9 @@ Page({
           console.log("DeleteTasktaskId", taskId)
           console.log("DeleteTaskuserName", userName)
           that.deleteTask(taskId, userName)
-          // wx.navigateBack({
-          //   url: '../../ProjectMore/ProjectMore',
-          // })
+          wx.navigateBack({
+            url: '../../ProjectMore/ProjectMore',
+          })
         }
         else if (res.cancel) {
         }
@@ -573,7 +575,7 @@ Page({
  * 获取任务成员，成员数组的第一个是任务负责人
  */
   getTaskMember:function (taskId, leaderId){
-
+    var that =  this
     var TaskMember = Bmob.Object.extend('task_member')
     var taskmemberQuery = new Bmob.Query(TaskMember)
 
@@ -583,7 +585,6 @@ Page({
     taskmemberQuery.include("user_id")
     taskmemberQuery.find({
       success: function (results) {
-        console.log("任务成员", results)
         for (var i = 0; i < results.length; i++) {
           var result = results[i]
           if (leaderId == result.get("user_id").objectId) {
@@ -592,8 +593,11 @@ Page({
             memberArr.push(result.get("user_id"))
           }
         }
+        console.log("任务成员", memberArr)
         //在这里设置setData
-        
+        that.setData({
+          member: memberArr
+        })
 
 
 
@@ -698,7 +702,10 @@ Page({
         result.save()
         //console.log("删除反馈时间成功")
         //不用记录操作
-        console.log("deleteTask")
+        wx.showToast({
+          title: '删除成功',
+          icon:"success"
+        })
         wx.removeStorageSync("TaskDetail-taskId")
       },
       error: function (error) {
@@ -716,7 +723,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
+    // var projectName = wx.getStorageSync("Project-name")//项目名
+    // var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
+    // //获取任务详情信息
+    // that.setData({
+    //   taskId: taskId,
+    //   projectName: projectName
+    // })
   },
 
   /**
@@ -735,19 +749,17 @@ Page({
     var projectName = wx.getStorageSync("Project-name")//项目名
     var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
     var projectMember = wx.getStorageSync("ProjectDetail-memberList")//项目成员
-    console.log("onshow:",projectMember)
-    //获取任务详情信息
     that.setData({
-      taskId: wx.getStorageSync("ProjectMore-Task-id"),
-      member: projectMember,
-      projectName: wx.getStorageSync("Project-name")
+      taskId: taskId
     })
+
     that.getTaskDetail(taskId);
 
     //获取任务成员
     console.log("onshow:")
-    console.log("taskId:",taskId)
-    console.log("leaderId:",leaderId)
+    console.log("taskId:", wx.getStorageSync("ProjectMore-Task-id"))
+    console.log("leaderId:", wx.getStorageSync("ProjectMore-LeaderId"))
+    console.log("projectname:", wx.getStorageSync("Project-name"))
     that.getTaskMember(taskId, leaderId)
 
     //反馈模板
