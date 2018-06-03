@@ -6,6 +6,7 @@ var DELETE_SCHEDULE = "删除了日程"
 var MODIFY_SCHEDULE_START = "修改了日程开始时间"
 var MODIFY_SCHEDULE_END = "修改了日程截止时间"
 var MODIFY_SCHEDULE_TITLE = "修改了日程标题"
+var ADD_SCHEDULE_TASK = "添加了日程关联的任务"
 
 /**
  * @parameter projId 项目id，content内容，
@@ -17,6 +18,7 @@ function createSchedule(projId,content,startTime,endTime,taskIds){
   
   var that = this
   var Schedule = Bmob.Object.extend('schedule')
+  var Scheduletask = Bmob.Object.extend('schedule_task')
   var schedule = new Schedule()
 
   //添加日程
@@ -43,17 +45,19 @@ function createSchedule(projId,content,startTime,endTime,taskIds){
       var objects = new Array()  //本地schedule_task数组
       for (var i = 0; i < taskIds.length;i++){
         var taskid = taskIds[i]
+
+        console.log("taskID",taskid)
+
         var task = Bmob.Object.createWithoutData("task", taskid)
-        var object = {}
-        object = {
-          schedule_id: schedule.id,  //日程id
-          task: task
-        }
-        objects.push(object)
+        var cheduletaskObject = new Scheduletask()
+        cheduletaskObject.set("schedule_id", schedule.id/*日程id*/)
+        cheduletaskObject.set("task", task)
+        objects.push(cheduletaskObject)
       }
       //批量添加
       Bmob.Object.saveAll(objects).then(function (objects) {
         // 成功添加关联任务
+        console.log("成功添加关联任务！")
       },
         function (error) {
           // 异常处理
@@ -80,34 +84,50 @@ function getSchedules(projId){
   scheduleQuery.ascending('start_time')
   
   scheduleQuery.find({
-    success: function(results){
+    success: function(schedules){
       var scheduleIds = []
-      for (var i = 0; i < results.length; i++) {
-        scheduleIds.push(results[i].id)
+      for (var i = 0; i < schedules.length; i++) {
+        scheduleIds.push(schedules[i].id)
       }
       //获取日程关联的任务
-      scheduletaskQuery.include("task")
       scheduletaskQuery.containedIn("schedule_id", scheduleIds)
+      scheduletaskQuery.include("task")
+      scheduletaskQuery.include("task.leader")
       scheduletaskQuery.find({
         success: function (results) {
-          console.log(results)
-          var scheduleObjects = []
-          for (var i = 0; i < scheduleIds.length; i++) {
+          var scheduleObjectArr = []
+          for (var i = 0; i < schedules.length; i++) {
             var scheduleObject = {}
             scheduleObject={
-              "scheduleId": scheduleIds[i],  //日程id
+              "objectId":'0',     //日程关联任务的id ，不是日程，也不是任务，而是两个的关联的id ，hh后面会设置
+              "scheduleId": schedules[i].id,  //日程id
+              "scheduleContent":schedules[i].get('content'),
+              "startTime": schedules[i].get('start_time'),
+              "endTime": schedules[i].get('end_time'),
               "tasks": []  //关联的任务数组
             }
+            //注意下面的for循环是 j ，不是 i 
             for (var j = 0; j < results.length; j++) {
-              if (results[i].get("schedule_id") == scheduleObject.scheduleId){
-                var taskObject = {
-                  "task_id": results[i].get("task").objectId,
-                  "task_title": results[i].get("schedule_id").title
+              if (results[j].get("schedule_id") == scheduleObject.scheduleId){
+                scheduleObject.objectId = results[j].id  //日程关联任务的id
+                var taskObject = {                 
+                  "task_id": results[j].get("task").objectId,
+                  "task_title": results[j].get("task").title,
+                  "task_userPic": results[j].get("task").leader.userPic
                 }
                 scheduleObject.tasks.push(taskObject)
               }
             }
+            scheduleObjectArr.push(scheduleObject)
           }
+          //scheduleObjectArr才是最终要获取的日程数组，每个日程下面包括有关联的任务的数据
+          //在这里setData
+          console.log(scheduleObjectArr)
+
+
+
+
+
         },
         error: function (error) {
           //获取日程关联的任务失败
@@ -115,10 +135,8 @@ function getSchedules(projId){
       })
     },
     error: function(error){
-
+        //查询日程失败
     }
-  }).then(function(schedules){
-    
   })
 
 }
@@ -229,6 +247,7 @@ function addProjectNotification(projId, content, _type, requestId) {
 /**
  * @parameter projId 项目id, scheduleId日程id
  * 删除日程
+ *  内部调用了addProjectNotification
  */
 function deleteSchedule(projId,scheduleId){
 
@@ -253,6 +272,7 @@ function deleteSchedule(projId,scheduleId){
 /**
  * @parameter projId项目id, scheduleId日程id, newTitle新标题
  * 修改日程标题
+ *  内部调用了addProjectNotification
  */
 function modifyScheduleTitle(projId, scheduleId, newTitle){
   
@@ -277,8 +297,9 @@ function modifyScheduleTitle(projId, scheduleId, newTitle){
 /**
  * @parameter projId项目id, scheduleId日程id, newStartTime新的开始时间
  * 修改日程开始时间
+ *  内部调用了addProjectNotification
  */
-function modifyScheduleTitle(projId, scheduleId, newStartTime) {
+function modifyScheduleStartTime(projId, scheduleId, newStartTime) {
 
   var that = this
   var Schedule = Bmob.Object.extend('shcedule')
@@ -301,8 +322,9 @@ function modifyScheduleTitle(projId, scheduleId, newStartTime) {
 /**
  * @parameter projId项目id, scheduleId日程id, newTitle新标题
  * 修改日程结束时间
+ *  内部调用了addProjectNotification
  */
-function modifyScheduleTitle(projId, scheduleId, newEndTime) {
+function modifyScheduleEndtime(projId, scheduleId, newEndTime) {
 
   var that = this
   var Schedule = Bmob.Object.extend('shcedule')
@@ -325,8 +347,62 @@ function modifyScheduleTitle(projId, scheduleId, newEndTime) {
 /**
  * @parameter projId项目id,scheduleId日程id,taskIds任务id数组
  * 为日程添加关联任务
+ * 内部调用了addProjectNotification
  */
 function addRelatedTask(projId,scheduleId,taskIds){
 
+  var that = this
+  var Scheduletask = Bmob.Object.extend('schedule_task')
+  var scheduletaskArr = []  //日程关联任务的数组
+
+  //批量添加与日程关联的任务
+  if (taskIds != null && taskIds.length > 0){
+    for(var i in taskIds){
+      var scheduletask = new Scheduletask()
+      var task = Bmob.Object.createWithoutData('task', taskIds[i])  //关联的任务信息
+      scheduletask.set("schedule_id", scheduleId)
+      scheduletask.set("task",task)
+      scheduletaskArr.push(scheduletask)
+    }
+    //批量保存新关联的任务
+    Bmob.Object.saveAll(scheduletaskArr).then(function (scheduletaskArr) {
+      // 成功
+      var _type = 3  //通知类型
+      that.addProjectNotification(projId, ADD_SCHEDULE_TASK, _type, scheduleId/*日程id*/)  //通知其他项目成员
+      console.log("提示用户关联任务成功！")
+
+
+    },
+      function (error) {
+        // 异常处理
+        console.log("提示用户关联任务失败！")
+      })
+  }
+}
+
+/**
+ * @parameter scheduleTaskId "日程关联任务的id"
+ * 删除单个任务关联，我想的是让用户左滑删除。所以是单个
+ */
+function deleteOneScheduleTask(scheduleTaskId){
+
+  var Scheduletask = Bmob.Object.extend('schedule_task')
+  var scheduletaskQuery = new Bmob.Query(Scheduletask)
+
+  //删除单个程序关联的任务
+  scheduletaskQuery.equalTo('objectId', scheduleTaskId)
+  scheduletaskQuery.destroyAll({
+    success: function () {
+      //删除成功
+      console.log("提示用户删除成功！")
+    },
+    error: function (err) {
+      // 删除失败
+      console.log("提示用户删除失败！")
+    }
+  })
 }
 module.exports.createSchedule = createSchedule
+module.exports.addProjectNotification = addProjectNotification
+module.exports.getSchedules = getSchedules
+module.exports.addRelatedTask = addRelatedTask
