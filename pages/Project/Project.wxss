@@ -94,6 +94,14 @@
     width: 85%;
 }
 
+.Project-container .item .item-two{
+    display: flex;
+    align-items: center;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    height: 100%;
+}
+
 .Project-container .item .item-one .item-icon{
     width: 100rpx;
     height: 100rpx;
@@ -106,7 +114,6 @@
 }
 
 .Project-container .item .itemmore-icon{
-    margin-right: 40rpx;
     width: 40rpx;
     height: 40rpx;
 }
