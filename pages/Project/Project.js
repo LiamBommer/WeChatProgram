@@ -27,19 +27,21 @@ Page({
   
   //点击星标项目
   ClickStarItem: function(e) {
+    var that = this
     var index = e.currentTarget.dataset.index
     wx.setStorage({
       key: "Project-detail",
-      data: this.data.StarProject[index],
+      data: that.data.StarProject[index],
     })
   },
 
   //点击项目
   ClickItem: function(e) {
+    var that = this
     var index = e.currentTarget.dataset.index
     wx.setStorage({
       key: "Project-detail",
-      data: this.data.Project[index],
+      data: that.data.Project[index],
     })
   },
 

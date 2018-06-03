@@ -100,36 +100,33 @@ Page({
 
     //消息循环列表
     taskremind: [
-      {
-        text: '朱宏涛添加了子任务“寻找通讯录"',
-        time: '6月1日 20:00',
-      },
-      {
-        text: '朱宏涛添加了子任务“筛选嘉宾"',
-        time: '6月1日 20:00',
-      },
+      // {
+      //   text: '朱宏涛添加了子任务“寻找通讯录"',
+      //   time: '6月1日 20:00',
+      // },
+      // {
+      //   text: '朱宏涛添加了子任务“筛选嘉宾"',
+      //   time: '6月1日 20:00',
+      // },
     ],
 
     //他人聊天循环列表
     chat: [
-      {
-        content: '嘉宾应该邀请哪种类型呢？',
-        icon: '/img/me.png',
-        judgemine: false,//其他人发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
-      {
-        content: '感觉竞赛类的嘉宾比较有同学喜欢',
-        icon: '/img/me.png',
-        judgemine: true,//我发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
-      {
-        content: '选嘉宾的标准应该是能引起同学们兴趣的',
-        icon: '/img/me.png',
-        judgemine: true,//我发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
+      // {
+      //   content: '嘉宾应该邀请哪种类型呢？',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
+      // {
+      //   content: '感觉竞赛类的嘉宾比较有同学喜欢',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
+      // {
+      //   content: '选嘉宾的标准应该是能引起同学们兴趣的',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
     ],
 
 
@@ -348,7 +345,6 @@ Page({
   Feedback: function () {
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
-    // wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
     //获取反馈模板
     wx.setStorageSync("TaskDetail-feedbackMod", that.data.feedbackMod)
     that.setData({
@@ -369,8 +365,6 @@ Page({
       success: function (res) {//删除任务
         if (res.confirm) {
           var userName = getApp().globalData.nickName
-          console.log("DeleteTasktaskId", taskId)
-          console.log("DeleteTaskuserName", userName)
           that.deleteTask(taskId, userName)
           wx.navigateBack({
             url: '../../ProjectMore/ProjectMore',
@@ -430,22 +424,30 @@ Page({
   },
 
   // 点击发送按钮发送消息
-  sendMessage: function() {
-    var content = this.Inputcontent;
-    var chat = this.data.chat;
-
+  sendMessage: function(e) {
+    var that = this
+    var content = e.detail.value.review;
+    var chat = that.data.chat;
+    var scrollTop = that.data.scrollTop;
+    scrollTop += 200;
+    
     console.log(content);
-    if(content == undefined) {
+
+    if (content == undefined) {
       // 发送内容为空则不发送
     } else {
+      console.log("点击发送")
+      var taskId = that.data.taskId
+      var publisherId = getApp().globalData.userId
+      var userPic = getApp().globalData.userPic
+      that.sendTaskComment(taskId, publisherId, content)//传后台
       chat.push({
         content: content, //我发送的内容
-        icon: '/img/me.png',//我的头像
-        judgemine: true,//我发的消息
+        icon: userPic,//我的头像
       });
       that.setData({
-        chat : chat,
-        Inputcontent : "",
+        chat: chat,
+        Inputcontent: "",
         scrollTop: scrollTop,
       });
     }
@@ -459,13 +461,16 @@ Page({
     var content = e.detail.value;
     var chat = that.data.chat;
 
-    console.log(content);
     if(content == undefined) {
       // 发送内容为空则不发送
     } else {
+      var taskId = that.data.taskId
+      var publisherId = getApp().globalData.userId
+      var userPic = getApp().globalData.userPic
+      that.sendTaskComment(taskId, publisherId, content)//传后台
       chat.push({
         content: content, //我发送的内容
-        icon: '/img/me.png',//我的头像
+        icon: userPic,//我的头像
         judgemine: true,//我发的消息
       });
       that.setData({
@@ -643,7 +648,10 @@ Page({
         result.set('is_finish', isFinish)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+        if(isFinish == true)
+          that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+        else
+          that.addTaskRecord(taskId, userName, REDO_TASK + result.get('title'))
 
       },
       error: function (object, error) {
@@ -866,7 +874,10 @@ Page({
         result.set("is_finish", is_finish)
         result.save()
         //记录
-        that.addTaskRecord(taskId, userName, FINISH_SUB_TASK + result.get('title'))
+        if (isFinish == true)
+          that.addTaskRecord(taskId, userName, FINISH_SUB_TASK + result.get('title'))
+        else
+          that.addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
 
       },
       error: function (error) {
@@ -986,14 +997,16 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         if (Math.abs(angle) > 30) return;
         if (i == index) {
            if (touchMoveX > startX) //右滑
-              v.isTouchMove = false
+           {
+             txtStyle = "";
+             v.isTouchMove = false
+           }
            else //左滑
            {
              txtStyle = "margin-left:-" + 200 + "px";
              v.isTouchMove = true
            }
-    
-  }
+        }
    })
     var list = that.data.ChildTask;
     list[index].txtStyle = txtStyle;
@@ -1014,7 +1027,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
      return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
   
 },
-  //删除事件
+  //删除子任务
   del: function (e) {
     var that = this
     wx.showModal({
@@ -1036,6 +1049,163 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
     
   
 },
+
+  /**
+   * 2018-05-29
+   * @parameter taskId 任务id
+   * 获取任务记录 , 一次50条,时间越久远的排在越后面
+   */
+  getTaskRecord:function (taskId){
+    var that = this
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecordQuery = new Bmob.Query(TaskRecord)
+
+    //查询任务记录
+    taskrecordQuery.select("record")
+    taskrecordQuery.equalTo("task_id", taskId)
+    taskrecordQuery.descending("createdAt")
+    taskrecordQuery.limit(50)
+    taskrecordQuery.find({
+      success: function (results) {
+        //成功
+        //在这里设置setData
+        // console.log("获取的任务记录", results)
+        var taskremind = []
+        for (var i in results){
+          var object = {
+            text: results[i].attributes.record,
+            time: results[i].createdAt.substring(0,16)
+          }
+          taskremind.push(object)
+        }
+        console.log("获取的任务记录", taskremind)
+        that.setData({
+          taskremind: taskremind
+        })
+
+      },
+      error: function (error) {
+        //失败
+        console.log("获取任务记录失败！", error)
+      }
+    })
+
+
+  },
+
+  /**
+ * 获取某个任务的评论（50条）,按时间由近到远排序
+ */
+  getTaskComment:function (taskId){
+    var that = this
+    var Taskcommment = Bmob.Object.extend('task_comment')
+    var taskcommentQuery = new Bmob.Query(Taskcommment)
+    var commentList = new Array()  //获取的评论列表
+
+    //获取评论
+    taskcommentQuery.equalTo('task_id', taskId)
+    taskcommentQuery.descending('createdAt')
+    taskcommentQuery.include('publisher')  //获取发布人的信息
+    taskcommentQuery.limit(50)
+    taskcommentQuery.find({
+      success: function (results) {
+        //成功返回results     
+        for (var i in results) {
+          var commentId = results[i].id;  //评论id
+          var userPic = results[i].get('publisher').userPic  //发布评论的人的头像
+          var content = results[i].get('content')  //评论内容
+          var createdAt = results[i].createdAt  //评论时间
+          var isImg = results[i].get('is_img')
+          var comment;
+          comment = {
+            "content": content,
+            'icon': userPic,
+            'judgepictrue': isImg,
+            "commentId": commentId,
+            "time": createdAt.substring(0,16)
+          }
+          commentList.push(comment)
+        }
+        //在这里setData
+        console.log("获取评论成功!", commentList)
+        that.setData({
+          chat: commentList
+          })
+
+
+
+
+      },
+      error: function (error) {
+        //获取评论失败
+        console.log("获取评论失败!", error)
+      }
+
+    })
+  },
+
+/**
+ * 2018-06-02
+ * @parameter taskId任务id, publisherId评论人的id, content评论内容
+ * 发布评论，沟通模板也可以用这个函数，沟通模板的内容就是content
+ */
+sendTaskComment:function (taskId, publisherId, content) {
+    var that= this
+    var Taskcommment = Bmob.Object.extend('task_comment')
+    var taskcomment = new Taskcommment()
+
+    var publisher = Bmob.Object.createWithoutData("_User", publisherId)  //发布人的信息
+    //添加任务评论
+    taskcomment.save({
+      publisher: publisher,
+      content: content,  //评论内容
+      task_id: taskId,  //任务id
+      is_img: false     //内容不是图片
+    }, {
+        success: function (result) {
+          // 添加成功
+          console.log("提示用户评论成功!")
+          wx.showToast({
+            title: '评论成功',
+          })
+        },
+        error: function (result, error) {
+          // 添加失败
+          console.log("提示用户评论失败!")
+        }
+      })
+  },
+
+/**
+ * 2018-06-02
+ * 发图片，发布任务评论的图片
+ * 内部调用了函数sendTaskComment
+ */
+sendTaskCommentPicture:function (taskId, publisherId) {
+    var that = this
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths;
+        if (tempFilePaths.length > 0) {
+          var name = "1.jpg";//上传的图片的别名，建议可以用日期命名
+          var file = new Bmob.File(name, tempFilePaths);
+          file.save().then(function (res) {
+
+            //res.url()是上传图片后的 url
+            //console.log(res.url());
+            sendTaskComment(taskId, publisherId, res.url()) //存储图片路径url
+
+          }, function (error) {
+            console.log(error);
+          })
+        }
+
+      }
+    })
+  },
 
 
   /**
@@ -1060,35 +1230,39 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
     wx.getStorage({
       key: 'ProjectMore-Task',
       success: function(res) {
+        console.log("In ProjectMore-Task", res.data)
         var taskId = res.data.objectId//任务id
         var leaderId = res.data.leaderId//任务负责人id
         that.setData({
-          taskId: taskId
+          taskId: taskId,
+          leaderId: leaderId
         })
         that.getTaskDetail(taskId);//获取任务详情
         that.getTaskMember(taskId, leaderId)//获取任务成员
         that.getSubtasks(taskId);//获取子任务列表
+        that.getTaskRecord(taskId)//获取任务记录
+        that.getTaskComment(taskId)//获取评论
+        
       },
     })
     //项目
     wx.getStorage({
       key: "Project-detail",
       success: function (res) {
+        console.log("In Project-detail", res.data)
         that.setData({
           projectName: res.data.name
         })
       },
     })
+    // var taskId = that.data.taskId
+    // var leaderId = that.data.leaderId
+    // console.log("taskId", taskId)
+    // console.log("leaderId", leaderId)
+    // that.getTaskDetail(taskId);//获取任务详情
+    // that.getTaskMember(taskId, leaderId)//获取任务成员
+    // that.getSubtasks(taskId);//获取子任务列表
     
-
-
-    //反馈模板
-    var feedbackMod = wx.getStorageSync("FeedBack-content")
-    console.log("Feedback:", feedbackMod)
-    that.setData({
-      feedbackMod: feedbackMod
-    })
-
     //发送沟通模板
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;

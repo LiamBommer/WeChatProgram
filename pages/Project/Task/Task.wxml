@@ -28,7 +28,8 @@
                           <view class='taskitem-top'>
                           <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}'  data-index="{{index}}" bindtap="ClickTask" 
+                                <checkbox class='item-checkbox' value='{{index}}' data-checked="{{tasks.is_finish}}"  data-index="{{index}}"
+                                 bindtap="ClickTask"  id="{{tasks.objectId}}"
                                 checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
                               <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>

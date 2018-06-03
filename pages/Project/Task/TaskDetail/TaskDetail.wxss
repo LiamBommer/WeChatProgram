@@ -95,34 +95,49 @@ button[hover-class="share-hover"]::after {
   margin-top: 40rpx;
 }
 
-.chat .chatperson{
-  width: 670rpx;
-  padding: 16rpx 40rpx;
-  min-height: 90rpx;
-  background-color: white;
-  border-bottom: solid 2rpx #f2f2f2;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .chat .person-icon-view {
   height: 100%;
 }
 
-.chat .person-icon{
-  width: 40rpx;
-  height: 40rpx;
+.chat .chatperson{
+  width: 670rpx;
+  padding: 16rpx 40rpx;
+  min-height: 110rpx;
+  background-color: white;
+  border-bottom: solid 2rpx #f2f2f2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.chat .chatperson .person-icon-view{
+  display:flex;
+  justify-content:flex-start;
+  flex-direction:column;
+  margin-left:20rpx;
+  width:90%;
+  margin-top:30rpx;
+}
+
+.chat .chatperson  .person-icon{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
   top: 9rpx;
 }
 
 .chat .chatperson .content{
-  margin-left: 20rpx;
-  line-height: 50rpx;
-  width: 100%;
+  line-height:60rpx;
 }
 
-.chat .chatperson .content-img{
+.chat .chatperson .time{
+  font-size:24rpx;
+  color:#888888;
+  width:100%;
+  text-align:end;
+}
+
+.chat .chatperson  .person-icon-view .content-img{
   width: 60rpx;
   height: 60rpx;
   margin-left: 20rpx;
@@ -131,7 +146,7 @@ button[hover-class="share-hover"]::after {
   padding:15rpx;
   line-height: 50rpx;
 }
-
+/* 
 .chat .chatperson-me{
   margin-top: 40rpx;
   width: 700rpx;
@@ -157,7 +172,7 @@ button[hover-class="share-hover"]::after {
   border-radius:10rpx;
   padding:15rpx;
   line-height: 50rpx;
-}
+} */
 
 /*
  * 输入区

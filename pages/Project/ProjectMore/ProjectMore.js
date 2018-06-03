@@ -15,6 +15,9 @@ Page({
     hiddenmodalputTitle: true,//弹出任务列表标题模态框
     inputTitle:'',//输入任务列表标题
     listId:'',//当前任务列表Id
+    currentProjId:"",//当前项目ID
+
+
     //隐藏判断
     exitTask: true,
     exitAnnouncement: false,
@@ -269,7 +272,6 @@ Page({
     var taskId = e.currentTarget.id//当前任务ID
     var userName = getApp().globalData.nickName//当前操作用户
     var TakChecked = !e.currentTarget.dataset.checked//当前任务是否被选中
-    console.log("ClickTask", TakChecked)
     that.finishTask(taskId, TakChecked, userName)
 
     var taskList = that.data.tasklist//任务列表
@@ -479,11 +481,13 @@ Page({
    * 显示任务详情页面
    */
   showTask: function(e) {
+    var that = this
     var taskListIndex = this.data.currentItem
     var index = e.currentTarget.dataset.index
+    console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
       key: "ProjectMore-Task",
-      data: this.data.tasklist[taskListIndex].tasks[index],
+      data: that.data.tasklist[taskListIndex].tasks[index],
     })
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
@@ -862,8 +866,10 @@ Page({
         result.set('is_finish', isFinish)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
-
+        if (isFinish == true)
+          that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+        else
+          that.addTaskRecord(taskId, userName, REDO_TASK + result.get('title'))
       },
       error: function (object, error) {
         //失败情况
@@ -982,20 +988,26 @@ Page({
   onShow: function () {
     var that = this
     wx.startPullDownRefresh()//刷新
-
     wx.getStorage({
       key: "Project-detail",
       success: function (res) {
         console.log("onshow:project", res.data)
         var ProjectId = res.data.id//获取项目ID
+        that.setData({
+          currentProjId: ProjectId
+        })
         that.getAnnouncements(ProjectId)//获取公告ID
         that.getTaskLists(ProjectId);//获取任务ID
         that.getProjectMember(ProjectId);//获取项目成员
       },
     })
-    
-
-
+    if (that.data.exitTask == true)//只刷新任务页
+    {
+      var currentProjId = that.data.currentProjId
+      console.log("当前项目ID", currentProjId)
+      that.getTaskLists(currentProjId);//获取任务ID
+      that.getProjectMember(currentProjId);//获取项目成员
+    }
    
 
   },

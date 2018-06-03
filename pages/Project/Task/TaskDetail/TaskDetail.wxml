@@ -128,7 +128,7 @@
 
    <!-- 聊天框 -->
    <view class='chat'>
-     <scroll-view scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >
+     <!-- <scroll-view scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" > -->
        <!-- 信息框 -->
        <view class='desc-title'>评论</view>
        <block wx:for = "{{chat}}">
@@ -143,14 +143,15 @@
          <block wx:else>
            <!-- 文字信息框 -->
            <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
-             <view class='person-icon-view'>
                <image class='person-icon' src='{{item.icon}}'></image>
+             <view class='person-icon-view'>
+               <view class='content'>{{item.content}}</view>
+               <view class='time'>{{item.time}}</view>
              </view>
-             <text class='content'>{{item.content}}</text>
            </view>
          </block>
        </block>
-     </scroll-view>
+     <!-- </scroll-view> -->
 
      <!-- 任务消息 -->
      <block wx:for = "{{taskremind}}">
@@ -161,22 +162,23 @@
      </block>
 
      <!-- 输入框 -->
-     <view class='input'>
-        <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
-        <input fixed="true" type='text' placeholder='在此输入文字...' cursor-spacing="20"
-        bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送"
-        confirm-hold="true" adjust-position="true"></input>
-        <!-- <image class='face-icon' src='/img/expression.png'></image> -->
-        <!-- 判断是否为操作系统类型 -->
-        <block wx:if="{{isInputing}}">
-          <!-- 正在输入时显示发送按钮，否则显示图片 -->
-          <button id='send-btn' bindtap='sendMessage'>发送</button>
-        </block>
-        <block wx:else>
-          <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
-        </block>
-     </view>
-
+      <form bindsubmit='sendMessage'>
+        <view class='input'>
+            <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
+            <input fixed="true" name="review" type='text' placeholder='在此输入文字...' cursor-spacing="20"
+            bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送"
+            confirm-hold="true" adjust-position="true"></input>
+            <!-- <image class='face-icon' src='/img/expression.png'></image> -->
+            <!-- 判断是否为操作系统类型 -->
+            <block wx:if="{{isInputing}}">
+              <!-- 正在输入时显示发送按钮，否则显示图片 -->
+              <button id='send-btn' form-type='submit'>发送</button>
+            </block>
+            <block wx:else>
+              <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
+            </block>
+        </view>
+       </form>
   </view>
 
 </view>

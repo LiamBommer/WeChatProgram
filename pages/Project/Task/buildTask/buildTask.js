@@ -36,7 +36,6 @@ Page({
     var name = e.detail.value.name
     var end_time = e.detail.value.time
     if(name == "" || name.length == 0) {
-      console.log('Task name CANNOT be NULL')
       return;
     }
 
@@ -44,7 +43,12 @@ Page({
     var myId = getApp().globalData.userId
     var memberIds = []
     memberIds.push(myId)
-    that.createTask(that.data.list_id, name, memberIds, end_time)
+    wx.getStorage({
+      key: "Project-detail",
+      success: function(res) {
+        that.createTask(res.data.id, that.data.list_id, name, memberIds, end_time)
+      },
+    })
 
     wx.navigateBack({
       url: "../../ProjectMore/ProjectMore"
@@ -59,13 +63,14 @@ Page({
    * 2018-05-19
    * @author mr.li
    * @parameter
+   *  projId
       listId任务看板id，
       title任务名称
       memberIds成员id数组，包括创建者自己（第一个）
       endTime截止时间
    * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
    */
-  createTask: function(listId, title, memberIds, endTime){
+  createTask: function(projId ,listId, title, memberIds, endTime){
     var that = this
     var Task = Bmob.Object.extend("task")
     var task = new Task()
@@ -83,7 +88,8 @@ Page({
       end_time: endTime,
       is_finish: false,
       has_sub: false,
-      is_delete: false
+      is_delete: false,
+      proj_id: projId
     },{
       success: function(result){
         //添加成功

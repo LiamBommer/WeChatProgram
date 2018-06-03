@@ -49,7 +49,6 @@
     "pages/Notification/Notification",
     "pages/memberList/memberList",
     "pages/logs/logs",
-    "pages/test/test",
     "test/test"
   ],
   "window": {
