@@ -30,7 +30,7 @@ Page({
     var ProjectMember = that.data.ProjectMember;
     for (var i in ProjectMember)
       if (ProjectMember[i].id == MemberId){
-        wx.setStorageSync("buildTask-memberList-membericon", ProjectMember[i].icon)
+        wx.setStorageSync("buildTask-memberList-membericon", ProjectMember[i].userPic)
       }
 
     wx.navigateBack({
@@ -62,30 +62,37 @@ Page({
    */
   onShow: function () {
     var that = this
-    var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    for (var i in memberList){
-      memberList[i].checked = false
-    }
+    wx.getStorage({
+      key: 'ProjectMore-projectMember',
+      success: function(res) {
 
-    console.log('Member list: '+memberList)
-
-    that.setData({
-      ProjectMember: memberList,
-    });
-
-    var membericon = wx.getStorageSync("buildTask-membericon")
-    if (membericon != ""){
-      for (var i in memberList) {
-        if (memberList[i].icon == membericon) {//初始化选中成员
-          console.log(memberList[i])
-          memberList[i].checked = true
-          that.setData({
-            ProjectMember: memberList,
-          });
+        var memberList = res.data
+        for (var i in memberList) {
+          memberList[i].checked = false
         }
-      }
-    }
 
+        console.log('Member list: ' + memberList)
+
+        that.setData({
+          ProjectMember: memberList,
+        });
+
+        var membericon = wx.getStorageSync("buildTask-membericon")
+        if (membericon != "") {
+          for (var i in memberList) {
+            if (memberList[i].userPic == membericon) {//初始化选中成员
+              console.log(memberList[i])
+              memberList[i].checked = true
+              that.setData({
+                ProjectMember: memberList,
+              });
+            }
+          }
+        }
+
+      },
+    })
+    
 
   },
 

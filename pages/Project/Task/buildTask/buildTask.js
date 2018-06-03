@@ -9,7 +9,7 @@ Page({
   data: {
     icon: '',//成员头像
     deadline: '',//截止时间
-    list_id: -1,  // 所属任务看板id
+    list_id: 0,  // 所属任务看板id
   },
 
   // 截止时间
@@ -141,11 +141,7 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log('List ID: ' + options.list_id)
-    this.setData({
-      list_id: options.list_id
-    })
+  onLoad: function () {
   },
 
   /**
@@ -159,6 +155,17 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
+    wx.getStorage({
+      key: 'ProjectMore-TaskListId',
+      success: function(res) {
+        var list_id = res.data
+        that.setData({
+          list_id: list_id
+        })
+      },
+    })
+
     var icon = wx.getStorageSync("buildTask-memberList-membericon")
     console.log(icon)
     if(icon == "")

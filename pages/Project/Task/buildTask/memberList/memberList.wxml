@@ -9,8 +9,8 @@
             <!-- 列表项 -->
             <view class='item'>
                   <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
+                    <image class='item-icon' src='{{item.userPic}}'></image>
+                    <view class='item-text'>{{item.nickName}}</view>
                   </view>
                   <radio class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
             </view>
@@ -22,8 +22,8 @@
             <!-- 列表项 -->
               <view class='item'>
                   <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
+                    <image class='item-icon' src='{{item.userPic}}'></image>
+                    <view class='item-text'>{{item.nickName}}</view>
                   </view>
                   <radio class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
               </view>

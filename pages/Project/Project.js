@@ -32,8 +32,6 @@ Page({
       key: "Project-detail",
       data: this.data.StarProject[index],
     })
-    // wx.setStorageSync("Project-id", this.data.StarProject[index].id)
-    // wx.setStorageSync("Project-name", this.data.StarProject[index].name)
   },
 
   //点击项目

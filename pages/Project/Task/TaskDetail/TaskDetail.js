@@ -1061,7 +1061,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
       key: 'ProjectMore-Task',
       success: function(res) {
         var taskId = res.data.objectId//任务id
-        var leaderId = res.data.leader.objectId//任务负责人id
+        var leaderId = res.data.leaderId//任务负责人id
         that.setData({
           taskId: taskId
         })

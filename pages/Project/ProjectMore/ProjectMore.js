@@ -11,7 +11,10 @@ Page({
   data: {
     currentItem: 0,//当前swiper滑块的位置
     index: '',//当前任务列表下标
-    check:[],//任务勾选
+    check: [],//任务勾选
+    hiddenmodalputTitle: true,//弹出任务列表标题模态框
+    inputTitle:'',//输入任务列表标题
+    listId:'',//当前任务列表Id
     //隐藏判断
     exitTask: true,
     exitAnnouncement: false,
@@ -266,63 +269,93 @@ Page({
     var taskId = e.currentTarget.id//当前任务ID
     var userName = getApp().globalData.nickName//当前操作用户
     var TakChecked = !e.currentTarget.dataset.checked//当前任务是否被选中
+    console.log("ClickTask", TakChecked)
     that.finishTask(taskId, TakChecked, userName)
 
-    var Task = " tasklist[" + currentItem + "].attributes.tasks[" + index + "].is_finish"
-    console.log("Task", Task)
-    var Task_isfinish = that.data.tasklist[currentItem].attributes.tasks[index].is_finish//获取选中任务项的勾选判断
-    console.log("Task_isfinish", that.data.tasklist[currentItem].attributes.tasks[index].is_finish)
+    var taskList = that.data.tasklist//任务列表
+    var task = taskList[currentItem].tasks//任务
+    for (var i in task){
+        if(i == index){
+          task[i].is_finish = !task[i].is_finish
+        }
+    }
     that.setData({
-      [Task]: !Task_isfinish
+      tasklist: taskList
     })
   },
 
  
-  // 修改任务列表名
-  ListNameInput: function(e){
-    var index = this.data.index;
-    var newname = 'tasklist[' + index + ']';
-    // console.log("ListNameInput-index:", index)
-    // console.log("ListNameInput-:", e.detail.value)
-    // this.setData({
-    //   [newname]: e.detail.value,
-    // });
+  //任务列表标题：点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputTitle: function (e) {
+    var that = this
+    var title = e.currentTarget.dataset.title//当前任务列表标题
+    var listId = e.currentTarget.dataset.id//当前任务列表id
+    that.setData({
+      listId:listId,
+      inputTitle: title,
+      hiddenmodalputTitle: false
+    })
   },
-
-  // 修改任务列表名
-  ListNameClick: function (e) {
-    console.log(e.currentTarget.dataset.index);
+  //取消按钮  
+  cancelTitle: function () {
     this.setData({
-      index: e.currentTarget.dataset.index,
+      hiddenmodalputTitle: true,
     });
   },
 
-  // 添加任务列表
-  Taskmore: function () {
+  //确认  
+  confirmTitle: function (e) {
+    var that = this
+    var listId = that.data.listId//当前任务列表id
+    // var index = that.data.currentItem//当前任务列表下标
+    // var taskList = "taskList["+index+"].title"
+    that.modifyTaskListTitle(listId, that.data.inputTitle) 
+    that.setData({
+      hiddenmodalputTitle: true,
+    })
+  },
+  //任务列表标题输入
+  input: function (e) {
+    var that =  this
+    var inputTitle = e.detail.value
+    that.setData({
+      inputTitle: inputTitle
+    })
+  },
+
+  // 添加，删除任务列表
+  Taskmore: function (e) {
     var that = this;
     var tasklist = that.data.tasklist;
     var tasks = that.data.tasks;
+    var listId = e.currentTarget.dataset.id;
 
     wx.showActionSheet({
       itemList: ['添加任务列表','删除该任务列表'],
       success: function (res) {
         //添加任务列表
         if (res.tapIndex == 0){
-          var Length = tasklist.length;//数组长度
-
-          tasklist.push("")
-          that.setData({
-            tasklist: tasklist,
-            currentItem: Length,
-          });
-          var projId = wx.getStorageSync("Project-id")//获取项目ID
-          that.createTaskList(projId, "新增")//projId 项目id，title任务看板名称
+          wx.getStorage({
+            key: "Project-detail",
+            success: function(res) {
+              var Length = tasklist.length;//数组长度
+              tasklist.push({
+                title:'新增'
+              })
+              that.setData({
+                tasklist: tasklist,
+                currentItem: Length,
+              });
+              var projId = res.data.id
+              that.createTaskList(projId, "新增")//projId 项目id，title任务看板名称
+            },
+          })
+          
         }
 
         //删除该任务列表
         if (res.tapIndex == 1){
-          var currentItem = that.data.currentItem;
-          console.log(currentItem);
+          that.deleteTaskList(listId)
         } 
       },
       fail: function (res) {
@@ -396,6 +429,10 @@ Page({
    */
   createTask: function (event) {
     var listId = event.currentTarget.dataset.listId
+    wx.setStorage({
+      key: 'ProjectMore-TaskListId',
+      data: listId,
+    })
     wx.navigateTo({
       url: '../Task/buildTask/buildTask?list_id='+listId
     })
@@ -444,12 +481,10 @@ Page({
   showTask: function(e) {
     var taskListIndex = this.data.currentItem
     var index = e.currentTarget.dataset.index
-    // wx.setStorageSync("ProjectMore-Task-id", this.data.tasklist[taskListIndex].attributes.tasks[index].objectId)
     wx.setStorage({
       key: "ProjectMore-Task",
-      data: this.data.tasklist[taskListIndex].attributes.tasks[index],
+      data: this.data.tasklist[taskListIndex].tasks[index],
     })
-    // wx.setStorageSync("ProjectMore-LeaderId", this.data.tasklist[taskListIndex].attributes.tasks[index].leader.objectId)//任务负责人id
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
     });
@@ -557,7 +592,7 @@ Page({
  * 创建任务看板
  */
   createTaskList:function (projId, title){
-  
+      var that = this
       var TaskList = Bmob.Object.extend("task_list")
     var taskList = new TaskList()
 
@@ -572,6 +607,7 @@ Page({
           console.log("提示用户添加任务看板成功!")
 
 
+          that.getTaskLists(projId)
 
 
 
@@ -602,14 +638,7 @@ Page({
     tasklistQuery.notEqualTo("is_delete", true)
 
     //第一次默认添加任务看板
-    // var taskList = new TaskList()
     console.log("taskList", TaskList)
-    // if (taskList)
-    // taskList.save({
-    //   title: "新增",
-    //   proj_id: projId,
-    //   is_delete: false
-    // },
     tasklistQuery.find({
 
       success: function(results){
@@ -621,18 +650,20 @@ Page({
         var listIndex = 0;
         console.log('results number: ' + results.length)
 
-        if (results.length == 0) {//第一次进入任务列表
-          results.length = 1
-          // that.setData({
-          //   tasklist: tasklists
-          // })
-        }
-        else {
+          var taskList = []
           //获取第一个任务看板的任务
           for (var i = 0; i < results.length; i++) {
-            that.getTasks(results[i].id, i, results)
+            var object
+            var task = new Array()
+            object = {
+              title: results[i].attributes.title,
+              is_delete: results[i].attributes.is_delete,
+              listId: results[i].id,
+              tasks:  task,
+            }
+            taskList.push(object)
+            that.getTasks(results[i].id, i, taskList)
           }
-        }
         
 
       },
@@ -679,23 +710,32 @@ Page({
         }
         console.log('tasks: ')
         console.log(tasks)
+        console.log('tasklists: ')
+        console.log(tasklists)
         
 
         // 将任务插入到对应看板列表中
-        tasklists[listIndex]['attributes']['tasks'] = []
         for (var i in tasks) {
-          tasks[i]['attributes']['is_finish'] = tasks[i].attributes.is_finish
-          tasks[i]['attributes']['objectId'] = tasks[i].id
-          tasks[i]['attributes']['createdAt'] = tasks[i].createdAt
-          tasks[i]['attributes']['updatedAt'] = tasks[i].updatedAt
-          tasklists[listIndex]['attributes']['tasks'].push(tasks[i]['attributes'])
+          var object
+          object={
+            end_time: tasks[i].attributes.end_time,
+            has_sub: tasks[i].attributes.has_sub,
+            is_delete: tasks[i].attributes.is_delete,
+            is_finish: tasks[i].attributes.is_finish,
+            list_id: tasks[i].attributes.list_id,
+            timeStatus: tasks[i].attributes.timeStatus,
+            title: tasks[i].attributes.title,
+            leaderId: tasks[i].attributes.leader.objectId,
+            objectId: tasks[i].id,
+          }
+          tasklists[listIndex].tasks.push(object)
         }
+        console.log("tasklists:", tasklists[listIndex])
 
         that.setData({
           tasklist: tasklists
         })
-        console.log("This's tasklists: ")
-        console.log(that.data.tasklist)
+        console.log("tasklists:", that.data.tasklist)
 
       },
       error: function (error) {
@@ -723,6 +763,87 @@ Page({
     
   },
 
+  /**
+   * 创建任务时，从项目成员中选一个负责人
+   */
+  getProjectMember:function(projId){
+
+    var ProjectMember = Bmob.Object.extend("proj_member")
+    var memberQuery = new Bmob.Query(ProjectMember)
+    var User = Bmob.Object.extend("_User")
+    var userQuery = new Bmob.Query(User)
+
+    var leader_id = "0"
+    var memberId = [] //项目的所有成员id数组
+    var userArr = [] //项目所有成员数组
+
+    //获取指定项目的所有成员id，50条
+    memberQuery.equalTo("proj_id", projId)
+    memberQuery.select("user_id", "is_leader")
+    memberQuery.find().then(function (results) {
+      //返回成功
+      console.log("共查询到 " + results.length + " 条记录");
+      for (var i = 0; i < results.length; i++) {
+        var object = results[i];
+        if (object.get("is_leader")) {
+          //项目领导，放在数组的第一个
+          console.log("获取项目领导id", object.get('user_id'));
+          leader_id = object.get("user_id")
+          memberId.unshift(leader_id)
+
+        } else {
+          console.log("获取项目成员id", object.get('user_id'));
+          memberId.push(object.get("user_id"))  //将成员id添加到数组
+        }
+      }
+    }).then(function (result) {
+
+      //获取指定项目的所有成员,默认10条
+      userQuery.select("nickName", "userPic")  //查询出用户的昵称和头像
+      userQuery.limit(50)
+      userQuery.containedIn("objectId", memberId)
+
+      // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
+      userQuery.find({
+        success: function (results) {
+          console.log("共查询到项目成员 " + results.length + " 条记录");
+          // 循环处理查询到的数据
+          for (var i = 0; i < results.length; i++) {
+            var object = results[i];
+            var user
+            user = {
+              "id":object.id,
+              "userPic":object.get("userPic"),
+              "nickName": object.get("nickName"),
+              "checked":''
+            }
+            if (user.id == leader_id) {
+              //将项目领导放在数组的第一个位置
+              userArr.unshift(user)
+            } else
+              userArr.push(user)
+          }
+          //在这里设置setdata
+          console.log("成员数组",userArr)
+          wx.setStorage({
+            key: 'ProjectMore-projectMember',
+            data: userArr,
+          })
+
+
+
+
+        },
+        error: function (error) {
+          console.log("查询失败: " + error.code + " " + error.message);
+          //失败情况
+
+
+        }
+      })
+
+    })
+  },
   
 
   /**
@@ -774,6 +895,72 @@ Page({
       })
   },
 
+  /**
+ * 更改任务列表名
+ */
+  modifyTaskListTitle: function (listId, newTitle) {
+    var that = this
+    var Tasklist = Bmob.Object.extend('task_list')
+    var tasklistQuery = new Bmob.Query(Tasklist)
+
+    //更改任务列表名
+    tasklistQuery.get(listId, {
+      success: function (result) {
+        result.set('title', newTitle)
+        result.save()
+        console.log("更改任务列表名成功")
+
+        var index = that.data.currentItem//当前任务列表下标
+        var taskList = that.data.tasklist
+        console.log(taskList)
+        for (var i in taskList) {
+          console.log(index)
+          if (i == index){
+            console.log(taskList[i].title)
+            taskList[i].title = result.get('title')
+          }
+        }
+        that.setData({
+          tasklist: taskList
+        })
+      },
+      error: function (error) {
+        //失败
+        console.log("更改任务列表名失败", error)
+      }
+    })
+  },
+  /**
+ * 删除任务列表
+ */
+  deleteTaskList:function (listId){
+
+    var Tasklist = Bmob.Object.extend('task_list')
+    var tasklistQuery = new Bmob.Query(Tasklist)
+
+    if(listId != null) {
+        tasklistQuery.equalTo('objectId', listId)
+      tasklistQuery.destroyAll({
+        success: function () {
+          //删除成功
+          console.log("提示用户任务列表删除成功!")
+         wx.showToast({
+           title: '删除成功',
+         })
+
+
+        },
+        error: function (err) {
+          // 删除失败
+          console("提示用户删除任务列表成功")
+        }
+      })
+    }
+
+  },
+
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -803,21 +990,11 @@ Page({
         var ProjectId = res.data.id//获取项目ID
         that.getAnnouncements(ProjectId)//获取公告ID
         that.getTaskLists(ProjectId);//获取任务ID
+        that.getProjectMember(ProjectId);//获取项目成员
       },
     })
     
 
-    // var taskList = that.data.taskList
-    // var taskindex = that.data.currentItem
-    //  console.log("onshow", taskindex)
-    //  if (taskList != undefined) {
-    //    console.log("onshow", taskList)
-    //   if (taskList[taskindex] != "") {//当前任务列表有任务时
-    //     for (var i in taskList[taskindex]) {
-
-    //     }
-    //  }
-    // }
 
    
 

@@ -12,6 +12,11 @@
   height: 1000rpx;
 }
 
+.ModelDetail-container .text textarea{
+  width:90%;
+  height:900rpx;
+}
+
 .ModelDetail-container .save{
    width:146rpx;
    height:68rpx;
