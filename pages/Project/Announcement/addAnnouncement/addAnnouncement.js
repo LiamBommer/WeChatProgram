@@ -31,9 +31,13 @@ Page({
         icon: 'none',
         duration: 1500,
       })
-
       return;
     }
+
+    // 显示loading
+    wx.showLoading({
+      title: '正在创建...',
+    })
 
     // submit
     that.createAnnouncement(ProjectId, ProjectName, title, content, checked)
@@ -80,6 +84,7 @@ Page({
           //提示用户创建公告成功
           console.log("创建公告成功！", result.id)
 
+          wx.hideLoading()
           wx.showToast({
             title: '创建公告成功',
             icon: 'success',

@@ -13,6 +13,7 @@
     font-size: 34rpx;
     display: flex;
     align-items: center;
+    
 }
 
 .Project-container .startitle image{
@@ -59,6 +60,12 @@
 
 .Project-container .staritem .staritem-one .staritem-text{
     margin-left: 30rpx;
+    width: 440rpx;
+    display: block;
+    line-height: 40rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
 }
 
 .Project-container .staritem .staritemmore-icon{
@@ -91,7 +98,15 @@
 .Project-container .item .item-one{
     display: flex;
     align-items: center;
-    width: 85%;
+    width: 630rpx;
+}
+
+.Project-container .item .item-two{
+    display: flex;
+    align-items: center;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    height: 100%;
 }
 
 .Project-container .item .item-one .item-icon{
@@ -103,10 +118,15 @@
 
 .Project-container .item .item-one .item-text{
     margin-left: 30rpx;
+    width: 460rpx;
+    display: block;
+    line-height: 40rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
 }
 
 .Project-container .item .itemmore-icon{
-    margin-right: 40rpx;
     width: 40rpx;
     height: 40rpx;
 }

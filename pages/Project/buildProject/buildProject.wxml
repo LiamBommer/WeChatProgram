@@ -5,12 +5,12 @@
       <!-- 列表项 -->
     <view class='item'>
         <view class='item-title'>项目名称</view>
-        <input type='text' class='item-content'  name='title' bindinput="inputTitle" placeholder-class='placeholder' placeholder='输入项目名称...'></input>
+        <input type='text' class='item-content' name='title' placeholder-class='placeholder' placeholder='输入项目名称...' maxlength='20'></input>
     </view>
     <!-- 列表项 -->
     <view class='item'>
         <view class='item-title'>项目描述</view>
-        <input type='text' class='item-content' name='desc' bindinput="inputDesc" placeholder-class='placeholder' placeholder='输入项目描述...'></input>
+        <input type='text' class='item-content' name='desc' placeholder-class='placeholder' placeholder='输入项目描述...'></input>
     </view>
 
     <button class='submit' size='default' form-type='submit'>完成</button>

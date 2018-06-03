@@ -16,6 +16,22 @@ Page({
     var title, desc;
     title = e.detail.value.title;
     desc = e.detail.value.desc;
+
+    if (title == "" || title.length == 0) {
+      // 提示标题不可为空
+      wx.showToast({
+        title: '项目名称不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+      return;
+    }
+
+    // 显示loading
+    wx.showLoading({
+      title: '正在星标...',
+    })
+    // submit
     that.buildProject(title, desc);
   },
 
@@ -57,12 +73,12 @@ Page({
           console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
 
-
+          wx.hideLoading()
           wx.showToast({
-            title: '成功',
+            title: '成功创建项目',
             icon: 'success',
+            duration: 1000
           });
-
           wx.switchTab({
             url: '../Project',
           })

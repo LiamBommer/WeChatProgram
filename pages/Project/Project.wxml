@@ -13,8 +13,8 @@
             <image class='staritem-icon'  src='{{item.icon}}'></image>
             <view class='staritem-text'>{{item.name}}</view>
           </view>
-          <view class='staritem-two' >
-            <image class='staritemmore-icon'bindtap='showProjectDetail' data-index="{{index}}" src='/img/more.png'></image>
+          <view class='staritem-two' bindtap='showProjectDetail' data-index="{{index}}">
+            <image class='staritemmore-icon' src='/img/more.png'></image>
           </view>
         </view>
     </block>
@@ -29,7 +29,9 @@
             <image class='item-icon' src='{{item.icon}}'></image>
             <view class='item-text'>{{item.name}}</view>
           </view>
-          <image class='itemmore-icon' bindtap='showProjectDetail' data-index="{{index}}" src='/img/more.png'></image>
+          <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}">
+            <image class='itemmore-icon' src='/img/more.png'></image>
+          </view>
         </view>
     </block>
 

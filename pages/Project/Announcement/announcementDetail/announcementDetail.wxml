@@ -56,14 +56,14 @@
     <block wx:if="{{!is_read_empty}}">
       <text class='item-title'>已读成员</text>
       <view class='view-container'>
-        <view class="item-view space-between">
+        <view class="item-view space-between" bindtap='readMember'>
           <view class="ver-align">
             <block wx:for="{{read}}">
               <image class='radius' src='{{item.userPic}}'></image>
             </block>
           </view>
           <view class="ver-align">
-            <image src='{{icon_more}}' bindtap='readMember'></image>
+            <image src='{{icon_more}}'></image>
           </view>
         </view>
       </view>
