@@ -40,6 +40,7 @@ Page({
 
     startX: 0, //删除开始坐标
     startY: 0,//删除
+    delBtnWidth:90,//删除按钮宽度单位（px）
     hiddenmodalputTitle: true,//弹出任务标题模态框
     hiddenmodalputChildTitle: true,//弹出子任务标题模态框
     childIndex:"",//当前子任务下标
@@ -832,6 +833,7 @@ Page({
               userPic: results[i].attributes.user.userPic,
               clickChild:0,
               isTouchMove:false,
+              txtStyle:'',
             }
             ChildTask.push(object)
           }
@@ -944,7 +946,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         //删除成功
         console.log("删除子任务成功！")
         //记录操作
-        addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        that.addTaskRecord(subTaskId, userName, DELETE_SUB_TASK + subTaskTitle)
       },
       error: function (err) {
         // 删除失败
@@ -969,14 +971,15 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
 },
   //滑动事件处理
   touchmove: function (e) {
-     var that = this,
-      index = e.currentTarget.dataset.index,//当前索引
-        startX = that.data.startX,//开始X坐标
-          startY = that.data.startY,//开始Y坐标
-           touchMoveX = e.changedTouches[0].clientX,//滑动变化坐标
-              touchMoveY = e.changedTouches[0].clientY,//滑动变化坐标
-               //获取滑动角度
-      angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+     var that = this
+     var index = e.currentTarget.dataset.index//当前索引
+     var startX = that.data.startX//开始X坐标
+     var startY = that.data.startY//开始Y坐标
+      var touchMoveX = e.changedTouches[0].clientX//滑动变化坐标
+      var touchMoveY = e.changedTouches[0].clientY//滑动变化坐标
+      var txtStyle = ""//样式更改
+      //获取滑动角度
+      var angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
      that.data.ChildTask.forEach(function (v, i) {
         v.isTouchMove = false
         //滑动超过30度角 return
@@ -985,14 +988,19 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
            if (touchMoveX > startX) //右滑
               v.isTouchMove = false
            else //左滑
-            v.isTouchMove = true
+           {
+             txtStyle = "margin-left:-" + 200 + "px";
+             v.isTouchMove = true
+           }
     
   }
    })
-   //更新数据
-   that.setData({
-     ChildTask: that.data.ChildTask
-   })
+    var list = that.data.ChildTask;
+    list[index].txtStyle = txtStyle;
+    //更新列表的状态
+    that.setData({
+      ChildTask: list
+    });
   },
   /**
    * 计算滑动角度
@@ -1008,28 +1016,32 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
 },
   //删除事件
   del: function (e) {
-    this.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
-     this.setData({
-       ChildTask: this.data.ChildTask
-   })
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除子任务吗？',
+      success:function(res){
+       if(res.confirm){
+         that.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
+         var subTaskId = e.currentTarget.dataset.id
+         var subTaskTitle = e.currentTarget.dataset.childTitle
+         var userName = getApp().globalData.nickName
+         that.deleteSubTask(subTaskId, userName, subTaskTitle)
+         that.setData({
+           ChildTask: that.data.ChildTask
+         })
+       }
+      }
+    })
+    
   
 },
 
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    for (var i = 0; i < 10; i++) {
-      this.data.ChildTask.push({
-             content: i + " 向左滑动删除哦,向左滑动删除哦,向左滑动删除哦,向左滑动删除哦,向左滑动删除哦",
-             isTouchMove: false //默认全隐藏删除
-    })
-      
-    }
-  //      this.setData({
-  //         ChildTask: this.data.ChildTask
-  //  })
   },
 
   /**

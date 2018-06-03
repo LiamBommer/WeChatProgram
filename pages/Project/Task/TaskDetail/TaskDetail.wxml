@@ -99,10 +99,11 @@
       <image src='{{icon_add}}' bindtap='AddChildTask'></image>
     </view>
 
-     
-        <view wx:for="{{ChildTask}}" class="touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove">
-            <view class="contentminddle item-view ver-align space-between" 
-            style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}'>
+     <!-- bindtouchstart="touchstart" bindtouchmove="touchmove"  bindtouchend="touchE" -->
+        <view wx:for="{{ChildTask}}" class="touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" >
+            <view class="contentminddle item-view ver-align space-between"  bindtouchstart="touchstart" bindtouchmove="touchmove" 
+         data-index="{{index}}" 
+            style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
               <view class='childtask'>
                   <checkbox-group bindchange="childCheckboxChange"> 
                       <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' 
@@ -119,7 +120,7 @@
               </view>
               <image class='radius' src='{{item.userPic}}'></image>
             </view>
-            <view class="del" catchtap="del" data-index="{{index}}">删除</view>
+            <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除</view>
         </view>
     
 

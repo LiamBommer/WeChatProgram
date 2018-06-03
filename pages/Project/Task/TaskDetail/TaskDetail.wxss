@@ -213,7 +213,7 @@ button[hover-class="share-hover"]::after {
   .touch-item {
    font-size: 14px;
    display: flex;
-  justify-content: space-between;
+   justify-content: space-between;
    width: 100%;
    overflow: hidden
   }
