@@ -174,6 +174,7 @@ App({
   globalData: {
     userInfo: null,
     userId:null,
-    nickName:null
+    nickName:null,
+    userPic:null,
   }
 })

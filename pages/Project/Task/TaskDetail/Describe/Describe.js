@@ -1,6 +1,6 @@
 // pages/Project/Task/TaskDetail/CommModel/addModel/addModel.js
 var Bmob = require('../../../../../utils/bmob.js')
-var MODIFY_FEEDBACK_MOD = "修改了反馈模板"
+var MODIFY_TASK_DESC = "修改了任务描述"
 Page({
 
   /**
@@ -19,39 +19,35 @@ Page({
     var content = e.detail.value.content
     var userName = getApp().globalData.nickName
     var taskId = wx.getStorageSync("TaskDetail-taskId")
-    var feedbackMod = content
-    that.modifyFeedbackMod(taskId, feedbackMod, userName)
-    wx.setStorageSync("FeedBack-content", content)
+    var description = content
+    that.modifyTaskDesc(taskId, description, userName)
+    // wx.setStorageSync("FeedBack-content", content)
     wx.navigateBack({
       url: '../TaskDetail',
     })
   },
-
-  /**
- *  @parameter taskId任务id，feedbackMod反馈时间，userName操作人的昵称（用来存在历史操作记录表用）
- * 修改反馈模板
- * 
- */
-  modifyFeedbackMod: function (taskId, feedbackMod, userName) {
+  
+  //任务描述
+  modifyTaskDesc:function (taskId, description, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
-    //添加反馈模板
+    //添加反馈时间
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
-        result.set('feedback_mod', feedbackMod)
+        result.set('desc', description)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_MOD)
+        that.addTaskRecord(taskId, userName, MODIFY_TASK_DESC)
+
       },
       error: function (object, error) {
         //失败情况
       }
     })
   },
-
 
 
 
@@ -89,11 +85,10 @@ Page({
 
     taskQuery.get(taskId, {
       success: function (result) {
-        //反馈模板
-        console.log("getTaskDetail:", result.attributes.feedback_mod)
-        if (result.attributes.feedback_mod != null && result.attributes.feedback_mod != '') {
+        //任务描述
+        if (result.attributes.desc != null && result.attributes.desc != '') {
           that.setData({
-            content: result.attributes.feedback_mod,
+            content: result.attributes.desc,
           })
         }
 
@@ -129,8 +124,7 @@ Page({
       taskId: taskId
     })
     that.getTaskDetail(that.data.taskId)
-    var content = wx.getStorageSync("TaskDetail-feedbackMod")
-    console.log("onshow:", content)
+    var content = wx.getStorageSync("TaskDetail-desc")
     if (content != "") {
       that.setData({
         content: content

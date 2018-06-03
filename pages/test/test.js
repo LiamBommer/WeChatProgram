@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/projectDetail.js')
+var test = require('../../model/schedule.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -78,7 +78,12 @@ Page({
      //test.makeProjectFirst("3d3525ec0f",true)
      //test.cancelProjectFirst("3d3525ec0f", false)
      //test.transferProject("05b1b947d7", "Mr.Li", "46afed01fb","5b2cad79f6")   
-
+     //test.addProjectNotification('3d3525ec0f','test',1,'213')
+     //test.addTaskNotification('	81c2ae2e31','ecf39929e8','测试')
+     //test.createSchedule("3d3525ec0f", "mr.li测试", "2018-06-03", "2018-07-01",["58ec3a7f5e"])
+     //test.destroyTaskRecord()
+     test.getSchedules("3d3525ec0f")
+     //test.addRelatedTask("3d3525ec0f", "73e8e1b1c0", ["bcb7155f39"])
   },
 
   /**

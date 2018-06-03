@@ -9,30 +9,31 @@ Page({
     selectedMemberId: "",
     //任务成员
     TaskMemember: [
-      {
-        index: 0,
-        icon:"/img/me.png",
-        name: '帅涛' ,
-        checked: true,
-      },
-      {
-        index: 1 ,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: false,
-      },
-      {
-        index: 2,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: false,
-      },
+      // {
+      //   index: 0,
+      //   icon:"/img/me.png",
+      //   name: '帅涛' ,
+      //   checked: true,
+      // },
+      // {
+      //   index: 1 ,
+      //   icon: "/img/me.png",
+      //   name: '美国队长',
+      //   checked: false,
+      // },
+      // {
+      //   index: 2,
+      //   icon: "/img/me.png",
+      //   name: '灭霸',
+      //   checked: false,
+      // },
     ],
 
   },
 
   //选择任务成员
   radioChange: function (e) {
+    console.log("radioChange",e.detail.value)
     this.setData({
       selectedMemberId: e.detail.value,
     });
@@ -65,7 +66,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.getStorage({
+      key: 'TaskDetail-member',
+      success: function (res) {
+        console.log(res.data)
+        that.setData({
+          TaskMemember: res.data
+        })
+      }
+    })
   },
 
   /**

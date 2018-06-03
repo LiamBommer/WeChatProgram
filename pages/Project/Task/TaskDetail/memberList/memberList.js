@@ -7,74 +7,38 @@ Page({
   data: {
     //是否选中
     TaskIndex: "",
-    ProjectIndex: "",
-    //任务负责人
-    principalName: "帅涛",
-    principalIicon: "/img/me.png",
-    principalIndex: 0,
-    principalChecked: true,
+    // ProjectIndex: "",
+    // principalName: "帅涛",
+    // principalIicon: "/img/me.png",
+    // principalIndex: 0,
+    // principalChecked: true,
     // 是否在任务中
     isInTask: false,
     //任务成员
     TaskMemember: [
-      {
-        index: 0,
-        icon:"/img/me.png",
-        name: '帅涛' ,
-        checked: true,
-      },
-      {
-        index: 1 ,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: true,
-      },
-      {
-        index: 2,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: true,
-      },
+      // {
+      //   //任务负责人
+      //   index: 0,
+      //   icon:"/img/me.png",
+      //   name: '帅涛' ,
+      //   checked: true,
+      // },
+      // {
+      //   index: 1 ,
+      //   icon: "/img/me.png",
+      //   name: '美国队长',
+      //   checked: true,
+      // },
+      // {
+      //   index: 2,
+      //   icon: "/img/me.png",
+      //   name: '灭霸',
+      //   checked: true,
+      // },
     ],
-    //项目成员
-    ProjectMemember: [
-      {
-        index: 0,
-        icon: "/img/me.png",
-        name: '钢铁侠',
-        checked: false
-      },
-      {
-        index: 1,
-        icon: "/img/me.png",
-        name: '美国队长',
-        checked: false,
-      },
-      {
-        index: 2,
-        icon: "/img/me.png",
-        name: '灭霸',
-        checked: false,
-      },
-    ],
-
-
-
+    
   },
 
-  //选择任务成员
-  TaskMememberChange: function (e) {
-    this.setData({
-      TaskIndex: e.detail.value,
-    });
-  },
-
-  //选择项目成员
-  ProjectMememberChange: function (e) {
-    this.setData({
-      ProjectIndex : e.detail.value,
-    });
-  },
 
   //添加成员
   joinTask: function(){
@@ -140,7 +104,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // TaskMemember: [
+    //   {
+    //     //任务负责人
+    //     index: 0,
+    //     icon: "/img/me.png",
+    //     name: '帅涛',
+    //     checked: true,
+    //   },
+    var that = this 
+    wx.getStorage({
+      key: 'TaskDetail-member',
+      success:function(res){
+        console.log(res)
+        that.setData({
+          TaskMemember: res.data
+        })
+      }
+    })
   },
 
   /**

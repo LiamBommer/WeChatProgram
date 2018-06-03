@@ -9,7 +9,7 @@ Page({
   data: {
     icon: '',//成员头像
     deadline: '',//截止时间
-    list_id: -1,  // 所属任务看板id
+    list_id: 0,  // 所属任务看板id
   },
 
   // 截止时间
@@ -36,7 +36,6 @@ Page({
     var name = e.detail.value.name
     var end_time = e.detail.value.time
     if(name == "" || name.length == 0) {
-      console.log('Task name CANNOT be NULL')
       return;
     }
 
@@ -44,10 +43,19 @@ Page({
     var myId = getApp().globalData.userId
     var memberIds = []
     memberIds.push(myId)
-    that.createTask(that.data.list_id, name, memberIds, end_time)
+    wx.getStorage({
+      key: "Project-detail",
+      success: function(res) {
+        that.createTask(res.data.id, that.data.list_id, name, memberIds, end_time)
+      },
+    })
 
     wx.navigateBack({
-      url:"../../ProjectMore/ProjectMore"
+      url: "../../ProjectMore/ProjectMore"
+    })
+    wx.showToast({
+      title: '添加任务成功',
+      icon: 'success',
     })
   },
 
@@ -55,13 +63,14 @@ Page({
    * 2018-05-19
    * @author mr.li
    * @parameter
+   *  projId
       listId任务看板id，
       title任务名称
       memberIds成员id数组，包括创建者自己（第一个）
       endTime截止时间
    * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
    */
-  createTask: function(listId, title, memberIds, endTime){
+  createTask: function(projId ,listId, title, memberIds, endTime){
     var that = this
     var Task = Bmob.Object.extend("task")
     var task = new Task()
@@ -70,6 +79,7 @@ Page({
 
     var leaderId = memberIds.shift()  //删除并返回第一个任务负责人的id
     var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
+
     //添加任务
     task.save({
       list_id: listId,
@@ -78,7 +88,8 @@ Page({
       end_time: endTime,
       is_finish: false,
       has_sub: false,
-      is_delete: false
+      is_delete: false,
+      proj_id: projId
     },{
       success: function(result){
         //添加成功
@@ -136,11 +147,7 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log('List ID: ' + options.list_id)
-    this.setData({
-      list_id: options.list_id
-    })
+  onLoad: function () {
   },
 
   /**
@@ -154,6 +161,17 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this
+    wx.getStorage({
+      key: 'ProjectMore-TaskListId',
+      success: function(res) {
+        var list_id = res.data
+        that.setData({
+          list_id: list_id
+        })
+      },
+    })
+
     var icon = wx.getStorageSync("buildTask-memberList-membericon")
     console.log(icon)
     if(icon == "")

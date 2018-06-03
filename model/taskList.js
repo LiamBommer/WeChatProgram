@@ -143,6 +143,54 @@ function getTaskLists(projId){
 
 }
 
+/**
+ * 删除任务列表
+ */
+function deleteTaskList(listId){
+
+  var Tasklist = Bmob.Object.extend('task_list')
+  var tasklistQuery = new Bmob.Query(Tasklist)
+
+  if(listId != null){
+    tasklistQuery.equalTo('objectId', listId)
+    tasklistQuery.destroyAll({
+      success: function () {
+        //删除成功
+        console.log("提示用户任务列表删除成功!")
+
+
+
+      },
+      error: function (err) {
+        // 删除失败
+        console("提示用户删除任务列表成功")
+      }
+    })
+  }
+  
+}
+
+/**
+ * 更改任务列表名
+ */
+function modifyTaskListTitle(listId,newTitle){
+
+  var Tasklist = Bmob.Object.extend('task_list')
+  var tasklistQuery = new Bmob.Query(Tasklist)
+
+  //更改任务列表名
+  tasklistQuery.get(listId,{
+    success: function(result){
+      result.set('title',newTitle)
+      result.save()
+      console.log("更改任务列表名成功")
+    },
+    error: function(error){
+      //失败
+      console.log("更改任务列表名失败",error)
+    }
+  })
+}
 module.exports.createTaskList = createTaskList
 module.exports.getTaskLists = getTaskLists
 module.exports.getTasks = getTasks

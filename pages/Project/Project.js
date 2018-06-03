@@ -27,16 +27,22 @@ Page({
   
   //点击星标项目
   ClickStarItem: function(e) {
+    var that = this
     var index = e.currentTarget.dataset.index
-    wx.setStorageSync("Project-id", this.data.StarProject[index].id)
-    wx.setStorageSync("Project-name", this.data.StarProject[index].name)
+    wx.setStorage({
+      key: "Project-detail",
+      data: that.data.StarProject[index],
+    })
   },
 
   //点击项目
   ClickItem: function(e) {
+    var that = this
     var index = e.currentTarget.dataset.index
-    wx.setStorageSync("Project-id", this.data.Project[index].id)
-    wx.setStorageSync("Project-name", this.data.Project[index].name)
+    wx.setStorage({
+      key: "Project-detail",
+      data: that.data.Project[index],
+    })
   },
 
   //创建项目

@@ -9,8 +9,12 @@
                 <view class='task-container'>
                   <!-- 标题 -->
                   <view class='tasktitle'>
-                      <input class='title' placeholder="输入任务列表名..." value='{{item.title}}' data-index='{{index}}' bindinput='ListNameInput' bindtap='ListNameClick'/>
-                      <image class='more' src='/img/more.png' bindtap='Taskmore'></image>
+                      <text class='title' bindtap="modalinputTitle" data-id="{{item.listId}}" data-title="{{item.title}}">{{item.title}}</text> 
+                      <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" 
+                      bindconfirm="confirmTitle"> 
+                            <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" />
+                      </modal> 
+                      <image class='more' src='/img/more.png' data-id="{{item.listId}}" bindtap='Taskmore'></image>
                   </view>
           
                   <!-- 任务项 -->
@@ -19,12 +23,14 @@
               <scroll-view scroll-y="true" style="height: 900rpx">
                   <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
                     <block wx:if="{{tasks.is_finish}}">
-                      <view class='taskitemDone' data-index="{{index}}" bindtap="ClickTask">
+                      <view class='taskitemDone'>
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
                           <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                                <checkbox class='item-checkbox' value='{{index}}' data-checked="{{tasks.is_finish}}"  data-index="{{index}}"
+                                 bindtap="ClickTask"  id="{{tasks.objectId}}"
+                                checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
                               <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
@@ -43,12 +49,13 @@
                     </block>
                     
                     <block wx:else>
-                      <view class='taskitem' data-index="{{index}}" bindtap="ClickTask">
+                      <view class='taskitem' >
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
                           <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}' checked='{{tasks.is_finish}}'/>
+                                <checkbox class='item-checkbox' id='{{tasks.objectId}}' value='{{index}}' checked='{{tasks.is_finish}}'
+                                data-index="{{index}}" data-checked="{{tasks.is_finish}}" bindtap="ClickTask"/>
                               </checkbox-group>
                               <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
@@ -67,7 +74,7 @@
                     </block>
                   </block>
                   <!-- 添加任务 -->
-                  <view class='addTask' bindtap='createTask' data-list-id='{{item.objectId}}'>
+                  <view class='addTask' bindtap='createTask' data-list-id='{{item.listId}}'>
                       <image class='addTask-icon' src='/img/add.png'></image>
                       <view class='addTask-text'>添加任务</view>
                   </view>

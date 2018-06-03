@@ -38,15 +38,25 @@ Page({
    */
   data: {
 
-
-    hiddenmodalputTitle: true,//弹出标题模态框
-    projectName:"学长说系列分享活动",//项目名
+    startX: 0, //删除开始坐标
+    startY: 0,//删除
+    delBtnWidth:90,//删除按钮宽度单位（px）
+    hiddenmodalputTitle: true,//弹出任务标题模态框
+    hiddenmodalputChildTitle: true,//弹出子任务标题模态框
+    childIndex:"",//当前子任务下标
+    childtaskId:'',//当前子任务ID
+    projectName:"",//项目名
     taskId:"",//任务ID
     checked:false,//勾选任务
-    title: '寻找嘉宾',//标题
+    childChecked:false,//勾选子任务
+    title: '',//任务标题
+    childTitle:"",//子任务标题
     inputTitle: '',//输入的标题
+    inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID
     member:[],//任务成员
+    focus:false,//输入框焦点
+
 
     show: false,
     deadline: '2018-06-01',
@@ -78,64 +88,77 @@ Page({
 
     //子任务循环列表
     ChildTask:[
-      {
-         name:'寻找通讯录',
-         icon:'/img/member.png',
-      },
-      {
-        name: '筛选嘉宾',
-        icon: '/img/member.png',
-      },
+      // {
+      //    name:'寻找通讯录',
+      //    icon:'/img/member.png',
+      //    clickChild:0,//勾选子任务次数
+      // },
+      // {
+      //   name: '筛选嘉宾',
+      //   icon: '/img/member.png',
+      // },
     ],
 
     //消息循环列表
     taskremind: [
-      {
-        text: '朱宏涛添加了子任务“寻找通讯录"',
-        time: '6月1日 20:00',
-      },
-      {
-        text: '朱宏涛添加了子任务“筛选嘉宾"',
-        time: '6月1日 20:00',
-      },
+      // {
+      //   text: '朱宏涛添加了子任务“寻找通讯录"',
+      //   time: '6月1日 20:00',
+      // },
+      // {
+      //   text: '朱宏涛添加了子任务“筛选嘉宾"',
+      //   time: '6月1日 20:00',
+      // },
     ],
 
     //他人聊天循环列表
     chat: [
-      {
-        content: '嘉宾应该邀请哪种类型呢？',
-        icon: '/img/me.png',
-        judgemine: false,//其他人发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
-      {
-        content: '感觉竞赛类的嘉宾比较有同学喜欢',
-        icon: '/img/me.png',
-        judgemine: true,//我发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
-      {
-        content: '选嘉宾的标准应该是能引起同学们兴趣的',
-        icon: '/img/me.png',
-        judgemine: true,//我发的消息
-        judgepictrue: false,//判断输入的是文字还是图片
-      },
+      // {
+      //   content: '嘉宾应该邀请哪种类型呢？',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
+      // {
+      //   content: '感觉竞赛类的嘉宾比较有同学喜欢',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
+      // {
+      //   content: '选嘉宾的标准应该是能引起同学们兴趣的',
+      //   icon: '/img/me.png',
+      //   judgepictrue: false,//判断输入的是文字还是图片
+      // },
     ],
 
 
   },
+  //点击子任务
+  checkTest: function (e) {
+    var that = this
+    var index = e.currentTarget.dataset.index//当前下标
+    var childTaskId = e.currentTarget.id//当前子任务ID
+    var userName = getApp().globalData.nickName//当前操作用户
+    var childTakChecked = !e.currentTarget.dataset.checked//当前子任务是否被选中
+    
+    that.finishSubTask(that.data.taskId, childTaskId, childTakChecked, userName)
+
+    var ChildTask = "ChildTask[" + index + "].is_finish"
+    var ChildTask_isfinish = that.data.ChildTask[index].is_finish
+    that.setData({
+      [ChildTask]: !ChildTask_isfinish
+    })
+
+  },
+
 
   //勾选任务
-  checkboxChange : function(){
+  checkboxChange: function () {
     var that = this
     var userName = getApp().globalData.nickName
     that.finishTask(that.data.taskId, !that.data.checked, userName)
-    // that.setData({
-    //   checked: !this.data.checked
-    // })
   },
 
-  //点击按钮弹出指定的hiddenmodalput弹出框  
+  //任务标题：点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function () {
     var that = this
     that.setData({
@@ -160,12 +183,56 @@ Page({
       title: this.data.inputTitle
     })
   },
-
-  //标题
+  //任务标题输入
   input: function (e) {
     var inputTitle = e.detail.value
     this.setData({
       inputTitle: inputTitle
+    })
+  },
+
+
+  //子任务标题： 点击按钮弹出指定的hiddenmodalput弹出框  
+  modalinputChildTitle: function (e) {
+    var that = this
+    var childtitle = e.currentTarget.dataset.childtitle
+    var checked = e.currentTarget.dataset.checked
+    var childtaskId = e.currentTarget.dataset.taskid
+    var childIndex = e.currentTarget.dataset.index
+    if (checked == false){
+      that.setData({
+        inputChildTitle: childtitle,
+        childIndex: childIndex,
+        childtaskId:childtaskId,
+        hiddenmodalputChildTitle: false
+      })
+    }
+  },
+  //取消按钮  
+  cancelChildTitle: function () {
+    this.setData({
+      hiddenmodalputChildTitle: true,
+    });
+  },
+
+  //确认  
+  confirmChildTitle: function (e) {
+    var that = this
+    var subtaskId = that.data.childtaskId//当前子任务ID
+    var index = that.data.childIndex//当前子任务下标
+    var userName = getApp().globalData.nickName
+    that.modifySubTaskTitle(subtaskId, that.data.inputChildTitle, userName)
+    var childTitle = "ChildTask[" + index + "].childTitle"
+    this.setData({
+      hiddenmodalputChildTitle: true,
+      [childTitle]: that.data.inputChildTitle
+    })
+  },
+  //子任务标题输入
+  childInput: function (e) {
+    var inputChildTitle = e.detail.value
+    this.setData({
+      inputChildTitle: inputChildTitle
     })
   },
 
@@ -213,6 +280,11 @@ Page({
 
   // 成员列表
   MemberList: function(e) {
+    console.log("MemberList:", this.data.member)
+    wx.setStorage({
+      key: 'TaskDetail-member',
+      data: this.data.member,
+    })
     wx.navigateTo({
       url: './memberList/memberList',
     })
@@ -274,7 +346,6 @@ Page({
   Feedback: function () {
     var that = this
     wx.setStorageSync("TaskDetail-taskId", that.data.taskId)
-    // wx.setStorageSync("TaskDetail-feedback", that.data.feedbackMod)
     //获取反馈模板
     wx.setStorageSync("TaskDetail-feedbackMod", that.data.feedbackMod)
     that.setData({
@@ -295,8 +366,6 @@ Page({
       success: function (res) {//删除任务
         if (res.confirm) {
           var userName = getApp().globalData.nickName
-          console.log("DeleteTasktaskId", taskId)
-          console.log("DeleteTaskuserName", userName)
           that.deleteTask(taskId, userName)
           wx.navigateBack({
             url: '../../ProjectMore/ProjectMore',
@@ -310,6 +379,15 @@ Page({
 
   //添加子任务
   AddChildTask: function() {
+    var that = this
+    wx.setStorage({
+      key: 'TaskDetail-taskId',
+      data: that.data.taskId,
+    })
+    wx.setStorage({
+      key: 'TaskDetail-member',
+      data: that.data.member,
+    })
     wx.navigateTo({
       url: '../buildChildTask/buildChildTask',
     })
@@ -317,6 +395,12 @@ Page({
 
   //点击沟通模板
   ClickCommModel: function () {
+    // 使页面滚动到评论区
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      wx.pageScrollTo({
+        scrollTop: rect.height - 200
+      })
+    }).exec()
     this.setData({
       CommModel: true,
     });
@@ -331,10 +415,11 @@ Page({
     that.setData({
       isInputing: true
     });
+      // 使页面滚动到评论区
     wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
-      // 使页面滚动到底部
+      console.log("rect",rect.height)
       wx.pageScrollTo({
-        scrollTop: rect.bottom
+        scrollTop: rect.height - 200 
       })
     }).exec()
   },
@@ -347,76 +432,55 @@ Page({
   },
 
   // 点击发送按钮发送消息
-  sendMessage: function() {
-    var content = this.Inputcontent;
-    var chat = this.data.chat;
+  sendMessage: function (e) {
+    var that = this
+    var content = e.detail.value.review;
 
-    console.log(content);
-    if(content == undefined) {
+    if (content == undefined) {
       // 发送内容为空则不发送
     } else {
-      chat.push({
-        content: content, //我发送的内容
-        icon: '/img/me.png',//我的头像
-        judgemine: true,//我发的消息
-      });
+      console.log("点击发送")
+      var taskId = that.data.taskId
+      var publisherId = getApp().globalData.userId
+      that.sendTaskComment(taskId, publisherId, content, false)//传后台
       that.setData({
-        chat : chat,
-        Inputcontent : "",
-        scrollTop: scrollTop,
+        Inputcontent: "",
       });
     }
   },
 
   //聊天框按回车发送消息
-  ChatInput: function(e) {
+  ChatInput: function (e) {
     var that = this;
-    var scrollTop = that.data.scrollTop;
-    scrollTop += 200;
     var content = e.detail.value;
-    var chat = that.data.chat;
 
-    console.log(content);
     if(content == undefined) {
       // 发送内容为空则不发送
     } else {
-      chat.push({
-        content: content, //我发送的内容
-        icon: '/img/me.png',//我的头像
-        judgemine: true,//我发的消息
-      });
+      var taskId = that.data.taskId
+      var publisherId = getApp().globalData.userId
+      that.sendTaskComment(taskId, publisherId, content,false)//传后台
       that.setData({
-        chat : chat,
         Inputcontent : "",
-        scrollTop: scrollTop,
+        focus:false,
       });
     }
+    
   },
 
   //聊天框发送图片
-  PictrueSelect: function (e) {
+  PictrueSelect:function (e) {
+    // 使页面滚动到评论区
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      wx.pageScrollTo({
+        scrollTop: rect.height - 200
+      })
+    }).exec()
     var that = this;
-    var scrollTop = that.data.scrollTop;
-    scrollTop += 200;
-    var chat = that.data.chat;
-    wx.chooseImage({
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths;
-        var content = tempFilePaths[0];
-        chat.push({
-          content: content,//我发送的内容
-          icon: '/img/me.png',//我的头像
-          judgemine: true,//我发的消息
-          judgepictrue: true,//判断输入的是文字还是图片
-        });
-        that.setData({
-          chat: chat,
-          scrollTop: scrollTop,
-        });
-
-      }
-    })
+    var taskId = that.data.taskId
+    var publisherId = getApp().globalData.userId
+    that.sendTaskCommentPicture(taskId, publisherId, true)//传后台
+    
   },
 
   //聊天框预览图片
@@ -560,7 +624,10 @@ Page({
         result.set('is_finish', isFinish)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+        if(isFinish == true)
+          that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+        else
+          that.addTaskRecord(taskId, userName, REDO_TASK + result.get('title'))
 
       },
       error: function (object, error) {
@@ -716,21 +783,408 @@ Page({
 
 
   
+ 
 
+  /**
+   * 2018-05-29
+   * @parameter taskId 为父任务id
+   * 获取某一任务下的子任务（默认20个）,最先创建的排在最前面
+   */
+  getSubtasks:function (taskId){
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //获取子任务（20个）
+    subtaskQuery.equalTo("task_id", taskId)
+    subtaskQuery.include("user")
+    subtaskQuery.ascending("createdAt")
+    subtaskQuery.limit(20)
+
+    subtaskQuery.find({
+      success: function (results) {
+        //成功,results即为结果数组
+        if (results != null) {
+          //在这里设置setData
+          console.log("getSubtasks:", results)
+          var ChildTask = []
+          for (var i in results){
+            var object = {}
+            object = {
+              subtask_id: results[i].id,
+              is_finish: results[i].attributes.is_finish,
+              childTitle: results[i].attributes.title,
+              userPic: results[i].attributes.user.userPic,
+              clickChild:0,
+              isTouchMove:false,
+              txtStyle:'',
+            }
+            ChildTask.push(object)
+          }
+          that.setData({
+            ChildTask: ChildTask
+          })
+          console.log("ChildTask:", that.data.ChildTask)
+        }
+      },
+      error: function (error) {
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId 子任务的id，is_finish 为true
+ * 完成某个子任务
+ */
+  finishSubTask: function (taskId, subTaskId, is_finish ,userName) {
+      var that = this
+      var Subtask = Bmob.Object.extend('sub_task')
+      var subtaskQuery = new Bmob.Query(Subtask)
+
+      //更改子任务为完成状态
+      subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("is_finish", is_finish)
+        result.save()
+        //记录
+        if (isFinish == true)
+          that.addTaskRecord(taskId, userName, FINISH_SUB_TASK + result.get('title'))
+        else
+          that.addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId 子任务的id，is_finish 为false
+ * 重做某个子任务
+ */
+redoSubTask:function (subTaskId, is_finish) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //更改子任务为完成状态
+    subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("is_finish", is_finish)
+        result.save()
+        //记录
+        addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * 2018-05-29
+ * @parameter subTaskId子任务的id ， newTitle 新任务标题
+ * 修改子任务标题
+ */
+  modifySubTaskTitle: function (subTaskId, newTitle, userName) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //更改子任务为完成状态
+    subtaskQuery.get(subTaskId, {
+      success: function (result) {
+        //成功
+        result.set("title", newTitle)
+        result.save()
+        //记录
+        that.addTaskRecord(subTaskId, userName, MODIFY_SUB_TASK_TITLE)
+
+      },
+      error: function (error) {
+        //失败
+
+      }
+    })
+  },
+
+/**
+ * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
+ * 删除子任务
+ */
+deleteSubTask:function (subTaskId, userName, subTaskTitle) {
+    var that = this
+    var Subtask = Bmob.Object.extend('sub_task')
+    var subtaskQuery = new Bmob.Query(Subtask)
+
+    //删除子任务
+    subtaskQuery.equalTo('objectId', subTaskId)
+    subtaskQuery.destroyAll({
+      success: function () {
+        //删除成功
+        console.log("删除子任务成功！")
+        //记录操作
+        that.addTaskRecord(subTaskId, userName, DELETE_SUB_TASK + subTaskTitle)
+      },
+      error: function (err) {
+        // 删除失败
+      }
+    })
+  },
+
+//手指触摸动作开始 记录起点X坐标
+  touchstart: function(e) {
+     //开始触摸时 重置所有删除
+    this.data.ChildTask.forEach(function (v, i) {
+        if (v.isTouchMove)//只操作为true的
+           v.isTouchMove = false;
+    
+  })
+     this.setData({
+        startX: e.changedTouches[0].clientX,
+        startY: e.changedTouches[0].clientY,
+        ChildTask: this.data.ChildTask
+   })
+  
+},
+  //滑动事件处理
+  touchmove: function (e) {
+     var that = this
+     var index = e.currentTarget.dataset.index//当前索引
+     var startX = that.data.startX//开始X坐标
+     var startY = that.data.startY//开始Y坐标
+      var touchMoveX = e.changedTouches[0].clientX//滑动变化坐标
+      var touchMoveY = e.changedTouches[0].clientY//滑动变化坐标
+      var txtStyle = ""//样式更改
+      //获取滑动角度
+      var angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+     that.data.ChildTask.forEach(function (v, i) {
+        v.isTouchMove = false
+        //滑动超过30度角 return
+        if (Math.abs(angle) > 30) return;
+        if (i == index) {
+           if (touchMoveX > startX) //右滑
+           {
+             txtStyle = "";
+             v.isTouchMove = false
+           }
+           else //左滑
+           {
+             txtStyle = "margin-left:-" + 200 + "px";
+             v.isTouchMove = true
+           }
+        }
+   })
+    var list = that.data.ChildTask;
+    list[index].txtStyle = txtStyle;
+    //更新列表的状态
+    that.setData({
+      ChildTask: list
+    });
+  },
+  /**
+   * 计算滑动角度
+   * @param {Object} start 起点坐标
+   * @param {Object} end 终点坐标
+   */
+  angle: function (start, end) {
+     var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+     //返回角度 /Math.atan()返回数字的反正切值
+     return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+  
+},
+  //删除子任务
+  del: function (e) {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除子任务吗？',
+      success:function(res){
+       if(res.confirm){
+         that.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
+         var subTaskId = e.currentTarget.dataset.id
+         var subTaskTitle = e.currentTarget.dataset.childTitle
+         var userName = getApp().globalData.nickName
+         that.deleteSubTask(subTaskId, userName, subTaskTitle)
+         that.setData({
+           ChildTask: that.data.ChildTask
+         })
+       }
+      }
+    })
+    
+  
+},
+
+  /**
+   * 2018-05-29
+   * @parameter taskId 任务id
+   * 获取任务记录 , 一次50条,时间越久远的排在越后面
+   */
+  getTaskRecord:function (taskId){
+    var that = this
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecordQuery = new Bmob.Query(TaskRecord)
+
+    //查询任务记录
+    taskrecordQuery.select("record")
+    taskrecordQuery.equalTo("task_id", taskId)
+    taskrecordQuery.descending("createdAt")
+    taskrecordQuery.limit(50)
+    taskrecordQuery.find({
+      success: function (results) {
+        //成功
+        //在这里设置setData
+        // console.log("获取的任务记录", results)
+        var taskremind = []
+        for (var i in results){
+          var object = {
+            text: results[i].attributes.record,
+            time: results[i].createdAt.substring(0,16)
+          }
+          taskremind.push(object)
+        }
+        console.log("获取的任务记录", taskremind)
+        that.setData({
+          taskremind: taskremind
+        })
+
+      },
+      error: function (error) {
+        //失败
+        console.log("获取任务记录失败！", error)
+      }
+    })
+
+
+  },
+
+  /**
+ * 获取某个任务的评论（50条）,按时间由近到远排序
+ */
+  getTaskComment:function (taskId){
+    var that = this
+    var Taskcommment = Bmob.Object.extend('task_comment')
+    var taskcommentQuery = new Bmob.Query(Taskcommment)
+    var commentList = new Array()  //获取的评论列表
+
+    //获取评论
+    taskcommentQuery.equalTo('task_id', taskId)
+    taskcommentQuery.descending('createdAt')
+    taskcommentQuery.include('publisher')  //获取发布人的信息
+    taskcommentQuery.limit(50)
+    taskcommentQuery.find({
+      success: function (results) {
+        //成功返回results     
+        for (var i in results) {
+          var commentId = results[i].id;  //评论id
+          var userPic = results[i].get('publisher').userPic  //发布评论的人的头像
+          var content = results[i].get('content')  //评论内容
+          var createdAt = results[i].createdAt  //评论时间
+          var isImg = results[i].get('is_img')
+          var comment;
+          comment = {
+            "content": content,
+            'icon': userPic,
+            'judgepictrue': isImg,
+            "commentId": commentId,
+            "time": createdAt.substring(0,16)
+          }
+          commentList.push(comment)
+        }
+        //在这里setData
+        console.log("获取评论成功!", commentList)
+        that.setData({
+          chat: commentList
+          })
+      },
+      error: function (error) {
+        //获取评论失败
+        console.log("获取评论失败!", error)
+      }
+
+    })
+  },
+
+/**
+ * 2018-06-02
+ * @parameter taskId任务id, publisherId评论人的id, content评论内容
+ * 发布评论，沟通模板也可以用这个函数，沟通模板的内容就是content
+ */
+sendTaskComment:function (taskId, publisherId, content,isImg) {
+    var that= this
+    var Taskcommment = Bmob.Object.extend('task_comment')
+    var taskcomment = new Taskcommment()
+
+    var publisher = Bmob.Object.createWithoutData("_User", publisherId)  //发布人的信息
+    //添加任务评论
+    taskcomment.save({
+      publisher: publisher,
+      content: content,  //评论内容
+      task_id: taskId,  //任务id
+      is_img: isImg     //内容不是图片
+    }, {
+        success: function (result) {
+          // 添加成功
+          console.log("提示用户评论成功!")
+          wx.showToast({
+            title: '评论成功',
+          })
+          that.getTaskComment(taskId)
+        },
+        error: function (result, error) {
+          // 添加失败
+          console.log("提示用户评论失败!")
+        }
+      })
+  },
+
+/**
+ * 2018-06-02
+ * 发图片，发布任务评论的图片
+ * 内部调用了函数sendTaskComment
+ */
+sendTaskCommentPicture:function (taskId, publisherId) {
+    var that = this
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths;
+        if (tempFilePaths.length > 0) {
+          var name = "1.jpg";//上传的图片的别名，建议可以用日期命名
+          var file = new Bmob.File(name, tempFilePaths);
+          file.save().then(function (res) {
+
+            //res.url()是上传图片后的 url
+            //console.log(res.url());
+            that.sendTaskComment(taskId, publisherId, res.url(),true) //存储图片路径url
+             
+          }, function (error) {
+            console.log(error);
+          })
+        }
+
+      }
+    })
+  },
 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    // var projectName = wx.getStorageSync("Project-name")//项目名
-    // var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
-    // //获取任务详情信息
-    // that.setData({
-    //   taskId: taskId,
-    //   projectName: projectName
-    // })
   },
 
   /**
@@ -745,31 +1199,46 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var taskId = wx.getStorageSync("ProjectMore-Task-id") //任务ID
-    var projectName = wx.getStorageSync("Project-name")//项目名
-    var leaderId = wx.getStorageSync("ProjectMore-LeaderId")//任务负责人id
-    var projectMember = wx.getStorageSync("ProjectDetail-memberList")//项目成员
-    that.setData({
-      taskId: taskId
+    //任务
+    wx.getStorage({
+      key: 'ProjectMore-Task',
+      success: function(res) {
+        console.log("In ProjectMore-Task", res.data)
+        var taskId = res.data.objectId//任务id
+        var leaderId = res.data.leaderId//任务负责人id
+        that.setData({
+          taskId: taskId,
+          leaderId: leaderId
+        })
+        that.getTaskDetail(taskId);//获取任务详情
+        that.getTaskMember(taskId, leaderId)//获取任务成员
+        that.getSubtasks(taskId);//获取子任务列表
+        that.getTaskRecord(taskId)//获取任务记录
+        that.getTaskComment(taskId)//获取评论
+        
+      },
     })
-
-    that.getTaskDetail(taskId);
-
-    //获取任务成员
-    console.log("onshow:")
-    console.log("taskId:", wx.getStorageSync("ProjectMore-Task-id"))
-    console.log("leaderId:", wx.getStorageSync("ProjectMore-LeaderId"))
-    console.log("projectname:", wx.getStorageSync("Project-name"))
-    that.getTaskMember(taskId, leaderId)
-
-    //反馈模板
-    var feedbackMod = wx.getStorageSync("FeedBack-content")
-    console.log("Feedback:", feedbackMod)
-    that.setData({
-      feedbackMod: feedbackMod
+    //项目
+    wx.getStorage({
+      key: "Project-detail",
+      success: function (res) {
+        console.log("In Project-detail", res.data)
+        that.setData({
+          projectName: res.data.name
+        })
+      },
     })
-
+    // var taskId = that.data.taskId
+    // var leaderId = that.data.leaderId
+    // console.log("taskId", taskId)
+    // console.log("leaderId", leaderId)
+    // that.getTaskDetail(taskId);//获取任务详情
+    // that.getTaskMember(taskId, leaderId)//获取任务成员
+    // that.getSubtasks(taskId);//获取子任务列表
+    
     //发送沟通模板
+      var currentT = new Date().toLocaleString()//获取当前时间
+      var currentTime = currentT.substring(9, 15)
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
       var chat = that.data.chat;
@@ -777,11 +1246,15 @@ Page({
         key: 'CommModel',
         success: function (res) {
           var content = res.data;
-          console.log(content);
+          console.log("沟通模板！",content);
+          var taskId = that.data.taskId//当前任务ID
+          var publisherId = getApp().globalData.userId//当前操作用户ID
+          var userPic = getApp().globalData.userPic//当前操作用户头像
+          that.sendTaskComment(taskId, publisherId, content)//传后台
           chat.push({
             content: content, //我发送的内容
-            icon: '/img/me.png',//我的头像
-            judgemine: true,//我发的消息
+            icon: userPic,//我的头像
+            time: currentTime,//时间
           });
           that.setData({
             chat: chat,
