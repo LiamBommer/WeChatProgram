@@ -10,8 +10,9 @@ Page({
     //星标项目
     StarProject: [
       {
+        id:"",
         icon: "/img/logo.png",
-        name: "鲨鱼不排队"
+        name: "学长说系列分享活动"
       }
     ],
     //普通项目
@@ -20,8 +21,15 @@ Page({
         id: "",
         icon: "",
         name: ""
-      }
+      },
     ]
+  },
+  
+  //点击星标项目
+  ClickStarItem: function(e) {
+    var index = e.currentTarget.dataset.index
+    wx.setStorageSync("Project-id", this.data.StarProject[index].id)
+    wx.setStorageSync("Project-name", this.data.StarProject[index].name)
   },
 
   //点击项目
@@ -29,7 +37,6 @@ Page({
     var index = e.currentTarget.dataset.index
     wx.setStorageSync("Project-id", this.data.Project[index].id)
     wx.setStorageSync("Project-name", this.data.Project[index].name)
-    console.log("点击项目：",this.data.Project[index].name)
   },
 
   //创建项目
@@ -43,7 +50,7 @@ Page({
   },
 
   //项目编辑
-  showProjectDetail: function() {
+  showProjectDetail: function (e) {
     wx.navigateTo({url: './ProjectDetail/ProjectDetail'})
   },
 
@@ -66,6 +73,7 @@ Page({
     var user_id = "0"
     var project_id = [] //项目id数组
     var projectArr = []
+    var starprojectArr = []
     if (currentUser) {
       user_id = currentUser.id
     }
@@ -73,7 +81,7 @@ Page({
     //查询当前用户所在的所有项目id，默认10条
     memberQuery.select("proj_id")
     memberQuery.equalTo("user_id", user_id)
-    memberQuery.notEqualTo("is_delete",true)
+    
     memberQuery.find().then(function(results) {
       //返回成功
       console.log("共查询到用户所在项目 " + results.length + " 条记录");
@@ -84,6 +92,7 @@ Page({
 
       //查询当前用户所在的所有项目，默认10条
       projectQuery.containedIn("objectId", project_id)
+      projectQuery.equalTo('is_delete',false)
       projectQuery.find({
         success: function(results) {
           //成功
@@ -91,37 +100,32 @@ Page({
           // 循环处理查询到的数据
           for (var i = 0; i < results.length; i++) {
             var result = results[i]
-            console.log(result)
+            console.log("getProjectList",result)
             var object = {}
-            object = {
-              icon: result.attributes.img_url,
-              name: result.attributes.name,
-              id: result.id
+            var starobject = {}
+            if (result.attributes.is_first == false)//非星标项目
+            {
+              object = {
+                icon: result.attributes.img_url,
+                name: result.attributes.name,
+                id: result.id
+              }
+              projectArr.push(object)
             }
-            projectArr.push(object)
+            if (result.attributes.is_first == true)//星标项目
+            {
+              starobject = {
+                icon: result.attributes.img_url,
+                name: result.attributes.name,
+                id: result.id
+              }
+              starprojectArr.push(starobject)
+            }
           }
-          console.log("projectArr", projectArr[0])
-          //todo: 在这里设置setdata
-          // var ProjectList = []
-          // for (var id in projectArr){
-          //   var obje
-          //   ProjectList.push({
-
-          //   })
-          //   ProjectList[id].name = projectArr[id].attributes.name
-
-          // }
-          // Project: [
-          //   {
-          //     icon: "/img/logo.png",
-          //     name: "鲨鱼不排队",
-          //   },
-          //   {
-          //     icon: "/img/logo.png",
-          //     name: "我爱大白鲨",
-          //   },
-          // ],
-          that.setData({Project: projectArr})
+          console.log("Project", projectArr)
+          console.log("StarProject", starprojectArr)
+          that.setData({ Project: projectArr })
+          that.setData({ StarProject: starprojectArr })
 
         },
         error: function(error) {
@@ -139,7 +143,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

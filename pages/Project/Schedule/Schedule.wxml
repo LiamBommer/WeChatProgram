@@ -2,7 +2,7 @@
 <view class='Schedule-container'>
 
   <!-- 无内容 -->
-  <view style='display:{{Announcement.length==0? "":"none"}}'>
+  <view style='display:{{Schedule.length==0? "":"none"}}'>
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noSchedule.png'></image>
       <view class='noitem-title'>发布日程</view>
@@ -12,7 +12,7 @@
   </view>
 
   <!-- 有内容 -->
-  <view style='display:{{Announcement.length==0? "none":""}}'>
+  <view style='display:{{Schedule.length==0? "none":""}}'>
     <block wx:for="{{Schedule}}">
         <block wx:if="{{item.month}}">
         <!-- 标题 -->

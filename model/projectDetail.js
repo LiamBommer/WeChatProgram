@@ -206,7 +206,7 @@ function cancelProjectFirst(projId,isFirst){
   })
 }
 
-/**
+/**ok
  * 项目负责人的转让
  * （内部用到函数updateMemberLeader）
  */
@@ -241,7 +241,7 @@ function transferProject(projId, newleaderName,newleaderId,oldLeaderId){
   }) 
 }
 
-/**
+/**ok
  * 更改新项目成员中的领导
  */
 function updateMemberLeader(projId, newLeaderId, oldLeaderId){
@@ -271,7 +271,7 @@ function updateMemberLeader(projId, newLeaderId, oldLeaderId){
     })
 }
 
-/**
+/**ok
  * @parameter projId项目id，newName 新的项目名
  * 修改项目名称
  */
@@ -292,7 +292,7 @@ function modifyProjectTitle(projId,newName){
   })
 }
 
-/**
+/**ok
  * @parameter projId项目id，newDescrip 新的项目描述
  * 修改项目描述
  */
@@ -313,7 +313,7 @@ function modifyProjectDescrep(projId,newDescrip){
   })
 }
 
-/**
+/**ok
  * 修改项目图片
  */
 function modifyProjcetImg(projId){
@@ -356,7 +356,7 @@ function modifyProjcetImg(projId){
     }
   })
 }
-/**
+/**ok
  * @parameter projId项目id 
  * 退出/解散项目
  * 利用了字段is_delete 来判断项目是否被删除。

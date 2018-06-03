@@ -1,11 +1,108 @@
 // pages/Project/Task/TaskDetail/CommModel/addModel/addModel.js
+var Bmob = require('../../../../../utils/bmob.js')
+var MODIFY_FEEDBACK_MOD = "修改了反馈模板"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    taskId:"",//当前任务ID
+    content:"",//内容
+  },
+
+
   
+  //保存
+  save: function (e) {
+    var that = this
+    var content = e.detail.value.content
+    var userName = getApp().globalData.nickName
+    var taskId = wx.getStorageSync("TaskDetail-taskId")
+    var feedbackMod = content
+    that.modifyFeedbackMod(taskId, feedbackMod, userName)
+    wx.setStorageSync("FeedBack-content", content)
+    wx.navigateBack({
+      url: '../TaskDetail',
+    })
+  },
+
+  /**
+ *  @parameter taskId任务id，feedbackMod反馈时间，userName操作人的昵称（用来存在历史操作记录表用）
+ * 修改反馈模板
+ * 
+ */
+  modifyFeedbackMod:function (taskId, feedbackMod, userName) {
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    //添加反馈模板
+    taskQuery.get(taskId, {
+        success: function (result) {
+        //成功情况
+        result.set('feedback_mod', feedbackMod)
+        result.save()
+        //记录操作
+        that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_MOD)
+      },
+      error: function (object, error) {
+        //失败情况
+      }
+    })
+  },
+
+
+  
+
+  /**
+ *添加任务记录
+ */
+  addTaskRecord: function (taskId, userName, record) {
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecord = new TaskRecord()
+
+    //存储任务记录
+    taskrecord.save({
+      user_name: userName,
+      task_id: taskId,
+      record: userName + record
+    }, {
+        success: function (result) {
+          //添加成功
+
+        },
+        error: function (result, error) {
+          //添加失败
+
+        }
+      })
+  },
+
+  /**
+* 获取某个任务的基本信息
+*/
+  getTaskDetail: function (taskId) {
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    taskQuery.get(taskId, {
+      success: function (result) {
+        //反馈模板
+        console.log("getTaskDetail:",result.attributes.feedback_mod)
+        if (result.attributes.feedback_mod != null && result.attributes.feedback_mod != '') {
+          that.setData({
+            content: result.attributes.feedback_mod,
+          })
+        }
+
+        //成功
+      },
+      error: function (error) {
+        //失败
+      }
+    })
   },
 
   /**
@@ -26,7 +123,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this
+    var taskId = wx.getStorageSync("TaskDetail-taskId")
+    that.setData({
+      taskId: taskId
+    })
+    that.getTaskDetail(that.data.taskId)
+    var content = wx.getStorageSync("TaskDetail-feedbackMod")
+    console.log("onshow:",content)
+    if (content != "") {
+      that.setData({
+        content: content
+      })
+    }
+    else{
+      
+    }
   },
 
   /**
@@ -40,7 +152,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    wx.removeStorageSync("TaskDetail-feedback")
   },
 
   /**

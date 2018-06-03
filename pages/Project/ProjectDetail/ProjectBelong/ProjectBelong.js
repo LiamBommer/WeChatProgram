@@ -1,10 +1,12 @@
 // pages/Project/ProjectDetail/ProjectBelong/ProjectBelong.js
+
+var Bmob = require('../../../../utils/bmob.js')
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    memberId:'',//选中的成员
+    memberIndex:'',//选中的成员
     //项目成员
     ProjectMemember: [
       {
@@ -36,21 +38,95 @@ Page({
 
   //选择项目成员
   ProjectMememberChange: function (e) {
-    this.setData({
-      memberId: e.detail.value,//选中的项目成员iD
+    var that = this
+    that.setData({
+      memberIndex: e.detail.value,//选中的项目成员iD
     });
   },
 
   //添加成员
   Finish:function () {
     var that = this
-    var memberId = that.data.memberId
-    console.log(memberId)
-    wx.setStorageSync("ProjectBelong-memberId", memberId)//选中的成员ID
+    var projId = wx.getStorageSync("Project-id")
+    var ProjectMemember = wx.getStorageSync("ProjectDetail-memberList")
+    var newIndex = that.data.memberIndex
+    var newleaderName = ProjectMemember[newIndex].name
+    var newleaderId = ProjectMemember[newIndex].id
+    var oldLeaderId = ProjectMemember[0].id
+    that.transferProject(projId, newleaderName, newleaderId, oldLeaderId)
+
+    wx.setStorageSync("ProjectBelong-memberName", newleaderName)//选中的成员名字
     wx.navigateBack({
       url: '../ProjectDetail',
     })
   },
+
+  /**
+* 项目负责人的转让
+* （内部用到函数updateMemberLeader）
+*/
+  transferProject: function (projId, newleaderName, newleaderId, oldLeaderId) {
+
+    var that = this
+    var Project = Bmob.Object.extend("project")
+    var projectQuery = new Bmob.Query(Project)
+
+    projectQuery.get(projId, {
+      success: function (result) {
+        result.set("leader_id", newleaderId)
+        result.set("leader_name", newleaderName)
+        result.save()
+
+        //更改新项目成员中的领导属性
+        that.updateMemberLeader(projId, newleaderId, oldLeaderId)
+        //成功情况
+
+
+
+
+      },
+      error: function (object, error) {
+        //失败情况
+        //console.log(error)
+
+
+
+
+      }
+    })
+  },
+
+  /**
+   * 更改新项目成员中的领导
+   */
+  updateMemberLeader: function (projId, newLeaderId, oldLeaderId) {
+    var that = this
+    var ProjMember = Bmob.Object.extend("proj_member")
+    var projmemberQuery = new Bmob.Query(ProjMember)
+
+    var ids = [newLeaderId, oldLeaderId]
+    projmemberQuery.equalTo("proj_id", projId)
+    projmemberQuery.containedIn("user_id", ids)
+    projmemberQuery.find().then(function (todos) {
+      todos.forEach(function (todo) {
+        if (todo.get("user_id") == newLeaderId) {
+          todo.set("is_leader", true)
+        } else {
+          todo.set("is_leader", false)
+        }
+      })
+      return Bmob.Object.saveAll(todos);
+    }).then(function (todos) {
+      // 更新成功
+      //console.log("updateMemberLeader","更改新项目成员中的领导成功!")
+
+    },
+      function (error) {
+        // 异常处理
+        console.log("updateMemberLeader", "更改新项目成员中的领导失败!")
+      })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
