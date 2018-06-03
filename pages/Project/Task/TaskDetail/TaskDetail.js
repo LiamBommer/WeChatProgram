@@ -55,6 +55,7 @@ Page({
     inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID
     member:[],//任务成员
+    focus:false,//输入框焦点
 
 
     show: false,
@@ -394,6 +395,12 @@ Page({
 
   //点击沟通模板
   ClickCommModel: function () {
+    // 使页面滚动到评论区
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      wx.pageScrollTo({
+        scrollTop: rect.height - 200
+      })
+    }).exec()
     this.setData({
       CommModel: true,
     });
@@ -408,10 +415,11 @@ Page({
     that.setData({
       isInputing: true
     });
+      // 使页面滚动到评论区
     wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
-      // 使页面滚动到底部
+      console.log("rect",rect.height)
       wx.pageScrollTo({
-        scrollTop: rect.bottom
+        scrollTop: rect.height - 200 
       })
     }).exec()
   },
@@ -424,14 +432,9 @@ Page({
   },
 
   // 点击发送按钮发送消息
-  sendMessage: function(e) {
+  sendMessage: function (e) {
     var that = this
     var content = e.detail.value.review;
-    var chat = that.data.chat;
-    var scrollTop = that.data.scrollTop;
-    scrollTop += 200;
-    
-    console.log(content);
 
     if (content == undefined) {
       // 发送内容为空则不发送
@@ -439,72 +442,45 @@ Page({
       console.log("点击发送")
       var taskId = that.data.taskId
       var publisherId = getApp().globalData.userId
-      var userPic = getApp().globalData.userPic
-      that.sendTaskComment(taskId, publisherId, content)//传后台
-      chat.push({
-        content: content, //我发送的内容
-        icon: userPic,//我的头像
-      });
+      that.sendTaskComment(taskId, publisherId, content, false)//传后台
       that.setData({
-        chat: chat,
         Inputcontent: "",
-        scrollTop: scrollTop,
       });
     }
   },
 
   //聊天框按回车发送消息
-  ChatInput: function(e) {
+  ChatInput: function (e) {
     var that = this;
-    var scrollTop = that.data.scrollTop;
-    scrollTop += 200;
     var content = e.detail.value;
-    var chat = that.data.chat;
 
     if(content == undefined) {
       // 发送内容为空则不发送
     } else {
       var taskId = that.data.taskId
       var publisherId = getApp().globalData.userId
-      var userPic = getApp().globalData.userPic
-      that.sendTaskComment(taskId, publisherId, content)//传后台
-      chat.push({
-        content: content, //我发送的内容
-        icon: userPic,//我的头像
-        judgemine: true,//我发的消息
-      });
+      that.sendTaskComment(taskId, publisherId, content,false)//传后台
       that.setData({
-        chat : chat,
         Inputcontent : "",
-        scrollTop: scrollTop,
+        focus:false,
       });
     }
+    
   },
 
   //聊天框发送图片
-  PictrueSelect: function (e) {
+  PictrueSelect:function (e) {
+    // 使页面滚动到评论区
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      wx.pageScrollTo({
+        scrollTop: rect.height - 200
+      })
+    }).exec()
     var that = this;
-    var scrollTop = that.data.scrollTop;
-    scrollTop += 200;
-    var chat = that.data.chat;
-    wx.chooseImage({
-      success: function (res) {
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths;
-        var content = tempFilePaths[0];
-        chat.push({
-          content: content,//我发送的内容
-          icon: '/img/me.png',//我的头像
-          judgemine: true,//我发的消息
-          judgepictrue: true,//判断输入的是文字还是图片
-        });
-        that.setData({
-          chat: chat,
-          scrollTop: scrollTop,
-        });
-
-      }
-    })
+    var taskId = that.data.taskId
+    var publisherId = getApp().globalData.userId
+    that.sendTaskCommentPicture(taskId, publisherId, true)//传后台
+    
   },
 
   //聊天框预览图片
@@ -1131,10 +1107,6 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         that.setData({
           chat: commentList
           })
-
-
-
-
       },
       error: function (error) {
         //获取评论失败
@@ -1149,7 +1121,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
  * @parameter taskId任务id, publisherId评论人的id, content评论内容
  * 发布评论，沟通模板也可以用这个函数，沟通模板的内容就是content
  */
-sendTaskComment:function (taskId, publisherId, content) {
+sendTaskComment:function (taskId, publisherId, content,isImg) {
     var that= this
     var Taskcommment = Bmob.Object.extend('task_comment')
     var taskcomment = new Taskcommment()
@@ -1160,7 +1132,7 @@ sendTaskComment:function (taskId, publisherId, content) {
       publisher: publisher,
       content: content,  //评论内容
       task_id: taskId,  //任务id
-      is_img: false     //内容不是图片
+      is_img: isImg     //内容不是图片
     }, {
         success: function (result) {
           // 添加成功
@@ -1168,6 +1140,7 @@ sendTaskComment:function (taskId, publisherId, content) {
           wx.showToast({
             title: '评论成功',
           })
+          that.getTaskComment(taskId)
         },
         error: function (result, error) {
           // 添加失败
@@ -1196,8 +1169,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
 
             //res.url()是上传图片后的 url
             //console.log(res.url());
-            sendTaskComment(taskId, publisherId, res.url()) //存储图片路径url
-
+            that.sendTaskComment(taskId, publisherId, res.url(),true) //存储图片路径url
+             
           }, function (error) {
             console.log(error);
           })
@@ -1264,6 +1237,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     // that.getSubtasks(taskId);//获取子任务列表
     
     //发送沟通模板
+      var currentT = new Date().toLocaleString()//获取当前时间
+      var currentTime = currentT.substring(9, 15)
       var scrollTop = that.data.scrollTop;
       scrollTop += 200;
       var chat = that.data.chat;
@@ -1271,11 +1246,15 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         key: 'CommModel',
         success: function (res) {
           var content = res.data;
-          console.log(content);
+          console.log("沟通模板！",content);
+          var taskId = that.data.taskId//当前任务ID
+          var publisherId = getApp().globalData.userId//当前操作用户ID
+          var userPic = getApp().globalData.userPic//当前操作用户头像
+          that.sendTaskComment(taskId, publisherId, content)//传后台
           chat.push({
             content: content, //我发送的内容
-            icon: '/img/me.png',//我的头像
-            judgemine: true,//我发的消息
+            icon: userPic,//我的头像
+            time: currentTime,//时间
           });
           that.setData({
             chat: chat,

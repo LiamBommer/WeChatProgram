@@ -101,7 +101,7 @@ button[hover-class="share-hover"]::after {
 
 .chat .chatperson{
   width: 670rpx;
-  padding: 16rpx 40rpx;
+  padding: 0rpx 40rpx;
   min-height: 110rpx;
   background-color: white;
   border-bottom: solid 2rpx #f2f2f2;
@@ -114,27 +114,36 @@ button[hover-class="share-hover"]::after {
   display:flex;
   justify-content:flex-start;
   flex-direction:column;
-  margin-left:20rpx;
+  margin-left:30rpx;
   width:90%;
-  margin-top:30rpx;
+  margin-top:37rpx;
 }
 
 .chat .chatperson  .person-icon{
-  width: 50rpx;
-  height: 50rpx;
+  width:55rpx;
+  height:55rpx;
   border-radius: 50%;
   top: 9rpx;
 }
 
-.chat .chatperson .content{
-  line-height:60rpx;
+.chat .chatperson .person-icon-view .content{
+  padding:16rpx 0rpx;
+   /* 多行省略 */
+   display: -webkit-box;
+   line-height: 40rpx;
+   word-break: break-all;
+   -webkit-box-orient: vertical;
+   /* -webkit-line-break: 2; */
+   text-overflow: ellipsis;
+   /* 多行省略 */
 }
 
-.chat .chatperson .time{
+.chat .chatperson .person-icon-view .time{
   font-size:24rpx;
   color:#888888;
   width:100%;
   text-align:end;
+  padding-bottom: 10rpx;
 }
 
 .chat .chatperson  .person-icon-view .content-img{

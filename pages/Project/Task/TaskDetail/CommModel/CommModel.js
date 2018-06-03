@@ -9,8 +9,8 @@ Page({
     exitComment: true,
     exitQuestion: false,
     exitLike: false,
-    //当前选择的模板
-    ModelIndex:"",
+    
+    ModelIndex: "",//当前选择的模板
     //意见模板
     ModelComment: [
       { index: 0, value: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
@@ -80,7 +80,7 @@ Page({
           ModelIndex: "",
         });
       }
-      wx.navigateTo({
+      wx.navigateBack({
         url: '../TaskDetail',
       })
     }
