@@ -187,10 +187,13 @@ Page({
       content: '确定要删除此公告吗',
       success:function(res){
         if(res.confirm){//点击确定
-          that.deleteAnnouncement(that.data.id)
-          wx.navigateBack({
-            url: '../../ProjectMore/ProjectMore',
+          // 显示loading Toast
+          wx.showLoading({
+            title: '正在删除...',
           })
+          // delete
+          that.deleteAnnouncement(that.data.id)
+          
         }
         else{//点击取消
 
@@ -337,16 +340,32 @@ Page({
         //删除成功
         console.log("删除公告成功！")
 
+        // 隐藏loading弹窗
+        wx.hideLoading()
+
+        // 返回上一个页面
+        wx.navigateBack({
+          url: '../../ProjectMore/ProjectMore',
+        })
+
+        // 显示成功反馈
         wx.showToast({
           title: '公告删除成功',
           icon: 'success',
-          duration: 1500
+          duration: 1000
         })
-
       },
       error: function (err) {
         // 删除失败
         console.log("删除公告失败！", err)
+        // 隐藏loading弹窗
+        wx.hideLoading()
+        // 显示失败反馈
+        wx.showToast({
+          title: '公告删除失败，请稍后再试',
+          icon: 'none',
+          duration: 1000
+        })
       }
     })
 
