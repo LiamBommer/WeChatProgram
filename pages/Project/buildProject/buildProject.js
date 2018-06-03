@@ -16,6 +16,18 @@ Page({
     var title, desc;
     title = e.detail.value.title;
     desc = e.detail.value.desc;
+
+    if (title == "" || title.length == 0) {
+      // 提示标题不可为空
+      wx.showToast({
+        title: '项目名称不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+      return;
+    }
+
+    // submit
     that.buildProject(title, desc);
   },
 

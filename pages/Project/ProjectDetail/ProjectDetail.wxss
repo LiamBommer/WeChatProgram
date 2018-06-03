@@ -1,6 +1,6 @@
 
 .title-view {
-  height: 160rpx;
+  min-height: 160rpx;
 }
 
 .title-view .project-img {
@@ -12,6 +12,10 @@
 .title-view .title {
   font-size: 40rpx;
   margin-left: 30rpx;
+  width: 544rpx;
+  display: block;
+  line-height: 50rpx;
+  overflow: auto;
 }
 
 .list {
@@ -27,7 +31,7 @@
 .item-view .content {
   width: 490rpx;
   overflow: auto;
-  margin: 10rpx 0rpx;
+  padding: 10rpx 0rpx;
 }
 
 .item-view .intermediate-view {

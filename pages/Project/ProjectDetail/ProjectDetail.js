@@ -49,6 +49,22 @@ Page({
     var that = this
     var projId = that.data.projId
     var title = that.data.title
+
+    if(title == "" || title.length == 0) {
+      // 提示标题不可为空
+      wx.showToast({
+        title: '项目名称不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+      return;
+    }
+
+    // 显示loading
+    wx.showLoading({
+      title: '正在修改...',
+    })
+    // submit
     that.modifyProjectTitle(projId, title)
     that.setData({
       hiddenmodalputTitle: true,
@@ -79,8 +95,12 @@ Page({
 
   //点击按钮弹出指定的hiddenmodalput弹出框
   modalinput: function () {
+    var proj_desc = this.data.project_desc
+    if(proj_desc == '点击添加项目描述') {
+      proj_desc = ''
+    }
     this.setData({
-      content: this.data.project_desc,
+      content: proj_desc,
       hiddenmodalput: false
     })
   },
@@ -95,17 +115,33 @@ Page({
     var that = this
     var projId = that.data.projId
     var content = that.data.content
+    var text_color = ""
+
+    // 描述为空时设置内容与字体
+    if (content == "" || content == 0) {
+      content = '点击添加项目描述'
+      text_color = '#888888'
+    } else {
+      text_color = 'black'
+    }
+
+    // 显示loading
+    wx.showLoading({
+      title: '正在修改...',
+    })
+
     that.modifyProjectDescrep(projId, content)
     this.setData({
       hiddenmodalput: true,
       project_desc: content,
+      text_color: text_color
     })
   },
  
   //项目描述
   ProjectContent: function(e) {
     this.setData({
-      content: e.detail.value
+      content: e.detail.value,
     })
   },
 
@@ -132,10 +168,22 @@ Page({
     var that = this
     var projId = that.data.projId
     var switchChecked = e.detail.value
-    if (switchChecked == true)
-    that.makeProjectFirst(projId, true)//置顶
-    if (switchChecked == false)
-      that.cancelProjectFirst(projId, false)//取消置顶
+    if (switchChecked == true) {
+      // 显示loading
+      wx.showLoading({
+        title: '正在星标...',
+      })
+      //置顶
+      that.makeProjectFirst(projId, true)
+    }
+    if (switchChecked == false) {
+      // 显示loading
+      wx.showLoading({
+        title: '正在取消星标...',
+      })
+      //取消置顶
+      that.cancelProjectFirst(projId, false)
+    }
   },
 
   //删除/退出项目
@@ -147,12 +195,16 @@ Page({
       success:function(res){
         if (res.confirm) {
           var projId = that.data.projId
+
+          // 显示loading
+          wx.showLoading({
+            title: '正在修改...',
+          })
+          // submit
           that.deletePoject(projId)
           wx.removeStorageSync("ProjectDetail-memberList")
           wx.removeStorageSync("Project- id")
-          wx.navigateBack({
-            url: '../Project'
-          })
+          
         } else if (res.cancel) {
 
         }
@@ -254,14 +306,11 @@ Page({
           console.log("查询失败: " + error.code + " " + error.message);
           //失败情况
 
-
-
-
-
         }
       })
 
     })
+
     //查询指定项目详情
     projectQuery.equalTo("objectId", projId)
     projectQuery.first({
@@ -269,11 +318,18 @@ Page({
         detailObject = result
         console.log("项目详情", detailObject)
         //todo：在这里设置setdata
+        var proj_desc = detailObject.attributes.desc
+        var text_color = ""
+        if(proj_desc == "" || proj_desc.length == 0 || proj_desc == '点击添加项目描述') {
+          proj_desc = '点击添加项目描述'
+          text_color = '#888888'
+        }
         that.setData({
            project_img : detailObject.attributes.img_url,
            project_name: detailObject.attributes.name,
-           project_desc: detailObject.attributes.desc,
+           project_desc: proj_desc,
            SwitchChecked: detailObject.attributes.is_first,
+           text_color: text_color
         });
 
       },
@@ -339,7 +395,7 @@ Page({
  */
   modifyProjectTitle:function (projId, newName){
     var Project = Bmob.Object.extend('project')
-  var projectQuery = new Bmob.Query(Project)
+    var projectQuery = new Bmob.Query(Project)
 
   //修改项目名称
   projectQuery.get(projId, {
@@ -347,6 +403,12 @@ Page({
         result.set("name", newName)  //修改项目名称
         result.save()
         //console.log("项目标题修改成功")
+        wx.hideLoading()
+        wx.showToast({
+          title: '修改名称成功',
+          icon: 'success',
+          duration: 1000
+        })
       },
       error: function (error) {
         //项目删除失败
@@ -369,12 +431,19 @@ Page({
         result.set("desc", newDescrip)  //修改项目描述
         result.save()
         //console.log("项目描述修改成功")
+        wx.hideLoading()
+        wx.showToast({
+          title: '修改描述成功',
+          icon: 'success',
+          duration: 1000
+        })
       },
       error: function (error) {
         //项目删除失败
       }
     })
   },
+
   /**
    * 2018-05-22
    * @parameter 项目id ,isFirst 是否置顶项目，设置为true
@@ -384,23 +453,30 @@ Page({
 
   makeProjectFirst:function (projId, isFirst){
     var Project = Bmob.Object.extend("project")
-  var projectQuery = new Bmob.Query(Project)
+    var projectQuery = new Bmob.Query(Project)
 
-  projectQuery.get(projId, {
+    projectQuery.get(projId, {
       success: function (result) {
         result.set("is_first", isFirst)
         result.save()
         //成功的情况
-        console.log("设置星标项目成功")
-
+        console.log("设置成功")
+        wx.hideLoading()
+        wx.showToast({
+          title: '设置成功',
+          icon: 'success',
+          duration: 1000
+        })
       },
       error: function (object, error) {
         //失败的情况
         //console.log(error)
-
-
-
-
+        wx.hideLoading()
+        wx.showToast({
+          title: '设置失败，请稍后再试',
+          icon: 'success',
+          duration: 1000
+        })
       }
     })
   },
@@ -420,13 +496,23 @@ cancelProjectFirst:function (projId, isFirst) {
         result.set("is_first", isFirst)
         result.save()
         //成功的情况
-
+        wx.hideLoading()
+        wx.showToast({
+          title: '取消成功',
+          icon: 'success',
+          duration: 1000
+        })
 
       },
       error: function (object, error) {
         //失败的情况
         //console.log(error)
-
+        wx.hideLoading()
+        wx.showToast({
+          title: '取消失败，请稍后再试',
+          icon: 'success',
+          duration: 1000
+        })
 
 
 
@@ -453,6 +539,15 @@ cancelProjectFirst:function (projId, isFirst) {
         result.set("is_delete", true)  //删除项目。不可修复。
         result.save()
         //console.log("项目删除成功")
+        wx.hideLoading()
+        wx.navigateBack({
+          url: '../Project'
+        })
+        wx.showToast({
+          title: '退出项目成功',
+          icon: 'success',
+          duration: 1000
+        })
       },
       error: function (error) {
         //项目删除失败
