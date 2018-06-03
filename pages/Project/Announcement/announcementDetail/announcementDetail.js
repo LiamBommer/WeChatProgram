@@ -16,6 +16,10 @@ Page({
     note_user: '产品经理',
     belonging: '项目名',//项目名
 
+    has_read: true,  // 本用户是否已读此公告
+    is_read_empty: false, // 已读列表是否为空，下同
+    is_noread_empty: false,
+
     icon_share: '/img/share.png',
     icon_belonging: '/img/belonging.png',
     icon_close: '/img/close.png',
@@ -85,25 +89,34 @@ Page({
     var CurrentMemberId = getApp().globalData.userId//当前用户ID
     var CurrentMemberIcon = getApp().globalData.userPic//当前用户头像
     var CurrentMemberName = getApp().globalData.nickName//当前用户姓名
+
     that.letMeSee(CurrentMemberId,that.data.id)
+
     var read = that.data.read
     var noread = that.data.noread
-    for(var i in read){
-      if (read[i].objectId == CurrentMemberId)//已点击"收到"
-      {
-        wx.showToast({
-          title: '你已经点过啦',
-          icon:'none',
-        })
-        hasRead = true
-      }
-    }
+
+    // for(var i in read){
+    //   if (read[i].objectId == CurrentMemberId)//已点击"收到"
+    //   {
+    //     wx.showToast({
+    //       title: '你已经点过啦',
+    //       icon:'none',
+    //     })
+    //     hasRead = true
+    //   }
+    // }
+
     if (hasRead == false) {//未点击"收到"
       wx.showToast({
         title: '收到',
         icon: 'success',
       })
-    //删除未读成员
+      // 隐藏按钮
+      that.setData({
+        has_read: true
+      })
+
+      //删除未读成员
       for (var i in noread ){
         if (noread[i].objectId == CurrentMemberId){
           noread.splice(i,1)
@@ -120,6 +133,7 @@ Page({
           hasReadMember = true
         }
       }
+
       if (hasReadMember == false){
         read.push({
           objectId: CurrentMemberId,
@@ -129,6 +143,22 @@ Page({
         that.setData({
           read: read
         })
+
+        var readUser = that.data.read
+        var unreadUser = that.data.noread
+        // 判断未读列表是否只剩一个
+        if (unreadUser.length == 1) {
+          that.setData({
+            is_noread_empty: true
+          })
+        }
+        if (readUser != "[]" || readUser.length != 0) {
+          // 已读列表为空，则设置为假（本人已读）
+          that.setData({
+            is_read_empty: false
+          })
+        }
+
       }
       else{
         wx.showToast({
@@ -200,16 +230,38 @@ Page({
             unreadUser.push(results[i].get("user"))
           }
         }
+
         //在这里设置setData
         that.setData({
           read: readUser,
           noread: unreadUser
         })
 
-     
-
-
-
+        // 判断已读列表是否为空，以判断是否显示列表
+        if(unreadUser == "[]" || unreadUser.length == 0) {
+          // 未读列表为空
+          that.setData({
+            is_noread_empty: true
+          })
+        }
+        if (readUser == "[]" || readUser.length == 0) {
+          // 已读列表为空
+          that.setData({
+            is_read_empty: true
+          })
+        }
+        
+        // 判断我是否已读，是则隐藏按钮
+        var myId = getApp().globalData.userId
+        for(var i=0; i<unreadUser.length; i++) {
+          if(unreadUser[i].objectId == myId) {
+            // 隐藏按钮
+            that.setData({
+              has_read: false
+            })
+            break
+          }
+        }
 
       },
       error: function (error) {
@@ -228,7 +280,7 @@ Page({
  */
   letMeSee:function (userId, announcementId){
 
-    var AnnouncementRead = Bmob.Object.extend("annoucement_read")
+  var AnnouncementRead = Bmob.Object.extend("annoucement_read")
   var announcementReadQuery = new Bmob.Query(AnnouncementRead)
 
   //更改某用户的已读状态
@@ -254,6 +306,7 @@ Page({
               //失败
             }
           })
+
         }
 
       },
@@ -327,7 +380,8 @@ Page({
       content: Announcement.content,
       note_time: Announcement.time,
       belonging: projectName,
-      note_user: Announcement.memberName
+      note_user: Announcement.memberName,
+      is_showmember: Announcement.is_showmember
     })
 
     if (Announcement.content == "" || Announcement.content.length == 0) {

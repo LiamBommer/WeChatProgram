@@ -21,7 +21,11 @@
       <text class='note'>{{note_time}}</text>
     </view>
   </view>
-  <button type='primary' size='default' bindtap='ClickRead'>收到</button>
+  
+  <block wx:if="{{!has_read}}">
+    <button type='primary' size='default' bindtap='ClickRead'>收到</button>
+  </block>
+
   <view class="view-container">
     <view class="item-view">
       <image src='{{icon_belonging}}'></image>
@@ -33,29 +37,41 @@
     </view>
   </view>
 
-  <text class='item-title'>未读成员</text>
-  <view class='view-container'>
-    <block wx:for="{{noread}}">
-        <view class="item-view">
-          <image class='radius' src='{{item.userPic}}'></image>
-          <text class='desc'>{{item.nickName}}</text>
-        </view>
-    </block>
-  </view>
-
-  <text class='item-title'>已读成员</text>
-  <view class='view-container'>
-    <view class="item-view space-between">
-      <view class="ver-align">
-        <block wx:for="{{read}}">
-          <image class='radius' src='{{item.userPic}}'></image>
+  <block wx:if="{{is_showmember}}">
+    <block wx:if="{{!is_noread_empty}}">
+      <text class='item-title'>未读成员</text>
+      <view class='view-container'>
+        <block wx:for="{{noread}}">
+            <view class="item-view">
+              <image class='radius' src='{{item.userPic}}'></image>
+              <text class='desc'>{{item.nickName}}</text>
+            </view>
         </block>
       </view>
-      <view class="ver-align">
-        <image src='{{icon_more}}' bindtap='readMember'></image>
+    </block>
+    <block wx:else>
+      <text class='item-title' style='text-align:center'>每个人都看过了！</text>
+    </block>
+
+    <block wx:if="{{!is_read_empty}}">
+      <text class='item-title'>已读成员</text>
+      <view class='view-container'>
+        <view class="item-view space-between">
+          <view class="ver-align">
+            <block wx:for="{{read}}">
+              <image class='radius' src='{{item.userPic}}'></image>
+            </block>
+          </view>
+          <view class="ver-align">
+            <image src='{{icon_more}}' bindtap='readMember'></image>
+          </view>
+        </view>
       </view>
-    </view>
-  </view>
+    </block>
+    <block wx:else>
+      <text class='item-title' style='text-align:center'>还没有人看过</text>
+    </block>
+  </block>
 
   <view style='height:200rpx;'></view>
 

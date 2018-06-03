@@ -542,6 +542,8 @@ Page({
       annoucementQuery.find({
           success: function (results) {
         //console.log("共查询到公告 " + results.length + " 条记录");
+        console.log('Announcements: \n')
+        console.log(results)
         // 循环处理查询到的数据
         for (var i = 0; i < results.length; i++) {
           var result = results[i]
@@ -557,6 +559,7 @@ Page({
             time: createdAt,
             icon: result.changed.publisher.userPic,
             memberName: result.changed.publisher.nickName,
+            is_showmember: result.attributes.is_showmember,
           }
           annoucementArr.push(object)
         }
