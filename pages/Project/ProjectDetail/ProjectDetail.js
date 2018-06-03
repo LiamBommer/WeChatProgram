@@ -198,7 +198,7 @@ Page({
 
           // 显示loading
           wx.showLoading({
-            title: '正在修改...',
+            title: '正在退出...',
           })
           // submit
           that.deletePoject(projId)

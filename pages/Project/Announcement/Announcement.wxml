@@ -25,7 +25,9 @@
             <!-- 列表右 -->
             <view class='item-second'>
               <view class='item-time'>{{item.time}}</view>
-              <view class='item-read'>{{item.read}}人已读</view>
+              <block wx:if="{{item.is_showmember}}">
+                <view class='item-read'>{{item.read}}人已读</view>
+              </block>
             </view>
           </view>
       </block>
