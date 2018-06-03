@@ -20,30 +20,37 @@ Page({
     var that = this
     var title = e.detail.value.title//获取公告标题
     var content = e.detail.value.content//获取公告内容
-    var ProjectId = wx.getStorageSync("Project-id")//获取项目ID
-    var ProjectName = wx.getStorageSync("Project-name")//获取项目名
     var checked = that.data.checked//获取是否显示已读
 
-    if(title == "" || title.length == 0) {
-      // 提示标题不可为空
-      wx.showToast({
-        title: '公告标题不见咯',
-        icon: 'none',
-        duration: 1500,
-      })
-      return;
-    }
+    wx.getStorage({
+      key: "Project-detail",
+      success: function (res) { 
+        var ProjectId = res.data.id//获取项目ID
+        var ProjectName = res.data.name//获取项目名
 
-    // 显示loading
-    wx.showLoading({
-      title: '正在创建...',
-    })
+        if (title == "" || title.length == 0) {
+          // 提示标题不可为空
+          wx.showToast({
+            title: '公告标题不见咯',
+            icon: 'none',
+            duration: 1500,
+          })
+          return;
+        }
 
-    // submit
-    that.createAnnouncement(ProjectId, ProjectName, title, content, checked)
-    wx.navigateBack({
-      url:"../../ProjectMore/ProjectMore"
+        // 显示loading
+        wx.showLoading({
+          title: '正在创建...',
+        })
+
+        // submit
+        that.createAnnouncement(ProjectId, ProjectName, title, content, checked)
+        wx.navigateBack({
+          url: "../../ProjectMore/ProjectMore"
+        })
+      },
     })
+   
   },
 
   /**
