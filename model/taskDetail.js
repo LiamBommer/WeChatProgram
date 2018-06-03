@@ -509,7 +509,7 @@ function modifyTaskTitle(taskId,newTitle){
   taskQuery.get(taskId, {
     success: function (result) {
       //成功情况
-      result.set('title ', newTitle)
+      result.set('title', newTitle)
       result.save()
       //记录操作
       addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
