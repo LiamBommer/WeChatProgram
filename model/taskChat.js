@@ -1,4 +1,5 @@
 //model/taskChat.js
+//已废弃
 var Bmob = require('../utils/bmob.js')
 // var BSI = require('../utils/bmobSocketIo.js')
 // var BmobSocketIo = new BSI("acb853b88395063829cae5f88c29fb82")
