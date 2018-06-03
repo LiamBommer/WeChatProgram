@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/notification.js')
+var test = require('../../model/destroy.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -79,7 +79,10 @@ Page({
      //test.cancelProjectFirst("3d3525ec0f", false)
      //test.transferProject("05b1b947d7", "Mr.Li", "46afed01fb","5b2cad79f6")   
      //test.addProjectNotification('3d3525ec0f','test',1,'213')
-     test.addTaskNotification('	81c2ae2e31','ecf39929e8','测试')
+     //test.addTaskNotification('	81c2ae2e31','ecf39929e8','测试')
+     //test.createSchedule("123")
+     test.destroyTaskRecord()
+
   },
 
   /**
