@@ -39,7 +39,7 @@
 
 .Announcement-container .item{
   width: 100%;
-  height: 135rpx;
+  min-height: 135rpx;
   background: #fff;
   display: flex;
   align-items: center;
@@ -48,6 +48,7 @@
 .Announcement-container .item .item-first{
   width:600rpx;
   display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -59,7 +60,9 @@
 }
 
 .Announcement-container .item .item-first .item-text{
-  margin-left: 30rpx;
+  width: 460rpx;
+  height: 100%;
+  margin: 16rpx 20rpx 16rpx 20rpx;
 }
 
 .Announcement-container .item .item-first .item-text .item-title{
@@ -69,6 +72,16 @@
 .Announcement-container .item .item-first .item-text .item-content{
    font-size: 28rpx;
    color: #888888;
+   /* 多行省略 */
+   display: -webkit-box;
+   line-height: 40rpx;
+   word-break: break-all;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2;
+   /* -webkit-line-break: 2; */
+   overflow: hidden;
+   text-overflow: ellipsis;
+   /* 多行省略 */
 }
 
 .Announcement-container .item .item-second{

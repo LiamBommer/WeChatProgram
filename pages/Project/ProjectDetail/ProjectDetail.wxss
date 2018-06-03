@@ -26,6 +26,8 @@
 
 .item-view .content {
   width: 490rpx;
+  overflow: auto;
+  margin: 10rpx 0rpx;
 }
 
 .item-view .intermediate-view {
@@ -38,4 +40,10 @@ image {
   width: 40rpx;
   height: 40rpx;
   border-radius: 50%;
+}
+
+modal textarea {
+  width: 100%;
+  overflow: auto;
+  min-height: 150rpx;
 }

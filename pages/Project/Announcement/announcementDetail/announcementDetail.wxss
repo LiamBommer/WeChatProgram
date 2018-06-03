@@ -38,6 +38,11 @@ button[hover-class="share-hover"]::after {
   padding: 16rpx 0rpx;
 }
 
+.view-container .content-view .content{
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+
 .view-container .note-view {
   padding-bottom: 16rpx;
   display: flex;
