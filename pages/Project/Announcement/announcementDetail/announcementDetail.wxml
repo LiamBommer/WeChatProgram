@@ -14,7 +14,7 @@
   </view>
   <view class="view-container">
     <view class='content-view' bindtap='Content'>
-       <text class='content'>公告内容：{{content}}</text>
+       <text class='content' style='color: {{text_color}}'>{{content}}</text>
      </view>
     <view class='note-view'>
       <text class='note'>{{note_user}}</text>

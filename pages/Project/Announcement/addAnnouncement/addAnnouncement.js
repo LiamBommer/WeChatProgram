@@ -23,6 +23,19 @@ Page({
     var ProjectId = wx.getStorageSync("Project-id")//获取项目ID
     var ProjectName = wx.getStorageSync("Project-name")//获取项目名
     var checked = that.data.checked//获取是否显示已读
+
+    if(title == "" || title.length == 0) {
+      // 提示标题不可为空
+      wx.showToast({
+        title: '公告标题不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+
+      return;
+    }
+
+    // submit
     that.createAnnouncement(ProjectId, ProjectName, title, content, checked)
     wx.navigateBack({
       url:"../../ProjectMore/ProjectMore"
@@ -65,12 +78,13 @@ Page({
           }
 
           //提示用户创建公告成功
-          console.log("提示用户创建公告成功！", result.id)
+          console.log("创建公告成功！", result.id)
 
-
-
-
-
+          wx.showToast({
+            title: '创建公告成功',
+            icon: 'success',
+            duration: 1000
+          })
 
         },
         error: function (result, error) {

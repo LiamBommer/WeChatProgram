@@ -11,9 +11,7 @@ Page({
     id:"",//公告ID
     title: '公告标题',//标题
     inputTitle:'',//输入的标题
-    content: '因为 Mr.Li 也很牛逼balabal ...\n'+
-            '我就不说什么了，大家都知道的。\n'+
-            '请同学们抓紧时间做完原型图，做完了请大家吃鸡腿',
+    content: '公告内容',
     note_time: '2018/05/01',
     note_user: '产品经理',
     belonging: '项目名',//项目名
@@ -25,11 +23,11 @@ Page({
     
     //未读成员
     noread: [
-      {
-        objectId: "",
-        userPic: '/img/member.png',
-        nickName:"同学A",
-      },
+      // {
+      //   objectId: "",
+      //   userPic: '/img/member.png',
+      //   nickName:"同学A",
+      // },
     ],
 
     //已读成员
@@ -284,12 +282,13 @@ Page({
   announcementQuery.destroyAll({
       success: function () {
         //删除成功
-        console.log("提示用户删除公告成功！")
+        console.log("删除公告成功！")
 
-
-
-
-
+        wx.showToast({
+          title: '公告删除成功',
+          icon: 'success',
+          duration: 1500
+        })
 
       },
       error: function (err) {
@@ -321,6 +320,7 @@ Page({
     var that = this
     var projectName = wx.getStorageSync("Project-name")
     var Announcement = wx.getStorageSync("AnnouncementDetail")//公告内容
+
     that.setData({
       id: Announcement.id,
       title: Announcement.title,
@@ -329,6 +329,15 @@ Page({
       belonging: projectName,
       note_user: Announcement.memberName
     })
+
+    if (Announcement.content == "" || Announcement.content.length == 0) {
+      // 公告不为空时显示公告
+      that.setData({
+        content: '此公告无详情',
+        text_color: '#888888'
+      })
+    }
+
   },
 
   /**
@@ -344,11 +353,14 @@ Page({
   onShow: function () {
    var that = this
 
-   var content = wx.getStorageSync("announcementDetail-Content-content")//会议内容
-   if(content != "")
-   that.setData({
-     content: content
-   })
+   var content = wx.getStorageSync("announcementDetail-Content-content")//公告内容
+   console.log('公告内容：'+content)
+   
+   if(content != "" || content.length != 0) {
+     that.setData({
+       content: content
+     })
+   }
 
    var Announcement = wx.getStorageSync("AnnouncementDetail")//公告内容
    that.getReadAnnounce(Announcement.id)
