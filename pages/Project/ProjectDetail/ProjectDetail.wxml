@@ -23,7 +23,9 @@
         <text class='des'>项目归属</text>
         <text>{{project_response}}</text>
       </view>
-      <image src='{{icon_more}}' bindtap='ProjectBelong'></image>
+      <view class='more-view ver-align'>
+        <image src='{{icon_more}}' bindtap='ProjectBelong'></image>
+      </view>
     </view>
     <view class='item-view space-between'>
       <view class='intermediate-view'>
@@ -34,7 +36,7 @@
           </block>
         </view>
       </view>
-      <view style='height:100%'>
+      <view class='more-view ver-align'>
         <image src='{{icon_more}}' bindtap='showMemberList'></image>
       </view>
     </view>
