@@ -26,7 +26,9 @@
           </block>
         </view>
 
-        <view class="item-view">
+      <view class="touch-item '{{DeadlineisTouchMove ? 'touch-move-active' : ''}}" >
+        <view style='{{DeadlinetxtStyle}}'
+        class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartDeadline" bindtouchmove="touchmoveDeadline" >
           <image src='{{icon_deadline}}'></image>
           <view class='desc'>
             <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
@@ -35,16 +37,20 @@
               </view>
             </picker>
           </view>
-          
+        </view> 
+        <view class="del"  catchtap="delDeadline" >删除
         </view>
+      </view>      
+        
         <view class="item-view">
           <image src='{{icon_project}}'></image>
           <text class='desc'>{{projectName}}/项目名</text>
         </view>
 
         <!-- 内容隐藏 -->
-        <view style='display:{{showRemindTime? "" : "none"}}'
-          class="scroll-view-item item-view">
+      <view class="touch-item '{{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}'>
+        <view style='{{RemindtimetxtStyle}}'
+          class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartRemindtime" bindtouchmove="touchmoveRemindtime" > 
           <image src='/img/alarm.png'></image>
           <view class='desc'>
               <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
@@ -54,9 +60,13 @@
               </picker>
           </view>
         </view>
+        <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+        </view>
+      </view>
 
-          <view style='display:{{showFeedbackTime? "" : "none"}}'
-            class="scroll-view-item item-view">
+        <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}'>
+          <view style='{{FeedbacktxtStyle}}'
+            class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartFeedback" bindtouchmove="touchmoveFeedback" >
             <image src='/img/feedback_time.png'></image>
             <view class='desc'>
                 <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
@@ -66,11 +76,15 @@
                 </picker>
             </view>
           </view>
+          <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+          </view>
+        </view>
 
           <view style='display:{{showFeedbackModel? "" : "none"}}'
-            class="scroll-view-item item-view" bindtap='Feedback'>
-            <image src='/img/feedback_model.png'></image>
-            <text class='desc'>反馈模板</text>
+            class=" scroll-view-item item-view" bindtap='Feedback'
+            bindtouchstart="touchstart" bindtouchmove="touchmove" >
+              <image src='/img/feedback_model.png'></image>
+              <text class='desc'>反馈模板</text>
           </view>
 
           <view style='display:{{showDescription? "" : "none"}}'
@@ -98,26 +112,26 @@
           <image src='{{icon_add}}' bindtap='AddChildTask'></image>
         </view>
 
-        <!-- bindtouchstart="touchstart" bindtouchmove="touchmove"  bindtouchend="touchE" -->
-            <view wx:for="{{ChildTask}}" class="touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" >
-                <view class="contentminddle item-view ver-align space-between"  bindtouchstart="touchstart" bindtouchmove="touchmove" 
+            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" >
+                <view class="contentminddle item-view ver-align space-between item-padding"  bindtouchstart="touchstart" bindtouchmove="touchmove" 
                   data-index="{{index}}" 
-                style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
-                  <view class='childtask'>
-                      <checkbox-group bindchange="childCheckboxChange"> 
-                          <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' 
-                          class='item-checkbox' checked='{{item.is_finish}}' value='{{item.subtask_id}}'/>
-                      </checkbox-group> 
-                      <text id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" 
-                      bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" 
-                      data-checked='{{item.is_finish}}'>{{item.childTitle}}</text>
-                      <modal  hidden="{{hiddenmodalputChildTitle}}" 
-                      title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" bindconfirm="confirmChildTitle"> 
-                          <input id='childTitle' bindinput='childInput' type='text' 
-                          value='{{inputChildTitle}}' placeholder="子任务标题" />
-                      </modal> 
-                  </view>
-                  <image class='radius' src='{{item.userPic}}'></image>
+                  style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
+                    <view class='childtask'>
+                        <checkbox-group bindchange="childCheckboxChange"> 
+                            <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' 
+                            class='item-checkbox' checked='{{item.is_finish}}' value='{{item.subtask_id}}'/>
+                        </checkbox-group> 
+                        <text id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" 
+                        bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" 
+                        data-checked='{{item.is_finish}}'>{{item.childTitle}}</text>
+                        <modal  hidden="{{hiddenmodalputChildTitle}}" 
+                        title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" 
+                        bindconfirm="confirmChildTitle"> 
+                            <input id='childTitle' bindinput='childInput' type='text' 
+                            value='{{inputChildTitle}}' placeholder="子任务标题" />
+                        </modal> 
+                    </view>
+                    <image class='radius' src='{{item.userPic}}'></image>
                 </view>
                 <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
                 </view>

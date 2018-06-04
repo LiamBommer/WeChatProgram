@@ -70,6 +70,7 @@ button[hover-class="share-hover"]::after {
   align-items: center;
 }
 
+
 /*
  * 聊天区
  */
@@ -234,6 +235,7 @@ button[hover-class="share-hover"]::after {
   border: none;
 }
 
+
   .touch-item {
    font-size: 14px;
    display: flex;
@@ -244,7 +246,6 @@ button[hover-class="share-hover"]::after {
 
   .contentminddle{
     width: 100%;
-    padding: 10px;
     line-height: 22px;
     margin-right:0;
     -webkit-transition: all 0.4s;

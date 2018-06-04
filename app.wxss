@@ -47,7 +47,7 @@ page {
 /*
  * 列表项view
  * 规定高度和底部边框，常用于带图标的列表项: 如截止时间等
- * 自带上下居中
+ * 
  */
 .view-container .item-view {
   border-bottom: 2rpx solid #f2f2f2;
@@ -57,6 +57,12 @@ page {
   align-items: center;
 }
 
+/*
+ * 扩大列表项高度
+ */
+.item-padding{
+  padding: 20rpx 0rpx;
+}
 /*
  * 列表项view 内的图片和文字
  * 规定高度和底部边框，常用于带图标的列表项: 如截止时间等

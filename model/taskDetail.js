@@ -612,7 +612,7 @@ function deleteEndTime(taskId, userName) {
 
 /**
  * @parameter taskId 任务id,userName用户昵称（记录操作用）
- * 删除截止时间
+ * 删除反馈时间
  */
 function deleteFeedbackTime(taskId, userName) {
 
