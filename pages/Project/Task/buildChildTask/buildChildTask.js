@@ -66,7 +66,7 @@ Page({
           icon: 'success',
         })
         wx.navigateBack({
-          url: "../../ProjectMore/ProjectMore"
+          url: "../TeskDetail/TeskDetail"
         })
       },
       error: function (result, error) {

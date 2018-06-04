@@ -148,7 +148,6 @@ Page({
   //项目归属
   ProjectBelong: function () {
     var that = this
-    wx.setStorageSync("ProjectDetail-memberList", that.data.member)
     wx.navigateTo({
       url: 'ProjectBelong/ProjectBelong'
     })
@@ -157,7 +156,10 @@ Page({
   //项目成员
   showMemberList: function () {
     var that = this
-    wx.setStorageSync("ProjectDetail-memberList", that.data.member)
+    wx.setStorage({
+      key: "ProjectDetail-memberList",
+      data: that.data.member,
+    })
     wx.navigateTo({
       url: 'memberList/memberList'
     })
@@ -303,7 +305,10 @@ Page({
           wx.hideLoading()
 
           //项目成员
-          wx.setStorageSync("ProjectDetail-memberList", that.data.member)
+          wx.setStorage({
+            key: "ProjectDetail-memberList",
+            data: that.data.member,
+          })
 
         },
         error: function (error) {
@@ -602,7 +607,6 @@ cancelProjectFirst:function (projId, isFirst) {
     that.setData({
       project_response: leaderName
     })
-    // wx.setStorageSync("ProjectDetail-memberList", this.data.member)
   },
 
   /**

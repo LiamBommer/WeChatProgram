@@ -16,6 +16,7 @@ Page({
     inputTitle:'',//输入任务列表标题
     listId:'',//当前任务列表Id
     currentProjId:"",//当前项目ID
+    currentProjName: "",//当前项目名
 
 
     //隐藏判断
@@ -482,12 +483,18 @@ Page({
    */
   showTask: function(e) {
     var that = this
-    var taskListIndex = this.data.currentItem
+    var taskListIndex = that.data.currentItem
+    var projName = that.data.currentProjName 
     var index = e.currentTarget.dataset.index
     console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
       key: "ProjectMore-Task",
       data: that.data.tasklist[taskListIndex].tasks[index],
+    })
+    console.log("显示任务详情:", projName)
+    wx.setStorage({
+      key: "ProjectMore-projName",
+      data: projName,
     })
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
@@ -996,21 +1003,23 @@ Page({
       success: function (res) {
         console.log("onshow:project", res.data)
         var ProjectId = res.data.id//获取项目ID
+        var ProjectName = res.data.name//获取项目名
         that.setData({
-          currentProjId: ProjectId
+          currentProjId: ProjectId,
+          currentProjName: ProjectName
         })
         that.getAnnouncements(ProjectId)//获取公告ID
         that.getTaskLists(ProjectId);//获取任务ID
         that.getProjectMember(ProjectId);//获取项目成员
       },
     })
-    if (that.data.exitTask == true)//只刷新任务页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      that.getTaskLists(currentProjId);//获取任务ID
-      that.getProjectMember(currentProjId);//获取项目成员
-    }
+    // if (that.data.exitTask == true)//只刷新任务页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   that.getTaskLists(currentProjId);//获取任务ID
+    //   that.getProjectMember(currentProjId);//获取项目成员
+    // }
    
 
   },

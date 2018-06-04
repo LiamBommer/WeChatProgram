@@ -47,18 +47,32 @@ Page({
   //添加成员
   Finish:function () {
     var that = this
-    var projId = wx.getStorageSync("Project-id")
-    var ProjectMemember = wx.getStorageSync("ProjectDetail-memberList")
     var newIndex = that.data.memberIndex
-    var newleaderName = ProjectMemember[newIndex].name
-    var newleaderId = ProjectMemember[newIndex].id
-    var oldLeaderId = ProjectMemember[0].id
-    that.transferProject(projId, newleaderName, newleaderId, oldLeaderId)
-
-    wx.setStorageSync("ProjectBelong-memberName", newleaderName)//选中的成员名字
-    wx.navigateBack({
-      url: '../ProjectDetail',
-    })
+    if (newIndex == ""){//项目只有一个人时
+      wx.setStorageSync("ProjectBelong-memberName", that.data.ProjectMemember[0].name)//选中的成员名字
+      wx.navigateBack({
+        url: '../ProjectDetail',
+      })
+    }
+    else{//项目有多个人时
+      wx.getStorage({
+        key: 'Project-detail',
+        success: function (res) {
+          var projId = res.data.id
+          var ProjectMemember = that.data.ProjectMemember
+          console.log(newIndex)
+          var newleaderName = ProjectMemember[newIndex].name
+          var newleaderId = ProjectMemember[newIndex].id
+          var oldLeaderId = ProjectMemember[0].id
+          that.transferProject(projId, newleaderName, newleaderId, oldLeaderId)
+          wx.setStorageSync("ProjectBelong-memberName", newleaderName)//选中的成员名字
+          wx.navigateBack({
+            url: '../ProjectDetail',
+          })
+        },
+      })
+    }
+    
   },
 
   /**
@@ -150,14 +164,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var ProjectMemember = wx.getStorageSync("ProjectDetail-memberList")
-    for (var i in ProjectMemember){
-      if(i != 0)
-        ProjectMemember[i].checked = false
-    }
-    this.setData({
-      ProjectMemember: ProjectMemember
-    });
+    var that = this
+    wx.getStorage({
+      key: "ProjectDetail-memberList",
+      success: function (res) {
+        var ProjectMemember =res.data
+        for (var i in ProjectMemember) {
+          if (i != 0)
+            ProjectMemember[i].checked = false
+        }
+        that.setData({
+          ProjectMemember: ProjectMemember
+        });
+      },
+    })
   },
 
   /**
