@@ -12,7 +12,7 @@ Page({
       {
         id:"",
         icon: "/img/logo.png",
-        name: "学长说系列分享活动"
+        name: "静态项目"
       }
     ],
     //普通项目

@@ -1,0 +1,8 @@
+<view class='joinProject-container'>
+  <view class='item'>
+    <image class='item-icon' src='{{projectImgUrl}}'></image>
+    <view class='item-title'>{{projectName}}</view>
+    <view class='item-content'>{{projectLeaderName}}邀请你加入本项目</view>
+    <button class='item-create' bindtap='confirm' size='default'>加入项目</button>
+  </view>
+</view>

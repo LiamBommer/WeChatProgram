@@ -1,0 +1,36 @@
+.joinProject-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.joinProject-container .item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:260rpx;
+}   
+
+.joinProject-container .item .item-icon{
+  width:130rpx;
+  height:130rpx;
+}
+
+.joinProject-container .item  .item-title{
+  font-size: 40rpx;
+  color: #888888;
+  margin-top:20rpx;
+}
+
+.joinProject-container .item  .item-content{
+  font-size: 30rpx;
+  color: #b2b2b2;
+  margin-top:10rpx;
+}
+
+.joinProject-container .item  .item-create{
+  color: #fff;
+  background: #09BB07;
+  margin-top: 40rpx;
+}

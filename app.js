@@ -108,69 +108,30 @@ App({
     if (options.query.projectid) {
       console.log("判断是否是被邀请加入项目。", Bmob.User.current().id)
       var projectId = options.query.projectid
-      this.joinProject(projectId, Bmob.User.current().id)
+      console.log('要加入的项目ID： ' + projectId)
+
+      // 数据存入缓存，再跳转页面
+      wx.showLoading({
+        title: '正在处理...',
+        mask: 'true'
+      })
+      wx.setStorage({
+        key: 'Project-share-id',
+        data: projectId,
+        success: function () {
+          wx.hideLoading()
+          // 跳转页面
+          wx.navigateTo({
+            url: '/pages/Project/JoinProject/JoinProject',
+          })
+        } 
+      })
 
     }
   },
 
-  joinProject: function(projectId, userId){
+  
 
-    var that = this
-    var Project = Bmob.Object.extend("project")
-    var projectQuery = new Bmob.Query(Project)
-
-
-    projectQuery.equalTo("objectId", projectId)
-    projectQuery.first({
-      success: function(result){
-        that.joinProject2(projectId,userId,result.get("name"))
-
-      },
-      error: function(error){
-        wx.showToast({
-          title: '加入' + result.get('name') + '失败',
-        })
-      }
-    })
-
-
-  },
-  joinProject2: function (projectId, userId,projectName){
-
-    var ProjectMember = Bmob.Object.extend('proj_member')
-    var projectmember = new ProjectMember()
-    var projectmemberQuery = new Bmob.Query(ProjectMember)
-
-
-    projectmemberQuery.equalTo("proj_id", projectId)
-    projectmemberQuery.equalTo("user_id", userId)
-    projectmemberQuery.first({
-      success: function (result) {
-        if (result == null) {
-          projectmember.save({
-            proj_id: projectId,
-            user_id: userId,
-            is_leader: false
-
-          }, {
-              success: function (result) {
-                // 添加成功
-                wx.setStorageSync("Project-id", projectId)
-                wx.showToast({
-                  title: '加入' + projectName + '成功！',
-                })
-              },
-              error: function (result, error) {
-                // 添加失败
-              }
-            })
-        }
-      },
-      error: function (error) {
-
-      }
-    })
-  },
   globalData: {
     userInfo: null,
     userId:null,

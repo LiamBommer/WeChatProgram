@@ -3,6 +3,7 @@
     "pages/Project/Project",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/buildProject/buildProject",
+    "pages/Project/JoinProject/JoinProject",
     "pages/Project/ProjectDetail/memberList/memberList",
     "pages/Project/ProjectDetail/memberList/addMember/addMember",
     "pages/Project/ProjectDetail/ProjectDetail",
