@@ -11,6 +11,13 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+
+
+
+
+
+
+    
     var that = this
 
     // 登录 mr.li 代码是Bmob封装好的接口

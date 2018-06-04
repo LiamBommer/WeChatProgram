@@ -168,13 +168,10 @@ function getTasks(projId){
           "userPic":tasks[i].get('leader').userPic || ''  //负责人头像
         }
         taskArr.push(taskObject)
-        //setData
-        console.log(taskArr)
-
-
-
 
       }
+      //setData
+      console.log(taskArr)
 
     },
     error: function (error) {

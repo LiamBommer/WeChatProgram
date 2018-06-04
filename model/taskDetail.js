@@ -737,25 +737,30 @@ function addTaskMember(taskId,memberIds,userName){
 /**
  * 2018-06-02
  *  @parameter taskId 任务id,memberIds任务成员数组,userName用户昵称（记录操作用）
- * 删除任务成员
+ * 删除任务成员，一次最多删除50条
  */
 function taskMemberDelete(taskId,memberIds,userName){
 
   var Taskmember = Bmob.Object.extend('task_member')
   var taskmemberQuery = new Bmob.Query(Taskmember)
+  if(memberIds!= null && memberIds.length > 0){
+    taskmemberQuery.equalTo('task_id', taskId)
+    taskmemberQuery.containedIn('user_id', memberIds)
+      //删除任务成员,一次最多删除50条
+      taskmemberQuery.destroyAll({
+        success: function () {
+          //删除成功
+          console.log("删除成功！")
+          //记录操作
+          addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
 
-  //删除任务成员
-  taskmemberQuery.destroyAll({
-    success: function () {
-      //删除成功
-      //记录操作
-      addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
-
-    },
-    error: function (err) {
-      // 删除失败
-    }
-  })
+        },
+        error: function (err) {
+          // 删除失败
+        }
+      })
+  }
+  
 }
 
 /**
@@ -794,4 +799,4 @@ module.exports.createSubTask = createSubTask
 module.exports.getSubtasks = getSubtasks
 module.exports.getTaskRecord = getTaskRecord
 module.exports.addTaskRecord = addTaskRecord
- 
+module.exports.taskMemberDelete = taskMemberDelete
