@@ -298,6 +298,10 @@ Page({
               project_response: userArr[0].name,
             })
           }
+
+          // 加载完成
+          wx.hideLoading()
+
           //项目成员
           wx.setStorageSync("ProjectDetail-memberList", that.data.member)
 
@@ -568,17 +572,21 @@ cancelProjectFirst:function (projId, isFirst) {
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.showLoading({
-      title: '正在加载',
-    })
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.hideLoading()
-    
+
+    // 等待加载完成后消失
+    // getProjectDetail()
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
+
     var that = this
     //项目
     wx.getStorage({
