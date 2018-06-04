@@ -12,7 +12,7 @@ Page({
       {
         id:"",
         icon: "/img/logo.png",
-        name: "学长说系列分享活动"
+        name: "静态项目"
       }
     ],
     //普通项目
@@ -133,6 +133,9 @@ Page({
           that.setData({ Project: projectArr })
           that.setData({ StarProject: starprojectArr })
 
+          // 加载完成
+          wx.hideLoading()
+
         },
         error: function(error) {
           //失败
@@ -162,6 +165,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+
+    // 等待加载完成后消失
+    // getProjectList()
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
+
     var that = this
     that.getProjectList()
   },
