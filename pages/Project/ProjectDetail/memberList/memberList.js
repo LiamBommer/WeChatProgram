@@ -125,10 +125,16 @@ Page({
    */
   onShow: function () {
     var that = this
-    var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    that.setData({
-      ProjectMemember: memberList,
-    });
+    wx.getStorage({
+      key: 'ProjectDetail-memberList',
+      success: function(res) {
+        var memberList = res.data
+        that.setData({
+          ProjectMemember: memberList,
+        });
+      },
+    })
+    
   },
 
   /**

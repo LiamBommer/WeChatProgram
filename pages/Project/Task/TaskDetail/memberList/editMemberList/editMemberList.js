@@ -1,4 +1,9 @@
 // pages/editMemberList/editMemberList.js
+
+const Bmob = require('../../../../../../utils/bmob.js')
+
+var ADD_TASK_MEMBER = "添加了新的任务成员"
+var DELETE_TASK_MEMBER = "删除了任务成员"
 Page({
 
   /**
@@ -6,10 +11,11 @@ Page({
    */
   data: {
     //是否选中
-    memberId: "",
-    checked:true,//成员默认选中
+    // memberIdTrue: [],//选中的成员Id
+    // memberIdFalse: [],//未选中的成员Id
+    // checked:true,//成员默认选中
     //项目成员
-    ProjectMemember: [
+    ProjectMember: [
       // {
       //   index: 0,
       //   icon: "/img/me.png",
@@ -32,51 +38,165 @@ Page({
 
   },
 
-  //选择项目成员
-  ProjectMememberChange: function (e) {
-    var memberId = e.detail.value
-    this.setData({
-      memberId: memberId,
-    });
+  //选择成员
+  // ProjectMemberChange: function (e) {
+  //   var memberId = e.detail.value
+  //   console.log("ProjectMemberChange:", memberId)
+  //   this.setData({
+  //     memberId: memberId,
+  //   });
+  // },
+
+  //点击成员复选框
+  clickCheck: function (e) {
+    var that = this
+    var checked = !e.currentTarget.dataset.checked//当前成员的选中情况
+    var index = e.currentTarget.dataset.index//当前成员下标
+    var ProjectMember = that.data.ProjectMember//成员列表
+    console.log("ProjectMemberChange:", ProjectMember)
+
+    for (var i in ProjectMember){
+         if(i == index)
+         {
+           ProjectMember[i].checked = !ProjectMember[i].checked
+         }
+    }
+
+    //获取选中的成员ID
+      that.setData({
+        ProjectMember: ProjectMember,
+      });
   },
 
 
   //完成
   save: function () {
-    var that = this;
-    var memberId = that.data.memberId;
-    var memberIdLength = memberId.length;
-    var NomemberId = []
-    var NomemberIdLength = 0
-    var ProjectMemember = that.data.ProjectMemember;
-    var projId = wx.getStorageSync("Project-id")
-
-    if (memberIdLength == 0) {//全部未选
-      for (var id in ProjectMemember)
-        NomemberId.push(ProjectMemember[id].id)
-    }
-    else {//个别未选
-      for (var id in ProjectMemember) {
-
-        for (var i in memberId) {
-          if (ProjectMemember[id].id != memberId[i])
-            NomemberIdLength++
-
-          if (NomemberIdLength == memberIdLength)
-            NomemberId.push(ProjectMemember[id].id)//未选中的成员ID
-
+    var that = this
+    var memberId = that.data.memberId//选中的成员下标
+    var ProjectMember = that.data.ProjectMember//项目成员
+    var memberIds = []//选中任务成员数组
+    var NomemberIds = []//未选中任务成员数组
+    
+    for (var i in ProjectMember){
+      if (i != 0) {
+        if (ProjectMember[i].checked == true) {//选中的成员
+          memberIds.push(ProjectMember[i])
         }
-        NomemberIdLength = 0
-
+        else {//未选中的成员
+          NomemberIds.push(ProjectMember[i])
+        }
       }
     }
+    console.log("选中的成员", memberIds)
+    console.log("未选中的成员", NomemberIds)
 
-    console.log("NomemberId", NomemberId);//未选中的成员ID
-    // that.deleteProjectMember(projId, NomemberId)
-
-    wx.navigateBack({
-      url: '../ProjectDetail',
+    //获取任务ID
+    wx.getStorage({
+      key: 'TaskDetail-memberList-TaskId',
+      success: function(res) {
+        var userName = getApp().globalData.nickName
+        var taskId = res.data
+        //  that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
+         that.addTaskMember(taskId, memberIds, userName)//添加任务成员
+      },
     })
+  },
+
+  /**
+ * 2018-06-02
+ *  @parameter taskId 任务id,memberIds任务成员数组,userName用户昵称（记录操作用）
+ * 删除任务成员
+ */
+  taskMemberDelete: function (taskId, memberIds, userName) {
+    var that = this
+    var Taskmember = Bmob.Object.extend('task_member')
+    var taskmemberQuery = new Bmob.Query(Taskmember)
+    if (memberIds != null && memberIds.length > 0) {
+      taskmemberQuery.equalTo('task_id', taskId)
+      taskmemberQuery.containedIn('user_id', memberIds)
+      //删除任务成员,一次最多删除50条
+      taskmemberQuery.destroyAll({
+        success: function () {
+          //删除成功
+          console.log("删除成功！")
+          //记录操作
+          that.addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
+
+        },
+        error: function (err) {
+          // 删除失败
+        }
+      })
+    }
+  },
+
+  /**
+ * 2018-06-02
+ * @parameter taskId 任务id,memberIds新添加的任务成员数组,userName用户昵称（记录操作用）
+ * 额外添加任务成员
+ */
+  addTaskMember:function (taskId, memberIds, userName){
+    console.log("添加的成员",memberIds)
+    var that = this
+    var Taskmember = Bmob.Object.extend('task_member')
+    var memberObjects = []
+    
+    if(memberIds!=null && memberIds.length > 0) {
+      for (var i = 0; i < memberIds.length; i++) {
+        var user = Bmob.Object.createWithoutData("_User", memberIds[i].id)
+        var taskmember = new Taskmember()
+        taskmember.set('user_id', user)
+        taskmember.set('task_id', taskId)
+        memberObjects.push(taskmember)
+      }
+      if (memberObjects != null && memberObjects.length > 0) {
+        Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
+          // 成功
+          //记录操作
+          that.addTaskRecord(taskId, userName, ADD_TASK_MEMBER)
+
+          console.log("添加任务成员成功！")
+          wx.showToast({
+            title: '添加成功',
+          })
+          wx.navigateBack({
+            url:"../memberList"
+          })
+
+        },
+          function (error) {
+            // 异常处理
+            console.log(error)
+          })
+      }
+
+
+    }
+  },
+
+  /**
+*添加任务记录
+*/
+  addTaskRecord: function (taskId, userName, record) {
+    var that = this
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecord = new TaskRecord()
+
+    //存储任务记录
+    taskrecord.save({
+      user_name: userName,
+      task_id: taskId,
+      record: userName + record
+    }, {
+        success: function (result) {
+          //添加成功
+
+        },
+        error: function (result, error) {
+          //添加失败
+
+        }
+      })
   },
 
   /**
@@ -98,15 +218,19 @@ Page({
    */
   onShow: function () {
     var that = this
+    var ProjectMember = []
+    //获取任务管理列表成员
     wx.getStorage({
-      key: 'TaskDetail-member',
+      key: 'TaskDetail-memberList-EditMemberList',
       success: function (res) {
-        console.log(res.data)
+        var memberList = res.data
+        console.log('EditMemberList: ' , memberList)
         that.setData({
-          ProjectMemember: res.data
-        })
-      }
+          ProjectMember: memberList,
+        });
+      },
     })
+
   },
 
   /**

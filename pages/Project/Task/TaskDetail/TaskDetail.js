@@ -55,10 +55,10 @@ Page({
     inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID
     member:[],//任务成员
+    projectMember:[],//项目成员
     focus:false,//输入框焦点
-
-
     show: false,
+
     deadline: '2018-06-01',//截止时间
     DeadlineisTouchMove: false,//判断滑动截止时间
     DeadlinetxtStyle:"",//截止时间滑动距离
@@ -186,11 +186,25 @@ Page({
   confirmTitle: function (e) {
     var that = this
     var userName = getApp().globalData.nickName
-    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
-    this.setData({
-      hiddenmodalputTitle: true,
-      title: this.data.inputTitle
-    })
+    if (that.data.inputTitle == ""){
+      // 提示标题不可为空
+      wx.showToast({
+        title: '项目名称不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+    } else {
+      // 显示loading
+      wx.showLoading({
+        title: '正在修改...',
+      })
+      that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
+      this.setData({
+        hiddenmodalputTitle: true,
+        title: this.data.inputTitle
+      })
+    }
+    
   },
   //任务标题输入
   input: function (e) {
@@ -254,30 +268,78 @@ Page({
        success: function(res) {
          // 提醒时间
          if(res.tapIndex == 0) {
-           that.setData({
-             showRemindTime: true
-           });
+           if (that.data.showRemindTime == false) {
+             that.setData({
+               showRemindTime: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 反馈时间
          if(res.tapIndex == 1) {
-           that.setData({
-             showFeedbackTime: true
-           });
+           if (that.data.showFeedbackTime == false) {
+             that.setData({
+               showFeedbackTime: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 反馈模板
          if(res.tapIndex == 2) {
-           that.setData({
-             showFeedbackModel: true
-           });
+           if (that.data.showFeedbackModel == false) {
+             that.setData({
+               showFeedbackModel: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 任务描述
          if(res.tapIndex == 3) {
-           that.setData({
-             showDescription: true
-           });
+           if (that.data.showDescription == false) {
+             that.setData({
+               showDescription: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
        },
        fail: function(res) {
@@ -289,10 +351,23 @@ Page({
 
   // 成员列表
   MemberList: function(e) {
-    console.log("MemberList:", this.data.member)
+    var that = this
+    console.log("MemberList:", that.data.member)
+    console.log("projectMember:", that.data.projectMember)
+    //设置任务id缓存
+    wx.setStorage({
+      key: 'TaskDetail-taskId',
+      data: that.data.taskId,
+    })
+    //设置任务成员缓存
     wx.setStorage({
       key: 'TaskDetail-member',
-      data: this.data.member,
+      data: that.data.member,
+    })
+    //设置项目成员缓存
+    wx.setStorage({
+      key: 'TaskDetail-projectMember',
+      data: that.data.projectMember,
     })
     wx.navigateTo({
       url: './memberList/memberList',
@@ -306,7 +381,6 @@ Page({
     var taskId = that.data.taskId
     var endTime = e.detail.value
     that.modifyEndTime(taskId, endTime, userName)
-    
     this.setData({
       deadline: e.detail.value
     })
@@ -609,7 +683,10 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
-
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -696,7 +773,7 @@ Page({
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
-    //添加反馈模板
+    //添加截止时间
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
@@ -704,6 +781,10 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_END_TIME)
+        //修改截止时间成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -728,10 +809,14 @@ deleteEndTime:function (taskId, userName) {
         result.set('end_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除截止时间成功")
-        addTaskRecord(taskId, userName, DELETE_END_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_END_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
-
+         console.log("error")
       }
     })
   },
@@ -795,13 +880,27 @@ deleteEndTime:function (taskId, userName) {
       content: '确定要删除截止时间吗？',
       success: function (res) {
         if (res.confirm) {
-          var userName = getApp().globalData.nickName
-          var taskId = that.data.taskId
-          that.deleteEndTime(taskId, userName)
-          that.setData({
-            DeadlineisTouchMove: that.data.DeadlineisTouchMove,
-            DeadlinetxtStyle: that.data.DeadlinetxtStyle,
-          })
+          if (that.data.deadline == ""){
+            wx.showToast({
+              title: '已经没有东西能删啦',
+              icon:"none",
+              duration:1500,
+            })
+            that.setData({
+              DeadlineisTouchMove: false,
+              DeadlinetxtStyle: "",
+            })
+          }
+          else {
+            var userName = getApp().globalData.nickName
+            var taskId = that.data.taskId
+            that.deleteEndTime(taskId, userName)
+            that.setData({
+              DeadlineisTouchMove: false,
+              DeadlinetxtStyle: "",
+              deadline: '',
+            })
+          }
         }
       }
     })
@@ -825,7 +924,11 @@ deleteEndTime:function (taskId, userName) {
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_NOTI_TIME)
-        console.log("modifyNotiTime",result)
+        console.log("modifyNotiTime", result)
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -848,10 +951,15 @@ deleteEndTime:function (taskId, userName) {
         result.set('noti_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除提醒时间成功")
-        addTaskRecord(taskId, userName, DELETE_NOTI_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_NOTI_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
 
+        console.log("error")
       }
     })
 
@@ -909,7 +1017,7 @@ deleteEndTime:function (taskId, userName) {
     });
   },
   //删除提醒时间
-  delDeadline: function (e) {
+  delRemindtime: function (e) {
     var that = this
     wx.showModal({
       title: '提示',
@@ -920,8 +1028,10 @@ deleteEndTime:function (taskId, userName) {
           var taskId = that.data.taskId
           that.deleteNotiTime(taskId, userName)
           that.setData({
-            RemindtimeisTouchMove: that.data.RemindtimeisTouchMove,
-            RemindtimetxtStyle: that.data.RemindtimetxtStyle,
+            RemindtimeisTouchMove: false,
+            RemindtimetxtStyle:'' ,
+            remindtime:'',
+            showRemindTime:false,
           })
         }
       }
@@ -948,6 +1058,10 @@ deleteEndTime:function (taskId, userName) {
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_TIME)
 
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -970,10 +1084,15 @@ deleteEndTime:function (taskId, userName) {
         result.set('feedback_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除反馈时间成功")
-        addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
 
+        console.log("error")
       }
     })
   },
@@ -1029,7 +1148,7 @@ deleteEndTime:function (taskId, userName) {
     });
   },
   //删除反馈时间
-  delDeadline: function (e) {
+  delFeedback: function (e) {
     var that = this
     wx.showModal({
       title: '提示',
@@ -1040,8 +1159,10 @@ deleteEndTime:function (taskId, userName) {
           var taskId = that.data.taskId
           that.deleteFeedbackTime(taskId, userName)
           that.setData({
-            FeedbackisTouchMove: that.data.FeedbackisTouchMove,
-            FeedbacktxtStyle: that.data.FeedbacktxtStyle,
+            FeedbackisTouchMove: false,
+            FeedbacktxtStyle: '',
+            feedbacktime:'',
+            showFeedbackTime:false,
           })
         }
       }
@@ -1203,7 +1324,10 @@ redoSubTask:function (subTaskId, is_finish) {
         result.save()
         //记录
         that.addTaskRecord(subTaskId, userName, MODIFY_SUB_TASK_TITLE)
-
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (error) {
         //失败
@@ -1229,6 +1353,10 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         console.log("删除子任务成功！")
         //记录操作
         that.addTaskRecord(subTaskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (err) {
         // 删除失败
@@ -1514,7 +1642,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         that.getTaskComment(taskId)//获取评论
       },
     })
-    //项目
+    //获取项目数据
     wx.getStorage({
       key: "ProjectMore-projName",
       success: function (res) {
@@ -1532,6 +1660,19 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     that.getTaskMember(taskId, leaderId)//获取任务成员
     that.getSubtasks(taskId);//获取子任务列表
     
+
+    //项目成员
+    wx.getStorage({
+      key: 'ProjectMore-projectMember',
+      success: function (res) {
+        var memberList = res.data
+        console.log('ProjectMore-projectMember', memberList)
+        that.setData({
+          projectMember: memberList
+        })
+      },
+    })
+
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间
       var currentTime = currentT.substring(9, 15)

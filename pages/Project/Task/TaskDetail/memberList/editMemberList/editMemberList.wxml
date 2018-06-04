@@ -1,7 +1,7 @@
 <!--pages/editMemberList/editMemberList.wxml-->
 <view class='memberList-container'>
 
-  <block wx:for="{{ProjectMemember}}">
+  <block wx:for="{{ProjectMember}}">
     <block wx:if="{{index == 0}}">
       <!-- 标题 -->
       <view class='title'>任务负责人</view>
@@ -17,14 +17,15 @@
     </block>
 
     <block wx:else>
-      <checkbox-group bindchange="ProjectMememberChange">
+      <checkbox-group bindchange="ProjectMemberChange">
         <!-- 列表项 -->
         <view class='item'>
           <view class='item-one'>
             <image class='item-icon' src='{{item.userPic}}'></image>
             <view class='item-text'>{{item.nickName}}</view>
           </view>
-          <checkbox class='item-checkbox' value="{{item.objectId}}" checked='{{checked}}'/>
+          <checkbox bindtap='clickCheck' data-id="{{item.id}}" data-checked="{{item.checked}}" 
+          data-index="{{index}}" class='item-checkbox' value="" checked='{{item.checked}}'/>
         </view>
       </checkbox-group>
     </block>
