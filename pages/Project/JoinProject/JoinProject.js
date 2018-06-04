@@ -98,6 +98,8 @@ Page({
     projectmemberQuery.first({
       success: function (result) {
         if (result == null) {
+
+          // 未在项目中，加入项目
           projectmember.save({
             proj_id: projectId,
             user_id: userId,
@@ -105,6 +107,7 @@ Page({
 
           }, {
               success: function (result) {
+                // 加入成功
                 // 反馈
                 wx.hideLoading()
                 wx.showToast({
@@ -115,12 +118,25 @@ Page({
                 wx.navigateTo({
                   url: '../../Project/Project',
                 })
-
               },
               error: function (result, error) {
                 // 添加失败
+
               }
             })
+            
+        } else {
+          // 已在项目中
+          wx.hideLoading()
+          wx.showToast({
+            title: '你已在项目中！',
+            duration: 1000,
+          })
+
+          wx.navigateTo({
+            url: '../../Project/Project',
+          })
+
         }
       },
       error: function (error) {

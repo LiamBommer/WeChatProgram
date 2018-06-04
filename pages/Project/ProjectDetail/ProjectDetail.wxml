@@ -34,7 +34,9 @@
           </block>
         </view>
       </view>
-      <image src='{{icon_more}}' bindtap='showMemberList'></image>
+      <view style='height:100%'>
+        <image src='{{icon_more}}' bindtap='showMemberList'></image>
+      </view>
     </view>
     <view class='item-view space-between'>
       <text class='des'>星标项目</text>
