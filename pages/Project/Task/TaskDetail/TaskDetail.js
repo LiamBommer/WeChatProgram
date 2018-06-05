@@ -1057,12 +1057,12 @@ deleteEndTime:function (taskId, userName) {
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
-    //删除反馈时间
+    //删除任务
     taskQuery.get(taskId, {
       success: function (result) {
         result.set('is_delete', true)  //设为‘’ 空
         result.save()
-        //console.log("删除反馈时间成功")
+        
         //不用记录操作
         wx.showToast({
           title: '删除成功',
