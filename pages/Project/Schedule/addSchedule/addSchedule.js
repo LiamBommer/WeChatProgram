@@ -191,7 +191,7 @@ Page({
           //通知其他项目成员
           var _type = 3  //通知类型
           // that.addProjectNotification(projId, ADD_SCHEDULE, _type, result.id/*创建的日程id*/)  //通知其他项目成员
-          console.log("提示用户添加日程成功！")
+          console.log("添加日程成功！")
 
           // 操作完成 ???
           wx.hideLoading()

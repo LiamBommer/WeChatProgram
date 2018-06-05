@@ -174,6 +174,7 @@ Page({
       // },
 
     ],
+    ScheduleYear: [],
 
     //会议列表
     Meeting: [
@@ -765,6 +766,10 @@ Page({
     var currentTime = new Date(new Date().toLocaleDateString())
     var endTime = new Date(new Date(end_time.replace(/-/g, "/")))
 
+    console.log('Original end time: '+end_time)
+    console.log('Data: '+endTime.getDate())
+    console.log('Time: ' + endTime.getTime())
+
     var days = endTime.getTime() - currentTime.getTime()
     var day = parseInt(days / (1000 * 60 * 60 * 24));  //时间差值
     if (day > 1) {
@@ -1006,13 +1011,31 @@ Page({
           success: function (results) {
             var scheduleObjectArr = []
             for (var i = 0; i < schedules.length; i++) {
+
+              // 处理开始时间，整理出年月日
+              var startTimeDate = new Date(new Date(schedules[i].get('start_time').replace(/-/g, "/")))
+              var startYear = startTimeDate.getFullYear()   // 开始时间年月日
+              var startMonth = startTimeDate.getMonth()
+              var startDate = startTimeDate.getDate()
+
+              var endTimeDate = new Date(new Date(schedules[i].get('end_time').replace(/-/g, "/")))
+              var endMonth = endTimeDate.getMonth()   // 截至时间月日
+              var endDate = endTimeDate.getDate()
+
               var scheduleObject = {}
               scheduleObject = {
                 "objectId": '0',     //日程关联任务的id ，不是日程，也不是任务，而是两个的关联的id ，hh后面会设置
                 "scheduleId": schedules[i].id,  //日程id
                 "scheduleContent": schedules[i].get('content'),
                 "startTime": schedules[i].get('start_time'),
+                "startYear": startYear,
+                "startMonth": startMonth,
+                "startDate": startDate,
+                "endMonth": endMonth,
+                "endDate": endDate,
+
                 "endTime": schedules[i].get('end_time'),
+                "expanded": false,  // 判断是否有点击隐藏
                 "tasks": []  //关联的任务数组
               }
               //注意下面的for循环是 j ，不是 i 
@@ -1034,21 +1057,95 @@ Page({
             console.log('日程列表：\n')
             console.log(scheduleObjectArr)
 
+            // 对日程按年进行排序并分组
+            var currentYear = new Date().getFullYear()
+            var scheduleYear = [
+              {
+                'id': 0,
+                'year': currentYear,
+                'schedules': [],
+              }
+            ]
+            
+            for (var i in scheduleObjectArr) {
+              for (var j in scheduleYear) {
+                // 若此日程在本年份中
+                if(scheduleObjectArr[i].startYear == scheduleYear[j].year) {
+                  // 将此日程加入本年份的日程列表中
+                  scheduleYear[j].schedules.push(scheduleObjectArr[i])
+                  // 跳出循环
+                  break
+
+                } else if(j == (scheduleYear.length-1)) {
+                  // 已到本年份最后一个日程
+                  // 新建一个年份的日程列表
+                  var yearObject = {
+                    'id': parseInt(j)+1,
+                    'year': scheduleObjectArr[i].startYear,
+                    'schedules': [scheduleObjectArr[i]]
+                  }
+                  scheduleYear.push(yearObject)
+                  break
+                }
+              }
+            }
+
             that.setData({
-              Schedule: scheduleObjectArr
+              Schedule: scheduleObjectArr,
+              ScheduleYear: scheduleYear
             })
 
 
           },
           error: function (error) {
             //获取日程关联的任务失败
+            wx.showToast({
+              title: '查询日程关联的任务失败，请稍后再试',
+              icon: 'none',
+              duration: 1000
+            })
           }
         })
       },
       error: function (error) {
         //查询日程失败
+        wx.showToast({
+          title: '查询日程失败，请稍后再试',
+          icon: 'none',
+          duration: 1000
+        })
       }
     })
+
+  },
+
+  /**
+   * 
+   * 显示/隐藏日程
+   */
+  expandSchedule: function(e) {
+
+    var that = this
+    console.log('点击数组信息：', e)
+
+    var yearIndex = parseInt(e.currentTarget.dataset.yearIndex)
+    var scheduleIndex = parseInt(e.currentTarget.dataset.scheduleIndex)
+
+    console.log('yearIndex: '+yearIndex+'\nScheIndex: '+scheduleIndex)
+    var flag = that.data.ScheduleYear[yearIndex].schedules[scheduleIndex].expanded
+    console.log("flag: "+flag)
+    // ScheduleYear[yearIndex].schedules[scheduleIndex].expaned
+    var path = 'ScheduleYear['+yearIndex+'].schedules['+scheduleIndex+'].expanded'
+
+    if(flag) {
+      that.setData({
+        [path]: false
+      })
+    } else {
+      that.setData({
+        [path]: true
+      })
+    }
 
   },
 
