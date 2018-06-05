@@ -154,6 +154,7 @@ function getTasks(projId){
   //查询出对应的任务看板的所有任务
   taskQuery.limit(20)
   taskQuery.equalTo("proj_id", projId)
+  taskQuery.equalTo("is_delete", false)
   taskQuery.include("leader")  //可以查询出leader
   taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
   taskQuery.find({
