@@ -47,14 +47,6 @@ Page({
       })
       return;
     }
-<<<<<<< HEAD
-
-    // data submit
-    var myId = getApp().globalData.userId
-    var memberId = []
-    memberId.push(myId)
-=======
->>>>>>> parent of 1133eb9... Merge branch 'dev-liam' into dev-tao
     wx.getStorage({
       key: "ProjectMore-projId",
       success: function(res) {
