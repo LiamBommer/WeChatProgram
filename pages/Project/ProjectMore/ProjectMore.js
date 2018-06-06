@@ -339,17 +339,22 @@ Page({
       success: function (res) {
         //添加任务列表
         if (res.tapIndex == 0) {
-          console.log("res.tapIndex")
-          var currentProjId = that.data.currentProjId
-          var Length = tasklist.length;//数组长度
-          tasklist.push({
-            title:'未完成'
+          wx.getStorage({
+            key: "Project-detail",
+            success: function (res) {
+              var Length = tasklist.length;//数组长度
+              tasklist.push({
+                title: '新增'
+              })
+              that.setData({
+                tasklist: tasklist,
+                currentItem: Length,
+              });
+              var projId = res.data.id
+              that.createTaskList(projId, "新增")//projId 项目id，title任务看板名称
+            },
           })
-          that.setData({
-            tasklist: tasklist,
-            currentItem: Length,
-          });
-          that.createTaskList(currentProjId, "未完成")//projId 项目id，title任务看板名称
+
         }
 
         //删除该任务列表
@@ -427,17 +432,10 @@ Page({
    * 打开创建任务页面
    */
   createTask: function (event) {
-    var that = this
     var listId = event.currentTarget.dataset.listId
-    //设置任务成员缓存
     wx.setStorage({
       key: 'ProjectMore-TaskListId',
       data: listId,
-    })
-    //设置任务成员缓存
-    wx.setStorage({
-      key: 'ProjectMore-projId',
-      data: that.data.projId,
     })
     wx.navigateTo({
       url: '../Task/buildTask/buildTask?list_id=' + listId
@@ -605,9 +603,9 @@ Page({
         that.setData({
           Announcement: annoucementArr
         })
-        
-        // 加载完成
-        wx.hideLoading()
+
+
+
 
       },
       error: function (error) {
@@ -636,7 +634,13 @@ Page({
         success: function (result) {
           //添加任务看板成功
           console.log("提示用户添加任务看板成功!")
+
+
           that.getTaskLists(projId)
+
+
+
+
         },
         error: function (result, error) {
           //添加任务看板失败
@@ -675,21 +679,21 @@ Page({
         var listIndex = 0;
         console.log('results number: ' + results.length)
 
-          var taskList = []
-          for (var i = 0; i < results.length; i++) {
-            var object
-            var task = new Array()
-            object = {
-              title: results[i].attributes.title,
-              is_delete: results[i].attributes.is_delete,
-              listId: results[i].id,
-              tasks: task,
-            }
-            taskList.push(object)
-            that.getTasks(results[i].id, i, taskList)
+        var taskList = []
+        //获取第一个任务看板的任务
+        for (var i = 0; i < results.length; i++) {
+          var object
+          var task = new Array()
+          object = {
+            title: results[i].attributes.title,
+            is_delete: results[i].attributes.is_delete,
+            listId: results[i].id,
+            tasks: task,
           }
-          // 加载完成
-          wx.hideLoading()
+          taskList.push(object)
+          that.getTasks(results[i].id, i, taskList)
+        }
+
 
       },
       error: function (error) {
@@ -752,7 +756,6 @@ Page({
             title: tasks[i].attributes.title,
             leaderId: tasks[i].attributes.leader.objectId,
             objectId: tasks[i].id,
-            sub_num: tasks[i].attributes.sub_num,
           }
           tasklists[listIndex].tasks.push(object)
         }
@@ -1184,12 +1187,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
-    
-
     var that = this
     wx.startPullDownRefresh()//刷新
     wx.getStorage({
