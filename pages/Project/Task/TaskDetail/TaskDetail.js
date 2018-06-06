@@ -1386,6 +1386,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
 },
   //滑动事件处理
 =======
+
   //滑动删除子任务：滑动事件处理
 >>>>>>> parent of 0fab3e3... 任务详情完善
   touchmove: function (e) {
