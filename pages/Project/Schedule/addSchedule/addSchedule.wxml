@@ -3,7 +3,7 @@
   <form bindsubmit='BuildSchedule'>
       <view class='view-container'>
         <view class='title-view ver-align'>
-          <input class='title' name='title' placeholder='日程内容'/>
+          <input class='title' name='title' placeholder='日程内容' maxlength='20' />
         </view>
           <view class="item-view ver-align">
             <image src='{{icon_deadline}}'></image>

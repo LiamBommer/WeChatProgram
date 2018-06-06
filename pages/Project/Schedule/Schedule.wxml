@@ -19,13 +19,13 @@
       <view class='title'>{{item.year}}</view>
       <!-- </block> -->
       <block wx:for="{{item.schedules}}" wx:for-item="schedules" wx:for-index="scheduleIndex" wx:key="{{scheduleId}}">
-        
+
         <!-- 列表项 -->
-        <view class='item' >
+        <view class='item {{schedules.hasBorder}}' >
 
           <view class='item-first' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
             <view class='item-time'>{{schedules.startMonth}}月{{schedules.startDate}}日</view>
-            
+
             <block wx:if="{{schedules.expanded}}">
               <view class='item-connect'>|</view>
               <view class='item-time'>{{schedules.endMonth}}月{{schedules.endDate}}日</view>
@@ -41,8 +41,8 @@
           </view>
           <!-- 任务 -->
           <block wx:if="{{schedules.expanded}}">
-            <view class='item-third' bindtap='showScheduleDetail'>
-              <image src='/img/more.png'></image>
+            <view class='item-third' bindtap='showScheduleDetail' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
+              <image src='/img/pen.png'></image>
             </view>
           </block>
 

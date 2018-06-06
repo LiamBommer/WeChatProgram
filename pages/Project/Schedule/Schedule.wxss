@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   margin-top:260rpx;
-}   
+}
 
 .Schedule-container .noitem .noitem-icon{
   width:130rpx;
@@ -55,6 +55,11 @@
     /* justify-content: space-around; */
 }
 
+.Schedule-container .item.hasBorder {
+  border-top: 16rpx solid #f2f2f2;
+  border-bottom: 16rpx solid #f2f2f2;
+}
+
 .Schedule-container .item .item-first{
     display: flex;
     align-items: center;
@@ -82,7 +87,7 @@
     width: 430rpx;
     padding: 24rpx 0rpx;
     /* text-align: center; */
-    
+
 }
 
 .Schedule-container .item .item-second .item-title{

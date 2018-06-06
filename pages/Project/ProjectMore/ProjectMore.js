@@ -525,10 +525,24 @@ Page({
   /**
    * 显示日程详情页面
    */
-  showScheduleDetail: function () {
-    wx.navigateTo({
-      url: '../Schedule/scheduleDetail/scheduleDetail'
-    });
+  showScheduleDetail: function (e) {
+
+    // 获取id，存入缓存
+    var yearIndex = parseInt(e.currentTarget.dataset.yearIndex)
+    var scheduleIndex = parseInt(e.currentTarget.dataset.scheduleIndex)
+    var scheduleDetail = this.data.ScheduleYear[yearIndex].schedules[scheduleIndex]
+
+    wx.setStorage({
+      key: 'ProjectMore-scheduleDetail',
+      data: scheduleDetail,
+      success: function() {
+        // 导航跳转
+        wx.navigateTo({
+          url: '../Schedule/scheduleDetail/scheduleDetail'
+        });
+      }
+    })
+
   },
 
   /**
@@ -1008,6 +1022,7 @@ Page({
         scheduletaskQuery.find({
           success: function (results) {
             var scheduleObjectArr = []
+            console.log('日程人物列表:',results)
             for (var i = 0; i < schedules.length; i++) {
 
               // 处理开始时间，整理出年月日
@@ -1043,7 +1058,8 @@ Page({
                   var taskObject = {
                     "task_id": results[j].get("task").objectId,
                     "task_title": results[j].get("task").title,
-                    "task_userPic": results[j].get("task").leader.userPic
+                    "task_userPic": results[j].get("task").leader.userPic,
+                    "task_is_deleted": results[j].get("task").is_delete
                   }
                   scheduleObject.tasks.push(taskObject)
                 }
@@ -1131,17 +1147,20 @@ Page({
 
     console.log('yearIndex: '+yearIndex+'\nScheIndex: '+scheduleIndex)
     var flag = that.data.ScheduleYear[yearIndex].schedules[scheduleIndex].expanded
-    console.log("flag: "+flag)
-    // ScheduleYear[yearIndex].schedules[scheduleIndex].expaned
+
+    // path = ScheduleYear[yearIndex].schedules[scheduleIndex].expaned
     var path = 'ScheduleYear['+yearIndex+'].schedules['+scheduleIndex+'].expanded'
+    var pathHasBorder = 'ScheduleYear['+yearIndex+'].schedules['+scheduleIndex+'].hasBorder'
 
     if(flag) {
       that.setData({
-        [path]: false
+        [path]: false,
+        [pathHasBorder]: ''
       })
     } else {
       that.setData({
-        [path]: true
+        [path]: true,
+        [pathHasBorder]: 'hasBorder'
       })
     }
 

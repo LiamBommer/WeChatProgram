@@ -8,13 +8,19 @@ Page({
    */
   data: {
 
-    projectDetail: '',  // 用于从缓存中获取本项目id
+    // 用于从缓存中获取本项目id
+    projectDetail: '',
 
     // checkbox 选中列表
     TaskId: {},
 
     // tasklist 后面代码自动添加
     tasklist: [],
+
+    // 验证是否从日程详情页进入，
+    //  true则完成并保存
+    //  false则不修改
+    isScheduleDetail: false,
 
   },
 
@@ -32,7 +38,7 @@ Page({
   Finish: function () {
     var that = this;
     var TaskId = that.data.TaskId;  //被选中的任务ID
-    
+
     // wx.setStorageSync("ScheduleTaskList-TaskId", TaskId)
     // 将获取的任务id存进缓存
     wx.setStorage({
@@ -45,7 +51,12 @@ Page({
       }
     })
 
-    
+    // 从日程详情页进入，需要修改任务列表至日程
+    if(that.data.isScheduleDetail == true) {
+
+    }
+
+
   },
 
   /**
@@ -186,6 +197,16 @@ Page({
 
     var that = this
 
+    // 从缓存中判断是否从详情页进入
+    wx.getStorage({
+      key: 'isScheduleDetail',
+      success: function(res) {
+        that.setData({
+          isScheduleDetail: res.data
+        })
+      }
+    })
+
     // 从缓存获取项目信息
     wx.getStorage({
       key: 'Project-detail',
@@ -231,32 +252,6 @@ Page({
     })
 
     var that = this
-    // //初始化成员列表
-    // var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    // if (memberList != "") {
-    //   for (var i in memberList)
-    //     memberList[i].checked = false
-    //   that.setData({
-    //     ProjectMemember: memberList
-    //   });
-    // }
-    // else{
-
-    // }
-
-    // //初始化选中成员
-    // var membericon = wx.getStorageSync("meetingDetail-membericon")
-    // if (membericon != "") {
-    //   for (var i in memberList) {
-    //     for (var j in membericon)
-    //       if (memberList[i].icon == membericon[j]) {
-    //         memberList[i].checked = true
-    //         that.setData({
-    //           ProjectMemember: memberList,
-    //         });
-    //       }
-    //   }
-    // }
 
   },
 
