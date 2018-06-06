@@ -154,6 +154,7 @@ function getTasks(projId){
   //查询出对应的任务看板的所有任务
   taskQuery.limit(20)
   taskQuery.equalTo("proj_id", projId)
+  taskQuery.equalTo("is_delete", false)
   taskQuery.include("leader")  //可以查询出leader
   taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
   taskQuery.find({
@@ -168,13 +169,10 @@ function getTasks(projId){
           "userPic":tasks[i].get('leader').userPic || ''  //负责人头像
         }
         taskArr.push(taskObject)
-        //setData
-        console.log(taskArr)
-
-
-
 
       }
+      //setData
+      console.log(taskArr)
 
     },
     error: function (error) {
@@ -251,7 +249,7 @@ function addProjectNotification(projId, content, _type, requestId) {
  */
 function deleteSchedule(projId,scheduleId){
 
-  var Schedule = Bmob.Object.extend('shcedule')
+  var Schedule = Bmob.Object.extend('schedule')
   var scheduleQuery = new Bmob.Query(Schedule)
   //删除日程
   scheduleQuery.get(scheduleId,{
@@ -277,7 +275,7 @@ function deleteSchedule(projId,scheduleId){
 function modifyScheduleTitle(projId, scheduleId, newTitle){
   
   var that = this
-  var Schedule = Bmob.Object.extend('shcedule')
+  var Schedule = Bmob.Object.extend('schedule')
   var scheduleQuery = new Bmob.Query(Schedule)
   //删除日程
   scheduleQuery.get(scheduleId, {
@@ -302,19 +300,19 @@ function modifyScheduleTitle(projId, scheduleId, newTitle){
 function modifyScheduleStartTime(projId, scheduleId, newStartTime) {
 
   var that = this
-  var Schedule = Bmob.Object.extend('shcedule')
+  var Schedule = Bmob.Object.extend('schedule')
   var scheduleQuery = new Bmob.Query(Schedule)
   //删除日程
   scheduleQuery.get(scheduleId, {
     success: function (result) {
       result.set('start_time', newStartTime)
       result.save()
-
+      console.log(result)
       var _type = 3  //通知类型
-      that.addProjectNotification(projId, MODIFY_SCHEDULE_START, _type, scheduleId/*日程id*/)  //通知其他项目成员
+      //that.addProjectNotification(projId, MODIFY_SCHEDULE_START, _type, scheduleId/*日程id*/)  //通知其他项目成员
     },
-    error: function (error) {
-
+    error: function (object,error) {
+      console.log('error',error)
     }
   })
 }
@@ -327,7 +325,7 @@ function modifyScheduleStartTime(projId, scheduleId, newStartTime) {
 function modifyScheduleEndtime(projId, scheduleId, newEndTime) {
 
   var that = this
-  var Schedule = Bmob.Object.extend('shcedule')
+  var Schedule = Bmob.Object.extend('schedule')
   var scheduleQuery = new Bmob.Query(Schedule)
   //删除日程
   scheduleQuery.get(scheduleId, {
@@ -406,3 +404,4 @@ module.exports.createSchedule = createSchedule
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getSchedules = getSchedules
 module.exports.addRelatedTask = addRelatedTask
+module.exports.modifyScheduleStartTime = modifyScheduleStartTime
