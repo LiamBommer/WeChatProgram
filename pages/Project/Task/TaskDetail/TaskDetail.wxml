@@ -7,7 +7,7 @@
         <checkbox-group bindchange="checkboxChange">
           <checkbox class='item-checkbox' checked='{{checked}}'/>
         </checkbox-group>
-          <text class='title' bindtap="modalinputTitle">{{title}}</text> 
+          <text class='title' bindtap="modalinputTitle" >{{title}}</text> 
           <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
                 <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" maxlength='15'/>
           </modal>   
@@ -20,7 +20,6 @@
   <!-- 内容 -->
   <view class="view-container"id='j_page'>
         <view class="item-view" bindtap='MemberList'>
-          <!-- <image class='header' src='{{icon_person}}'></image> -->
           <block wx:for="{{member}}">
             <image class='membericon' src='{{item.userPic}}'></image>
           </block>
@@ -60,7 +59,7 @@
               </picker>
           </view>
         </view>
-        <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+        <view class="del"  catchtap="delRemindtime" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
         </view>
       </view>
 
@@ -76,7 +75,7 @@
                 </picker>
             </view>
           </view>
-          <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+          <view class="del"  catchtap="delFeedback" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
           </view>
         </view>
 

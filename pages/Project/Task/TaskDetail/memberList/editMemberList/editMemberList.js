@@ -1,4 +1,9 @@
 // pages/editMemberList/editMemberList.js
+
+const Bmob = require('../../../../../../utils/bmob.js')
+
+var ADD_TASK_MEMBER = "添加了新的任务成员"
+var DELETE_TASK_MEMBER = "删除了任务成员"
 Page({
 
   /**
@@ -9,11 +14,9 @@ Page({
     InitProjectMember:[],
     //项目成员
     ProjectMember: [
-
     ],
 
   },
-
 
 
   //点击成员复选框
@@ -34,7 +37,6 @@ Page({
     //获取选中的成员ID
     that.setData({
       ProjectMember: ProjectMember,
-
     });
   },
 
@@ -122,6 +124,7 @@ Page({
       })
     }
   },
+
   /**
  * 2018-06-02
  * @parameter taskId 任务id,memberIds新添加的任务成员id数组,userName用户昵称（记录操作用）
@@ -164,13 +167,31 @@ Page({
 
 
     }
+  },
 
-    console.log("NomemberId", NomemberId);//未选中的成员ID
-    // that.deleteProjectMember(projId, NomemberId)
+  /**
+*添加任务记录
+*/
+  addTaskRecord: function (taskId, userName, record) {
+    var that = this
+    var TaskRecord = Bmob.Object.extend('task_record')
+    var taskrecord = new TaskRecord()
 
-    wx.navigateBack({
-      url: '../ProjectDetail',
-    })
+    //存储任务记录
+    taskrecord.save({
+      user_name: userName,
+      task_id: taskId,
+      record: userName + record
+    }, {
+        success: function (result) {
+          //添加成功
+
+        },
+        error: function (result, error) {
+          //添加失败
+
+        }
+      })
   },
 
   /**
@@ -192,8 +213,10 @@ Page({
    */
   onShow: function () {
     var that = this
+    var ProjectMember = []
+    //获取任务管理列表成员
     wx.getStorage({
-      key: 'TaskDetail-member',
+      key: 'TaskDetail-memberList-EditMemberList',
       success: function (res) {
         var memberList = res.data
         console.log('EditMemberList: ', memberList)
@@ -203,6 +226,7 @@ Page({
         });
       },
     })
+
   },
 
   /**

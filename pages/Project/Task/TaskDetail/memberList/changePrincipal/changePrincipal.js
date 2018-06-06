@@ -1,4 +1,7 @@
 // pages/changePrincepal/changePrincepal.js
+
+const Bmob = require('../../../../../../utils/bmob.js')
+var MODIFY_TASK_LEADER = "变更了任务负责人"
 Page({
 
   /**
@@ -8,26 +11,7 @@ Page({
     //是否选中
     selectedMemberId: "",
     //任务成员
-    TaskMemember: [
-      // {
-      //   index: 0,
-      //   icon:"/img/me.png",
-      //   name: '帅涛' ,
-      //   checked: true,
-      // },
-      // {
-      //   index: 1 ,
-      //   icon: "/img/me.png",
-      //   name: '美国队长',
-      //   checked: false,
-      // },
-      // {
-      //   index: 2,
-      //   icon: "/img/me.png",
-      //   name: '灭霸',
-      //   checked: false,
-      // },
-    ],
+    TaskMember: [],
 
   },
 
@@ -116,6 +100,7 @@ Page({
       })
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -135,12 +120,23 @@ Page({
    */
   onShow: function () {
     var that = this
+    //获取任务成员
     wx.getStorage({
-      key: 'TaskDetail-member',
+      key: 'TaskDetail-memberList-TaskMember',
       success: function (res) {
-        console.log(res.data)
+        var TaskMember = res.data
+        //往任务成员中添加“checked”属性
+        for (var i in TaskMember){
+          if (i == 0) {
+            TaskMember[i]['checked'] = true
+          }
+          else {
+            TaskMember[i]['checked'] = false
+          }
+        }
+        console.log('任务成员:', TaskMember)
         that.setData({
-          TaskMemember: res.data
+          TaskMember: TaskMember
         })
       }
     })

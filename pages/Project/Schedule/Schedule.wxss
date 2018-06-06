@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   margin-top:260rpx;
-}
+}   
 
 .Schedule-container .noitem .noitem-icon{
   width:130rpx;
@@ -49,15 +49,10 @@
     background: #fff;
     color: #000;
     width: 100%;
-    min-height: 165rpx;
+    height: 165rpx;
     display: flex;
     align-items: center;
-    /* justify-content: space-around; */
-}
-
-.Schedule-container .item.hasBorder {
-  border-top: 16rpx solid #f2f2f2;
-  border-bottom: 16rpx solid #f2f2f2;
+    justify-content: space-around;
 }
 
 .Schedule-container .item .item-first{
@@ -65,16 +60,13 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-around;
-    padding: 24rpx 0rpx;
     font-size: 34rpx;
-    color: #888888;
-    margin-left: 40rpx;
-    width:140rpx;
+    width:11%;
 
 }
 
 .Schedule-container .item .item-first .item-time{
-    /* font-weight: bold; */
+    font-weight: bold;
 }
 
 .Schedule-container .item .item-first .item-connect{
@@ -82,42 +74,18 @@
 }
 
 .Schedule-container .item .item-second{
-    font-size: 34rpx;
-    margin-left: 30rpx;
-    width: 430rpx;
-    padding: 24rpx 0rpx;
-    /* text-align: center; */
+    font-size: 30rpx;
+    width:9%;
 
-}
-
-.Schedule-container .item .item-second .item-title{
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 24rpx 0rpx;
-}
-
-.Schedule-container .item .item-second .item-text{
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #888888;
-    font-size: 28rpx;
-    width: 100%;
 }
 
 .Schedule-container .item .item-third{
-    width: 40rpx;
-    height: 100%;
-    padding: 0rpx 40rpx 0rpx 30rpx;
-}
-
-.Schedule-container .item .item-third image {
-  width: 40rpx;
-  height: 40rpx;
-
+    font-size: 28rpx;
+    color: #b2b2b2;
+    width: 30%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
 .Schedule-container .buildicon{
