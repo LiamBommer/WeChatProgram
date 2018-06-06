@@ -339,6 +339,7 @@ Page({
       itemList: ['添加任务列表','删除该任务列表'],
       success: function (res) {
         //添加任务列表
+<<<<<<< HEAD
         if (res.tapIndex == 0) {
           wx.getStorage({
             key: "Project-detail",
@@ -346,6 +347,15 @@ Page({
               var Length = tasklist.length;//数组长度
               tasklist.push({
                 title: '新增'
+=======
+        if (res.tapIndex == 0){
+          wx.getStorage({
+            key: "Project-detail",
+            success: function(res) {
+              var Length = tasklist.length;//数组长度
+              tasklist.push({
+                title:'新增'
+>>>>>>> parent of c764681... 完善任务详情
               })
               that.setData({
                 tasklist: tasklist,
@@ -356,6 +366,7 @@ Page({
             },
           })
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
           that.setData({
@@ -364,6 +375,8 @@ Page({
           });
           that.createTaskList(currentProjId, "未完成")//projId 项目id，title任务看板名称
            
+=======
+>>>>>>> parent of c764681... 完善任务详情
           
 >>>>>>> parent of 1133eb9... Merge branch 'dev-liam' into dev-tao
         }
@@ -615,7 +628,11 @@ Page({
         that.setData({
           Announcement: annoucementArr
         })
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> parent of c764681... 完善任务详情
 
 
 
@@ -646,6 +663,7 @@ Page({
         success: function (result) {
           //添加任务看板成功
           console.log("提示用户添加任务看板成功!")
+<<<<<<< HEAD
 
 
           that.getTaskLists(projId)
@@ -653,6 +671,9 @@ Page({
 
 
 
+=======
+          // that.getTaskLists(projId)
+>>>>>>> parent of c764681... 完善任务详情
         },
         error: function (result, error) {
           //添加任务看板失败
@@ -718,6 +739,7 @@ Page({
 >>>>>>> parent of 0fab3e3... 任务详情完善
           }
 <<<<<<< HEAD
+<<<<<<< HEAD
           taskList.push(object)
           that.getTasks(results[i].id, i, taskList)
         }
@@ -725,6 +747,8 @@ Page({
 =======
           // 加载完成
           wx.hideLoading()
+=======
+>>>>>>> parent of c764681... 完善任务详情
         
 >>>>>>> parent of 1133eb9... Merge branch 'dev-liam' into dev-tao
 

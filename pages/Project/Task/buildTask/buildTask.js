@@ -48,10 +48,11 @@ Page({
       return;
     }
     wx.getStorage({
-      key: "ProjectMore-projId",
+      key: "Project-detail",
       success: function(res) {
-        console.log("BuildTask", res.data, that.data.list_id, name, memberId[0], end_time)
-        that.createTask(res.data, that.data.list_id, name, memberId[0], end_time)
+        console.log("BuildTask", res.data.id, that.data.list_id, name, memberId[0], end_time)
+        
+        that.createTask(res.data.id, that.data.list_id, name, memberId[0], end_time)
       },
     })
 

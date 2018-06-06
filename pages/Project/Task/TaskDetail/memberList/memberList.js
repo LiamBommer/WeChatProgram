@@ -50,7 +50,7 @@ Page({
 
 
   //加入任务
-  joinTask: function(e){
+  joinTask: function(){
     var that = this;
     console.log("123")
     wx.getStorage({
@@ -70,7 +70,7 @@ Page({
         that.setData({
           TaskMemember: TaskMemember
         })
-        that.JoinTask(taskId, userId, userName, TaskMemember[0].objectId)
+        that.JoinTask(taskId, userId, userName)
       },
     })
    
@@ -176,24 +176,7 @@ Page({
           })
 
 
-        //刷新“加入任务”是否隐藏
-        var TaskMememberId = getApp().globalData.userId//当前操作者ID
-        var TaskMemember = memberArr//任务成员
-        for (var i in TaskMemember) {
-          if (TaskMemember[i].objectId == TaskMememberId) {//如果当前操作者已在任务中
-            that.setData({
-              isInTask: true
-            })
-          }
-          else {
-            that.setData({
-              isInTask: false
-            })
-          }
-        }
 
-        // 加载完成
-        wx.hideLoading()
 
       },
       error: function (error) {
@@ -204,10 +187,10 @@ Page({
 
   /**
  * 2018-06-02
- * @parameter taskId 任务id,memberId当前操作成员ID,userName用户昵称（记录操作用），leaderId任务负责人ID（刷新任务成员用）
+ * @parameter taskId 任务id,memberId当前操作成员ID,userName用户昵称（记录操作用）
  * 加入任务
  */
-  JoinTask: function (taskId, memberId, userName, leaderId) {
+  JoinTask: function (taskId, memberId, userName) {
     console.log("添加的成员", memberId)
     var that = this
     var Taskmember = Bmob.Object.extend('task_member')
@@ -223,7 +206,7 @@ Page({
           // 成功
           //记录操作
           that.addTaskRecord(taskId, userName, ADD_TASK_MEMBER)
-          
+
           console.log("添加任务成员成功！")
           //隐藏“加入任务”按钮
           that.setData({
@@ -232,7 +215,6 @@ Page({
           wx.showToast({
             title: '添加成功',
           })
-          that.getTaskMember(taskId, leaderId)
 
         },
           function (error) {
@@ -319,15 +301,10 @@ addTaskRecord:function (taskId, userName, record){
               isInTask: true
             })
           }
-          else {
-            that.setData({
-              isInTask: false
-            })
-          }
         }
         that.setData({
           TaskMemember: res.data
-        }) 
+        })
       }
     })
     //获得项目成员
@@ -341,15 +318,6 @@ addTaskRecord:function (taskId, userName, record){
         })
       },
     })
-    //从后台刷新任务成员
-    if (that.data.taskId != "" && that.data.TaskMemember[0].objectId != "") {
-      console.log("刷新后台！", that.data.taskId, that.data.TaskMemember[0].objectId)
-      wx.showLoading({
-        title: '正在加载',
-        mask: 'true'
-      })
-      that.getTaskMember(that.data.taskId, that.data.TaskMemember[0].objectId)
-    }
   },
 
   /**
