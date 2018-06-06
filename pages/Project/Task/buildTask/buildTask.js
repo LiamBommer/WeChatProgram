@@ -41,8 +41,8 @@ Page({
 
     // data submit
     var myId = getApp().globalData.userId
-    var memberIds = []
-    memberIds.push(myId)
+    var memberId = []
+    memberId.push(myId)
     wx.getStorage({
       key: "ProjectMore-projId",
       success: function(res) {
