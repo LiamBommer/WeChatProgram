@@ -26,9 +26,8 @@ Page({
   // 更改完成
   save: function() {
     var that = this
-    
-    var newLeaderId = that.data.selectedMemberId// 获取新选中的负责人Id
-    var userName = getApp().globalData.nickName// 获取当前操作者名字
+    // 获取新选中的负责人Id
+    var newLeaderId = that.data.selectedMemberId
 
     //获取任务ID
     wx.getStorage({
@@ -37,18 +36,18 @@ Page({
         var taskId = res.data
         console.log("transferTaskLeader", taskId, newLeaderId)
         // 传送后台确认更改，返回
-        that.transferTaskLeader(taskId, newLeaderId,userName)
+        that.transferTaskLeader(taskId, newLeaderId)
       },
     })
   },
 
   /**
  * 2018-06-02
- * 变更任务负责人 userName当前操作者名字
+ * 变更任务负责人
  */
-  transferTaskLeader: function (taskId, newLeaderId, userName) {
+  transferTaskLeader: function (taskId, newLeaderId) {
     var that = this
-    var Task = Bmob.Object.extend('task')
+    var Task = Bmob.object.extend('task')
     var taskQuery = new Bmob.Query(Task)
     var user = Bmob.Object.createWithoutData("_User", newLeaderId)
 
@@ -57,7 +56,7 @@ Page({
       success: function (result) {
         //成功
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_TASK_LEADER)
+        that.addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
 
         console.log("变更任务负责人成功！")
         wx.showToast({
