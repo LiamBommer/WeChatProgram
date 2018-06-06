@@ -44,6 +44,7 @@ Page({
    * 可以获取到创建项目成功后的项目id
    * 
    * 成功返回创建项目的id， 失败返回"fail"
+   * 内部调用 createTaskList ,为用户新创建的项目创建一个默认的任务列表
    */
   buildProject: function (title, desc) {
     var that = this;
@@ -72,7 +73,7 @@ Page({
         success: function (result) {
           console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
-
+          that.createTaskList(result.id/*项目id*/,"未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
           wx.hideLoading()
           wx.showToast({
             title: '成功创建项目',
@@ -94,6 +95,33 @@ Page({
         }
       })
 
+  },
+  /**
+* 2018-05-19
+* @author mr.li
+* @parameter projId 项目id，title任务看板名称
+* 创建任务看板
+*/
+  createTaskList: function (projId, title) {
+    var that = this
+    var TaskList = Bmob.Object.extend("task_list")
+    var taskList = new TaskList()
+
+    //添加任务看板
+    taskList.save({
+      title: title,
+      proj_id: projId,
+      is_delete: false
+    }, {
+        success: function (result) {
+          //添加任务看板成功
+
+        },
+        error: function (result, error) {
+          //添加任务看板失败
+          console.log("添加任务看板失败!")
+        }
+      })
   },
   /**
  * @author mr.li
