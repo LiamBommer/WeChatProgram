@@ -88,6 +88,7 @@ Page({
       is_finish: false,
       has_sub: false,
       is_delete: false,
+      sub_num:0,
       proj_id: projId
     },{
       success: function(result){

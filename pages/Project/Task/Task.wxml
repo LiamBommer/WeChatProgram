@@ -38,7 +38,7 @@
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
                               <view class='taskicon'>
-                                  <block wx:if="{{tasks.has_sub}}">
+                                  <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
                               </view>
@@ -63,7 +63,7 @@
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
                               <view class='taskicon'>
-                                  <block wx:if="{{tasks.has_sub}}">
+                                  <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
                               </view>

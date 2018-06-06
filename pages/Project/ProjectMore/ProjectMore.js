@@ -687,7 +687,7 @@ Page({
               title: results[i].attributes.title,
               is_delete: results[i].attributes.is_delete,
               listId: results[i].id,
-              tasks:  task,
+              tasks: task,
             }
             taskList.push(object)
             that.getTasks(results[i].id, i, taskList)
@@ -757,6 +757,7 @@ Page({
             title: tasks[i].attributes.title,
             leaderId: tasks[i].attributes.leader.objectId,
             objectId: tasks[i].id,
+            sub_num: tasks[i].attributes.sub_num,
           }
           tasklists[listIndex].tasks.push(object)
         }
