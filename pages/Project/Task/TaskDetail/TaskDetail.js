@@ -1299,7 +1299,7 @@ redoSubTask:function (subTaskId, is_finish) {
         result.set("title", newTitle)
         result.save()
         //记录
-        that.addTaskRecord(taskId, userName, MODIFY_SUB_TASK_TITLE)
+        that.addTaskRecord(subTaskId, userName, MODIFY_SUB_TASK_TITLE)
         //成功
         wx.showToast({
           title: '设置成功',
@@ -1316,7 +1316,7 @@ redoSubTask:function (subTaskId, is_finish) {
  * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
  * 删除子任务
  */
-deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
+deleteSubTask:function (subTaskId, userName, subTaskTitle) {
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtaskQuery = new Bmob.Query(Subtask)
@@ -1327,9 +1327,8 @@ deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
       success: function () {
         //删除成功
         console.log("删除子任务成功！")
-        that.modifySubNum(taskId,-1)
         //记录操作
-        that.addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        that.addTaskRecord(subTaskId, userName, DELETE_SUB_TASK + subTaskTitle)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -1342,26 +1341,6 @@ deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
   },
 
 
-  /**
-   * 修改子任务的数量
-   */
-  modifySubNum: function (taskId,num) {
-
-    var Task = Bmob.Object.extend('task')
-    var taskQuery = new Bmob.Query(Task)
-
-    taskQuery.get(taskId, {
-      success: function (result) {
-        //成功
-        result.increment('sub_num',num)
-        result.save()
-      },
-      error: function (error) {
-        //失败
-        console.log("修改子任务的数量失败:", error)
-      }
-    })
-  },
   //滑动删除子任务：滑动事件处理
   touchmove: function (e) {
      var that = this
@@ -1417,10 +1396,9 @@ deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
        if(res.confirm){
          that.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
          var subTaskId = e.currentTarget.dataset.id
-         var taskId = that.data.taskId
          var subTaskTitle = e.currentTarget.dataset.childTitle
          var userName = getApp().globalData.nickName
-         that.deleteSubTask(taskId,subTaskId, userName, subTaskTitle)
+         that.deleteSubTask(subTaskId, userName, subTaskTitle)
          that.setData({
            ChildTask: that.data.ChildTask
          })

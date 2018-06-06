@@ -691,6 +691,7 @@ Page({
         var listIndex = 0;
         console.log('results number: ' + results.length)
 
+<<<<<<< HEAD
         var taskList = []
         //获取第一个任务看板的任务
         for (var i = 0; i < results.length; i++) {
@@ -701,6 +702,20 @@ Page({
             is_delete: results[i].attributes.is_delete,
             listId: results[i].id,
             tasks: task,
+=======
+          var taskList = []
+          for (var i = 0; i < results.length; i++) {
+            var object
+            var task = new Array()
+            object = {
+              title: results[i].attributes.title,
+              is_delete: results[i].attributes.is_delete,
+              listId: results[i].id,
+              tasks:  task,
+            }
+            taskList.push(object)
+            that.getTasks(results[i].id, i, taskList)
+>>>>>>> parent of 0fab3e3... 任务详情完善
           }
 <<<<<<< HEAD
           taskList.push(object)

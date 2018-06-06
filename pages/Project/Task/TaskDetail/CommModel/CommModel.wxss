@@ -54,21 +54,10 @@ radio-group{
   align-items:center;
   justify-content:space-between;
   padding-bottom: 60rpx;
-  
 }
 
 .CommModel-container .rightcontent .text{
   padding-right: 20rpx;
-   /* 多行省略 */
-   display: -webkit-box;
-   line-height: 40rpx;
-   word-break: break-all;
-   -webkit-box-orient: vertical;
-   -webkit-line-clamp: 2;
-   /* -webkit-line-break: 2; */
-   overflow: hidden;
-   text-overflow: ellipsis;
-   /* 多行省略 */
 }
 
  .CommModel-container .rightcontent .add{

@@ -59,7 +59,6 @@ Page({
       success: function (result) {
         //添加成功
         //记录
-        that.modifySubNum(taskId,1)  //修改任务的子任务数量
         that.addTaskRecord(taskId, userName, ADD_SUB_TASK + title)
         console.log("提示用户添加子任务成功!")
         wx.showToast({
@@ -81,26 +80,6 @@ Page({
     })
   },
 
-  /**
-   * 修改子任务的数量
-   */
-  modifySubNum:function(taskId,num){
-
-    var Task = Bmob.Object.extend('task')
-    var taskQuery = new Bmob.Query(Task)
-
-    taskQuery.get(taskId,{
-      success: function(result){
-        //成功
-        result.increment('sub_num',num)
-        result.save()
-      },
-      error: function(error){
-        //失败
-        console.log("修改子任务的数量失败:",error)
-      }
-    })
-  },
   /**
 *添加任务记录
 */

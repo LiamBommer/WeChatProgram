@@ -56,8 +56,6 @@ Page({
     taskQuery.get(taskId, {
       success: function (result) {
         //成功
-        result.set('leader',user)
-        result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_TASK_LEADER)
 
