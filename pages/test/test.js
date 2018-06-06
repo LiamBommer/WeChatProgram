@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/taskDetail.js')
+var test = require('../../model/schedule.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -85,7 +85,12 @@ Page({
      //test.getSchedules("3d3525ec0f")
      //test.addRelatedTask("3d3525ec0f", "73e8e1b1c0", ["bcb7155f39"])
      //test.getProjectList()
-     test.taskMemberDelete("8b90c25951", ["5e2b90f2ce","46afed01fb"],"测试")
+    // test.taskMemberDelete("8b90c25951", ["5e2b90f2ce","46afed01fb"],"测试")
+     //test.createMeeting('123', 'ceshi','ceshineirong','2018-00-00',['789'])
+     //test.getMeeting('123')
+     //test.addCreateMeetingMember('123','722e010ffe',['23','456'])
+    // test.getMeetingMember('722e010ffe')
+    // test.modifyScheduleStartTime('e645f9e760','27c7a2e907','2018-06-06')
   },
 
   /**

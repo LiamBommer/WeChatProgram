@@ -550,3 +550,10 @@ function deleteMeetingMember(projId, meetingId, memberIds) {
   }
 
 }
+
+module.exports.createMeeting = createMeeting
+module.exports.addProjectNotification = addProjectNotification
+module.exports.getMeeting = getMeeting
+module.exports.addCreateMeetingMember = addCreateMeetingMember
+module.exports.getMeetingMember = getMeetingMember
+
