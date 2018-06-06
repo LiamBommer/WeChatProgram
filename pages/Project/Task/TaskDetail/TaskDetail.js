@@ -1364,6 +1364,7 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
     })
   },
 
+<<<<<<< HEAD
 //滑动删除子任务：手指触摸动作开始 记录起点X坐标
   touchstart: function(e) {
      //开始触摸时 重置所有删除
@@ -1384,6 +1385,9 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
   
 },
   //滑动事件处理
+=======
+  //滑动删除子任务：滑动事件处理
+>>>>>>> parent of 0fab3e3... 任务详情完善
   touchmove: function (e) {
      var that = this
      var index = e.currentTarget.dataset.index//当前索引
