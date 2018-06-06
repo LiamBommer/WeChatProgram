@@ -27,16 +27,21 @@ function getProjectList(){
   //查询当前用户所在的所有项目id，默认10条
   memberQuery.select("proj_id")
   memberQuery.equalTo("user_id", user_id)
+  memberQuery.limit(20)
   memberQuery.find().then(function(results){
     //返回成功
     console.log("共查询到用户所在项目 " + results.length + " 条记录");
+    console.log(results)
     for (var i = 0; i < results.length; i++) {
       var object = results[i]
       project_id.push(object.get("proj_id").trim())
     }
-
+    project_id.push("000")
     //查询当前用户所在的所有项目，默认10条
+    projectQuery.limit(20)
     projectQuery.containedIn("objectId", project_id)
+    //projectQuery.notEqualTo("is_delete",true)
+    
     projectQuery.find({
       success: function (results) {
         //成功
@@ -44,10 +49,9 @@ function getProjectList(){
         // 循环处理查询到的数据
         for (var i = 0; i < results.length; i++) {
           var object = results[i]
-          console.log(object)
           projectArr.push(object)
         }
-        console.log("projectArr", projectArr[0])
+        console.log("projectArr", projectArr)
         //todo: 在这里设置setdata
 
 

@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/schedule.js')
+var test = require('../../model/taskDetail.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -82,8 +82,10 @@ Page({
      //test.addTaskNotification('	81c2ae2e31','ecf39929e8','测试')
      //test.createSchedule("3d3525ec0f", "mr.li测试", "2018-06-03", "2018-07-01",["58ec3a7f5e"])
      //test.destroyTaskRecord()
-     test.getSchedules("3d3525ec0f")
+     //test.getSchedules("3d3525ec0f")
      //test.addRelatedTask("3d3525ec0f", "73e8e1b1c0", ["bcb7155f39"])
+     //test.getProjectList()
+     test.taskMemberDelete("8b90c25951", ["5e2b90f2ce","46afed01fb"],"测试")
   },
 
   /**

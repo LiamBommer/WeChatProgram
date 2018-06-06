@@ -15,7 +15,7 @@ var ADD_SCHEDULE_TASK = "添加了日程关联的任务"
  * 内部添加了调用通知项目成员的函数
  */
 function createSchedule(projId,content,startTime,endTime,taskIds){
-  
+
   var that = this
   var Schedule = Bmob.Object.extend('schedule')
   var Scheduletask = Bmob.Object.extend('schedule_task')
@@ -63,7 +63,7 @@ function createSchedule(projId,content,startTime,endTime,taskIds){
           // 异常处理
         })
     }
-    
+
   })
 }
 
@@ -82,7 +82,7 @@ function getSchedules(projId){
   scheduleQuery.equalTo('proj_id',projId)
   scheduleQuery.notEqualTo('is_delete',true)
   scheduleQuery.ascending('start_time')
-  
+
   scheduleQuery.find({
     success: function(schedules){
       var scheduleIds = []
@@ -106,11 +106,11 @@ function getSchedules(projId){
               "endTime": schedules[i].get('end_time'),
               "tasks": []  //关联的任务数组
             }
-            //注意下面的for循环是 j ，不是 i 
+            //注意下面的for循环是 j ，不是 i
             for (var j = 0; j < results.length; j++) {
               if (results[j].get("schedule_id") == scheduleObject.scheduleId){
                 scheduleObject.objectId = results[j].id  //日程关联任务的id
-                var taskObject = {                 
+                var taskObject = {
                   "task_id": results[j].get("task").objectId,
                   "task_title": results[j].get("task").title,
                   "task_userPic": results[j].get("task").leader.userPic
@@ -154,6 +154,7 @@ function getTasks(projId){
   //查询出对应的任务看板的所有任务
   taskQuery.limit(20)
   taskQuery.equalTo("proj_id", projId)
+  taskQuery.equalTo("is_delete", false)
   taskQuery.include("leader")  //可以查询出leader
   taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
   taskQuery.find({
@@ -168,8 +169,8 @@ function getTasks(projId){
           "userPic":tasks[i].get('leader').userPic || ''  //负责人头像
         }
         taskArr.push(taskObject)
+
       }
-      
       //setData
       console.log(taskArr)
 
@@ -272,7 +273,7 @@ function deleteSchedule(projId,scheduleId){
  *  内部调用了addProjectNotification
  */
 function modifyScheduleTitle(projId, scheduleId, newTitle){
-  
+
   var that = this
   var Schedule = Bmob.Object.extend('shcedule')
   var scheduleQuery = new Bmob.Query(Schedule)
@@ -286,7 +287,7 @@ function modifyScheduleTitle(projId, scheduleId, newTitle){
       that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE , _type, scheduleId/*日程id*/)  //通知其他项目成员
     },
     error: function (error) {
-      
+
     }
   })
 }

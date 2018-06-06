@@ -50,7 +50,8 @@
     "pages/Notification/Notification",
     "pages/memberList/memberList",
     "pages/logs/logs",
-    "test/test"
+    "test/test",
+    "pages/test/test"
   ],
   "window": {
     "backgroundTextStyle": "light",
