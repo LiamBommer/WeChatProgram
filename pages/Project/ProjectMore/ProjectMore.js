@@ -289,7 +289,7 @@ Page({
   },
 
 
-  //任务列表标题：点击按钮弹出指定的hiddenmodalput弹出框  
+  //任务列表标题：点击按钮弹出指定的hiddenmodalput弹出框
   modalinputTitle: function (e) {
     var that = this
     var title = e.currentTarget.dataset.title//当前任务列表标题
@@ -300,14 +300,14 @@ Page({
       hiddenmodalputTitle: false
     })
   },
-  //取消按钮  
+  //取消按钮
   cancelTitle: function () {
     this.setData({
       hiddenmodalputTitle: true,
     });
   },
 
-  //确认  
+  //确认
   confirmTitle: function (e) {
     var that = this
     var listId = that.data.listId//当前任务列表id
@@ -546,7 +546,7 @@ Page({
    @parameter projId 项目id
    *@return 指定项目的所有公告数组
    *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
-   * 
+   *
    */
   getAnnouncements: function (projId) {
     var that = this
@@ -850,8 +850,6 @@ Page({
           })
 
 
-
-
         },
         error: function (error) {
           console.log("查询失败: " + error.code + " " + error.message);
@@ -1038,7 +1036,7 @@ Page({
                 "expanded": false,  // 判断是否有点击隐藏
                 "tasks": []  //关联的任务数组
               }
-              //注意下面的for循环是 j ，不是 i 
+              //注意下面的for循环是 j ，不是 i
               for (var j = 0; j < results.length; j++) {
                 if (results[j].get("schedule_id") == scheduleObject.scheduleId) {
                   scheduleObject.objectId = results[j].id  //日程关联任务的id
@@ -1066,7 +1064,7 @@ Page({
                 'schedules': [],
               }
             ]
-            
+
             for (var i in scheduleObjectArr) {
               for (var j in scheduleYear) {
                 // 若此日程在本年份中
@@ -1120,7 +1118,7 @@ Page({
   },
 
   /**
-   * 
+   *
    * 显示/隐藏日程
    */
   expandSchedule: function(e) {
