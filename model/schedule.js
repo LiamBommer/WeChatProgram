@@ -15,7 +15,7 @@ var ADD_SCHEDULE_TASK = "添加了日程关联的任务"
  * 内部添加了调用通知项目成员的函数
  */
 function createSchedule(projId,content,startTime,endTime,taskIds){
-  
+
   var that = this
   var Schedule = Bmob.Object.extend('schedule')
   var Scheduletask = Bmob.Object.extend('schedule_task')
@@ -63,7 +63,7 @@ function createSchedule(projId,content,startTime,endTime,taskIds){
           // 异常处理
         })
     }
-    
+
   })
 }
 
@@ -82,7 +82,7 @@ function getSchedules(projId){
   scheduleQuery.equalTo('proj_id',projId)
   scheduleQuery.notEqualTo('is_delete',true)
   scheduleQuery.ascending('start_time')
-  
+
   scheduleQuery.find({
     success: function(schedules){
       var scheduleIds = []
@@ -106,11 +106,11 @@ function getSchedules(projId){
               "endTime": schedules[i].get('end_time'),
               "tasks": []  //关联的任务数组
             }
-            //注意下面的for循环是 j ，不是 i 
+            //注意下面的for循环是 j ，不是 i
             for (var j = 0; j < results.length; j++) {
               if (results[j].get("schedule_id") == scheduleObject.scheduleId){
                 scheduleObject.objectId = results[j].id  //日程关联任务的id
-                var taskObject = {                 
+                var taskObject = {
                   "task_id": results[j].get("task").objectId,
                   "task_title": results[j].get("task").title,
                   "task_userPic": results[j].get("task").leader.userPic
@@ -273,7 +273,7 @@ function deleteSchedule(projId,scheduleId){
  *  内部调用了addProjectNotification
  */
 function modifyScheduleTitle(projId, scheduleId, newTitle){
-  
+
   var that = this
   var Schedule = Bmob.Object.extend('schedule')
   var scheduleQuery = new Bmob.Query(Schedule)
@@ -287,7 +287,7 @@ function modifyScheduleTitle(projId, scheduleId, newTitle){
       that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE , _type, scheduleId/*日程id*/)  //通知其他项目成员
     },
     error: function (error) {
-      
+
     }
   })
 }

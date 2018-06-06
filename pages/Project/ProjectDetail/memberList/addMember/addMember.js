@@ -18,6 +18,23 @@ Page({
 
     })
 
+    // 取当前项目ID
+    // wx.getStorage({
+    //   key: 'Project-id',
+    //   success: function (res) {
+    //     that.setData({
+    //       projectId: res.data
+    //     })
+    //   },
+    // })
+    // wx.getStorage({
+    //   key: 'Project-name',
+    //   success: function (res) {
+    //     that.setData({
+    //       projectName: res.data
+    //     })
+    //   },
+    // })
     wx.getStorage({
       key: 'Project-detail',
       success: function (res) {

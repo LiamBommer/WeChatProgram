@@ -70,14 +70,6 @@ button[hover-class="share-hover"]::after {
   align-items: center;
 }
 
-.title-view .title {
-  font-size: 40rpx;
-  width: 544rpx;
-  display: block;
-  line-height: 50rpx;
-  overflow: auto;
-}
-
 
 /*
  * 聊天区

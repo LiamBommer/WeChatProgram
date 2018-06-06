@@ -1,19 +1,12 @@
 // pages/memberList/memberList.js
-
-const Bmob = require('../../../../../utils/bmob.js')
-
-var ADD_TASK_MEMBER = "添加了新的任务成员"
-var DELETE_TASK_MEMBER = "删除了任务成员"
-
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
-    TaskIndex: "",//是否选中
-    taskId:'',//任务Id
+    //是否选中
+    TaskIndex: "",
     // ProjectIndex: "",
     // principalName: "帅涛",
     // principalIicon: "/img/me.png",
@@ -21,8 +14,6 @@ Page({
     // principalChecked: true,
     // 是否在任务中
     isInTask: false,
-    //项目成员
-    projectMember:[],
     //任务成员
     TaskMemember: [
       // {
@@ -76,68 +67,15 @@ Page({
    
   },
 
-  //管理任务成员
+  //
   showEditMemberList: function () {
-    var that = this
-    var projectMember = that.data.projectMember//项目成员
-    var TaskMemember = that.data.TaskMemember//任务成员
-    var EditMemberList = []//管理任务成员列表，第一位为任务负责人
-
-    console.log("项目成员", projectMember)
-    console.log("任务成员", TaskMemember)
-    
-    for (var i in TaskMemember) {
-        for (var j in projectMember) {
-          if (TaskMemember[i].objectId == projectMember[j].id) {//项目成员中被选中的任务成员
-            projectMember[j].checked = true
-            EditMemberList.push(projectMember[j])
-            console.log("被选中的任务成员", projectMember[j])
-            break
-          }
-        }
-    }
-
-    for (var k in projectMember){
-      if (projectMember[k].checked == "")//未被选中的项目成员
-      {
-        EditMemberList.push(projectMember[k])
-        projectMember[k].checked = false
-        console.log("未选中的项目成员", projectMember[k])
-      }
-    }
-
-    console.log("成员管理列表", EditMemberList)
-
-
-    //设置成员管理列表缓存
-    wx.setStorage({
-      key: 'TaskDetail-memberList-EditMemberList',
-      data: EditMemberList,
-    })
-    //设置任务ID缓存
-    wx.setStorage({
-      key: 'TaskDetail-memberList-TaskId',
-      data: that.data.taskId,
-    })
     wx.navigateTo({
       url: './editMemberList/editMemberList'
     })
   },
 
-  //变更负责人
+  //
   showChangePrinciple: function () {
-    var that = this
-    //获取任务成员，第一位为负责人
-    wx.setStorage({
-      key: 'TaskDetail-memberList-TaskMember',
-      data: that.data.TaskMemember,
-    })
-    //设置任务ID缓存
-    wx.setStorage({
-      key: 'TaskDetail-memberList-TaskId',
-      data: that.data.taskId,
-    })
-    //获取任务成员列表
     wx.navigateTo({
       url: './changePrincipal/changePrincipal'
     })
@@ -294,17 +232,15 @@ addTaskRecord:function (taskId, userName, record){
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this
-    //获得任务Id
-    wx.getStorage({
-      key: 'TaskDetail-taskId',
-      success: function (res) {
-        that.setData({
-          taskId:res.data
-        })
-      },
-    })
-    //获得任务成员
+    // TaskMemember: [
+    //   {
+    //     //任务负责人
+    //     index: 0,
+    //     icon: "/img/me.png",
+    //     name: '帅涛',
+    //     checked: true,
+    //   },
+    var that = this 
     wx.getStorage({
       key: 'TaskDetail-member',
       success:function(res){

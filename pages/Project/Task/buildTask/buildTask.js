@@ -7,10 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    icon: '',//成员头像
     deadline: '',//截止时间
     list_id: 0,  // 所属任务看板id
-    taskMemberID:[],//任务成员id列表，第一位为任务负责人
-    icon: '',//选中任务成员头像
   },
 
   // 截止时间
@@ -22,7 +21,6 @@ Page({
 
    // 添加成员
   AddMember: function () {
-    var that = this
     var icon = this.data.icon
     wx.setStorageSync("buildTask-membericon", icon)
     wx.navigateTo({
@@ -37,16 +35,14 @@ Page({
     // data validate
     var name = e.detail.value.name
     var end_time = e.detail.value.time
-    var memberId = that.data.taskMemberID//任务成员ID数组
-    console.log("创建任务memberId：", memberId)
-    if (name == "" || name.length == 0 || memberId.length == 0) {
-      wx.showToast({
-        title: '请填写完整',
-        icon:"none",
-        duration:1500,
-      })
+    if(name == "" || name.length == 0) {
       return;
     }
+
+    // data submit
+    var myId = getApp().globalData.userId
+    var memberIds = []
+    memberIds.push(myId)
     wx.getStorage({
       key: "ProjectMore-projId",
       success: function(res) {
@@ -55,7 +51,13 @@ Page({
       },
     })
 
-
+    wx.navigateBack({
+      url: "../../ProjectMore/ProjectMore"
+    })
+    wx.showToast({
+      title: '添加任务成功',
+      icon: 'success',
+    })
   },
 
   /**
@@ -65,18 +67,18 @@ Page({
    *  projId
       listId任务看板id，
       title任务名称
-      memberId任务负责人ID
+      memberIds成员id数组，包括创建者自己（第一个）
       endTime截止时间
    * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
    */
-  createTask: function(projId ,listId, title, memberId, endTime){
+  createTask: function(projId ,listId, title, memberIds, endTime){
     var that = this
     var Task = Bmob.Object.extend("task")
     var task = new Task()
 
-    console.log('创建任务信息： \nListId: ' + listId + '\nTitle: ' + title + '\nMemberId: ' + memberId+'\nEndTime: '+endTime)
+    console.log('创建任务信息： \nListId: '+listId+'\nTitle: '+title+'\nMemberIds: '+memberIds+'\nEndTime: '+endTime)
 
-    var leaderId = memberId  //删除并返回第一个任务负责人的id
+    var leaderId = memberIds.shift()  //删除并返回第一个任务负责人的id
     var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
 
     //添加任务
@@ -94,17 +96,9 @@ Page({
       success: function(result){
         //添加成功
         //添加任务成员信息
-        that.addTaskMembers(result.id/*任务id*/, leaderId, [])
+        that.addTaskMembers(result.id/*任务id*/, leaderId, memberIds)
         // 提示用户添加成功
         console.log("添加任务成功")
-        wx.showToast({
-          title: '添加任务成功',
-          icon: 'success',
-        })
-        wx.navigateBack({
-          url: "../../ProjectMore/ProjectMore"
-        })
-
       },
       error: function(result,error){
         //添加失败
@@ -170,7 +164,6 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
    */
   onShow: function () {
     var that = this
-    //获取任务列表ID
     wx.getStorage({
       key: 'ProjectMore-TaskListId',
       success: function(res) {
@@ -180,29 +173,18 @@ Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
         })
       },
     })
-    //获取任务负责人图标
+
     var icon = wx.getStorageSync("buildTask-memberList-membericon")
     console.log(icon)
-    if (icon == "")
-      this.setData({
-        icon: "/img/add_solid.png"
-      })
-    else {
+    if(icon == "")
+    this.setData({
+      icon: "/img/add_solid.png"
+    })
+    else{
       this.setData({
         icon: icon
       })
     }
-    //获取任务成员
-    wx.getStorage({
-      key: 'buildTask-memberList-memeberId',
-      success: function(res) {
-        that.setData({
-          taskMemberID:res.data
-        })
-      },
-    })
-   
-    
 
   },
 

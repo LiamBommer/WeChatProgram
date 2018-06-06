@@ -1,7 +1,7 @@
 <!--pages/editMemberList/editMemberList.wxml-->
 <view class='memberList-container'>
 
-  <block wx:for="{{ProjectMember}}">
+  <block wx:for="{{ProjectMemember}}">
     <block wx:if="{{index == 0}}">
       <!-- 标题 -->
       <view class='title'>任务负责人</view>
@@ -17,7 +17,7 @@
     </block>
 
     <block wx:else>
-      <checkbox-group bindchange="ProjectMemberChange">
+      <checkbox-group bindchange="ProjectMememberChange">
         <!-- 列表项 -->
         <view class='item'>
           <view class='item-one'>

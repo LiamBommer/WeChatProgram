@@ -5,14 +5,14 @@
   <view class='title'>任务所有成员</view>
 
   <radio-group bindchange='radioChange'>
-    <block wx:for="{{TaskMember}}">
+    <block wx:for="{{TaskMemember}}">
       <!-- 列表项 -->
       <view class='item'>
         <view class='item-one'>
           <image class='item-icon' src='{{item.userPic}}'></image>
           <view class='item-text'>{{item.nickName}}</view>
         </view>
-        <radio value='{{item.objectId}}' checked='{{item.checked}}' />
+        <radio value='{{item.objectId}}' checked='' />
       </view>
     </block>
   </radio-group>
