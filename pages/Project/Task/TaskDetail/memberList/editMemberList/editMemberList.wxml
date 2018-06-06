@@ -25,7 +25,7 @@
             <view class='item-text'>{{item.nickName}}</view>
           </view>
           <checkbox bindtap='clickCheck' data-id="{{item.id}}" data-checked="{{item.checked}}" 
-          data-index="{{index}}" class='item-checkbox' value="" checked='{{item.checked}}'/>
+          data-index="{{index}}" class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
         </view>
       </checkbox-group>
     </block>

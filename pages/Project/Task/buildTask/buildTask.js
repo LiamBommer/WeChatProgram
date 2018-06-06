@@ -48,11 +48,10 @@ Page({
       return;
     }
     wx.getStorage({
-      key: "Project-detail",
+      key: "ProjectMore-projId",
       success: function(res) {
-        console.log("BuildTask", res.data.id, that.data.list_id, name, memberId[0], end_time)
-        
-        that.createTask(res.data.id, that.data.list_id, name, memberId[0], end_time)
+        console.log("BuildTask", res.data, that.data.list_id, name, memberId[0], end_time)
+        that.createTask(res.data, that.data.list_id, name, memberId[0], end_time)
       },
     })
 
@@ -89,6 +88,7 @@ Page({
       is_finish: false,
       has_sub: false,
       is_delete: false,
+      sub_num:0,
       proj_id: projId
     },{
       success: function(result){
