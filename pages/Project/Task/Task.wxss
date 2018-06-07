@@ -121,6 +121,7 @@
 .Task-container .task-container .taskitemDone .taskitem-top .task{
   color: #888888;
   text-decoration:line-through;
+  width: 80%;
 }
 
 .Task-container .task-container .taskitemDone .taskitem-bottom{

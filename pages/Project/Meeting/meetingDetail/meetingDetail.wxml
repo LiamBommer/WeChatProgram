@@ -2,9 +2,9 @@
 <view>
    <view class="view-container">
      <view class='title-view ver-align space-between'>
-      <text class='title' bindtap="modalinputTitle">{{title}}</text>
+      <text class='title' bindtap="modalinputTitle" data-title="{{title}}">{{title}}</text>
         <modal hidden="{{hiddenmodalputTitle}}" title="会议标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
-              <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入会议标题" />
+              <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入会议标题" maxlength='15'/>
         </modal> 
 
        <button class='share' hover-class="share-hover"  open-type="share">
@@ -14,7 +14,7 @@
   </view>
   <view class="view-container">
      <view class='content-view' bindtap='Content'>
-       <text class='content'>会议内容：{{content}}</text>
+       <text class='content' >{{content == ""? '会议内容：' : content}}</text>
      </view>
   </view>
   <view class="view-container">
@@ -46,8 +46,13 @@
         <text class='desc'>成员</text>
       </view>
       <view class="ver-align" bindtap='memberList'>
-        <block wx:for="{{memberIcon}}">
-          <image class='member' src='{{item}}'></image>
+        <block wx:if="{{member == ''}}">
+            <image class='member' src="/img/create.png"></image>
+        </block>
+        <block wx:else>
+          <block wx:for="{{member}}">
+            <image class='member' src='{{item.userPic}}'></image>
+          </block>
         </block>
       </view>
     </view>

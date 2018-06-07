@@ -455,7 +455,7 @@ Page({
     //设置任务成员缓存
     wx.setStorage({
       key: 'ProjectMore-projId',
-      data: that.data.projId,
+      data: that.data.currentProjId,
     })
     wx.navigateTo({
       url: '../Task/buildTask/buildTask?list_id='+listId
@@ -537,7 +537,20 @@ Page({
   /**
    * 显示会议详情页面
    */
-  showMeetingDetail: function() {
+  showMeetingDetail: function(e) {
+    var that = this
+    var meetingId = e.currentTarget.id
+    console.log("showMeetingDetail", meetingId)
+    //设置会议ID缓存
+    wx.setStorage({
+      key: 'ProjectMore-meetingId',
+      data: meetingId,
+    })
+    //设置项目ID缓存
+    wx.setStorage({
+      key: 'ProjectMore-projId',
+      data: that.data.currentProjId,
+    })
     wx.navigateTo({
       url: '../Meeting/meetingDetail/meetingDetail'
     });
@@ -995,7 +1008,6 @@ Page({
         that.setData({
           Announcement: annoucementArr
         })
-
         // 加载完成
         wx.hideLoading()
 
@@ -1029,6 +1041,7 @@ Page({
       success: function (results) {
         //获取成功
         console.log("获取会议详情成功：",results)
+        var oldMonth //存储上一次的月份
         //取数据
         for (var i in results) {
           var id = results[i].id
@@ -1037,7 +1050,7 @@ Page({
           var meetingRecord = results[i].get('meeting_record') //会议记录
           var startTime = results[i].get('start_time')
           console.log("getMeeting-startTime", startTime)
-          if (startTime != ""){
+          if (startTime != ""){//取时间中的月份和日期
           var month = startTime.substring(0,7)
           var day = startTime.substring(8, 10)
           }
@@ -1045,45 +1058,41 @@ Page({
             var month = ''
             var day =''
           }
+          //判断是否跨月份
+          var meetingMonth
           var meeting
-          meeting = {
-            'id': id || '',
-            'title': title || '',
-            'content': content || '',
-           // 'startTime': startTime || '',
-            'month': month || '',
-            'day': day || '',
-            'meetingRecord': meetingRecord
+          if (oldMonth == month) {//没有跨月
+            meeting = {
+              'id': id || '',
+              'title': title || '',
+              'content': content || '',
+              // 'startTime': startTime || '',
+              'day': day || '',
+              'meetingRecord': meetingRecord
+            }
           }
+          else {//跨月份
+            meetingMonth = {
+              'month': month || '',
+            }
+            meeting = {
+              'id': id || '',
+              'title': title || '',
+              'content': content || '',
+              'day': day || '',
+              'meetingRecord': meetingRecord
+            }
+            meetingArr.push(meetingMonth) 
+          }
+          oldMonth = month
           meetingArr.push(meeting)  //存储会议
         }
         if (meetingArr != null && meetingArr.length > 0) {
           //在这里setData
           console.log("会议详情：",meetingArr)
-          // that.setData({
-          //   Meeting: meetingArr
-          // })
-             // {
-      //   month: "2019年5月",
-      // },
-      // {
-      //   day: "22日",
-      //   time: "21:00",
-      //   content: "策划讨论",
-      // },
-      // {
-      //   day: "28日",
-      //   time: "22:30",
-      //   content: "讨论嘉宾人选",
-      // },
-      // {
-      //   month: "2019年6月",
-      // },
-      // {
-      //   day: "1日",
-      //   time: "21:00",
-      //   content: "讨论活动备案",
-      // },
+          that.setData({
+            Meeting: meetingArr
+          })
          
         }
 
@@ -1121,7 +1130,7 @@ Page({
     
 
     var that = this
-    wx.startPullDownRefresh()//刷新
+    // wx.startPullDownRefresh()//刷新
     //获取项目id和名字
     wx.getStorage({
       key: "Project-detail",

@@ -32,19 +32,50 @@ function readAll(userId){
  * 2018-05-31
  * @parameter userId 当前操作用户的id
  * 获取用户的所有通知(由近及远排序)
+ * 获取的数组，每个元素包括
+ * 'id':   //通知的id
+    'fromUserPic':   //通知的来源的人的头像
+    'content':  //通知内容
+    'type':   //通知类型
+    'requestId':   //点击通知时请求的通知详情的对应的 id
+    'isRead':  //判断通知是否已读，fasle为 未读
+    'projectName':   //对应的项目名
+    'createdAt':   //通知创建的时间
+ * 
  */
 function getNotification(userId){
 
   var Notification = Bmob.Object.extend('notification')
   var notificationQuery = new Bmob.Query(Notification)
+  var notificationArr = []
 
   //获取用户的所有通知
   notificationQuery.equalTo("to_user_id", userId)
+  notificationQuery.include('project')
+  notificationQuery.include('from_user')
   notificationQuery.descending("createdAt")
   notificationQuery.find({
     success: function(results){
-      //成功,results为返回的所有通知
+      //成功
+      for(var i in results){
+        var notiObject = {}
+        notiObject = {
+          'id': results[i].id,   //通知的id
+          'fromUserPic': results[i].attributes.from_user.userPic,  //通知的来源的人的头像
+          'content': results[i].get('content'),  //通知内容
+          'type': results[i].get('type'),  //通知类型
+          'requestId': results[i].get('request_id'),  //点击通知时请求的通知详情的对应的 id
+          'isRead': results[i].get('is_read'),  //判断通知是否已读，fasle为 未读
+          'projectName': results[i].attributes.project.name,  //对应的项目名
+          'createdAt': results.get('createdAt')  //通知创建的时间
+        }
 
+        notificationArr.push(notiObject)  //获取到的通知数组
+      }
+      if(notificationArr != null && notificationArr.length > 0){
+        //获取成功, 在这里setData
+        console.log('获取到的通知',notificationArr)
+      }
 
 
 
@@ -182,7 +213,7 @@ function addTaskNotification(projId,taskId,  content){
 /**
  * 2018-06-02
  * @parameter notificationId通知id
- * 已读某一个通知
+ * 用户点开某个通知，已读某一个通知
  */
 function readOneNotification(notificationId){
 

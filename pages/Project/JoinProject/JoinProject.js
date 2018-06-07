@@ -24,7 +24,7 @@ Page({
     })
     // submit
     console.log('加入项目id：' + this.data.projectShareId + '\n用户id：' + this.data.currentUserId)
-    this.joinProject(this.data.projectId, this.data.currentUserId)
+    this.joinProject(this.data.projectShareId, this.data.currentUserId)
 
   },
 
@@ -32,25 +32,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-
-    // 取当前用户id
-    var currentUserId = Bmob.User.current().id
-    that.setData({
-      currentUserId: currentUserId
-    })
-
-    // 取项目信息
-    wx.getStorage({
-      key: 'Project-share-id',
-      success: function(res) {
-        // 查询项目相关信息
-        that.getProjectInfo(res.data)
-        that.setData({
-          projectShareId: res.data
-        })
-      },
-    })
+    
   },
 
   /**
@@ -156,7 +138,26 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    var that = this
+
+    // 取当前用户id
+    var currentUserId = Bmob.User.current().id
+    that.setData({
+      currentUserId: currentUserId
+    })
+
+    // 取项目信息
+    wx.getStorage({
+      key: 'Project-share-id',
+      success: function (res) {
+        // 查询项目相关信息
+        that.getProjectInfo(res.data)
+        that.setData({
+          projectShareId: res.data
+        })
+        console.log("projectShareId", projectShareId)
+      },
+    })
   },
 
   /**

@@ -777,8 +777,10 @@ function transferTaskLeader(taskId,newLeaderId){
   taskQuery.get(taskId,{
     success: function(result){
       //成功
+      result.set('leader',user)
+      result.save()
       //记录操作
-      addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
+      addTaskRecord(taskId, userName, MODIFY_TASK_LEADER)
 
       console.log("变更任务负责人成功！")
     },

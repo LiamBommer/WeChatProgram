@@ -18,13 +18,13 @@
         </block>
         <block wx:else>
           <!-- 列表项 -->
-          <view class='item' bindtap='showMeetingDetail'>
+          <view class='item' bindtap='showMeetingDetail' id='{{item.id}}'>
             <view class='item-first'>
-              <view class='item-date'>{{item.day}}</view>
+              <view class='item-date'>{{item.day}}日</view>
               <view class='item-time'>{{item.time}}</view>
             </view>
             <view class='item-second'>
-              <view class='item-title'>{{item.content}}</view>
+              <view class='item-title'>{{item.title}}</view>
             </view>
             <view></view>
           </view>

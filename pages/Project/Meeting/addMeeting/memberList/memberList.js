@@ -46,10 +46,13 @@ Page({
     for (var id in ProjectMemember) {
       for (var i in MemberId) {
         if (ProjectMemember[id].id == MemberId[i]) {
-          icon.push(ProjectMemember[id].icon)
+          icon.push(ProjectMemember[id].userPic)
         }
       }
     }
+    //设置选中成员的id数组缓存
+    wx.setStorageSync("meetingDetail-memberList-MemberId", MemberId)
+    //设置选中成员的图标缓存
     wx.setStorageSync("meetingDetail-memberList-icon", icon)
     wx.navigateBack({
       url: '../ProjectDetail',
@@ -77,7 +80,8 @@ Page({
   onShow: function () {
     var that = this
     //初始化成员列表
-    var memberList = wx.getStorageSync("ProjectDetail-memberList")
+    var memberList = wx.getStorageSync("meetingDetail-member")
+    console.log("memberList", memberList)
     if (memberList != "") {
       for (var i in memberList)
         memberList[i].checked = false
@@ -94,7 +98,7 @@ Page({
     if (membericon != "") {
       for (var i in memberList) {
         for (var j in membericon)
-          if (memberList[i].icon == membericon[j]) {
+          if (memberList[i].userPic == membericon[j]) {
             memberList[i].checked = true
             that.setData({
               ProjectMemember: memberList,

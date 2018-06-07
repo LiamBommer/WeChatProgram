@@ -11,6 +11,9 @@
   padding-top:40rpx; 
   height: 1000rpx;
 }
+.ModelDetail-container .text textarea{
+  height: 1000rpx;
+}
 
 .ModelDetail-container .save{
    width:146rpx;

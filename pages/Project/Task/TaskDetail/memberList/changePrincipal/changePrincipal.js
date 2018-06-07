@@ -36,6 +36,8 @@ Page({
       success: function (res) {
         var taskId = res.data
         console.log("transferTaskLeader", taskId, newLeaderId)
+        //设置新负责人缓存
+        wx.setStorageSync('changePrincipal-newLeaderId', newLeaderId)
         // 传送后台确认更改，返回
         that.transferTaskLeader(taskId, newLeaderId,userName)
       },
