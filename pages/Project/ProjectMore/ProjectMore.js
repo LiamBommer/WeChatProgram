@@ -178,27 +178,27 @@ Page({
 
     //会议列表
     Meeting: [
-      {
-        month: "2019年5月",
-      },
-      {
-        day: "22日",
-        time: "21:00",
-        content: "策划讨论",
-      },
-      {
-        day: "28日",
-        time: "22:30",
-        content: "讨论嘉宾人选",
-      },
-      {
-        month: "2019年6月",
-      },
-      {
-        day: "1日",
-        time: "21:00",
-        content: "讨论活动备案",
-      },
+      // {
+      //   month: "2019年5月",
+      // },
+      // {
+      //   day: "22日",
+      //   time: "21:00",
+      //   content: "策划讨论",
+      // },
+      // {
+      //   day: "28日",
+      //   time: "22:30",
+      //   content: "讨论嘉宾人选",
+      // },
+      // {
+      //   month: "2019年6月",
+      // },
+      // {
+      //   day: "1日",
+      //   time: "21:00",
+      //   content: "讨论活动备案",
+      // },
     ],
 
     //墙列表
@@ -484,6 +484,18 @@ Page({
    * 打开创建会议页面
    */
   createMeeting: function() {
+    var that = this
+    //设置项目ID缓存
+    wx.setStorage({
+      key: 'ProjectMore-projId',
+      data: that.data.currentProjId,
+    })
+    console.log('ProjectMore-projectMember', that.data.currentProjMember)
+    //设置项目成员缓存
+    wx.setStorage({
+      key: 'ProjectMore-projectMember',
+      data: that.data.currentProjMember,
+    })
     wx.navigateTo({
       url: '../Meeting/addMeeting/addMeeting'
     });
@@ -560,66 +572,7 @@ Page({
     });
   },
 
-  /**
-   *2018-05-18
-   *@author mr.li
-   @parameter projId 项目id
-   *@return 指定项目的所有公告数组
-   *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
-   * 
-   */
-  getAnnouncements:function (projId){
-   var that = this
-    var Annoucement = Bmob.Object.extend("annoucement")
-      var annoucementQuery = new Bmob.Query(Annoucement)
-
-      var annoucementArr = []  //所有公告数组
-
-      //查询出此项目中的所有公告，默认10条
-      annoucementQuery.equalTo("proj_id", projId)
-      annoucementQuery.include("publisher")
-      annoucementQuery.descending("createdDate")  //根据时间降序排列
-      annoucementQuery.find({
-          success: function (results) {
-        //console.log("共查询到公告 " + results.length + " 条记录");
-        console.log('Announcements: \n')
-        console.log(results)
-        // 循环处理查询到的数据
-        for (var i = 0; i < results.length; i++) {
-          var result = results[i]
-          console.log(result)
-          var createdAt = result.createdAt.substring(0,16)
-          
-          var object = {}
-          object = {
-            id: result.id,
-            title: result.attributes.title,
-            content: result.attributes.content,
-            read: result.attributes.read_num,
-            time: createdAt,
-            icon: result.changed.publisher.userPic,
-            memberName: result.changed.publisher.nickName,
-            is_showmember: result.attributes.is_showmember,
-          }
-          annoucementArr.push(object)
-        }
-
-        //在这里setdata
-        console.log("查询到的公告数组", annoucementArr)
-        that.setData({
-          Announcement: annoucementArr
-        })
-        
-        // 加载完成
-        wx.hideLoading()
-
-      },
-      error: function (error) {
-        console.log("查询失败: " + error.code + " " + error.message);
-      }
-    })
-
-  },
+  
   /**
  * 2018-05-19
  * @author mr.li
@@ -859,6 +812,7 @@ Page({
           that.setData({
             currentProjMember: userArr
           })
+          //设置项目成员缓存
           wx.setStorage({
             key: 'ProjectMore-projectMember',
             data: userArr,
@@ -992,7 +946,133 @@ Page({
 
   },
 
+  /**
+   *2018-05-18
+   *@author mr.li
+   @parameter projId 项目id
+   *@return 指定项目的所有公告数组
+   *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
+   * 
+   */
+  getAnnouncements: function (projId) {
+    var that = this
+    var Annoucement = Bmob.Object.extend("annoucement")
+    var annoucementQuery = new Bmob.Query(Annoucement)
 
+    var annoucementArr = []  //所有公告数组
+
+    //查询出此项目中的所有公告，默认10条
+    annoucementQuery.equalTo("proj_id", projId)
+    annoucementQuery.include("publisher")
+    annoucementQuery.descending("createdDate")  //根据时间降序排列
+    annoucementQuery.find({
+      success: function (results) {
+        //console.log("共查询到公告 " + results.length + " 条记录");
+        console.log('Announcements: \n')
+        console.log(results)
+        // 循环处理查询到的数据
+        for (var i = 0; i < results.length; i++) {
+          var result = results[i]
+          console.log(result)
+          var createdAt = result.createdAt.substring(0, 16)
+
+          var object = {}
+          object = {
+            id: result.id,
+            title: result.attributes.title,
+            content: result.attributes.content,
+            read: result.attributes.read_num,
+            time: createdAt,
+            icon: result.changed.publisher.userPic,
+            memberName: result.changed.publisher.nickName,
+            is_showmember: result.attributes.is_showmember,
+          }
+          annoucementArr.push(object)
+        }
+
+        //在这里setdata
+        console.log("查询到的公告数组", annoucementArr)
+        that.setData({
+          Announcement: annoucementArr
+        })
+
+        // 加载完成
+        wx.hideLoading()
+
+      },
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+      }
+    })
+
+  },
+
+  /**
+   * @parameter projId 项目id
+   * 获取某项目下未删除的所有会议的基本信息（id，title，content，startTime,meetingRecord),如果这些信息为null则用''代替
+   * ,按开始时间升序排列（时间越近排序越后）
+   * 项目成员在另外一个函数 getMeetingMember
+   * 一次最多获取50条
+   */
+  getMeeting:function (projId){
+    var that = this
+    var Meeting = Bmob.Object.extend('meeting')
+    var meetingQuery = new Bmob.Query(Meeting)
+    var meetingArr = []  //存储获取的会议的数组
+
+    //获取某项目下的所有未删除的会议
+    meetingQuery.equalTo('proj_id', projId)
+    meetingQuery.equalTo('is_delete', false)
+    meetingQuery.ascending('start_time')
+    meetingQuery.limit(50)
+    meetingQuery.find({
+      success: function (results) {
+        //获取成功
+        console.log("获取会议详情成功：",results)
+        //取数据
+        for (var i in results) {
+          var id = results[i].id
+          var title = results[i].get('title')
+          var content = results[i].get('content')
+          var meetingRecord = results[i].get('meeting_record') //会议记录
+          var startTime = results[i].get('start_time')
+          console.log("getMeeting-startTime", startTime)
+          if (startTime != ""){
+          var month = startTime.substring(0,7)
+          var day = startTime.substring(8, 10)
+          }
+          else {
+            var month = ''
+            var day =''
+          }
+          var meeting
+          meeting = {
+            'id': id || '',
+            'title': title || '',
+            'content': content || '',
+           // 'startTime': startTime || '',
+            'month': month || '',
+            'day': day || '',
+            'meetingRecord': meetingRecord
+          }
+          meetingArr.push(meeting)  //存储会议
+        }
+        if (meetingArr != null && meetingArr.length > 0) {
+          //在这里setData
+          console.log("会议详情：",meetingArr)
+          // that.setData({
+          //   Meeting: meetingArr
+          // })
+         
+        }
+
+      },
+      error: function (error) {
+        //获取失败
+        console.log("获取某项目下的所有未删除的会议失败!")
+      }
+    })
+  },
 
 
   /**
@@ -1021,7 +1101,7 @@ Page({
 
     var that = this
     wx.startPullDownRefresh()//刷新
-    //第一次执行
+    //获取项目id和名字
     wx.getStorage({
       key: "Project-detail",
       success: function (res) {
@@ -1032,30 +1112,11 @@ Page({
           currentProjId: projId,
           currentProjName: ProjectName
         })
-
         console.log("onshow:project", res.data)
-
-        //第一次打开时创建一个任务列表
-        var tasklist = that.data.tasklist
-        var Length = tasklist.length//数组长度
-        console.log("第一次打开时tasklist的长度", Length)
-
-        // if (Length == 0){
-        //   tasklist.push({
-        //     title: '未完成'
-        //   })
-        //   that.setData({
-        //     tasklist: tasklist,
-        //     currentItem: 0,
-        //   });
-        //   var projId = res.data.id
-        //   that.createTaskList(projId, "新增")//projId 项目id，title任务看板名称
-        // }
-
-
-        that.getAnnouncements(projId)//获取公告ID
-        that.getTaskLists(projId);//获取任务ID
+        that.getTaskLists(projId);//获取任务详情
         that.getProjectMember(projId);//获取项目成员
+        that.getAnnouncements(projId)//获取公告详情
+        that.getMeeting(projId)//获取会议详情
       },
     })
 
@@ -1068,9 +1129,6 @@ Page({
       that.getTaskLists(currentProjId);//获取任务ID
       that.getProjectMember(currentProjId);//获取项目成员
     }
-
-
-   
 
   },
 

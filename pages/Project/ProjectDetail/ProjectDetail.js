@@ -272,7 +272,7 @@ Page({
       // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
       userQuery.find({
         success: function (results) {
-
+          console.log("results", results)
           // 循环处理查询到的数据
           for (var i = 0; i < results.length; i++) {
             var result = results[i];

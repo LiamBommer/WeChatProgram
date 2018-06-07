@@ -1639,13 +1639,29 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         })
       },
     })
+    //更改任务负责人时刷新后台
+    var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
     var taskId = that.data.taskId
-    var leaderId = that.data.leaderId
+    if (taskId != "" && leaderId != "") {
+      console.log("新负责人：刷新后台！", taskId, leaderId)
+      wx.showLoading({
+        title: '正在加载',
+        mask: 'true'
+      })
+      that.setData({
+        leaderId: leaderId
+      })
+      that.getTaskMember(taskId, leaderId)//获取任务成员
+      that.getSubtasks(taskId);//获取子任务列表
+    }
+    else{
+      //返回时刷新后台
+      that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
+      that.getSubtasks(taskId);//获取子任务列表
+    }
     // console.log("taskId", taskId)
     // console.log("leaderId", leaderId)
     // that.getTaskDetail(taskId);//获取任务详情
-    that.getTaskMember(taskId, leaderId)//获取任务成员
-    that.getSubtasks(taskId);//获取子任务列表
     
 
     //项目成员

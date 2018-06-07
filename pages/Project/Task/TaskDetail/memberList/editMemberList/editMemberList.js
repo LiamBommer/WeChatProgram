@@ -85,6 +85,7 @@ Page({
         else {
           that.addTaskMember(taskId, memberIds, userName)//添加任务成员
           that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
+          
         }
       },
     })

@@ -179,18 +179,20 @@ Page({
         //刷新“加入任务”是否隐藏
         var TaskMememberId = getApp().globalData.userId//当前操作者ID
         var TaskMemember = memberArr//任务成员
+        var check = false//判断当前操作者是否还在任务中
         for (var i in TaskMemember) {
           if (TaskMemember[i].objectId == TaskMememberId) {//如果当前操作者已在任务中
             that.setData({
               isInTask: true
             })
+            check = true
           }
-          else {
-            that.setData({
-              isInTask: false
-            })
-          }
-        }
+        }  
+        if (check == false)//如果当前操作者不在任务中
+          that.setData({
+            isInTask: false
+          })
+        
 
         // 加载完成
         wx.hideLoading()
@@ -308,23 +310,26 @@ addTaskRecord:function (taskId, userName, record){
     wx.getStorage({
       key: 'TaskDetail-member',
       success:function(res){
-        console.log(res)
+        console.log("获得任务成员",res)
         //隐藏按钮
         var TaskMememberId = getApp().globalData.userId//当前操作者ID
         var TaskMemember = res.data//任务成员
         console.log("TaskMemember", TaskMemember)
+        var check = false//判断当前操作者是否还在任务中
         for (var i in TaskMemember) {
           if (TaskMemember[i].objectId == TaskMememberId) {//如果当前操作者已在任务中
             that.setData({
               isInTask: true
             })
-          }
-          else {
-            that.setData({
-              isInTask: false
-            })
+            check = true
           }
         }
+        if (check == false)//如果当前操作者不在任务中
+          that.setData({
+            isInTask: false
+          })
+
+
         that.setData({
           TaskMemember: res.data
         }) 
@@ -342,7 +347,16 @@ addTaskRecord:function (taskId, userName, record){
       },
     })
     //从后台刷新任务成员
-    if (that.data.taskId != "" && that.data.TaskMemember[0].objectId != "") {
+    var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
+    if (that.data.taskId != "" && leaderId != "") {
+      console.log("新负责人：刷新后台！", that.data.taskId, leaderId)
+      wx.showLoading({
+        title: '正在加载',
+        mask: 'true'
+      })
+      that.getTaskMember(that.data.taskId, leaderId)
+    }
+    else if (that.data.taskId != "" && that.data.TaskMemember[0].objectId != "") {
       console.log("刷新后台！", that.data.taskId, that.data.TaskMemember[0].objectId)
       wx.showLoading({
         title: '正在加载',
