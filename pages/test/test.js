@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/schedule.js')
+var test = require('../../model/projectDetail.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -91,8 +91,10 @@ Page({
      //test.addCreateMeetingMember('123','722e010ffe',['23','456'])
     // test.getMeetingMember('722e010ffe')
     // test.modifyScheduleStartTime('e645f9e760','27c7a2e907','2018-06-06')
-  },
+     //test.deleteProjectMember('f79ece7fdd', ['5e2b90f2ce'])
+     //test.addProjectMember('852f280d24', ['46afed01fb', '5e2b90f2ce','f74f3aa1e1'])
 
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

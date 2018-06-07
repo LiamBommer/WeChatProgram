@@ -551,6 +551,46 @@ function deleteMeetingMember(projId, meetingId, memberIds) {
 
 }
 
+/**
+ * 获取某个会议的详情
+ * meeting =
+'id': result.id || '', //会议id
+'title': result.get('title') || '',  //会议标题
+'start_time': result.get('start_time') || '',  //会议开始时间
+'content': result.get('content') || '',  //会议内容
+'meetingRecord': result.get('meeting_record') || '' ,  //会议记录
+
+ */
+function getOneMeeting(meetingId){
+
+  var Meeting = Bmob.Object.extend('meeting')
+  var meetingQuery = new Bmob.Query(Meeting)
+
+  //获取某个会议的详情
+  meetingQuery.get(meetingId,{
+    success: function(result){
+      //成功
+      var meeting
+      meeting = {
+        'id': result.id || '', //会议id
+        'title': result.get('title') || '',  //会议标题
+        'start_time': result.get('start_time') || '',  //会议开始时间
+        'content': result.get('content') || '',  //会议内容
+        'meetingRecord': result.get('meeting_record') || '' ,  //会议记录
+      }
+      //获取到的会议 meeting
+      console.log(meeting)
+
+
+
+    },
+    error: function(error){
+      //失败
+      console.log('获取会议失败')
+
+    }
+  })
+}
 module.exports.createMeeting = createMeeting
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getMeeting = getMeeting
