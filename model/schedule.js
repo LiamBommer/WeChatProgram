@@ -400,8 +400,62 @@ function deleteOneScheduleTask(scheduleTaskId){
     }
   })
 }
+
+/**
+ * parameter projId 项目id，scheduleId 日程id， oldTaskIds旧的任务id数组, newTaskIds新的任务id数组
+ * 修改关联任务，将原先的都删除，然后添加新的关联任务数组
+ */
+function modifyRelatedTasks(projId, scheduleId, oldTaskIds, newTaskIds){
+
+  var that = this
+  var Scheduletask = Bmob.Object.extend('schedule_task')
+  var scheduletaskQuery = new Bmob.Query(Scheduletask)
+  var scheduletaskArr = []
+
+  //将原来关联的任务删除
+  if(oldTaskIds != null && oldTaskIds.length > 0){
+    scheduletaskQuery.containedIn('task', oldTaskIds)
+    scheduletaskQuery.equalTo('schedule_id',scheduleId)
+
+    scheduletaskQuery.destroyAll({
+      success: function () {
+        //删除成功
+        //然后加入新的关联任务
+        if(newTaskIds != null && newTaskIds.length>0){
+          for(var i in newTaskIds){
+            var scheduletask = new Scheduletask()
+            var task = Bmob.Object.createWithoutData("task", newTaskIds[i])
+            scheduletask.set('task',task)
+            scheduletask.set('schedule_id',scheduleId)
+            scheduletaskArr.push(scheduletask)  //这个数组用来批量添加用
+          }
+          if (scheduletaskArr != null && scheduletaskArr.length > 0){
+            Bmob.Object.saveAll(scheduletaskArr).then(function (results) {
+              // 重新添加关联的任务成功
+              console.log('修改关联任务成功！')
+
+            },
+              function (error) {
+                // 异常处理
+                console.log('修改关联任务中的重新添加关联任务失败！')
+                
+              })
+          }
+        }
+        
+      },
+      error: function (err) {
+        // 删除失败,即修改关联任务失败
+        console.log('修改关联任务失败')
+      }
+    })
+  }
+
+}
 module.exports.createSchedule = createSchedule
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getSchedules = getSchedules
 module.exports.addRelatedTask = addRelatedTask
 module.exports.modifyScheduleStartTime = modifyScheduleStartTime
+module.exports.modifyRelatedTasks = modifyRelatedTasks
+
