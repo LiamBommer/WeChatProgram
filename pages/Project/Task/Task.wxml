@@ -12,9 +12,10 @@
                       <text class='title' bindtap="modalinputTitle" data-id="{{item.listId}}" data-title="{{item.title}}">{{item.title}}</text> 
                       <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" 
                       bindconfirm="confirmTitle"> 
-                            <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" />
+                            <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题"  
+                            maxlength='20'/>
                       </modal> 
-                      <image class='more' src='/img/more.png' data-id="{{item.listId}}" bindtap='Taskmore'></image>
+                      <image class='more' src='/img/more.png' data-id="{{item.listId}}" data-index="{{index}}" bindtap='Taskmore'></image>
                   </view>
           
                   <!-- 任务项 -->
@@ -37,7 +38,7 @@
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
                               <view class='taskicon'>
-                                  <block wx:if="{{tasks.has_sub}}">
+                                  <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
                               </view>
@@ -62,7 +63,7 @@
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
                               <view class='taskicon'>
-                                  <block wx:if="{{tasks.has_sub}}">
+                                  <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
                               </view>

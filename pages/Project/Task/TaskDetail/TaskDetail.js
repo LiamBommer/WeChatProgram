@@ -55,10 +55,10 @@ Page({
     inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID
     member:[],//任务成员
+    projectMember:[],//项目成员
     focus:false,//输入框焦点
-
-
     show: false,
+
     deadline: '2018-06-01',//截止时间
     DeadlineisTouchMove: false,//判断滑动截止时间
     DeadlinetxtStyle:"",//截止时间滑动距离
@@ -186,11 +186,25 @@ Page({
   confirmTitle: function (e) {
     var that = this
     var userName = getApp().globalData.nickName
-    that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
-    this.setData({
-      hiddenmodalputTitle: true,
-      title: this.data.inputTitle
-    })
+    if (that.data.inputTitle == ""){
+      // 提示标题不可为空
+      wx.showToast({
+        title: '项目名称不见咯',
+        icon: 'none',
+        duration: 1500,
+      })
+    } else {
+      // 显示loading
+      wx.showLoading({
+        title: '正在修改...',
+      })
+      that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
+      this.setData({
+        hiddenmodalputTitle: true,
+        title: this.data.inputTitle
+      })
+    }
+    
   },
   //任务标题输入
   input: function (e) {
@@ -254,30 +268,78 @@ Page({
        success: function(res) {
          // 提醒时间
          if(res.tapIndex == 0) {
-           that.setData({
-             showRemindTime: true
-           });
+           if (that.data.showRemindTime == false) {
+             that.setData({
+               showRemindTime: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 反馈时间
          if(res.tapIndex == 1) {
-           that.setData({
-             showFeedbackTime: true
-           });
+           if (that.data.showFeedbackTime == false) {
+             that.setData({
+               showFeedbackTime: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 反馈模板
          if(res.tapIndex == 2) {
-           that.setData({
-             showFeedbackModel: true
-           });
+           if (that.data.showFeedbackModel == false) {
+             that.setData({
+               showFeedbackModel: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
 
          // 任务描述
          if(res.tapIndex == 3) {
-           that.setData({
-             showDescription: true
-           });
+           if (that.data.showDescription == false) {
+             that.setData({
+               showDescription: true
+             });
+             wx.showToast({
+               title: '添加成功',
+             })
+           }
+           else {
+             wx.showToast({
+               title: '已经添加过啦',
+               icon: 'none',
+               duration: 1500,
+             })
+           }
          }
        },
        fail: function(res) {
@@ -286,13 +348,56 @@ Page({
      });
 
   },
+  
+  //手指触摸动作开始 记录起点X坐标
+  touchstart: function (e) {
+    //开始触摸时 重置所有删除
+    this.data.ChildTask.forEach(function (v, i) {
+      if (v.isTouchMove)//只操作为true的
+      {
+        v.isTouchMove = false;
+        v.txtStyle = ''
+      }
+    })
+    this.data.DeadlineisTouchMove = false,//判断滑动截止时间
+      this.data.DeadlinetxtStyle = "",//截止时间滑动距离
+      this.data.RemindtimeisTouchMove = false,//判断滑动提醒时间
+      this.data.RemindtimetxtStyle = "",//截止时间滑动距离
+      this.data.FeedbackisTouchMove = false,//判断滑动反馈时间
+      this.data.FeedbacktxtStyle = "",//截止时间滑动距离
+
+      this.setData({
+        startX: e.changedTouches[0].clientX,
+        startY: e.changedTouches[0].clientY,
+        ChildTask: this.data.ChildTask,
+        DeadlineisTouchMove: this.data.DeadlineisTouchMove,
+        DeadlinetxtStyle: this.data.DeadlinetxtStyle,
+        RemindtimeisTouchMove: this.data.RemindtimeisTouchMove,
+        RemindtimetxtStyle: this.data.RemindtimetxtStyle,
+        FeedbackisTouchMove: this.data.FeedbackisTouchMove,
+        FeedbacktxtStyle: this.data.FeedbacktxtStyle,
+      })
+  },
 
   // 成员列表
   MemberList: function(e) {
-    console.log("MemberList:", this.data.member)
+    var that = this
+    console.log("MemberList:", that.data.member)
+    console.log("projectMember:", that.data.projectMember)
+    //设置任务id缓存
+    wx.setStorage({
+      key: 'TaskDetail-taskId',
+      data: that.data.taskId,
+    })
+    //设置任务成员缓存
     wx.setStorage({
       key: 'TaskDetail-member',
-      data: this.data.member,
+      data: that.data.member,
+    })
+    //设置项目成员缓存
+    wx.setStorage({
+      key: 'TaskDetail-projectMember',
+      data: that.data.projectMember,
     })
     wx.navigateTo({
       url: './memberList/memberList',
@@ -306,7 +411,6 @@ Page({
     var taskId = that.data.taskId
     var endTime = e.detail.value
     that.modifyEndTime(taskId, endTime, userName)
-    
     this.setData({
       deadline: e.detail.value
     })
@@ -558,8 +662,8 @@ Page({
             taskDesc: result.attributes.desc,
           })
         }
-        
-        //成功
+        // 加载完成
+        wx.hideLoading()
       },
       error: function (error) {
         //失败
@@ -609,7 +713,10 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
-
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -676,7 +783,8 @@ Page({
         })
 
 
-
+        // 加载完成
+        wx.hideLoading()
 
 
       },
@@ -696,7 +804,7 @@ Page({
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
 
-    //添加反馈模板
+    //添加截止时间
     taskQuery.get(taskId, {
       success: function (result) {
         //成功情况
@@ -704,6 +812,10 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_END_TIME)
+        //修改截止时间成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -728,35 +840,19 @@ deleteEndTime:function (taskId, userName) {
         result.set('end_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除截止时间成功")
-        addTaskRecord(taskId, userName, DELETE_END_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_END_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
-
+         console.log("error")
       }
     })
   },
 
-
-//滑动删除截止时间：手指触摸动作开始 记录起点X坐标
-  touchstartDeadline: function (e) {
-    var DeadlineisTouchMove = this.data.DeadlineisTouchMove
-    var DeadlinetxtStyle = this.data.DeadlinetxtStyle
-  //开始触摸时 重置所有删除
-    if (DeadlineisTouchMove)//只操作为true的
-    {
-      DeadlineisTouchMove = false
-      DeadlinetxtStyle = ''
-    }
-
-  this.setData({
-    startX: e.changedTouches[0].clientX,
-    startY: e.changedTouches[0].clientY,
-    DeadlineisTouchMove: DeadlineisTouchMove,
-    DeadlinetxtStyle: DeadlinetxtStyle,
-  })
-
-},
-//滑动事件处理
+//滑动删除截止时间：滑动事件处理
   touchmoveDeadline: function (e) {
   var that = this
   var startX = that.data.startX//开始X坐标
@@ -795,13 +891,27 @@ deleteEndTime:function (taskId, userName) {
       content: '确定要删除截止时间吗？',
       success: function (res) {
         if (res.confirm) {
-          var userName = getApp().globalData.nickName
-          var taskId = that.data.taskId
-          that.deleteEndTime(taskId, userName)
-          that.setData({
-            DeadlineisTouchMove: that.data.DeadlineisTouchMove,
-            DeadlinetxtStyle: that.data.DeadlinetxtStyle,
-          })
+          if (that.data.deadline == ""){
+            wx.showToast({
+              title: '已经没有东西能删啦',
+              icon:"none",
+              duration:1500,
+            })
+            that.setData({
+              DeadlineisTouchMove: false,
+              DeadlinetxtStyle: "",
+            })
+          }
+          else {
+            var userName = getApp().globalData.nickName
+            var taskId = that.data.taskId
+            that.deleteEndTime(taskId, userName)
+            that.setData({
+              DeadlineisTouchMove: false,
+              DeadlinetxtStyle: "",
+              deadline: '',
+            })
+          }
         }
       }
     })
@@ -825,7 +935,11 @@ deleteEndTime:function (taskId, userName) {
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_NOTI_TIME)
-        console.log("modifyNotiTime",result)
+        console.log("modifyNotiTime", result)
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -848,36 +962,22 @@ deleteEndTime:function (taskId, userName) {
         result.set('noti_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除提醒时间成功")
-        addTaskRecord(taskId, userName, DELETE_NOTI_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_NOTI_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
 
+        console.log("error")
       }
     })
 
   },
 
 
-  //滑动删除提醒时间：手指触摸动作开始 记录起点X坐标
-  touchstartRemindtime: function (e) {
-    var RemindtimeisTouchMove = this.data.RemindtimeisTouchMove
-    var RemindtimetxtStyle = this.data.RemindtimetxtStyle
-    //开始触摸时 重置所有删除
-    if (RemindtimeisTouchMove)//只操作为true的
-    {
-      RemindtimeisTouchMove = false
-      RemindtimetxtStyle = ''
-    }
-
-    this.setData({
-      startX: e.changedTouches[0].clientX,
-      startY: e.changedTouches[0].clientY,
-      RemindtimeisTouchMove: RemindtimeisTouchMove,
-      RemindtimetxtStyle: RemindtimetxtStyle,
-    })
-
-  },
-  //滑动事件处理
+  //滑动删除提醒时间：滑动事件处理
   touchmoveRemindtime: function (e) {
     var that = this
     var startX = that.data.startX//开始X坐标
@@ -909,7 +1009,7 @@ deleteEndTime:function (taskId, userName) {
     });
   },
   //删除提醒时间
-  delDeadline: function (e) {
+  delRemindtime: function (e) {
     var that = this
     wx.showModal({
       title: '提示',
@@ -920,8 +1020,10 @@ deleteEndTime:function (taskId, userName) {
           var taskId = that.data.taskId
           that.deleteNotiTime(taskId, userName)
           that.setData({
-            RemindtimeisTouchMove: that.data.RemindtimeisTouchMove,
-            RemindtimetxtStyle: that.data.RemindtimetxtStyle,
+            RemindtimeisTouchMove: false,
+            RemindtimetxtStyle:'' ,
+            remindtime:'',
+            showRemindTime:false,
           })
         }
       }
@@ -948,6 +1050,10 @@ deleteEndTime:function (taskId, userName) {
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_TIME)
 
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (object, error) {
         //失败情况
@@ -970,34 +1076,21 @@ deleteEndTime:function (taskId, userName) {
         result.set('feedback_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除反馈时间成功")
-        addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+        that.addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (error) {
 
+        console.log("error")
       }
     })
   },
 
-  //滑动删除反馈时间：手指触摸动作开始 记录起点X坐标
-  touchstartFeedback: function (e) {
-    var FeedbackisTouchMove = this.data.FeedbackisTouchMove
-    var FeedbacktxtStyle = this.data.FeedbacktxtStyle
-    //开始触摸时 重置所有删除
-    if (FeedbackisTouchMove)//只操作为true的
-    {
-      FeedbackisTouchMove = false
-      FeedbacktxtStyle = ''
-    }
-
-    this.setData({
-      startX: e.changedTouches[0].clientX,
-      startY: e.changedTouches[0].clientY,
-      FeedbackisTouchMove: FeedbackisTouchMove,
-      FeedbacktxtStyle: FeedbacktxtStyle,
-    })
-
-  },
-  //滑动事件处理
+  
+  //滑动删除反馈时间：滑动事件处理
   touchmoveFeedback: function (e) {
     var that = this
     var startX = that.data.startX//开始X坐标
@@ -1029,7 +1122,7 @@ deleteEndTime:function (taskId, userName) {
     });
   },
   //删除反馈时间
-  delDeadline: function (e) {
+  delFeedback: function (e) {
     var that = this
     wx.showModal({
       title: '提示',
@@ -1040,8 +1133,10 @@ deleteEndTime:function (taskId, userName) {
           var taskId = that.data.taskId
           that.deleteFeedbackTime(taskId, userName)
           that.setData({
-            FeedbackisTouchMove: that.data.FeedbackisTouchMove,
-            FeedbacktxtStyle: that.data.FeedbacktxtStyle,
+            FeedbackisTouchMove: false,
+            FeedbacktxtStyle: '',
+            feedbacktime:'',
+            showFeedbackTime:false,
           })
         }
       }
@@ -1121,6 +1216,8 @@ deleteEndTime:function (taskId, userName) {
           })
           console.log("ChildTask:", that.data.ChildTask)
         }
+        // 加载完成
+        wx.hideLoading()
       },
       error: function (error) {
 
@@ -1202,8 +1299,11 @@ redoSubTask:function (subTaskId, is_finish) {
         result.set("title", newTitle)
         result.save()
         //记录
-        that.addTaskRecord(subTaskId, userName, MODIFY_SUB_TASK_TITLE)
-
+        that.addTaskRecord(taskId, userName, MODIFY_SUB_TASK_TITLE)
+        //成功
+        wx.showToast({
+          title: '设置成功',
+        })
       },
       error: function (error) {
         //失败
@@ -1216,7 +1316,7 @@ redoSubTask:function (subTaskId, is_finish) {
  * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
  * 删除子任务
  */
-deleteSubTask:function (subTaskId, userName, subTaskTitle) {
+deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtaskQuery = new Bmob.Query(Subtask)
@@ -1227,8 +1327,13 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
       success: function () {
         //删除成功
         console.log("删除子任务成功！")
+        that.modifySubNum(taskId,-1)
         //记录操作
-        that.addTaskRecord(subTaskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        that.addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        //成功
+        wx.showToast({
+          title: '删除成功',
+        })
       },
       error: function (err) {
         // 删除失败
@@ -1236,26 +1341,28 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
     })
   },
 
-//滑动删除子任务：手指触摸动作开始 记录起点X坐标
-  touchstart: function(e) {
-     //开始触摸时 重置所有删除
-    this.data.ChildTask.forEach(function (v, i) {
-        if (v.isTouchMove)//只操作为true的
-        {
-          console.log("touchstart")
-          v.isTouchMove = false;
-          v.txtStyle = ''
-        }
-    
-  })
-     this.setData({
-        startX: e.changedTouches[0].clientX,
-        startY: e.changedTouches[0].clientY,
-        ChildTask: this.data.ChildTask
-   })
-  
-},
-  //滑动事件处理
+
+  /**
+   * 修改子任务的数量
+   */
+  modifySubNum: function (taskId,num) {
+
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    taskQuery.get(taskId, {
+      success: function (result) {
+        //成功
+        result.increment('sub_num',num)
+        result.save()
+      },
+      error: function (error) {
+        //失败
+        console.log("修改子任务的数量失败:", error)
+      }
+    })
+  },
+  //滑动删除子任务：滑动事件处理
   touchmove: function (e) {
      var that = this
      var index = e.currentTarget.dataset.index//当前索引
@@ -1310,9 +1417,10 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
        if(res.confirm){
          that.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
          var subTaskId = e.currentTarget.dataset.id
+         var taskId = that.data.taskId
          var subTaskTitle = e.currentTarget.dataset.childTitle
          var userName = getApp().globalData.nickName
-         that.deleteSubTask(subTaskId, userName, subTaskTitle)
+         that.deleteSubTask(taskId,subTaskId, userName, subTaskTitle)
          that.setData({
            ChildTask: that.data.ChildTask
          })
@@ -1355,7 +1463,8 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         that.setData({
           taskremind: taskremind
         })
-
+        // 加载完成
+        wx.hideLoading()
       },
       error: function (error) {
         //失败
@@ -1404,6 +1513,8 @@ deleteSubTask:function (subTaskId, userName, subTaskTitle) {
         that.setData({
           chat: commentList
           })
+        // 加载完成
+        wx.hideLoading()
       },
       error: function (error) {
         //获取评论失败
@@ -1495,6 +1606,10 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
     var that = this;
     //任务
     wx.getStorage({
@@ -1514,7 +1629,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         that.getTaskComment(taskId)//获取评论
       },
     })
-    //项目
+    //获取项目数据
     wx.getStorage({
       key: "ProjectMore-projName",
       success: function (res) {
@@ -1532,6 +1647,19 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     that.getTaskMember(taskId, leaderId)//获取任务成员
     that.getSubtasks(taskId);//获取子任务列表
     
+
+    //项目成员
+    wx.getStorage({
+      key: 'ProjectMore-projectMember',
+      success: function (res) {
+        var memberList = res.data
+        console.log('ProjectMore-projectMember', memberList)
+        that.setData({
+          projectMember: memberList
+        })
+      },
+    })
+
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间
       var currentTime = currentT.substring(9, 15)

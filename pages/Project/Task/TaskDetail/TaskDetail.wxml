@@ -1,5 +1,5 @@
 <!--pages/Project/Task/TaskDetail/TaskDetail.wxml-->
-<view  >
+<view bindtouchstart="touchstart" >
   <!-- 标题 -->
   <view class="view-container" >
      <view class='title-view ver-align space-between'>
@@ -7,9 +7,9 @@
         <checkbox-group bindchange="checkboxChange">
           <checkbox class='item-checkbox' checked='{{checked}}'/>
         </checkbox-group>
-          <text class='title' bindtap="modalinputTitle">{{title}}</text> 
+          <text class='title' bindtap="modalinputTitle" >{{title}}</text> 
           <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
-                <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" />
+                <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" maxlength='15'/>
           </modal>   
        </view>
        <button class='share' hover-class="share-hover"  open-type="share"><image src='{{icon_share}}'></image></button>
@@ -20,7 +20,6 @@
   <!-- 内容 -->
   <view class="view-container"id='j_page'>
         <view class="item-view" bindtap='MemberList'>
-          <!-- <image class='header' src='{{icon_person}}'></image> -->
           <block wx:for="{{member}}">
             <image class='membericon' src='{{item.userPic}}'></image>
           </block>
@@ -28,7 +27,7 @@
 
       <view class="touch-item '{{DeadlineisTouchMove ? 'touch-move-active' : ''}}" >
         <view style='{{DeadlinetxtStyle}}'
-        class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartDeadline" bindtouchmove="touchmoveDeadline" >
+        class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveDeadline" >
           <image src='{{icon_deadline}}'></image>
           <view class='desc'>
             <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
@@ -50,7 +49,7 @@
         <!-- 内容隐藏 -->
       <view class="touch-item '{{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}'>
         <view style='{{RemindtimetxtStyle}}'
-          class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartRemindtime" bindtouchmove="touchmoveRemindtime" > 
+          class="contentminddle scroll-view-item item-view"bindtouchmove="touchmoveRemindtime" > 
           <image src='/img/alarm.png'></image>
           <view class='desc'>
               <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
@@ -60,13 +59,13 @@
               </picker>
           </view>
         </view>
-        <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+        <view class="del"  catchtap="delRemindtime" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
         </view>
       </view>
 
         <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}'>
           <view style='{{FeedbacktxtStyle}}'
-            class="contentminddle scroll-view-item item-view" bindtouchstart="touchstartFeedback" bindtouchmove="touchmoveFeedback" >
+            class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveFeedback" >
             <image src='/img/feedback_time.png'></image>
             <view class='desc'>
                 <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
@@ -76,13 +75,13 @@
                 </picker>
             </view>
           </view>
-          <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
+          <view class="del"  catchtap="delFeedback" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
           </view>
         </view>
 
           <view style='display:{{showFeedbackModel? "" : "none"}}'
             class=" scroll-view-item item-view" bindtap='Feedback'
-            bindtouchstart="touchstart" bindtouchmove="touchmove" >
+           bindtouchmove="touchmove" >
               <image src='/img/feedback_model.png'></image>
               <text class='desc'>反馈模板</text>
           </view>
@@ -113,7 +112,7 @@
         </view>
 
             <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" >
-                <view class="contentminddle item-view ver-align space-between item-padding"  bindtouchstart="touchstart" bindtouchmove="touchmove" 
+                <view class="contentminddle item-view ver-align space-between item-padding" bindtouchmove="touchmove" 
                   data-index="{{index}}" 
                   style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
                     <view class='childtask'>

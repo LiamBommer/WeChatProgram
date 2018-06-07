@@ -26,13 +26,28 @@ Page({
   //完成
   save:function(){
     var that = this;
+    var TaskMemberId = []//任务成员id列表，第一位为负责人
     var MemberId = that.data.MemberId;//选中的成员ID
     var ProjectMember = that.data.ProjectMember;
+    for (var i in ProjectMember) {
+      if (ProjectMember[i].id == MemberId) {
+        TaskMemberId.push(ProjectMember[i].id)//选中的任务成员ID
+        wx.setStorageSync("buildTask-memberList-membericon", ProjectMember[i].userPic)//设置选中的成员头像缓存
+      }
+    }
+
     for (var i in ProjectMember)
-      if (ProjectMember[i].id == MemberId){
-        wx.setStorageSync("buildTask-memberList-membericon", ProjectMember[i].userPic)
+      if (ProjectMember[i].id != MemberId) {
+        TaskMemberId.push(ProjectMember[i].id)//没选中的任务成员ID
       }
 
+    console.log("任务成员id列表：", TaskMemberId)
+    //设置任务成员ID列表缓存，第一位为任务负责人
+    wx.setStorage({
+      key: 'buildTask-memberList-memeberId',
+      data: TaskMemberId,
+    })
+    
     wx.navigateBack({
       url:"../buildTask"
     })
@@ -65,7 +80,7 @@ Page({
     wx.getStorage({
       key: 'ProjectMore-projectMember',
       success: function(res) {
-
+        console.log('onShow',res.data)
         var memberList = res.data
         for (var i in memberList) {
           memberList[i].checked = false
@@ -77,11 +92,12 @@ Page({
           ProjectMember: memberList,
         });
 
-        var membericon = wx.getStorageSync("buildTask-membericon")
+        var membericon = wx.getStorageSync("buildTask-membericon") 
         if (membericon != "") {
           for (var i in memberList) {
+
             if (memberList[i].userPic == membericon) {//初始化选中成员
-              console.log(memberList[i])
+              console.log("memberList",memberList[i])
               memberList[i].checked = true
               that.setData({
                 ProjectMember: memberList,
@@ -107,7 +123,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync("buildTask-membericon")
   },
 
   /**
