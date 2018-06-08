@@ -126,53 +126,6 @@ Page({
 
     //日程列表
     Schedule: [
-      // {
-      //   month: "2018-05",
-      // },
-      // {
-      //   daystart: "18日",
-      //   dayend: "25日",
-      //   title: "撰写策划书",
-      //   task: [
-      //     { id: 1, content: "调研需求 " },
-      //     { id: 2, content: "开会讨论 " },
-      //     { id: 3, content: "策划审核 " },
-      //   ],
-      // },
-      // {
-      //   daystart: "26日",
-      //   dayend: "31日",
-      //   title: "物资申请",
-      //   task: [
-      //     { id: 1, content: "填写物资申请单 " },
-      //     { id: 2, content: "审核物资清单" },
-      //     { id: 3, content: "采购物资" },
-      //   ],
-      // },
-      // {
-      //   month: "2018-06",
-      // },
-      // {
-      //   daystart: "1日",
-      //   dayend: "10日",
-      //   title: "场地申请",
-      //   task: [
-      //     { id: 1, content: "填写场地申请单 " },
-      //     { id: 2, content: "审核场地" },
-      //     { id: 3, content: "到场踩点" },
-      //   ],
-      // },
-      // {
-      //   daystart: "11日",
-      //   dayend: "18日",
-      //   title: "活动进行",
-      //   task: [
-      //     { id: 1, content: "邀请嘉宾 " },
-      //     { id: 2, content: "发邀请函" },
-      //     { id: 3, content: "清点物资" },
-      //     { id: 3, content: "审核主持人，PPT" },
-      //   ],
-      // },
 
     ],
 
@@ -288,8 +241,8 @@ Page({
     })
   },
 
- 
-  //任务列表标题：点击按钮弹出指定的hiddenmodalput弹出框  
+
+  //任务列表标题：点击按钮弹出指定的hiddenmodalput弹出框
   modalinputTitle: function (e) {
     var that = this
     var title = e.currentTarget.dataset.title//当前任务列表标题
@@ -300,20 +253,20 @@ Page({
       hiddenmodalputTitle: false
     })
   },
-  //取消按钮  
+  //取消按钮
   cancelTitle: function () {
     this.setData({
       hiddenmodalputTitle: true,
     });
   },
 
-  //确认  
+  //确认
   confirmTitle: function (e) {
     var that = this
     var listId = that.data.listId//当前任务列表id
     // var index = that.data.currentItem//当前任务列表下标
     // var taskList = "taskList["+index+"].title"
-    that.modifyTaskListTitle(listId, that.data.inputTitle) 
+    that.modifyTaskListTitle(listId, that.data.inputTitle)
     that.setData({
       hiddenmodalputTitle: true,
     })
@@ -351,8 +304,8 @@ Page({
             currentItem: Length,
           });
           that.createTaskList(currentProjId, "未完成")//projId 项目id，title任务看板名称
-           
-          
+
+
         }
 
         //删除该任务列表
@@ -373,7 +326,7 @@ Page({
             });
             that.deleteTaskList(listId)
           }
-        } 
+        }
       },
       fail: function (res) {
         console.log(res.errMsg)
@@ -509,7 +462,7 @@ Page({
       url: '../Idea/addIdea/addIdea'
     });
   },
-  
+
 
   /**
    * 显示任务详情页面
@@ -517,7 +470,7 @@ Page({
   showTask: function(e) {
     var that = this
     var taskListIndex = that.data.currentItem
-    var projName = that.data.currentProjName 
+    var projName = that.data.currentProjName
     var index = e.currentTarget.dataset.index
     console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
@@ -575,11 +528,11 @@ Page({
     // 获取id，存入缓存
     var yearIndex = parseInt(e.currentTarget.dataset.yearIndex)
     var scheduleIndex = parseInt(e.currentTarget.dataset.scheduleIndex)
-    var scheduleDetail = this.data.ScheduleYear[yearIndex].schedules[scheduleIndex]
+    var scheduleDetailId = this.data.ScheduleYear[yearIndex].schedules[scheduleIndex].scheduleId
 
     wx.setStorage({
-      key: 'ProjectMore-scheduleDetail',
-      data: scheduleDetail,
+      key: 'ProjectMore-scheduleDetail-id',
+      data: scheduleDetailId,
       success: function () {
         // 导航跳转
         wx.navigateTo({
@@ -599,7 +552,7 @@ Page({
     });
   },
 
-  
+
   /**
  * 2018-05-19
  * @author mr.li
@@ -628,7 +581,7 @@ Page({
         }
       })
   },
-  
+
    /**
    * 获取任务列表
    * 2018-05-24
@@ -653,7 +606,7 @@ Page({
       success: function(results){
         //这里设置setdata
         console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
-        
+
         console.log("getTaskLists:",results)
         //results的第一个是最早创建的
         var listIndex = 0;
@@ -674,7 +627,7 @@ Page({
           }
           // 加载完成
           wx.hideLoading()
-        
+
 
       },
       error: function(error){
@@ -722,7 +675,7 @@ Page({
         console.log(tasks)
         console.log('tasklists: ')
         console.log(tasklists)
-        
+
 
         // 将任务插入到对应看板列表中
         for (var i in tasks) {
@@ -761,7 +714,7 @@ Page({
     var that = this
     var currentTime = new Date(new Date().toLocaleDateString())
     var endTime = new Date(new Date(end_time.replace(/-/g, "/")))
-    
+
     var days = endTime.getTime() - currentTime.getTime()
     var day = parseInt(days / (1000 * 60 * 60 * 24));  //时间差值
     if(day > 1){
@@ -771,7 +724,7 @@ Page({
       return 'red'
     }
 
-    
+
   },
 
   /**
@@ -858,7 +811,7 @@ Page({
 
     })
   },
-  
+
 
   /**
 * @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）
@@ -979,7 +932,7 @@ Page({
    @parameter projId 项目id
    *@return 指定项目的所有公告数组
    *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
-   * 
+   *
    */
   getAnnouncements: function (projId) {
     var that = this
@@ -1050,7 +1003,7 @@ Page({
     meetingQuery.equalTo('proj_id', projId)
     meetingQuery.equalTo('is_delete', false)
     meetingQuery.ascending('start_time')
-   
+
     meetingQuery.limit(50)
     meetingQuery.find({
       success: function (results) {
@@ -1099,7 +1052,7 @@ Page({
               'time': time || '',
               'meetingRecord': meetingRecord
             }
-            meetingArr.push(meetingMonth) 
+            meetingArr.push(meetingMonth)
           }
           oldMonth = month
           meetingArr.push(meeting)  //存储会议
@@ -1110,7 +1063,7 @@ Page({
           that.setData({
             Meeting: meetingArr
           })
-         
+
         }
 
       },
@@ -1322,7 +1275,7 @@ Page({
       title: '正在加载',
       mask: 'true'
     })
-    
+
 
     var that = this
     // wx.startPullDownRefresh()//刷新

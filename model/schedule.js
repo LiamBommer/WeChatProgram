@@ -561,4 +561,3 @@ module.exports.modifyRelatedTasks = modifyRelatedTasks
 module.exports.getOneSchedule = getOneSchedule
 module.exports.getTasks = getTasks
 
-

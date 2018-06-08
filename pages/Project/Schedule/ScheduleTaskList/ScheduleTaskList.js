@@ -55,13 +55,7 @@ Page({
       // 获取数据
       var projId = that.data.projectDetail.id
       var scheduleId = that.data.scheduleDetail.scheduleId
-      var oldTasks = that.data.scheduleDetail.tasks
-
-      // 获取原本的任务列表
-      var oldTaskIds = []
-      for (var i in oldTasks) {
-        oldTaskIds.push(oldTasks[i].task_id)
-      }
+      var oldTaskIds = that.data.scheduleDetail.taskIds
 
       // Submit
       that.modifyRelatedTasks(projId, scheduleId, oldTaskIds, TaskId)
@@ -315,18 +309,18 @@ Page({
         that.setData({
           isScheduleDetail: res.data
         })
-
-        // 获取本日程的详情
-        wx.getStorage({
-          key: 'ProjectMore-scheduleDetail',
-          success: function(res) {
-            that.setData({
-              scheduleDetail: res.data
-            })
-          },
-        })
-
       }
+    })
+
+    // 获取本日程的详情
+    wx.getStorage({
+      key: 'ScheduleDetail-scheduleDetail',
+      success: function(res) {
+        that.setData({
+          scheduleDetail: res.data,
+          TaskId: res.data.taskIds
+        })
+      },
     })
 
     // 从缓存获取项目信息
@@ -338,17 +332,7 @@ Page({
           projectDetail: res.data
         })
 
-        // 获取选中的关联任务
-        wx.getStorage({
-          key: 'ScheduleTaskList-TaskId',
-          success: function (res) {
-            that.setData({
-              TaskId: res.data
-            })
-          },
-        })
-
-        // 获取项目下任务列表
+        // 获取项目下任务列表以及任务
         that.getTaskLists(that.data.projectDetail.id)
 
       },
