@@ -3,7 +3,7 @@
   <form bindsubmit='BuildSchedule'>
       <view class='view-container'>
         <view class='title-view ver-align'>
-          <input class='title' name='title' placeholder='日程内容'/>
+          <input class='title' name='title' placeholder='日程内容' maxlength='20' />
         </view>
           <view class="item-view ver-align">
             <image src='{{icon_deadline}}'></image>
@@ -21,17 +21,17 @@
                 </view>
             </picker>
           </view>
-          <view class="item-view task-view ver-align">
+          <view class="item-view task-view ver-align" bindtap='connectTask'>
             <view class='ver-align'>
               <image src='{{icon_task_list}}'></image>
               <text class='desc'>关联任务</text>
             </view>
-            <image src='{{icon_add}}' bindtap='connectTask'></image>
+            <image src='{{icon_add}}'></image>
           </view>
-          <block wx:for="{{connectTask}}">
+          <block wx:for="{{connectTask}}" wx:key="{{task_id}}">
             <view class="item-view ver-align space-between">
-              <text >{{item.name}}</text>
-              <image src='{{item.icon}}'></image>
+              <text >{{item.task_title}}</text>
+              <image src='{{item.userPic}}'></image>
             </view>
           </block>
       </view>
