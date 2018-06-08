@@ -231,16 +231,31 @@ Page({
       }
     })
 
-    // 获取本日程的详情
-    wx.getStorage({
-      key: 'IdeaDetail-ideaDetail',
-      success: function(res) {
-        that.setData({
-          ideaDetail: res.data,
-          TaskId: res.data.taskIds
-        })
-      },
-    })
+    if(that.data.isIdeaDetail == true) {
+      // 详情页
+      // 获取本日程的详情
+      wx.getStorage({
+        key: 'IdeaDetail-ideaDetail',
+        success: function(res) {
+          that.setData({
+            ideaDetail: res.data,
+            TaskId: res.data.taskIds
+          })
+        },
+      })
+
+    } else {
+      // 创建页
+      // 获取关联任务列表里的数据
+      wx.getStorage({
+        key: 'IdeaTaskList-TaskId',
+        success: function(res) {
+          that.setData({
+            TaskId: res.data
+          })
+        },
+      })
+    }
 
     // 从缓存获取项目信息
     wx.getStorage({
