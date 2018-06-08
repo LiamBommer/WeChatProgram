@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    NotificationId:'',//通知传来的ID
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_task_list: '/img/task_list.png',
@@ -444,9 +444,9 @@ Page({
             for (var j = 0; j < results.length; j++) {
               if (results[j].get("task").is_delete != true) {
                 var taskObject = {
-                  "task_id": results[j].get("task").objectId,  //任务id
-                  "task_title": results[j].get("task").title,  //任务标题
-                  "task_userPic": results[j].attributes.task.leader.userPic  //任务负责人头像
+                  "task_id": results[j].get("task") != null ? results[j].get("task").objectId :null,  //任务id
+                  "task_title": results[j].get("task") != null ? results[j].get("task").title:null,  //任务标题
+                  "task_userPic": results[j].get("task").leader != null ? results[j].attributes.task.leader.userPic :null //任务负责人头像
                 }
                 tasks.push(taskObject)
               }
@@ -484,8 +484,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: function () {
   },
 
   /**
@@ -507,17 +506,25 @@ Page({
       mask: 'true'
     })
 
-    // 获取日程id，进行查询
-    wx.getStorage({
-      key: 'ProjectMore-scheduleDetail-id',
-      success: function (res) {
-        that.setData({
-          scheduleId: res.data
-        })
-        // Get schedule detail
-        that.getOneSchedule(res.data)
-      }
-    })
+    //获取通知的日程ID
+    var requestId = wx.getStorageSync("Notification-scheduleId")
+    if (requestId != ""){
+      that.getOneSchedule(requestId)
+    }
+    else{
+      // 获取日程id，进行查询
+      wx.getStorage({
+        key: 'ProjectMore-scheduleDetail-id',
+        success: function (res) {
+          that.setData({
+            scheduleId: res.data
+          })
+          // Get schedule detail
+          that.getOneSchedule(res.data)
+        }
+      })
+    }
+
 
     // 获取项目id，通知用
     wx.getStorage({

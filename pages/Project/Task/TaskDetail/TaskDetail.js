@@ -1612,38 +1612,63 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     })
     var that = this;
     //接受通知的参数ID
-    console.log("NotificationId:",options.id)
-    that.setData({
-      NotificationId:options.id
-    })
-    //任务
-    wx.getStorage({
-      key: 'ProjectMore-Task',
-      success: function(res) {
-        console.log("In ProjectMore-Task", res.data)
-        var taskId = res.data.objectId//任务id
-        var leaderId = res.data.leaderId//任务负责人id
-        that.setData({
-          taskId: taskId,
-          leaderId: leaderId
-        })
-        that.getTaskDetail(taskId);//获取任务详情
-        that.getTaskMember(taskId, leaderId)//获取任务成员
-        that.getSubtasks(taskId);//获取子任务列表
-        that.getTaskRecord(taskId)//获取任务记录
-        that.getTaskComment(taskId)//获取评论
-      },
-    })
-    //获取项目数据
-    wx.getStorage({
-      key: "ProjectMore-projName",
-      success: function (res) {
-        console.log("In Project-detail", res.data)
-        that.setData({
-          projectName: res.data
-        })
-      },
-    })
+    var requestId = wx.getStorageSync("Notification-taskId")
+    var projectName = wx.getStorageSync("Notification-projName")
+    console.log("Notification", requestId, projectName)
+    if (requestId != "" && projectName != "" ) {
+      console.log("Notification", requestId, projectName)
+      that.setData({
+        projectName: res.data,
+        // projectMember: memberList
+      })
+      that.getTaskDetail(requestId);//获取任务详情
+      that.getTaskMember(requestId, leaderId)//获取任务成员
+      that.getSubtasks(requestId);//获取子任务列表
+      that.getTaskRecord(requestId)//获取任务记录
+      that.getTaskComment(requestId)//获取评论
+    }
+    else {
+      //任务
+      wx.getStorage({
+        key: 'ProjectMore-Task',
+        success: function (res) {
+          console.log("In ProjectMore-Task", res.data)
+          var taskId = res.data.objectId//任务id
+          var leaderId = res.data.leaderId//任务负责人id
+          that.setData({
+            taskId: taskId,
+            leaderId: leaderId
+          })
+          that.getTaskDetail(taskId);//获取任务详情
+          that.getTaskMember(taskId, leaderId)//获取任务成员
+          that.getSubtasks(taskId);//获取子任务列表
+          that.getTaskRecord(taskId)//获取任务记录
+          that.getTaskComment(taskId)//获取评论
+        },
+      })
+      //获取项目数据
+      wx.getStorage({
+        key: "ProjectMore-projName",
+        success: function (res) {
+          console.log("In Project-detail", res.data)
+          that.setData({
+            projectName: res.data
+          })
+        },
+      })
+      //项目成员
+      wx.getStorage({
+        key: 'ProjectMore-projectMember',
+        success: function (res) {
+          var memberList = res.data
+          console.log('ProjectMore-projectMember', memberList)
+          that.setData({
+            projectMember: memberList
+          })
+        },
+      })
+    }
+    
     //更改任务负责人时刷新后台
     var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
     var taskId = that.data.taskId
@@ -1664,22 +1689,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
       that.getSubtasks(taskId);//获取子任务列表
     }
-    // console.log("taskId", taskId)
-    // console.log("leaderId", leaderId)
-    // that.getTaskDetail(taskId);//获取任务详情
     
 
-    //项目成员
-    wx.getStorage({
-      key: 'ProjectMore-projectMember',
-      success: function (res) {
-        var memberList = res.data
-        console.log('ProjectMore-projectMember', memberList)
-        that.setData({
-          projectMember: memberList
-        })
-      },
-    })
 
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间

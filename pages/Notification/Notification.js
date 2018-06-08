@@ -39,11 +39,13 @@ Page({
   ClickMessage:function(e){
     var that = this
     var index = e.currentTarget.dataset.index//当前通知下标
+    var id = e.currentTarget.id//当前通知id
     var Notification = that.data.Notification//通知
 
     var _type = Notification[index].type//通知类型
     var requestId = Notification[index].requestId//目标id
-    console.log("requestId",requestId)
+    var projName = Notification[index].project//目标项目名
+    that.readOneNotification(id) //传入后台
 
     if (_type == 1)//任务
     {
@@ -52,32 +54,65 @@ Page({
       that.setData({
         Notification: Notification
       })
-       wx.navigateTo({
-         url: './Project/Task/TaskDetail/TaskDetail?id=' + requestId ,
-       })
+      //设置任务ID缓存
+      wx.setStorageSync("Notification-taskId", requestId)
+      //设置项目名字缓存
+      wx.setStorageSync("Notification-projName", projName)
+      wx.navigateTo({
+        url: '../Project/Task/TaskDetail/TaskDetail',
+      })
     }
-    if (_type == 2)//公告
-    {
-
-    }
-    if (_type == 3)//日程
+    else if (_type == 2)//公告
     {
       Notification[index].isRead = true
       //设置通知已读
       that.setData({
         Notification: Notification
       })
+      //设置公告ID缓存
+      wx.setStorageSync("Notification-announcementId", requestId)
       wx.navigateTo({
-        url: '../Project/Schedule/scheduleDetail/scheduleDetail?id=' + requestId,
+        url: '../Project/Announcement/announcementDetail/announcementDetail?',
       })
     }
-    if (_type == 4)//会议
+    else if (_type == 3)//日程
     {
-
+      Notification[index].isRead = true
+      //设置通知已读
+      that.setData({
+        Notification: Notification
+      })
+      //设置日程ID缓存
+      wx.setStorageSync("Notification-scheduleId", requestId)
+      wx.navigateTo({
+        url: '../Project/Schedule/scheduleDetail/scheduleDetail',
+      })
     }
-    if (_type == 5)//墙
+    else if (_type == 4)//会议
     {
-
+      Notification[index].isRead = true
+      //设置通知已读
+      that.setData({
+        Notification: Notification
+      })
+      //设置会议ID缓存
+      wx.setStorageSync("Notification-meetingId", requestId)
+      wx.navigateTo({
+        url: '../Project/Meeting/meetingDetail/meetingDetail',
+      })
+    }
+    else if (_type == 5)//墙
+    {
+      Notification[index].isRead = true
+      //设置通知已读
+      that.setData({
+        Notification: Notification
+      })
+      //设置墙ID缓存
+      wx.setStorageSync("Notification-ideaId", requestId)
+      wx.navigateTo({
+        url: '../Project/Idea/ideaDetail/ideaDetail',
+      })
     }
     
   },
@@ -152,13 +187,6 @@ getNotification:function (userId) {
             'project': results[i].attributes.project.name,  //对应的项目名
             'time': results[i].createdAt.substring(0,16),//通知创建的时间
           }
-      //     {
-      //       icon: "/img/me.png",
-      //         title: "我觉得ZHT太牛逼了",
-      //           content: "因为ZHT也很牛逼balabal ...",
-      //             time: "5月1日20:00",
-      //               project: "鲨鱼派对项目",
-      // },
           notificationArr.push(notiObject)  //获取到的通知数组
         }
         if (notificationArr != null && notificationArr.length > 0) {
@@ -318,6 +346,7 @@ readOneNotification:function (notificationId) {
         //成功
         result.set('is_read', true)
         result.save()
+
       },
       error: function (error) {
         //失败

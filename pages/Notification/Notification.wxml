@@ -3,7 +3,7 @@
 
   <block wx:for="{{Notification}}">
       <!-- 列表项 -->
-      <view class='item' bindtap='ClickMessage' data-index="{{index}}">
+      <view class='item' bindtap='ClickMessage' data-index="{{index}}" id='{{item.id}}'>
         <!-- 列表左 -->
         <view class='item-first'>
           <image class='item-icon' src='{{item.icon}}'></image>

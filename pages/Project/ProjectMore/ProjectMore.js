@@ -514,7 +514,7 @@ Page({
    */
   showAnnouncementDetail: function(e) {
     var index = e.currentTarget.dataset.index
-    wx.setStorageSync("AnnouncementDetail", this.data.Announcement[index])
+    wx.setStorageSync("ProjectMore-AnnouncementDetail", this.data.Announcement[index])
     wx.navigateTo({
       url: '../Announcement/announcementDetail/announcementDetail'
     });
