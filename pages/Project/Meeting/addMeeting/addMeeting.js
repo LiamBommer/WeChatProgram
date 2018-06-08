@@ -1,5 +1,6 @@
 //addMember.js
 var Bmob = require('../../../../utils/bmob.js')
+var util = require('../../../../utils/util.js')
 var ADD_MEETING = "添加了新的会议"
 Page({
 
@@ -12,7 +13,8 @@ Page({
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
-    stattime: '', 
+    starttime: '', 
+    time:'',//时间
     index:'',//选择重复时间
     repeatTime: ["每天", "每周", "每月", "每年"],
     memberIcon: [
@@ -30,10 +32,16 @@ Page({
   },
 
   // 开始时间
-  StatTimeChange: function (e) {
-    console.log("stattime", e.detail.value)
+  starttimeChange: function (e) {
+    console.log("starttime", e.detail.value)
     this.setData({
-      stattime: e.detail.value
+      starttime: e.detail.value
+    })
+  },
+  //选择时间
+  bindTimeChange: function (e) {
+    this.setData({
+      time: e.detail.value
     })
   },
 
@@ -58,7 +66,8 @@ Page({
     var that = this
     var title = e.detail.value.title
     var content = e.detail.value.content
-    var startTime = that.data.stattime
+    var startTime = that.data.starttime
+    var time = that.data.time
     var memberIds = that.data.memberId
     wx.getStorage({
       key: 'ProjectMore-projId',
@@ -66,7 +75,7 @@ Page({
         var projId = res.data
         console.log("BuildMeeting")
         console.log(projId, title, content, startTime, memberIds)
-        if (startTime == "" || content == "" || title == ""){
+        if (startTime == "" || time == "" || content == "" || title == "" ){
          wx.showToast({
            title: '请填写完整',
            icon:"none",
@@ -74,7 +83,7 @@ Page({
          })
         }
         else{
-          that.createMeeting(projId, title, content, startTime, memberIds)
+          that.createMeeting(projId, title, content, startTime, time, memberIds)
         }
       },
     })
@@ -82,22 +91,22 @@ Page({
   },
   /**
    * @parameter projId 项目id，title会议标题，content 会议内容(可以为空）
-   * ，start_time开始时间（最好让用户填好,方便后面排序和显示）
+   * ，start_time开始时间（最好让用户填好,方便后面排序和显示）time为具体时间如05:50
    * memberIds 添加的会议成员id 数组（可以为空），没有重复的值（这个功能没想到怎么做）
    * 创建会议
    * 内部调用添加会议成员的函数addCreateMeetingMember
    * 内部调用通知项目成员的函数addProjectNotification
    */
-  createMeeting:function (projId, title, content, startTime, memberIds){
+  createMeeting:function (projId, title, content, startTime, time, memberIds){
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
     var meeting = new Meeting()
-
     //添加会议
     meeting.save({
       proj_id: projId,
       title: title,
       start_time: startTime,
+      time:time,
       content: content,
       is_delete: false
 
@@ -247,6 +256,13 @@ Page({
          projMember:res.data
        })
       }
+    })
+
+    //初始化时间为当前时间
+    var starttime = util.formatTime(new Date())
+    console.log("time", starttime)
+    that.setData({
+      starttime: starttime
     })
 
     //获取选中成员列表的id缓存

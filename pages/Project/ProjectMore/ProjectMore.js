@@ -1036,6 +1036,7 @@ Page({
     meetingQuery.equalTo('proj_id', projId)
     meetingQuery.equalTo('is_delete', false)
     meetingQuery.ascending('start_time')
+   
     meetingQuery.limit(50)
     meetingQuery.find({
       success: function (results) {
@@ -1048,6 +1049,7 @@ Page({
           var title = results[i].get('title')
           var content = results[i].get('content')
           var meetingRecord = results[i].get('meeting_record') //会议记录
+          var time = results[i].get('time')
           var startTime = results[i].get('start_time')
           console.log("getMeeting-startTime", startTime)
           if (startTime != ""){//取时间中的月份和日期
@@ -1066,8 +1068,8 @@ Page({
               'id': id || '',
               'title': title || '',
               'content': content || '',
-              // 'startTime': startTime || '',
               'day': day || '',
+              'time': time || '',
               'meetingRecord': meetingRecord
             }
           }
@@ -1080,6 +1082,7 @@ Page({
               'title': title || '',
               'content': content || '',
               'day': day || '',
+              'time': time || '',
               'meetingRecord': meetingRecord
             }
             meetingArr.push(meetingMonth) 

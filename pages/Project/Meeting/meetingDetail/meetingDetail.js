@@ -27,10 +27,12 @@ Page({
     icon_cycle: '/img/cycle.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
-    stattime: '2018-05-22 21:00', //开始时间
+    starttime: '2018-05-22', //开始时间
+    time:"",//时间
     index: '不',//选择重复时间
     repeatTime: ["每天", "每周", "每月", "每年"],
     member:[],
+    
   },
   //点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function (e) {
@@ -81,11 +83,26 @@ Page({
     var projId = that.data.projId
     var meetingId = that.data.meetingId
     var newStartTime = e.detail.value
-    that.modifyMeetingStartTime(projId, meetingId, newStartTime)
+    var newtime = that.data.time
+    that.modifyMeetingStartTime(projId, meetingId, newStartTime, newtime)
     this.setData({
-      stattime: newStartTime
+      starttime: newStartTime
     })
-  }, 
+  },
+
+  //选择时间
+  bindTimeChange: function (e) {
+    var that = this
+    var projId = that.data.projId
+    var meetingId = that.data.meetingId
+    var newStartTime = that.data.starttime
+    var newtime = e.detail.value
+    that.modifyMeetingStartTime(projId, meetingId, newStartTime, newtime)
+    this.setData({
+      time: e.detail.value
+    })
+  },
+
 
   //会议记录
   Record: function (e) {
@@ -172,6 +189,7 @@ Page({
           'id': result.id || '', //会议id
           'title': result.get('title') || '', //会议标题
           'start_time': result.get('start_time') || '', //会议开始时间
+          'time': result.get('time') || '', //会议开始时间
           'content': result.get('content') || '', //会议内容
           'meetingRecord': result.get('meeting_record') || '', //会议记录
         }
@@ -182,7 +200,8 @@ Page({
           meetingId: meeting.id,
           title: meeting.title,
           content: meeting.content,
-          stattime: meeting.start_time,
+          starttime: meeting.start_time,
+          time: meeting.time,
           meetingRecord: meeting.meetingRecord,
         })
         wx.hideLoading()
@@ -246,7 +265,7 @@ Page({
  * 修改会议开始时间
  * 内部调用通知项目成员的函数addProjectNotification
  */
-  modifyMeetingStartTime:function (projId, meetingId, newStartTime){
+  modifyMeetingStartTime: function (projId, meetingId, newStartTime, newtime){
 
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
@@ -257,6 +276,7 @@ Page({
       success: function (result) {
         //成功
         result.set('start_time', newStartTime)
+        result.set('time', newtime)
         result.save()
         console.log("修改会议开始时间成功！")
         //添加记录操作

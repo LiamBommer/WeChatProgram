@@ -22,8 +22,13 @@
       <image src='{{icon_deadline}}'></image>
       <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
           <view>
-            {{stattime}} 开始
+            {{starttime}} 
           </view>
+      </picker>
+      <picker mode="time" value="{{time}}"   bindchange="bindTimeChange">
+        <view class="picker">
+          {{time}} 开始
+        </view>
       </picker>
     </view>
     <view class="item-view">

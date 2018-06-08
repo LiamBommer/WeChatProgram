@@ -45,6 +45,10 @@ button[hover-class="share-hover"]::after {
   color: #e64340;
 }
 
+.picker{
+  margin-left: 10rpx;
+}
+
 image {
   height: 40rpx;
   width: 40rpx;
