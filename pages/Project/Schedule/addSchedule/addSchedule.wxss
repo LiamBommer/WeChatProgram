@@ -12,3 +12,7 @@
 .view-container .task-view {
   justify-content: space-between;
 }
+
+.item-view picker {
+  width: 100%;
+}

@@ -27,8 +27,14 @@ button[hover-class="share-hover"]::after {
 
 
 .view-container .content-view {
-  height: 200rpx;
-  padding: 16rpx 0rpx;
+  min-height:200rpx;
+  padding-top:8px;
+  word-wrap:break-word;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:5;
+  -webkit-box-orient:vertical;
 }
 
 .view-container .title-view .title {
@@ -37,6 +43,10 @@ button[hover-class="share-hover"]::after {
 
 .desc.delete-text {
   color: #e64340;
+}
+
+.picker{
+  margin-left: 10rpx;
 }
 
 image {

@@ -33,7 +33,7 @@
                                  bindtap="ClickTask"  id="{{tasks.objectId}}"
                                 checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
-                              <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                              <view class='task' bindtap='showTask'  data-index="{{index}}">{{tasks.title}}</view>
                           </view>
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >

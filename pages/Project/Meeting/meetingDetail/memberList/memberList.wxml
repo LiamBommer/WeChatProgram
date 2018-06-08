@@ -1,18 +1,19 @@
 <!--pages/memberList/memberList.wxml-->
 <view class='memberList-container'>
 
-    <checkbox-group bindchange="ProjectMememberChange">
-      <block wx:for="{{ProjectMemember}}">
+    <checkbox-group>
+      <block wx:for="{{ProjectMember}}">
           <block wx:if="{{index == 0}}">
             <!-- 标题 -->
             <view class='title'>项目负责人</view>
             <!-- 列表项 -->
             <view class='item'>
                   <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
+                    <image class='item-icon' src='{{item.userPic}}'></image>
+                    <view class='item-text'>{{item.nickName}}</view>
                   </view>
-                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
+                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}' data-checked="{{item.checked}}" 
+                   data-index="{{index}}" bindtap='Clickmember' />
             </view>  
             <!-- 标题 -->
             <view class='title'>项目成员</view>
@@ -22,10 +23,11 @@
             <!-- 列表项 -->
               <view class='item'>
                   <view class='item-one'>
-                    <image class='item-icon' src='{{item.icon}}'></image>
-                    <view class='item-text'>{{item.name}}</view>
+                    <image class='item-icon' src='{{item.userPic}}'></image>
+                    <view class='item-text'>{{item.nickName}}</view>
                   </view>
-                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>
+                  <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}' data-checked="{{item.checked}}" 
+                   data-index="{{index}}" bindtap='Clickmember' />
               </view>
           </block>
       </block>

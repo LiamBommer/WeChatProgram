@@ -42,7 +42,7 @@ Page({
     var NomemberId = []
     var NomemberIdLength = 0
     var ProjectMemember = that.data.ProjectMemember;
-    var projId = wx.getStorageSync("Project-id")
+    //var projId = wx.getStorageSync("Project-id")
 
     if (memberIdLength == 0) {//全部未选
       for (var id in ProjectMemember)
@@ -64,11 +64,14 @@ Page({
       }
     }
 
-    console.log(NomemberId);//未选中的成员ID
-    that.deleteProjectMember(projId, NomemberId)
+    
 
-    wx.navigateBack({
-      url: '../ProjectDetail',
+    wx.getStorage({
+      key: 'Project-detail',
+      success: function (res) {
+        console.log('未选中的成员ID', NomemberId, 'projId', res.data.id);//未选中的成员ID
+        that.deleteProjectMember(res.data.id, NomemberId)
+      },
     })
   },
 
@@ -82,28 +85,29 @@ Page({
 
     var Proj_Member = Bmob.Object.extend("proj_member")
 
-    var objects = new Array()
-    for(var i= 0;i<memberIds.length;i++){
-    var proj_member = new Proj_Member()
-    proj_member.set("projId", projId)
-    proj_member.set("user_id", memberIds[i])
-    objects.push(proj_member)
-     }
+    console.log('memberids',memberIds)    
     //若数组非空，则开始删除成员
-    if (objects != null && objects.length > 0) {
-      Bmob.Object.destroyAll(objects).then(function () {
-      //成功
-      //console.log("删除项目成员成功！")
+    if (memberIds != null && memberIds.length > 0) {
+      var projmemberQuery = new Bmob.Query(Proj_Member)
+      projmemberQuery.containedIn("user_id", memberIds)
+      projmemberQuery.equalTo('proj_id', projId)
+      projmemberQuery.destroyAll({
+        success: function () {
+          //删除成功
+          console.log('删除项目成员成功!')
 
-        console.log("success", success)
+          wx.navigateBack({
+            url: '../ProjectDetail',
+          })
+  
+        },
+        error: function (err) {
+          // 删除失败
+          console.log('删除任务成员失败!')
+        }
+      })
 
-    }, function (error) {
-      //失败
-
-      console.log("error",error)
-
-    })
-}
+    }
 
 },
 

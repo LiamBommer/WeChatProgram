@@ -3,7 +3,7 @@
    
    <form bindsubmit='save'>
    <view class='text'>
-     <textarea name='record' >{{record}}</textarea>
+     <textarea name='record' placeholder='请填写会议记录' value='{{record}}'maxlength="2000" ></textarea>
    </view>
 
     <button class='save' form-type='submit'>保存</button>

@@ -28,3 +28,7 @@
   border-radius: 50%;
   margin-left: 10rpx;
 }
+
+.picker{
+  margin-left: 10rpx;
+}

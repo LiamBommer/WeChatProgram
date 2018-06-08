@@ -91,8 +91,13 @@ Page({
      //test.addCreateMeetingMember('123','722e010ffe',['23','456'])
     // test.getMeetingMember('722e010ffe')
     // test.modifyScheduleStartTime('e645f9e760','27c7a2e907','2018-06-06')
+     //test.deleteProjectMember('f79ece7fdd', ['5e2b90f2ce'])
+     //test.addProjectMember('852f280d24', ['46afed01fb', '5e2b90f2ce','f74f3aa1e1'])
+     //test.modifyRelatedTasks('123', 'bd14e21fbc', ['e1fb8a8c5b', '0ab197b9e1', '33d0b073cb'], ['e1fb8a8c5b'])
+     //test.createIdea('123','userid','测试内容')
+     //test.getOneSchedule('e6e551b3d7')
+     test.getTasks('852f280d24')
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

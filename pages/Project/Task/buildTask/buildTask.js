@@ -70,6 +70,7 @@ Page({
    * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
    */
   createTask: function(projId ,listId, title, memberId, endTime){
+    console.log("项目id",projId)
     var that = this
     var Task = Bmob.Object.extend("task")
     var task = new Task()

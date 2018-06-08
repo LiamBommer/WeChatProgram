@@ -14,7 +14,7 @@
 
 .ModelDetail-container .text textarea{
   width:90%;
-  height:900rpx;
+  height:1000rpx;
 }
 
 .ModelDetail-container .save{
