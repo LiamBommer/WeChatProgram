@@ -70,13 +70,13 @@
 }
 
 .Meeting-container .item .item-first .item-time{
-    font-size: 28rpx;
+    font-size: 26rpx;
     color: #888888;
     margin-top:3rpx;
 }
 
 .Meeting-container .item .item-second{
-    font-size: 32rpx;
+    font-size: 34rpx;
 }
 
 .Meeting-container .buildicon{
