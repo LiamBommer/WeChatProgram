@@ -127,7 +127,7 @@ Page({
   connectTask: function (e) {
 
     var that = this
-    
+
     // 设置标识，进入人物列表后完成即保存
     wx.setStorage({
       key: 'isScheduleDetail',
@@ -149,8 +149,9 @@ Page({
             })
           }
         })
-        
+
       }
+
     })
 
     // 将原本的任务id保存至缓存 ！！！
@@ -173,7 +174,7 @@ Page({
           })
           // Submit
           that.deleteSchedule(that.data.projectDetail.id, that.data.scheduleId)
-          
+
         }
         else {//点击取消
 
