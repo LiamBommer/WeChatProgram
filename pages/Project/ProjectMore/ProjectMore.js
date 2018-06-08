@@ -455,7 +455,7 @@ Page({
     //设置任务成员缓存
     wx.setStorage({
       key: 'ProjectMore-projId',
-      data: that.data.projId,
+      data: that.data.currentProjectId,
     })
     wx.navigateTo({
       url: '../Task/buildTask/buildTask?list_id='+listId

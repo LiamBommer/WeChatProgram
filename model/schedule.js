@@ -558,5 +558,7 @@ module.exports.addRelatedTask = addRelatedTask
 module.exports.modifyScheduleStartTime = modifyScheduleStartTime
 module.exports.modifyRelatedTasks = modifyRelatedTasks
 module.exports.getOneSchedule = getOneSchedule
+module.exports.getTasks = getTasks
+
 
 

@@ -591,6 +591,51 @@ function getOneMeeting(meetingId){
     }
   })
 }
+
+/**
+ * @parameter projId项目id ，meetingId会议id，oldmemberIds 旧的成员id数组, newmemberIds 新的成员id数组
+ * 修改会议成员， 删掉原来的成员id数组,添加新的成员ids数组
+ */
+function modifyMeetingMember(projId, meetingId,oldmemberIds, newmemberIds){
+
+  var Meetingmember = Bmob.Object.extend('meeting_member')
+  var meetingmemberQuery = new Bmob.Query(Meetingmember)
+  var meetingmemberArr = []
+
+  if (oldmemberIds != null && oldmemberIds.length > 0){
+    meetingmemberQuery.containedIn('user', oldmemberIds)
+    meetingmemberQuery.equalTo('meeting_id', meetingId)
+
+    meetingmemberQuery.destroyAll({
+      success: function(){
+        //删除成功
+        //然后添加新的成员
+        if (newmemberIds != null && newmemberIds.length > 0){
+          for(var i in newmemberIds){
+            var member = new Meetingmember()
+            var user = Bmob.Object.createWithoutData('_User',newmemberIds[i])
+            member.set('meeting_id',meetingId)
+            member.set('user',user)
+            meetingmemberArr.push(member)
+          }
+
+          if(meetingmemberArr != null && meetingmemberArr.length > 0){
+            Bmob.Object.saveAll(meetingmemberArr).then(function (results) {
+              // 重新添加关联的任务成功
+              var _type = 4  //通知类型
+              that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+              console.log('修改会议关联成员成功！')
+            },
+              function (error) {
+                // 异常处理
+                console.log('修改会议关联成员成功！')
+              })
+          }
+        }
+      }
+    })
+  }
+}
 module.exports.createMeeting = createMeeting
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getMeeting = getMeeting
