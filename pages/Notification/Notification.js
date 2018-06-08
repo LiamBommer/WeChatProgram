@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    startX: '',
+    startY: '',
     //通知列表
     Notification:[
       {
@@ -16,6 +18,8 @@ Page({
         time: "5月1日20:00",
         project: "鲨鱼派对项目",
         isRead:'',
+        NotificationisTouchMove:'',
+        NotificationtxtStyle:'',
       },
       {
         icon: "/img/me.png",
@@ -35,6 +39,103 @@ Page({
   
   },
 
+  //手指触摸动作开始 记录起点X坐标
+  touchstart: function (e) {
+    //开始触摸时 重置所有删除
+    this.data.Notification.forEach(function (v, i) {
+      if (v.NotificationisTouchMove)//只操作为true的
+      {
+        v.NotificationisTouchMove = false;
+        v.NotificationtxtStyle = ''
+      }
+    })
+
+      this.setData({
+        startX: e.changedTouches[0].clientX,
+        startY: e.changedTouches[0].clientY,
+        Notification: this.data.Notification,
+      })
+  },
+  //滑动删除通知：滑动事件处理
+  touchmoveNotification: function (e) {
+    var that = this
+    var index = e.currentTarget.dataset.index//当前索引
+    var startX = that.data.startX//开始X坐标
+    var startY = that.data.startY//开始Y坐标
+    var touchMoveX = e.changedTouches[0].clientX//滑动变化坐标
+    var touchMoveY = e.changedTouches[0].clientY//滑动变化坐标
+    //获取滑动角度
+    var angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+    var Notification = that.data.Notification
+    Notification.forEach(function (v, i) {
+      v.NotificationisTouchMove = false
+      //滑动超过30度角 return
+      if (Math.abs(angle) > 30) return;
+      if (i == index) {
+        if (touchMoveX > startX) //右滑
+        {
+          v.NotificationtxtStyle = ""
+          v.NotificationisTouchMove = false
+        }
+        else //左滑
+        {
+          v.NotificationtxtStyle = "margin-left:-" + 418 + "px";
+          v.NotificationisTouchMove = true
+        }
+      }
+    })
+    //更新列表的状态
+    that.setData({
+      Notification: Notification
+    });
+  },
+  /**
+   * 计算滑动角度
+   * @param {Object} start 起点坐标
+   * @param {Object} end 终点坐标
+   */
+  angle: function (start, end) {
+    var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+    //返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+
+  },
+  //删除通知
+  delNotification: function (e) {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除通知吗？',
+      success: function (res) {
+        if (res.confirm) {
+          that.data.Notification.splice(e.currentTarget.dataset.index, 1)
+          var id = e.currentTarget.id
+          that.deleteOneNotification(id)
+          that.setData({
+            Notification: that.data.Notification
+          })
+        }
+      }
+    })
+
+
+  },
+
+ //标为已读
+  readNotification:function(e){
+    var that = this
+    var id = e.currentTarget.id//当前通知id
+    var index = e.currentTarget.dataset.index//当前通知下标
+    var Notification = that.data.Notification//通知
+    Notification[index].isRead = true
+    //设置通知已读
+    that.setData({
+      Notification: Notification
+    })
+    that.readOneNotification(id) //传入后台
+  },
+
   //点击通知
   ClickMessage:function(e){
     var that = this
@@ -44,7 +145,8 @@ Page({
 
     var _type = Notification[index].type//通知类型
     var requestId = Notification[index].requestId//目标id
-    var projName = Notification[index].project//目标项目名
+    var projId = Notification[index].projectId//目标id
+    var projName = Notification[index].projectName//目标项目名
     that.readOneNotification(id) //传入后台
 
     if (_type == 1)//任务
@@ -97,6 +199,8 @@ Page({
       })
       //设置会议ID缓存
       wx.setStorageSync("Notification-meetingId", requestId)
+      //设置项目ID缓存
+      wx.setStorageSync("Notification-projId", projId)
       wx.navigateTo({
         url: '../Project/Meeting/meetingDetail/meetingDetail',
       })
@@ -184,8 +288,11 @@ getNotification:function (userId) {
             'type': results[i].get('type'),  //通知类型
             'requestId': results[i].get('request_id'),  //点击通知时请求的通知详情的对应的 id
             'isRead': results[i].get('is_read'),  //判断通知是否已读，fasle为 未读
-            'project': results[i].attributes.project.name,  //对应的项目名
-            'time': results[i].createdAt.substring(0,16),//通知创建的时间
+            'projectName': results[i].attributes.project.name,  //对应的项目名
+            'time': results[i].createdAt.substring(0, 16),//通知创建的时间
+            'projectId': results[i].attributes.project.objectId,
+            NotificationisTouchMove: false,
+            NotificationtxtStyle: '',
           }
           notificationArr.push(notiObject)  //获取到的通知数组
         }

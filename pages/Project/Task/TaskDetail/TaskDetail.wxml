@@ -50,17 +50,18 @@
       <view class="touch-item '{{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}'>
         <view style='{{RemindtimetxtStyle}}'
           class="contentminddle scroll-view-item item-view"bindtouchmove="touchmoveRemindtime" > 
-          <image src='/img/alarm.png'></image>
-          <view class='desc'>
-              <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
-                <view class="picker">
-                  {{remindtime}} 提醒
-                </view>
-              </picker>
+            <image src='/img/alarm.png'></image>
+            <view class='desc'>
+                <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
+                  <view class="picker">
+                    {{remindtime}} 提醒
+                  </view>
+                </picker>
+            </view>
           </view>
-        </view>
-        <view class="del"  catchtap="delRemindtime" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
-        </view>
+          <view class="del"  catchtap="delRemindtime" data-index="{{index}}" data-id='{{item.subtask_id}}' 
+          data-title='{{item.childTitle}}'>删除
+         </view>
       </view>
 
         <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}'>

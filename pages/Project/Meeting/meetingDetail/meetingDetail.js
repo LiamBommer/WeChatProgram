@@ -434,13 +434,14 @@ Page({
       title: '正在加载',
     })
 
-    //获取通知的公告ID
+    //获取通知的会议ID
     var requestId = wx.getStorageSync("Notification-meetingId")
-    if (requestId != "") {
-
+    var projId = wx.getStorageSync("Notification-projId")
+    if (requestId != "" && projId != '') {
+      console.log("获取通知的会议ID", requestId, projId)
       that.setData({
         meetingId: requestId,
-        // projId: res.data
+        projId: projId
       })
       that.getOneMeeting(requestId)//获取会议详情
       that.getMeetingMember(requestId)//获取会议成员
