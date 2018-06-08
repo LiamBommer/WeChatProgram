@@ -22,9 +22,7 @@ Page({
     //  false则不修改
     isIdeaDetail: false,
 
-    // 日程详情页进入的话
-    // 日程的详情
-    ideaDetail: {},
+    ideaId: -1,
 
   },
 
@@ -44,20 +42,17 @@ Page({
     })
 
     var that = this
-    var TaskId = that.data.TaskId //被选中的任务ID
+    var TaskId = that.data.TaskId   //被选中的任务ID
+    var projId = that.data.projectDetail.id
+    var ideaId = that.data.ideaId
+    var oriTaskId = that.data.TaskId // 点子原来的任务id
 
 
     // 从点子详情页进入，需要修改任务列表至点子
     if (that.data.isIdeaDetail == true) {
 
-      // 获取数据
-      var projId = that.data.projectDetail.id
-      var ideaId = that.data.ideaDetail.ideaId
-      var oldTaskIds = that.data.ideaDetail.taskIds
-
       // Submit
-      // that.modifyRelatedTasks(projId, ideaId, oldTaskIds, TaskId)
-
+      that.modifyRelatedTask(projId, ideaId, TaskId)
 
     // 从日程创建页进入，只需要设置缓存
     } else {
@@ -210,6 +205,53 @@ Page({
 
   },
 
+  /**
+  * @parameter ideaId点子id,taskId任务id(一个）)
+  * 修改点子关联的任务
+  * 内部调用了addProjectNotification
+  */
+  modifyRelatedTask: function (projId,ideaId, taskId){
+
+    var that = this
+    var Idea = Bmob.Object.extend('idea')
+    var ideaQuery = new Bmob.Query(Idea)
+    var task = Bmob.Object.createWithoutData('task',taskId)
+
+    //修改点子关联的任务
+    ideaQuery.get(ideaId,{
+      success: function(result){
+        //成功
+        result.set('task',task)
+        result.save()
+        //通知项目其他成员
+        var _type = 5  //通知类型
+        // that.addProjectNotification(projId, MODIFY_RELATED_TASK, _type, ideaId/*点子id*/)  //通知其他项目成员
+        console.log('修改点子关联的任务成功！')
+
+        wx.hideLoading()
+        wx.navigateBack({
+          url: '../ideaDetail/ideaDetail',
+        })
+        wx.showToast({
+          title: '修改成功',
+          icon: 'success',
+          duration: 1000
+        })
+
+      },
+      error: function(result,error){
+        //失败
+        console.log('修改点子关联的任务失败！',error)
+        wx.hideLoading()
+        wx.showToast({
+          title: '修改失败，请稍后再试:\n' + JSON.stringify(error),
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -217,42 +259,6 @@ Page({
   onLoad: function (options) {
 
     var that = this
-
-    // 从缓存中判断是否从详情页进入
-    wx.getStorage({
-      key: 'isIdeaDetail',
-      success: function (res) {
-        that.setData({
-          isIdeaDetail: res.data
-        })
-      }
-    })
-
-    if(that.data.isIdeaDetail == true) {
-      // 详情页
-      // 获取本日程的详情
-      wx.getStorage({
-        key: 'IdeaDetail-ideaDetail',
-        success: function(res) {
-          that.setData({
-            ideaDetail: res.data,
-            TaskId: res.data.taskIds
-          })
-        },
-      })
-
-    } else {
-      // 创建页
-      // 获取关联任务列表里的数据
-      wx.getStorage({
-        key: 'IdeaTaskList-TaskId',
-        success: function(res) {
-          that.setData({
-            TaskId: res.data
-          })
-        },
-      })
-    }
 
     // 从缓存获取项目信息
     wx.getStorage({
@@ -267,6 +273,51 @@ Page({
         that.getTaskLists(that.data.projectDetail.id)
 
       },
+    })
+
+    // 从缓存中判断是否从详情页进入
+    wx.getStorage({
+      key: 'isIdeaDetail',
+      success: function (res) {
+
+        that.setData({
+          isIdeaDetail: res.data
+        })
+
+        if(that.data.isIdeaDetail == true) {
+          // 详情页
+          // 获取本日程的详情
+          wx.getStorage({
+            key: 'IdeaDetail-taskId',
+            success: function(res) {
+              that.setData({
+                TaskId: res.data
+              })
+            },
+          })
+          wx.getStorage({
+            key: 'ProjectMore-ideaDetail-id',
+            success: function(res) {
+              that.setData({
+                ideaId: res.data
+              })
+            }
+          })
+
+        } else {
+          // 创建页
+          // 获取关联任务列表里的数据
+          wx.getStorage({
+            key: 'IdeaTaskList-TaskId',
+            success: function(res) {
+              that.setData({
+                TaskId: res.data
+              })
+            },
+          })
+        }
+
+      }
     })
 
   },

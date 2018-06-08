@@ -23,7 +23,7 @@
       </view>
       <image src='{{icon_add}}'bindtap='connectTask'></image>
     </view>
-    <block wx:if="{{taskId}}">
+    <block wx:if="{{taskId != -1}}">
       <view class="item-view ver-align space-between">
         <text >{{taskTitle}}</text>
         <image src='{{taskUserPic}}'></image>

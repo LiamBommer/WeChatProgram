@@ -152,7 +152,6 @@ Page({
               url: '../ScheduleTaskList/ScheduleTaskList',
             })
 
-
           }
         })
 

@@ -59,6 +59,7 @@ Page({
     console.log('内容: ' + content)
     console.log('用户: ' + userId)
     console.log('任务: ' + taskId)
+    console.log('项目id：'+ projectId)
 
     wx.showLoading({
       title: '正在创建',
@@ -81,7 +82,7 @@ Page({
     var idea = new Idea()
     var user = Bmob.Object.createWithoutData("_User", userId)
     var project = Bmob.Object.createWithoutData("project", projId)
-    if(taskId != null)
+    if(taskId != -1)
     var task = Bmob.Object.createWithoutData("task", taskId)
 
     //添加点子的基本信息
@@ -110,9 +111,9 @@ Page({
         })
 
       },
-      error: function(error){
+      error: function(object,error){
         //添加失败
-        console.log("提示用户添加点子失败！")
+        console.log("提示用户添加点子失败！", error)
       }
     })
   },
@@ -207,6 +208,21 @@ Page({
     //需要任务列表，通过任务ID取任务名和任务执行者
     var that = this
 
+    // 获取任务数组，根据选中的列表取出名字和头像
+    wx.getStorage({
+      key: 'Project-detail',
+      success: function (res) {
+
+        // 存入数据
+        that.setData({
+          projectDetail: res.data
+        })
+
+        that.getTasks(res.data.id)
+
+      },
+    })
+
     // 从缓存中拿关联的任务列表
     wx.getStorage({
       key: 'IdeaTaskList-TaskId',
@@ -215,27 +231,12 @@ Page({
         // 选中关联任务数组不为空
         if (JSON.stringify(res.data) != '{}') {
 
-          // console.log('Get storage: ', res.data)
+          // console.log('Get        IdeaTaskList-TaskId           storage: ', res.data)
           // console.log('Storages length: ', res.data.length)
 
           // 关联数组存进数据
           that.setData({
             TaskId: res.data
-          })
-
-          // 获取任务数组，根据选中的列表取出名字和头像
-          wx.getStorage({
-            key: 'Project-detail',
-            success: function (res) {
-
-              that.getTasks(res.data.id)
-
-              // 存入数据
-              that.setData({
-                projectDetail: res.data
-              })
-
-            },
           })
 
         } else {  // 选中的关联任务数组为空
@@ -251,6 +252,8 @@ Page({
         wx.hideLoading()
       },
     })
+
+
 
   },
 

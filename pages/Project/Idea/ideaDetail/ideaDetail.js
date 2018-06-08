@@ -25,10 +25,6 @@ Page({
     taskTitle: '',
     createdAt: '',
 
-    connectTask: [//关联任务
-
-    ],
-
     projectDetail: ''
 
   },
@@ -62,6 +58,7 @@ Page({
 
   //删除
   Delete: function () {
+    var that = this
     wx.showModal({
       title: '提示',
       content: '确定要删除此点子吗',
@@ -85,9 +82,29 @@ Page({
 
   // 关联任务
   connectTask: function (e) {
-    //需要设置任务列表的任务名，执行者头像的缓存
-    wx.navigateTo({
-      url: '../IdeaTaskList/IdeaTaskList',
+
+    var that = this
+
+    // 设置标识，进入人物列表后完成即保存
+    wx.setStorage({
+      key: 'isIdeaDetail',
+      data: true,
+      success: function () {
+
+        wx.setStorage({
+          key: 'IdeaDetail-taskId',
+          data: that.data.taskId,
+          success: function() {
+
+            wx.navigateTo({
+              url: '../IdeaTaskList/IdeaTaskList',
+            })
+
+          }
+        })
+
+      }
+
     })
   },
 
@@ -122,25 +139,27 @@ Page({
         console.log('获取的点子：', results)
         //成功
 
+        ideaObject = {
+          'id': ideaId,   //点子id
+          'projectName': results.get('project').name || '', //项目名称
+          'content': results.get('content') || '',  //点子内容
+          'userName': results.get('user').nickName || '', //发布人的名字(真正的昵称，而不是其他名字)
+          'userPic': results.get('user').userPic || '',//发布人的头像
+          'createdAt': results.createdAt || '',  //点子创建时间
+
+          'taskId': -1,
+          'taskTitle': '',
+          'taskUserPic': '',
+        }
+
         //判断任务是否已删除
-        if(results.get('task').is_delete != true){
-          ideaObject = {
-            'id': ideaId,   //点子id
-            'taskId': results.get('task') != null && results.get('task').is_delete != true ? results.get('task')
-            .objectId : '',//关联的任务id
+        if(results.get('task') != undefined && results.get('task').is_delete != true){
+            ideaObject.taskId = results.get('task') != null && results.get('task').is_delete != true ? results.get('task')
+            .objectId : ''//关联的任务id
 
-            'taskTitle': results.get('task') != null && results.get('task').is_delete != true ? results.get
-            ('task').title : '',  //关联的任务名称
+            ideaObject.taskTitle = results.get('task') != null && results.get('task').is_delete != true ? results.get
+            ('task').title : ''  //关联的任务名称
 
-            'task': results.get('task') != null && results.get('task').is_delete != true ? results.get('task')
-             : '',//关联的任务id
-
-            'projectName': results.get('project').name || '', //项目名称
-            'content': results.get('content') || '',  //点子内容
-            'userName': results.get('user').nickName || '', //发布人的名字(真正的昵称，而不是其他名字)
-            'userPic': results.get('user').userPic || '',//发布人的头像
-            'createdAt': results.createdAt || '',  //点子创建时间
-          }
           if (results.get('task').leader != null){
             ideaObject['taskUserPic'] = results.get('task').leader.userPic
           }
@@ -154,9 +173,9 @@ Page({
           userName: ideaObject.userName,
           userPic: ideaObject.userPic,
           projectName: ideaObject.projectName,
-          taskId: ideaObject.taskId == undefined ? '' : ideaObject.taskId,
-          taskTitle: ideaObject.taskTitle == undefined ? '' : ideaObject.taskTitle,
-          taskUserPic: ideaObject.taskUserPic == undefined ? '' : ideaObject.taskUserPic,
+          taskId: ideaObject.taskId,
+          taskTitle: ideaObject.taskTitle,
+          taskUserPic: ideaObject.taskUserPic,
           createdAt: ideaObject.createdAt
         })
         wx.hideLoading()
