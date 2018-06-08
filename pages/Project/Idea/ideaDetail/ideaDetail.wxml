@@ -10,6 +10,12 @@
           <image src='{{icon_share}}'></image>
        </button>
     </view>
+    <view class="item-view ver-align">
+      <view class='ver-align'>
+        <image src='{{icon_project}}'></image>
+        <text class='desc' >项目 | {{projectName}}</text>
+      </view>
+    </view>
     <view class="item-view ver-align space-between">
       <view class='ver-align'>
         <image src='{{icon_task_list}}'></image>
@@ -17,12 +23,12 @@
       </view>
       <image src='{{icon_add}}'bindtap='connectTask'></image>
     </view>
-     <block wx:for="{{connectTask}}">
-          <view class="item-view ver-align space-between">
-            <text >{{item.name}}</text>
-            <image src='{{item.icon}}'></image>
-          </view>
-      </block>
+    <block wx:if="{{taskId}}">
+      <view class="item-view ver-align space-between">
+        <text >{{taskTitle}}</text>
+        <image src='{{taskUserPic}}'></image>
+      </view>
+    </block>
     <view class="item-view">
       <image src='{{icon_close}}'></image>
       <text class='desc delete-text 'bindtap='Delete'>删除点子</text>
