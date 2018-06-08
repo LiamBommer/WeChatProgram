@@ -123,28 +123,24 @@ function deleteProjectMember(projId, memberIds){
 
   var Proj_Member = Bmob.Object.extend("proj_member")
 
-  var objects = new Array()
-  for(var i=0;i<memberIds.length;i++){
-    var proj_member = new Proj_Member()
-    proj_member.set("projId",projId)
-    proj_member.set("user_id",memberIds[i])
-    objects.push(proj_member)
-  }
+
   //若数组非空，则开始删除成员
-  if(objects != null && objects.length > 0){
-    Bmob.Object.destroyAll(objects).then(function () {
-      //成功
-      //console.log("删除项目成员成功！")
-
-
-    }, function (error) {
-      //失败
-
-
-
+  if (memberIds != null && memberIds.length > 0){
+    var projmemberQuery = new Bmob.Query(Proj_Member)
+    projmemberQuery.containedIn("user_id",memberIds)
+    projmemberQuery.equalTo('proj_id',projId)
+    projmemberQuery.destroyAll({
+      success: function () {
+        //删除成功
+        console.log('删除任务成员成功!')
+      },
+      error: function (err) {
+        // 删除失败
+        console.log('删除任务成员失败!')
+      }
     })
-  }
 
+  }
 }
 
 /**
@@ -381,8 +377,38 @@ function deletePoject(projId){
     }
   })
 }
+
+/**
+ * 测试用
+ * 快速增加项目成员
+ */
+function addProjectMember(projId,memberIds){
+
+  var ProjectMember = Bmob.Object.extend('proj_member')
+  var memberArr = []
+
+  if (memberIds != null && memberIds.length > 0){
+    for(var i in memberIds){
+      var projectmember = new ProjectMember()
+      projectmember.set('proj_id',projId)
+      projectmember.set('user_id',memberIds[i])
+      memberArr.push(projectmember)
+    }
+    if (memberArr.length > 0){
+      Bmob.Object.saveAll(memberArr).then(function(memberArr){
+        //成功
+        console.log('添加项目成员成功!')
+      },
+      function(error){
+        //失败
+      })
+    }
+  }
+}
 module.exports.getProjectDetail = getProjectDetail
 module.exports.deleteProjectMember = deleteProjectMember
 module.exports.makeProjectFirst = makeProjectFirst
 module.exports.cancelProjectFirst = cancelProjectFirst
 module.exports.transferProject = transferProject
+module.exports.addProjectMember = addProjectMember
+

@@ -551,6 +551,91 @@ function deleteMeetingMember(projId, meetingId, memberIds) {
 
 }
 
+/**
+ * 获取某个会议的详情
+ * meeting =
+'id': result.id || '', //会议id
+'title': result.get('title') || '',  //会议标题
+'start_time': result.get('start_time') || '',  //会议开始时间
+'content': result.get('content') || '',  //会议内容
+'meetingRecord': result.get('meeting_record') || '' ,  //会议记录
+
+ */
+function getOneMeeting(meetingId){
+
+  var Meeting = Bmob.Object.extend('meeting')
+  var meetingQuery = new Bmob.Query(Meeting)
+
+  //获取某个会议的详情
+  meetingQuery.get(meetingId,{
+    success: function(result){
+      //成功
+      var meeting
+      meeting = {
+        'id': result.id || '', //会议id
+        'title': result.get('title') || '',  //会议标题
+        'start_time': result.get('start_time') || '',  //会议开始时间
+        'content': result.get('content') || '',  //会议内容
+        'meetingRecord': result.get('meeting_record') || '' ,  //会议记录
+      }
+      //获取到的会议 meeting
+      console.log(meeting)
+
+
+
+    },
+    error: function(error){
+      //失败
+      console.log('获取会议失败')
+
+    }
+  })
+}
+
+/**
+ * @parameter projId项目id ，meetingId会议id，oldmemberIds 旧的成员id数组, newmemberIds 新的成员id数组
+ * 修改会议成员， 删掉原来的成员id数组,添加新的成员ids数组
+ */
+function modifyMeetingMember(projId, meetingId,oldmemberIds, newmemberIds){
+
+  var Meetingmember = Bmob.Object.extend('meeting_member')
+  var meetingmemberQuery = new Bmob.Query(Meetingmember)
+  var meetingmemberArr = []
+
+  if (oldmemberIds != null && oldmemberIds.length > 0){
+    meetingmemberQuery.containedIn('user', oldmemberIds)
+    meetingmemberQuery.equalTo('meeting_id', meetingId)
+
+    meetingmemberQuery.destroyAll({
+      success: function(){
+        //删除成功
+        //然后添加新的成员
+        if (newmemberIds != null && newmemberIds.length > 0){
+          for(var i in newmemberIds){
+            var member = new Meetingmember()
+            var user = Bmob.Object.createWithoutData('_User',newmemberIds[i])
+            member.set('meeting_id',meetingId)
+            member.set('user',user)
+            meetingmemberArr.push(member)
+          }
+
+          if(meetingmemberArr != null && meetingmemberArr.length > 0){
+            Bmob.Object.saveAll(meetingmemberArr).then(function (results) {
+              // 重新添加关联的任务成功
+              var _type = 4  //通知类型
+              that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+              console.log('修改会议关联成员成功！')
+            },
+              function (error) {
+                // 异常处理
+                console.log('修改会议关联成员成功！')
+              })
+          }
+        }
+      }
+    })
+  }
+}
 module.exports.createMeeting = createMeeting
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getMeeting = getMeeting
