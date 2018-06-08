@@ -237,57 +237,64 @@ Page({
     var scheduletaskArr = []
 
     //将原来关联的任务删除
-    if (oldTaskIds != null && oldTaskIds.length > 0) {
+    if (oldTaskIds != undefined && oldTaskIds.length > 0) {
       scheduletaskQuery.containedIn('task', oldTaskIds)
       scheduletaskQuery.equalTo('schedule_id', scheduleId)
 
       scheduletaskQuery.destroyAll({
         success: function () {
           //删除成功
-          //然后加入新的关联任务
-          if (newTaskIds != null && newTaskIds.length > 0) {
-            for (var i in newTaskIds) {
-              var scheduletask = new Scheduletask()
-              var task = Bmob.Object.createWithoutData("task", newTaskIds[i])
-              scheduletask.set('task', task)
-              scheduletask.set('schedule_id', scheduleId)
-              scheduletaskArr.push(scheduletask)  //这个数组用来批量添加用
-            }
-            if (scheduletaskArr != null && scheduletaskArr.length > 0) {
-              Bmob.Object.saveAll(scheduletaskArr).then(function (results) {
-                // 重新添加关联的任务成功
-                var _type = 3  //通知类型
-                // that.addProjectNotification(projId, MODIFY_RELATED_TASK, _type, scheduleId/*日程id*/)  //通知其他项目成员
-                console.log('修改关联任务成功！')
-
-                wx.hideLoading()
-                wx.navigateBack({
-                  url: '../scheduleDetail/scheduleDetail',
-                })
-                wx.showToast({
-                  title: '关联成功',
-                  icon: 'success',
-                  duration: 1000
-                })
-
-              },
-                function (error) {
-                  // 异常处理
-                  console.log('修改关联任务中的重新添加关联任务失败！')
-                  wx.showToast({
-                    title: '关联失败',
-                    icon: 'none',
-                    duration: 1000
-                  })
-                })
-            }
-          }
 
         },
         error: function (err) {
           // 删除失败,即修改关联任务失败
           console.log('修改关联任务失败')
         }
+      })
+    }
+
+    //然后加入新的关联任务
+    if (newTaskIds != undefined && newTaskIds.length > 0) {
+      for (var i in newTaskIds) {
+        var scheduletask = new Scheduletask()
+        var task = Bmob.Object.createWithoutData("task", newTaskIds[i])
+        scheduletask.set('task', task)
+        scheduletask.set('schedule_id', scheduleId)
+        scheduletaskArr.push(scheduletask)  //这个数组用来批量添加用
+      }
+      if (scheduletaskArr != null && scheduletaskArr.length > 0) {
+        Bmob.Object.saveAll(scheduletaskArr).then(function (results) {
+          // 重新添加关联的任务成功
+          var _type = 3  //通知类型
+          // that.addProjectNotification(projId, MODIFY_RELATED_TASK, _type, scheduleId/*日程id*/)  //通知其他项目成员
+          console.log('修改关联任务成功！')
+
+          wx.hideLoading()
+          wx.navigateBack({
+            url: '../scheduleDetail/scheduleDetail',
+          })
+          wx.showToast({
+            title: '关联成功',
+            icon: 'success',
+            duration: 1000
+          })
+
+        },
+          function (error) {
+            // 异常处理
+            console.log('修改关联任务中的重新添加关联任务失败！')
+            wx.showToast({
+              title: '关联失败',
+              icon: 'none',
+              duration: 1000
+            })
+          })
+      }
+    } else {
+      //如果没有添加新的（删除了全部）则直接hideloading，并且跳转
+      wx.hideLoading()
+      wx.navigateBack({
+        url: '../scheduleDetail/scheduleDetail',
       })
     }
 
