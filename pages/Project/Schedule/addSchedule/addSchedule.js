@@ -21,7 +21,7 @@ Page({
     projectDetail: '',  // 所在项目信息
 
     connectTask: [//关联任务
-      
+
     ],
   },
 
@@ -92,7 +92,8 @@ Page({
 
   // 关联任务
   connectTask: function (e) {
-    //需要设置任务列表的任务名，执行者头像的缓存
+
+    // 设置创建页面标志缓存
     wx.setStorage({
       key: 'isScheduleDetail',
       data: false,
@@ -102,7 +103,7 @@ Page({
         })
       }
     })
-    
+
   },
 
   /**
@@ -116,6 +117,7 @@ Page({
     var Task = Bmob.Object.extend("task")
     var taskQuery = new Bmob.Query(Task)
     var taskArr = []
+    console.log('TaskId: '+TaskId)
 
     //查询出对应的任务看板的所有任务
     taskQuery.limit(20)
@@ -238,6 +240,11 @@ Page({
    */
   onLoad: function (options) {
 
+    wx.setStorage({
+      key: 'ScheduleDetail-scheduleDetail',
+      data: {},
+    })
+
   },
 
   /**
@@ -268,8 +275,8 @@ Page({
         // 选中关联任务数组不为空
         if (JSON.stringify(res.data) != '{}') {
 
-          console.log('Get storage: ', res.data)
-          console.log('Storages length: ', res.data.length)
+          // console.log('Get storage: ', res.data)
+          // console.log('Storages length: ', res.data.length)
 
           // 关联数组存进数据
           that.setData({
@@ -284,11 +291,16 @@ Page({
               that.getTasks(res.data.id)
 
               // 存入数据
+              console.log('Get project detail from storage: ', res.data)
               that.setData({
                 projectDetail: res.data
               })
+              console.log('Get project detail from DATA: ', that.data.projectDetail)
 
             },
+            fail: function(res) {
+              console.log('Fail to get project detail from storage: ', res)
+            }
           })
 
         } else {  // 选中的关联任务数组为空

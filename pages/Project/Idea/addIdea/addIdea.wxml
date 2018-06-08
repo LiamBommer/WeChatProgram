@@ -12,10 +12,10 @@
           </view>
           <image src='{{icon_add}}'bindtap='connectTask'></image>
         </view>
-         <block wx:for="{{connectTask}}">
+         <block wx:for="{{connectTask}}" wx:key="{{task_id}}">
           <view class="item-view ver-align space-between">
-            <text >{{item.name}}</text>
-            <image src='{{item.icon}}'></image>
+            <text >{{item.task_title}}</text>
+            <image src='{{item.userPic}}'></image>
           </view>
          </block>
     </view>

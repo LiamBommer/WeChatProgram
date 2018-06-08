@@ -2,17 +2,17 @@
 <view class='memberList-container'>
 
     <checkbox-group bindchange="ProjectTaskChange">
-      <block wx:for="{{TaskList}}">
+      <block wx:for="{{tasklist}}" wx:key="{{listId}}">
             <!-- 标题 -->
             <view class='title'>{{item.title}}</view>
             <!-- 列表项 -->
-            <block wx:for="{{item.list}}">
+            <block wx:for="{{item.tasks}}" wx:for-item="tasks" wx:key="{{objectId}}">
               <view class='item'>
                   <view class='item-one'>
-                    <checkbox class='item-checkbox' value="{{item.id}}" checked='{{item.checked}}'/>  
-                    <view class='item-text'>{{item.name}}</view>
+                     <image  class='item-icon' src='{{tasks.leaderPic}}'></image>
+                    <view class='item-text'>{{tasks.title}}</view>
                   </view>
-                  <image  class='item-icon' src='{{item.icon}}'></image>
+                  <checkbox class='item-checkbox' value="{{tasks.objectId}}" checked="{{tasks.checked}}" />
               </view>
             </block>
       </block>
