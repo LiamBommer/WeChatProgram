@@ -127,6 +127,15 @@ Page({
   connectTask: function (e) {
 
     var that = this
+    // 把本日程的详情加入缓存，给关联的列表用
+    var scheduleDetail = {}
+    var oldTasks = that.data.tasks
+    var oldTaskIds = []
+    for (var i in oldTasks) {
+      oldTaskIds.push(oldTasks[i].task_id)
+    }
+    scheduleDetail.scheduleId = that.data.scheduleId
+    scheduleDetail.taskIds = oldTaskIds
 
     // 设置标识，进入人物列表后完成即保存
     wx.setStorage({
@@ -134,27 +143,22 @@ Page({
       data: true,
       success: function () {
 
-        // 把已有的任务列表加入缓存，以便能收到
-        var oldTasks = that.data.tasks
-        var oldTaskIds = []
-        for (var i in oldTasks) {
-          oldTaskIds.push(oldTasks[i].task_id)
-        }
         wx.setStorage({
-          key: 'ScheduleDetail-TaskId',
-          data: oldTaskIds,
+          key: 'ScheduleDetail-scheduleDetail',
+          data: scheduleDetail,
           success: function() {
+
             wx.navigateTo({
               url: '../ScheduleTaskList/ScheduleTaskList',
             })
+
+
           }
         })
 
       }
 
     })
-
-    // 将原本的任务id保存至缓存 ！！！
 
   },
 
@@ -388,6 +392,96 @@ Page({
 
 
   /**
+  * @parameter scheduleId 日程id
+  * 获取某个日程的详情
+  * var scheduleObject = {
+  "objectId": '0',     //日程关联任务的id ，不是日程，也不是任务，而是两个的关联的id ，hh后面会设置（好像以后都没有用到）
+  "scheduleId":'',  //日程id
+  "scheduleContent": '',  //日程内容
+  "startTime": '', //日程开始时间,
+  "endTime": '', //日程结束时间,
+  "tasks": []  //关联的任务数组
+  }
+  *
+  */
+  getOneSchedule: function (scheduleId){
+
+    var that = this
+    var Schedule = Bmob.Object.extend('schedule')
+    var scheduleQuery = new Bmob.Query(Schedule)
+    var ScheduleTask = Bmob.Object.extend('schedule_task')
+    var scheduletaskQuery = new Bmob.Query(ScheduleTask)
+    var scheduleObject = {
+      "objectId": '0',     //日程关联任务的id ，不是日程，也不是任务，而是两个的关联的id ，hh后面会设置（好像以后都没有用到）
+      "scheduleId":'',  //日程id
+      "scheduleContent": '',  //日程内容
+      "startTime": '', //日程开始时间,
+      "endTime": '', //日程结束时间,
+      "tasks": []  //关联的任务数组
+    }
+
+    //获取日程的基本信息
+    scheduleQuery.get(scheduleId,{
+      success: function(schedule){
+        //成功，获取schedule
+
+        scheduleObject.scheduleId =  schedule.id //日程id
+        scheduleObject.scheduleContent = schedule.get('content') //日程内容
+        scheduleObject.startTime = schedule.get('start_time')//日程开始时间,
+        scheduleObject.endTime = schedule.get('end_time')//日程结束时间,
+
+        var tasks = []
+        //然后获取日程下的关联的任务
+        scheduletaskQuery.equalTo('schedule_id', schedule.id)
+        console.log(schedule.id)
+        scheduletaskQuery.include('task')
+        scheduletaskQuery.include('task.leader')
+        scheduletaskQuery.find({
+          success: function(results){
+            //获取关联任务成功
+            console.log('获取关联任务成功',results)
+            //注意下面的for循环是 j ，不是 i
+            for (var j = 0; j < results.length; j++) {
+              if (results[j].get("task").is_delete != true) {
+                var taskObject = {
+                  "task_id": results[j].get("task").objectId,  //任务id
+                  "task_title": results[j].get("task").title,  //任务标题
+                  "task_userPic": results[j].attributes.task.leader.userPic  //任务负责人头像
+                }
+                tasks.push(taskObject)
+              }
+
+            }
+
+            //获取成功，scheduleObject,在这里setData
+            console.log('获取成功，scheduleObject',scheduleObject)
+
+            that.setData({
+              scheduleContent: scheduleObject.scheduleContent,
+              startTime: scheduleObject.startTime,
+              endTime: scheduleObject.endTime,
+              tasks: tasks
+            })
+            wx.hideLoading()
+
+
+          },
+          error: function(error){
+            //获取关联任务失败
+            console.log('获取关联任务失败！')
+          }
+        })
+      },
+      error: function(error){
+        //失败
+        console.log('获取日程失败',error)
+      }
+    })
+
+  },
+
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -413,18 +507,15 @@ Page({
       mask: 'true'
     })
 
-    //需要任务列表，通过任务ID取任务名和任务执行者
+    // 获取日程id，进行查询
     wx.getStorage({
-      key: 'ProjectMore-scheduleDetail',
+      key: 'ProjectMore-scheduleDetail-id',
       success: function (res) {
         that.setData({
-          scheduleId: res.data.scheduleId,
-          scheduleContent: res.data.scheduleContent,
-          startTime: res.data.startTime,
-          endTime: res.data.endTime,
-          tasks: res.data.tasks
+          scheduleId: res.data
         })
-        wx.hideLoading()
+        // Get schedule detail
+        that.getOneSchedule(res.data)
       }
     })
 
