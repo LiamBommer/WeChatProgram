@@ -157,55 +157,7 @@ Page({
     //墙列表
     idea: { img_visible: true, bg_img: '',},
     Idea:[
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '点子狂想者',
-        content: '学长说可以做明星专场！通过学校，老师，新媒体各种渠道去寻找。',
-        task: '邀请嘉宾',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '我不是蚂蚁',
-        content: '希望学长说能设计很好看的宣传品，从而一直流传下去',
-        task: '设计宣传品',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '组织大佬',
-        content: '这次预热活动就不要搞那么多花里胡哨的东西啦',
-        task: '预热活动',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '患者',
-        content: '宣传品应该加一些复仇者联盟的元素',
-        task: '设计宣传品',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '策划大师',
-        content: '策划的时候应该把握好方向，不能随意乱跑',
-        task: '策划活动',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '钢铁侠',
-        content: '可以借拖车搬物资',
-        task: '活动当天',
-      },
-      {
-        icon_avatar: '/img/member.png',
-        icon_share: '/img/share.png',
-        username: '灭霸',
-        content: 'ppt可以考虑加入灭霸的元素',
-        task: '活动当天',
-      },
+
     ],
 
   },
@@ -546,10 +498,19 @@ Page({
   /**
    * 显示点子详情页面
    */
-  showIdeaDetail: function() {
-    wx.navigateTo({
-      url: '../Idea/ideaDetail/ideaDetail'
-    });
+  showIdeaDetail: function(e) {
+
+    var ideaId = e.currentTarget.dataset.index
+    wx.setStorage({
+      key: 'ProjectMore-ideaDetail-id',
+      data: ideaId,
+      success: function() {
+        wx.navigateTo({
+          url: '../Idea/ideaDetail/ideaDetail'
+        });
+      }
+    })
+
   },
 
 
@@ -1254,6 +1215,74 @@ Page({
 
 
   /**
+  * @parameter projId 项目id
+  * 获取某个项目的所有点子,每个点子的属性有
+  'id':  //点子的id
+  'content': //点子内容
+  'taskId':  //关联的任务id
+  'taskTitle':  //关联的任务名称
+  'projectName':  //项目名称
+  'userName':  //发布人的名字(真正的昵称，而不是其他名字)
+  'userPic':  //发布人的头像
+  'cretaedAt':  //点子创建时间
+  */
+
+  getProjectIdea: function (projId) {
+
+    var that = this
+    var Idea = Bmob.Object.extend('idea')
+    var ideaQuery = new Bmob.Query(Idea)
+    var ideaArr = []
+
+    //获取某个项目的所有点子
+    ideaQuery.equalTo('project', projId)
+    ideaQuery.include('project')
+    ideaQuery.include('task')  //获取点子关联的任务
+    ideaQuery.include('user')
+
+    ideaQuery.find({
+      success: function (results) {
+        //成功
+        for (var i in results) {
+          var ideaObject = {}
+          ideaObject = {
+            'id': results[i].id || '',  //点子的id
+            'taskId': results[i].get('task')!=null && results[i].get('task').is_delete != true ? results[i].get('task')                           .objectId : '',//关联的任务id
+            'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
+            'projectName': results[i].get('project').name,  //项目名称
+            'content': results[i].get('content') || '',  //点子内容
+            'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
+            'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
+            'cretaedAt': results[i].createdAt || '',  //点子创建时间
+          }
+          ideaArr.push(ideaObject)
+        }
+
+        if (ideaArr != null && ideaArr.length > 0) {
+          //获取到点子啦
+          //在这里setData
+          console.log('获取到的点子们', ideaArr)
+
+          that.setData({
+            Idea: ideaArr
+          })
+
+        }
+      },
+      error: function (error) {
+        //失败
+        //查询点子失败
+        wx.showToast({
+          title: '查询点子失败，请稍后再试',
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -1291,11 +1320,12 @@ Page({
           currentProjName: ProjectName
         })
         console.log("onshow:project", res.data)
-        that.getTaskLists(projId);//获取任务详情
-        that.getProjectMember(projId);//获取项目成员
-        that.getAnnouncements(projId)//获取公告详情
-        that.getMeeting(projId)//获取会议详情
-        that.getSchedules(projId)      // 获取日程列表
+        that.getTaskLists(projId)       // 获取任务详情
+        that.getProjectMember(projId)   // 获取项目成员
+        that.getAnnouncements(projId)   // 获取公告详情
+        that.getMeeting(projId)         // 获取会议详情
+        that.getSchedules(projId)       // 获取日程列表
+        that.getProjectIdea(projId)     // 获取点子列表
       },
     })
 

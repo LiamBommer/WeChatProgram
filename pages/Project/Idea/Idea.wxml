@@ -16,18 +16,18 @@
   <!-- 有内容 -->
   <view style='display:{{Idea.length==0? "none":""}}'>
     <view class='post-view'>
-      <block wx:for="{{Idea}}">
-          <view class='post' bindtap='showIdeaDetail'>
+      <block wx:for="{{Idea}}" wx:key="{{id}}">
+          <view class='post' bindtap='showIdeaDetail' data-index='{{item.id}}'>
             <view class='user-info ver-align'>
-              <image src='{{item.icon_avatar}}' class='avatar'></image>
-              <text class='username'>{{item.username}}</text>
+              <image src='{{item.userPic}}' class='avatar'></image>
+              <text class='username'>{{item.userName}}</text>
             </view>
             <view class='content'>
               {{item.content}}
             </view>
             <view class='bottom-view ver-align space-between'>
-              <text class='task'>{{item.task}}</text>
-              <image src='{{item.icon_share}}' class='img-share'></image>
+              <text class='task'>{{item.taskTitle}}</text>
+              <image src='/img/share.png' class='img-share'></image>
             </view>
           </view>
       </block>
