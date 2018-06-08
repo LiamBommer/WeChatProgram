@@ -3,6 +3,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding:0rpx 40rpx;
+  background: #fff;
 }
 
 .Announcement-container .item{
@@ -11,43 +13,69 @@
   background: #fff;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #f2f2f2;
 }
 
 .Announcement-container .item .item-first{
-  width: 584rpx;
+  width: 70%;
   display: flex;
   align-items: center;
 }
 
 .Announcement-container .item .item-first .item-icon{
-   width: 60rpx;
-   height: 60rpx;
-   border-radius: 200rpx;
-   margin-left: 40rpx;
+   width: 70rpx;
+   height: 70rpx;
+   border-radius: 10rpx;
+}
+
+.Announcement-container .item .item-first .item-message{
+  width:27rpx;
+  height:27rpx;
+  border-radius:50%;
+  color:#fff;
+  background:red;
+  position:relative;
+  font-size:20rpx;
+  text-align:center;
+  bottom:35rpx;
+  right:10rpx;
 }
 
 .Announcement-container .item .item-first .item-text{
-   margin-left: 30rpx;
+   width:70%;
 }
 
-.Announcement-container .item .item-first .item-text .item-title{
-   font-size: 34rpx;
+.Announcement-container .item .item-first .item-text .item-read{
+   font-size: 28rpx;
+   color: #b2b2b2;
 }
 
 .Announcement-container .item .item-first .item-text .item-content{
    font-size: 28rpx;
-   color: #888888;
+   /* 多行省略 */
+   display: -webkit-box;
+   line-height: 40rpx;
+   word-break: break-all;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   /* 多行省略 */
 }
 
 .Announcement-container .item .item-second{
    font-size: 26rpx;
    color: #b2b2b2;
+   display:flex;
+   flex-direction:column;
+   justify-content: flex-start;
+   align-items:center;
+   margin-right:25rpx;
+   margin-top:16rpx;   
 }
 
 .Announcement-container .item .item-second .item-time{
    font-size: 25rpx;
-}
-
-.Announcement-container .item .item-second .item-read{
-   font-size: 28rpx;
+   margin-top:-45rpx;
 }

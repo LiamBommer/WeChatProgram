@@ -37,7 +37,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    NotificationId:'',//通知传来的ID
     startX: 0, //删除开始坐标
     startY: 0,//删除
     delBtnWidth:90,//删除按钮宽度单位（px）
@@ -1611,6 +1611,11 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       mask: 'true'
     })
     var that = this;
+    //接受通知的参数ID
+    console.log("NotificationId:",options.id)
+    that.setData({
+      NotificationId:options.id
+    })
     //任务
     wx.getStorage({
       key: 'ProjectMore-Task',
