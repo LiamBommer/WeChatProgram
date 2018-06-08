@@ -546,7 +546,7 @@ Page({
     // 清空缓存列表
     // 以免干扰创建日程页面
     wx.setStorage({
-      key: 'ScheduleTaskList-TaskId',
+      key: 'ScheduleDetail-scheduleDetail',
       data: {},
     })
 

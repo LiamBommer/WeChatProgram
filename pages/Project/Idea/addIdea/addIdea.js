@@ -1,3 +1,6 @@
+
+var Bmob = require('../../../../utils/bmob.js')
+
 Page({
 
   /**
@@ -8,6 +11,10 @@ Page({
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
 
+    TaskId: {},   // 关联任务的列表id
+
+    projectDetail: '',  // 所在项目信息
+
     connectTask: [//关联任务
 
     ],
@@ -17,32 +24,17 @@ Page({
   // 关联任务
   connectTask: function (e) {
 
-    var that = this
-
-    // 设置标识，进入人物列表后完成即保存
+    // 设置创建页面标志缓存
     wx.setStorage({
-      key: 'isScheduleDetail',
-      data: true,
-      success: function () {
-
-        // 把已有的任务列表加入缓存，以便能收到
-        var oldTasks = that.data.tasks
-        var oldTaskIds = []
-        for (var i in oldTasks) {
-          oldTaskIds.push(oldTasks[i].task_id)
-        }
-        wx.setStorage({
-          key: 'ScheduleDetail-TaskId',
-          data: oldTaskIds,
-          success: function() {
-            wx.navigateTo({
-              url: '../IdeaTaskList/IdeaTaskList',
-            })
-          }
+      key: 'isIdeaDetail',
+      data: false,
+      success: function() {
+        wx.navigateTo({
+          url: '../IdeaTaskList/IdeaTaskList',
         })
-
       }
     })
+
   },
 
   //创建点子
@@ -58,6 +50,63 @@ Page({
     // createIdea: function (projId,userId,content,taskIds=[])
   },
 
+  /**
+ * @parameter projId项目id
+ * 创建点子时显示项目的任务
+ */
+  getTasks: function (projId) {
+
+    var that = this
+    var TaskId = that.data.TaskId   // 关联的任务id数组
+    var Task = Bmob.Object.extend("task")
+    var taskQuery = new Bmob.Query(Task)
+    var taskArr = []
+
+    //查询出对应的任务看板的所有任务
+    taskQuery.limit(20)
+    taskQuery.equalTo("proj_id", projId)
+    taskQuery.equalTo('is_delete', false) // 过滤掉已删掉的任务
+    taskQuery.include("leader")           // 可以查询出leader
+    taskQuery.ascending("end_time")       // 根据截止时间升序（越邻近排序最前面）
+    taskQuery.find({
+      success: function (tasks) {
+        //在这里设置setdata
+        console.log("获取到的任务: \n", tasks)  //已限定20个以内
+        for (var i in tasks) {
+
+          // 根据选中的列表取出名字和头像
+          for (var j in TaskId) {
+            if (tasks[i].id == TaskId[j]) {
+
+              // 将关联的任务存进数组
+              var taskObject = {}
+              taskObject = {
+                "task_id": tasks[i].id,  //任务id
+                "task_title": tasks[i].get('title'),  //任务标题
+                "userPic": tasks[i].get('leader').userPic || ''  //负责人头像
+              }
+              taskArr.push(taskObject)
+
+            }
+          }
+
+        }
+
+        //setData
+        console.log('关联的任务数组：', taskArr)
+        that.setData({
+          connectTask: taskArr
+        })
+        wx.hideLoading()
+
+
+      },
+      error: function (error) {
+        console.log("提示用户任务查询失败: " + error.code + " " + error.message);
+
+      }
+    })
+  },
 
   /**
   * @parameter projId 项目id，userId用户id，content 点子内容(不能为空），taskIds任务id数组（可以为空）
@@ -161,6 +210,59 @@ Page({
    */
   onShow: function () {
 
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
+
+    //需要任务列表，通过任务ID取任务名和任务执行者
+    var that = this
+
+    // 从缓存中拿关联的任务列表
+    wx.getStorage({
+      key: 'IdeaTaskList-TaskId',
+      success: function (res) {
+
+        // 选中关联任务数组不为空
+        if (JSON.stringify(res.data) != '{}') {
+
+          // console.log('Get storage: ', res.data)
+          // console.log('Storages length: ', res.data.length)
+
+          // 关联数组存进数据
+          that.setData({
+            TaskId: res.data
+          })
+
+          // 获取任务数组，根据选中的列表取出名字和头像
+          wx.getStorage({
+            key: 'Project-detail',
+            success: function (res) {
+
+              that.getTasks(res.data.id)
+
+              // 存入数据
+              that.setData({
+                projectDetail: res.data
+              })
+
+            },
+          })
+
+        } else {  // 选中的关联任务数组为空
+
+          wx.hideLoading()
+
+        }
+
+      },
+
+      fail: function(res) { // 未设置缓存
+        console.log('Fail to get storage: ', res)
+        wx.hideLoading()
+      },
+    })
+
   },
 
   /**
@@ -174,6 +276,12 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+
+    // 清空缓存列表
+    wx.setStorage({
+      key: 'IdeaTaskList-TaskId',
+      data: {},
+    })
 
   },
 
