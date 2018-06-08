@@ -12,7 +12,7 @@ Page({
     projectDetail: '',
 
     // checkbox 选中列表
-    TaskId: {},
+    TaskId: -1,
 
     // tasklist 后面代码自动添加
     tasklist: [],
@@ -171,11 +171,8 @@ Page({
 
           // 判断是否在选中的关联列表中
           tasks[i].checked = false
-          for (var j in TaskId) {
-            if (TaskId[j] == tasks[i].id) {
-              tasks[i].checked = true
-              break
-            }
+          if (TaskId == tasks[i].id) {
+            tasks[i].checked = true
           }
 
           var object

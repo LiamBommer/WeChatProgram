@@ -1,7 +1,7 @@
 <!--pages/memberList/memberList.wxml-->
 <view class='memberList-container'>
 
-    <checkbox-group bindchange="ProjectTaskChange">
+    <radio-group bindchange="ProjectTaskChange">
       <block wx:for="{{tasklist}}" wx:key="{{listId}}">
             <!-- 标题 -->
             <view class='title'>{{item.title}}</view>
@@ -12,11 +12,11 @@
                      <image  class='item-icon' src='{{tasks.leaderPic}}'></image>
                     <view class='item-text'>{{tasks.title}}</view>
                   </view>
-                  <checkbox class='item-checkbox' value="{{tasks.objectId}}" checked="{{tasks.checked}}" />
+                  <radio class='item-checkbox' value="{{tasks.objectId}}" checked="{{tasks.checked}}" />
               </view>
             </block>
       </block>
-    </checkbox-group>
+    </radio-group>
 
 
     <button class='addMember' size='default' bindtap='Finish'>完成</button>

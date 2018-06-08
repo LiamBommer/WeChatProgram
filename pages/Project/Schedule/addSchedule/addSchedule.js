@@ -200,6 +200,7 @@ Page({
           })
           wx.showToast({
             title: '成功添加日程',
+            icon: 'success',
             duration: 1000,
           })
 
