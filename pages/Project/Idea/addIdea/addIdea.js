@@ -18,6 +18,15 @@ Page({
     connectTask: {//关联任务
 
     },
+
+    colors: [
+      // 设计文档中的颜色
+      '#79bd9a',  // light green
+      '#576b95',  // blue
+      '#e64340',  // red
+      '#ffc952'   // yellow
+    ],
+
   },
 
 
@@ -41,10 +50,16 @@ Page({
   BuildIdea: function (e) {
 
     var that = this
-    var content = e.detail.value.content
+    var content = e.detail.value.content.trim()
     var userId = getApp().globalData.userId
     var projectId = that.data.projectDetail.id
     var taskId = that.data.TaskId
+
+    // 生成随机数
+    var max = 3
+    var min = 0
+    var num = Math.floor(Math.random()*(max-min+1)+min);
+    var color = that.data.colors[num]
 
     if(content == "" || content.length == 0) {
       wx.showToast({
@@ -60,13 +75,14 @@ Page({
     console.log('用户: ' + userId)
     console.log('任务: ' + taskId)
     console.log('项目id：'+ projectId)
+    console.log('颜色: ' + color)
 
     wx.showLoading({
       title: '正在创建',
       mask: 'true'
     })
     // Submit
-    that.createIdea(projectId,userId,content,taskId)
+    that.createIdea(projectId,userId,content,taskId, color)
   },
 
 
@@ -75,7 +91,7 @@ Page({
   * 添加一个点子
   * 内部调用了addProjectNotification
   */
-  createIdea: function (projId,userId,content,taskId){
+  createIdea: function (projId,userId,content,taskId, color){
 
     var that = this
     var Idea = Bmob.Object.extend('idea')
@@ -90,7 +106,8 @@ Page({
       user: user,      //用户
       project: project,  //项目
       content: content,   //点子内容
-      task: task        //关联的任务
+      task: task,        //关联的任务
+      color: color
     },{
       success: function(result){
         //添加成功
@@ -270,9 +287,15 @@ Page({
   onUnload: function () {
 
     // 清空缓存列表
-    wx.setStorage({
+
+    // 页面标识
+    wx.removeStorage({
+      key: 'isIdeaDetail',
+    })
+
+    // 选中的任务列表id
+    wx.removeStorage({
       key: 'IdeaTaskList-TaskId',
-      data: {},
     })
 
   },

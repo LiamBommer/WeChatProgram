@@ -300,60 +300,6 @@ Page({
    */
   onLoad: function (options) {
 
-    var that = this
-
-    // 从缓存中判断是否从详情页进入
-    wx.getStorage({
-      key: 'isScheduleDetail',
-      success: function (res) {
-        that.setData({
-          isScheduleDetail: res.data
-        })
-
-        if(that.data.isScheduleDetail == true) {
-          // 详情页
-          // 获取本日程的详情
-          wx.getStorage({
-            key: 'ScheduleDetail-scheduleDetail',
-            success: function(res) {
-              that.setData({
-                scheduleDetail: res.data,
-                TaskId: res.data.taskIds
-              })
-            },
-          })
-
-        } else {
-          // 创建页
-          // 获取关联任务列表里的数据
-          wx.getStorage({
-            key: 'ScheduleTaskList-TaskId',
-            success: function(res) {
-              that.setData({
-                TaskId: res.data
-              })
-            },
-          })
-        }
-        
-      }
-    })
-
-    // 从缓存获取项目信息
-    wx.getStorage({
-      key: 'Project-detail',
-      success: function (res) {
-
-        that.setData({
-          projectDetail: res.data
-        })
-
-        // 获取项目下任务列表以及任务
-        that.getTaskLists(that.data.projectDetail.id)
-
-      },
-    })
-
   },
 
   /**
@@ -374,6 +320,77 @@ Page({
     })
 
     var that = this
+
+    // 先从缓存获取项目信息
+    wx.getStorage({
+      key: 'Project-detail',
+      success: function (res) {
+
+        that.setData({
+          projectDetail: res.data
+        })
+
+        // 从缓存中判断是否从详情页进入
+        wx.getStorage({
+          key: 'isScheduleDetail',
+          success: function (res) {
+            that.setData({
+              isScheduleDetail: res.data
+            })
+
+            if(that.data.isScheduleDetail == true) {
+
+              // 详情页
+              // 获取本日程的详情
+              wx.getStorage({
+                key: 'ScheduleDetail-scheduleDetail',
+                success: function(res) {
+                  that.setData({
+                    scheduleDetail: res.data,
+                    TaskId: res.data.taskIds
+                  })
+
+                  // 获取项目下任务列表以及任务
+                  that.getTaskLists(that.data.projectDetail.id)
+
+                },
+                fail: function(res) {
+                  console.log('无法获取日程详情',res)
+                }
+              })
+
+            } else {
+
+              // 则是从创建页进入
+              // 获取关联任务列表里的数据
+              wx.getStorage({
+                key: 'ScheduleTaskList-TaskId',
+                success: function(res) {
+                  that.setData({
+                    TaskId: res.data
+                  })
+
+                  // 获取项目下任务列表以及任务
+                  that.getTaskLists(that.data.projectDetail.id)
+
+                },
+                fail: function(res) {
+                  // 没有选中关联任务
+                  // 获取项目下任务列表以及任务
+                  that.getTaskLists(that.data.projectDetail.id)
+                }
+              })
+
+            }
+
+          },
+          fail: function(res) {
+            console.log('未设置是否是日程详情的标识 isScheduleDetail',res)
+          }
+        })
+
+      },
+    })
 
   },
 

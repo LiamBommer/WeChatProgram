@@ -557,21 +557,15 @@ Page({
   onUnload: function () {
 
     // 清空缓存列表
-    // 以免干扰创建日程页面
-    wx.setStorage({
-      key: 'ScheduleDetail-scheduleDetail',
-      data: {},
-    })
 
-    wx.setStorage({
-      key: 'isScheduleDetail',
-      data: false,
-    })
+    // 本日程id
+    wx.removeStorageSync('ProjectMore-scheduleDetail-id')
 
-    wx.setStorage({
-      key: 'ideaDetail-content',
-      data: '',
-    })
+    // 给关联任务页的标识
+    wx.removeStorageSync('isScheduleDetail')
+
+    // 本日程详情缓存
+    wx.removeStorageSync('ScheduleDetail-scheduleDetail')
 
   },
 

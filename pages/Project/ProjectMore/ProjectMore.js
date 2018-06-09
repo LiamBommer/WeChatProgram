@@ -1256,6 +1256,7 @@ Page({
             'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
             'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
+            'color': results[i].get('color') || '', 
           }
           ideaArr.push(ideaObject)
         }
