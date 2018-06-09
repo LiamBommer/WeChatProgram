@@ -241,11 +241,6 @@ Page({
    */
   onLoad: function (options) {
 
-    wx.setStorage({
-      key: 'ScheduleDetail-scheduleDetail',
-      data: {},
-    })
-
   },
 
   /**
@@ -260,6 +255,10 @@ Page({
    */
   onShow: function () {
 
+    wx.removeStorage({
+      key: 'ScheduleDetail-scheduleDetail',
+    })
+
     wx.showLoading({
       title: '正在加载',
       mask: 'true'
@@ -268,54 +267,44 @@ Page({
     //需要任务列表，通过任务ID取任务名和任务执行者
     var that = this
 
-    // 从缓存中拿关联的任务列表
+
+    // 先获取任务详情，用于创建
     wx.getStorage({
-      key: 'ScheduleTaskList-TaskId',
+      key: 'Project-detail',
       success: function (res) {
 
-        // 选中关联任务数组不为空
-        if (JSON.stringify(res.data) != '{}') {
+        // 存入数据
+        that.setData({
+          projectDetail: res.data
+        })
 
-          // console.log('Get storage: ', res.data)
-          // console.log('Storages length: ', res.data.length)
+        // 从缓存中拿关联的任务列表
+        wx.getStorage({
+          key: 'ScheduleTaskList-TaskId',
+          success: function (res) {
+            console.log('ScheduleTaskList-TaskId',res.data)
 
-          // 关联数组存进数据
-          that.setData({
-            TaskId: res.data
-          })
+            // 选中关联任务数组不为空
+            // 关联数组存进数据
+            that.setData({
+              TaskId: res.data
+            })
 
-          // 获取任务数组，根据选中的列表取出名字和头像
-          wx.getStorage({
-            key: 'Project-detail',
-            success: function (res) {
+            // 获取任务数组，根据选中的列表取出名字和头像
+            that.getTasks(that.data.projectDetail.id)
 
-              that.getTasks(res.data.id)
-
-              // 存入数据
-              console.log('Get project detail from storage: ', res.data)
-              that.setData({
-                projectDetail: res.data
-              })
-              console.log('Get project detail from DATA: ', that.data.projectDetail)
-
-            },
-            fail: function(res) {
-              console.log('Fail to get project detail from storage: ', res)
-            }
-          })
-
-        } else {  // 选中的关联任务数组为空
-
-          wx.hideLoading()
-
-        }
+          },
+          fail: function(res) {
+            // 选中的关联任务数组为空（不存在）
+            console.log('!!! Fail to get storage "ScheduleTaskList-TaskId" : ', res)
+            wx.hideLoading()
+          },
+        })
 
       },
-
-      fail: function(res) { // 未设置缓存
-        console.log('Fail to get storage: ', res)
-        wx.hideLoading()
-      },
+      fail: function(res) {
+        console.log('!!! Fail to get Project Detail from storage: ', res)
+      }
     })
 
   },
@@ -333,9 +322,11 @@ Page({
   onUnload: function () {
 
     // 清空缓存列表
-    wx.setStorage({
+    wx.removeStorage({
       key: 'ScheduleTaskList-TaskId',
-      data: {},
+    })
+    wx.removeStorage({
+      key: 'isScheduleDetail',
     })
 
   },
