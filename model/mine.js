@@ -3,33 +3,54 @@ var Bmob = require('../utils/bmob.js')
 
 /**
  * 获取我的任务,限制50条
+ * 按任务截止时间升序排列
+ 'id':  //任务id
+'taskTitle':   //任务标题
+'taskEndTime':  //任务截止时间，只有年月日
  */
-// function getMyTasks(userId){
+function getMyTasks(userId){
 
-//   var Task = Bmob.Object.extend('task')
-//   var taskQuery = new Bmob.Query(Task)
-//   var Taskmember = Bmob.Object.extend('task_member')
-//   var taskmemberQuery = new Bmob.Query(Taskmember)
-//   var taskIds = []  //用户的任务的id数组
-//   var taskArr = []  //用户的任务数组,空就是无
+  var Taskmember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(Taskmember)
+  var taskArr = []  //用户的任务数组,空就是无
 
-//   taskmemberQuery.equalTo('user_id',userId)
-//   taskmemberQuery.limit(50)  //限制50条
-//   taskmemberQuery.find({
-//     success: function(results){
-//       //成功
-//       for(var i in results){
-//         taskIds.push(results[i].get('task_id'))
-//       }
-//       if(taskIds!=null && taskIds.length > 0){
-//         //获取任务
-//       }
-//     },
-//     error: function(error){
-//       //失败
-//     }
-//   })
-// }
+  taskmemberQuery.equalTo('user_id',userId)
+  taskmemberQuery.include('task')
+  taskmemberQuery.ascending('task.end_time')
+  taskmemberQuery.limit(50)  //限制50条
+  taskmemberQuery.find({
+    success: function(results){
+      //成功
+      for(var i in results){
+        if(results.get('task').is_delete != true){
+          var taskObject = {}
+          taskObject = {
+            'id': results.get('task').objectId,   //任务id
+            'taskTitle': results.get('task').title,   //任务标题
+            'taskEndTime': results.get('task').end_time, //任务截止时间，只有年月日
+          }
+          taskArr.push(taskObject)
+        }
+        if (taskArr != null && taskArr.length > 0){
+          //在这里setData
+          console.log('我的任务',taskArr)
+
+
+
+
+
+
+
+
+        }
+      }
+
+    },
+    error: function(error){
+      //失败
+    }
+  })
+}
 
 /**
  * 获取我的点子,最多50条
