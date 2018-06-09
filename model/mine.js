@@ -1,5 +1,7 @@
 //model/mine.js
 var Bmob = require('../utils/bmob.js')
+var FINISH_TASK = '完成了任务'
+var REDO_TASK = '重做了任务'
 
 /**
  * 获取我的任务,限制50条
@@ -7,6 +9,8 @@ var Bmob = require('../utils/bmob.js')
  'id':  //任务id
 'taskTitle':   //任务标题
 'taskEndTime':  //任务截止时间，只有年月日
+'projectName' ://项目名称
+projectId      //项目id，用来通知任务其他成员
  */
 function getMyTasks(userId){
 
@@ -16,6 +20,7 @@ function getMyTasks(userId){
 
   taskmemberQuery.equalTo('user_id',userId)
   taskmemberQuery.include('task')
+  taskmemberQuery.include('project')
   taskmemberQuery.ascending('task.end_time')
   taskmemberQuery.limit(50)  //限制50条
   taskmemberQuery.find({
@@ -28,6 +33,8 @@ function getMyTasks(userId){
             'id': results.get('task').objectId,   //任务id
             'taskTitle': results.get('task').title,   //任务标题
             'taskEndTime': results.get('task').end_time, //任务截止时间，只有年月日
+            'projectName': results.get('project').name,  //项目名称
+            'projectId': results.get('project').objectId  //项目id
           }
           taskArr.push(taskObject)
         }
@@ -131,5 +138,139 @@ function getMyMeeting(userId){
       //失败
     }
 
+  })
+}
+
+/**
+ * @parameter projId 项目id ，taskId 任务id ,isFinish 是否完成（true表示完成，false表示重做任务）
+ * 完成/重做我的任务
+ */
+function finishMytask(projId,taskId,isFinish){
+
+  var that = this
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  taskQuery.get(taskId,{
+    success:function(result){
+      //成功
+      result.set('is_finish',true)
+      result.save()
+
+      //通知任务其他成员
+      if(isFinish)
+        that.addTaskNotification(projId, taskId,FINISH_TASK + result.get('title'))
+      else
+        that.addTaskNotification(projId, taskId, REDO_TASK + result.get('title'))
+    }
+  })
+}
+
+/**
+   * 2018-05-31
+   * @parameter projId 项目id, taskId任务id，content 通知内容
+   * (request_id 为tskId)
+   * 存储通知,往往都是批量添加的
+   */
+function addTaskNotification(projId, taskId, content) {
+  var that = this
+  var _type = 1;  //任务是通知的第一种类型
+  var Taskmember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(Taskmember)
+  var toUserIds = []  //需要通知到的任务成员id数组
+  var Notification = Bmob.Object.extend('notification')
+  var notificationObjects = []
+
+  //查询任务成员
+  taskmemberQuery.equalTo('task_id', taskId)
+  taskmemberQuery.select("user_id");
+  taskmemberQuery.find().then(function (results) {
+    // 返回成功
+    for (var i = 0; i < results.length; i++) {
+      toUserIds.push(results[i].get('user_id').id)
+    }
+
+    if (toUserIds != null && toUserIds.length > 0) {
+      var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
+      var project = Bmob.Object.createWithoutData("project", projId)
+
+      for (var i = 0; i < toUserIds.length; i++) {
+        //无需通知操作人本身
+        if (toUserIds[i] != Bmob.User.current().id) {
+          var notification = new Notification()
+          notification.set('to_user_id', toUserIds[i])
+          notification.set('content', content)
+          notification.set('type', _type)
+          notification.set('is_read', false)
+          notification.set('request_id', taskId)
+          notification.set('project', project)
+          notification.set('from_user', fromUser)
+
+          notificationObjects.push(notification)  //存储本地通知对象
+        }
+      }
+      if (notificationObjects != null && notificationObjects.length > 0) {
+        //在数据库添加通知
+        Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+          // 成功
+          console.log("添加任务成员通知成功！", notificationObjects)
+
+
+        },
+          function (error) {
+            // 异常处理
+            console.log("添加任务成员通知失败!", error)
+
+          })
+      }
+    }
+  })
+
+}
+
+/**
+ * @parameter userId 用户id，label 用户写的标签
+ * 增加/修改标签(逗号分隔，提示用户)
+ */
+function modifyUserLabel(userId,label){
+
+  var user = Bmob.Object.extend('_User')
+  var userQuery = new Bmob.Query(user)
+
+  userQuery.get(userId,{
+    success: function(result){
+      //成功
+      result.set('label',label)
+      result.save()
+      console.log('修改用户标签成功！')
+    },
+    error: function(error){
+      //失败
+      console.log('修改用户标签失败！',error)
+    }
+  })
+}
+
+/**
+ * 获取用户标签
+ */
+function getUserLabel(userId){
+  var user = Bmob.Object.extend('_User')
+  var userQuery = new Bmob.Query(user)
+  var labelArr = []  //标签数组
+  userQuery.get(userId,{
+    success: function(result){
+      //成功
+      var label = result.get('label')
+      if(label != null ){
+        console.log('获取用户标签成功')
+        labelArr = label.split(',')  //根据 , 分割用户标签
+        console.log('labelArr', labelArr)
+        
+      }else{
+        //用户没有标签，labelArr为空
+        
+      }
+    }
   })
 }

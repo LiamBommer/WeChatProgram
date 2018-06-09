@@ -1,5 +1,6 @@
 
 var Bmob = require('../../../../utils/bmob.js')
+var DELETE_IDEA = "删除了一个点子"
 
 Page({
 
