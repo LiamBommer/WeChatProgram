@@ -1,25 +1,24 @@
 <!--pages/Mine/Meeting/Meeting.wxml-->
 <view class='Mine-Meeting-container'>
-  
-  <block wx:for="{{Meeting}}">
+
+  <block wx:for="{{Meeting}}" wx:key="{{id}}">
       <block wx:if="{{item.month}}">
       <!-- 标题 -->
-          <view class='Meeting-title'>{{item.month}}</view>
-      </block>
-      <block wx:else>
+          <view class='Meeting-title'>{{item.year}}年{{item.month}}月</view>
           <!-- 列表项 -->
-          <view class='Meeting-item' bindtap='MeetingDetail'>
+          <!-- <view class='Meeting-item' bindtap='MeetingDetail'> -->
+          <view class='Meeting-item'>
             <view class='Meeting-item-first'>
-              <view class='Meeting-item-date'>{{item.day}}</view>
+              <view class='Meeting-item-date'>{{item.date}}日</view>
               <view class='Meeting-item-time'>{{item.time}}</view>
             </view>
             <view class='Meeting-item-second'>
-              <view class='Meeting-item-title'>{{item.content}}</view>
+              <view class='Meeting-item-title'>{{item.title}}</view>
             </view>
             <view></view>
           </view>
       </block>
     </block>
 
-    
+
 </view>

@@ -44,29 +44,7 @@ Page({
     ],
 
     //我的会议列表
-    Meeting: [
-      {
-        month: "2019年5月",
-      },
-      {
-        day: "2日",
-        time: "21:00",
-        content: "第一次面基",
-      },
-      {
-        day: "2日",
-        time: "21:00",
-        content: "第一次面基",
-      },
-      {
-        month: "2019年6月",
-      },
-      {
-        day: "2日",
-        time: "21:00",
-        content: "第一次面基",
-      },
-    ],
+    Meeting: [],
 
     //我的点子列表
     Idea: [],
@@ -223,6 +201,64 @@ Page({
   },
 
 
+  /**
+  * 获取我的未删除的会议，最多50条
+  'id':  //会议id
+  'startTime': //会议的年月日
+  'time': //会议的时分秒
+  'title':  //会议名称
+  */
+  getMyMeeting: function (userId){
+
+    var that = this
+    var Meetingmember = Bmob.Object.extend('meeting_member')
+    var meetingmemberQuery = new Bmob.Query(Meetingmember)
+    var meetingArr = []   //获取的用户的会议数组，没有则为空
+
+    meetingmemberQuery.equalTo('user',userId)
+    meetingmemberQuery.include('meeting')
+    meetingmemberQuery.find({
+      success: function(results){
+        //成功
+        for(var i in results){
+          if (results[i].get('meeting').is_delete != true)
+          var meetingObject = {}
+
+          // 时间处理
+          var startTime = results[i].get('meeting').start_time
+          var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
+          var year = startTime.getFullYear()
+          var month = startTime.getMonth()
+          var date = startTime.getDate()
+
+          meetingObject = {
+            'id': results[i].get('meeting').objectId, //会议id
+            'title': results[i].get('meeting').title,  //会议名称
+            'time': results[i].get('meeting').time,  //会议的时分秒
+            'startTime': results[i].get('meeting').start_time, //会议的年月日
+            'year': year,
+            'month': month,
+            'date': date,
+          }
+          meetingArr.push(meetingObject)
+        }
+        if (meetingArr != null && meetingArr.length > 0){
+          //在这里setData
+          console.log('获取用户的会议',meetingArr)
+          that.setData({
+            Meeting: meetingArr
+          })
+        }
+      },
+      error: function(error){
+        //失败
+        console.log('获取我的会议失败：', error)
+      }
+
+    })
+  },
+
+
   onLoad: function () {
     if (app.globalData.userId) {
       var userInfo = {
@@ -265,6 +301,7 @@ Page({
 
     // 获取点子列表
     this.getMyidea(userId)
+    this.getMyMeeting(userId)
 
 
   },
