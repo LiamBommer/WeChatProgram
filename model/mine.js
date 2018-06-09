@@ -7,6 +7,8 @@ var Bmob = require('../utils/bmob.js')
  'id':  //任务id
 'taskTitle':   //任务标题
 'taskEndTime':  //任务截止时间，只有年月日
+'projectName' ://项目名称
+projectId      //项目id
  */
 function getMyTasks(userId){
 
@@ -16,6 +18,7 @@ function getMyTasks(userId){
 
   taskmemberQuery.equalTo('user_id',userId)
   taskmemberQuery.include('task')
+  taskmemberQuery.include('project')
   taskmemberQuery.ascending('task.end_time')
   taskmemberQuery.limit(50)  //限制50条
   taskmemberQuery.find({
@@ -28,6 +31,8 @@ function getMyTasks(userId){
             'id': results.get('task').objectId,   //任务id
             'taskTitle': results.get('task').title,   //任务标题
             'taskEndTime': results.get('task').end_time, //任务截止时间，只有年月日
+            'projectName': results.get('project').name,  //项目名称
+            'projectId': results.get('project').objectId  //项目id
           }
           taskArr.push(taskObject)
         }
@@ -131,5 +136,24 @@ function getMyMeeting(userId){
       //失败
     }
 
+  })
+}
+
+/**
+ * 完成我的任务
+ */
+function finishMytask(taskId){
+
+  var Task = Bmob.Object.extend('task')
+  var taskQuery = new Bmob.Query(Task)
+
+  taskQuery.get(taskId,{
+    success:function(result){
+      //成功
+      result.set('is_finish',true)
+      result.save()
+
+      //通知任务其他成员
+    }
   })
 }

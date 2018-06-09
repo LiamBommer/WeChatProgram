@@ -96,7 +96,7 @@ Page({
       success: function(result){
         //添加成功
         //添加任务成员信息
-        that.addTaskMembers(result.id/*任务id*/, leaderId, [])
+        that.addTaskMembers(projId,result.id/*任务id*/, leaderId, [])
         // 提示用户添加成功
         // console.log("添加任务成功")
         //通知项目成员
@@ -126,18 +126,20 @@ Page({
  * @parameter taskId任务id，leaderId任务负责人id，memberIds除负责人以外的任务成员id数组
  * 为任务添加成员
  */
-  addTaskMembers:function (taskId, leaderId, memberIds){
+  addTaskMembers:function (projId,taskId, leaderId, memberIds){
     var that = this
     var TaskMember = Bmob.Object.extend("task_member")
 
     var leader = Bmob.Object.createWithoutData("_User", leaderId)
     var task = Bmob.Object.createWithoutData("task",taskId)
+    var project = Bmob.Object.createWithoutData("project", projId)
     var memberObjects = []
     
     var taskMember = new TaskMember()
     taskMember.set('task_id', taskId)
     taskMember.set('user_id', leader)
     taskMember.set('task',task)
+    taskMember.set('project', project)
     memberObjects.push(taskMember)  //添加任务负责人id
 
     for(var i= 0;i<memberIds.length;i++){
@@ -147,6 +149,7 @@ Page({
       taskMember.set('task_id', taskId)
       taskMember.set('user_id', member)
       taskMember.set('task', task)
+      taskMember.set('project', project)
       memberObjects.push(taskMember)  //添加任务成员
     }
 
