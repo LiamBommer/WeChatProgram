@@ -1,6 +1,8 @@
 //addAnnouncement.js
 //获取应用实例
 var Bmob = require('../../../../utils/bmob.js')
+var ADD_ANNOUNCEMENT = '发布了新的公告'
+
 const app = getApp()
 
 Page({
@@ -87,7 +89,9 @@ Page({
             //保存未读成员列表 
             that.saveUnread(projId, announceId)  //调用函数
           }
-
+          //通知项目成员
+          var _type = 2  //通知类型
+          that.addProjectNotification(projId, ADD_ANNOUNCEMENT, _type, result.id/*公告的id*/) 
           //提示用户创建公告成功
           console.log("创建公告成功！", result.id)
 
@@ -112,6 +116,65 @@ Page({
       })
   },
 
+  /**
+   * 2018-05-31
+   * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
+   * 页面所有携带的请求数据，比如（taskId，meetingId 等）
+   * 存储通知,往往都是批量添加的
+   */
+  addProjectNotification: function (projId, content, _type, requestId) {
+    var that = this
+    var Projectmember = Bmob.Object.extend('proj_member')
+    var projectkmemberQuery = new Bmob.Query(Projectmember)
+    var Notification = Bmob.Object.extend('notification')
+    var toUserIds = []  //被通知的用户的id数组
+    var notificationObjects = []
+
+    var project = Bmob.Object.createWithoutData("project", projId)
+    var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
+
+    //查询项目下的所有成员id
+    projectkmemberQuery.equalTo('proj_id', projId)
+    projectkmemberQuery.find({
+      success: function (results) {
+        //成功
+        for (var i = 0; i < results.length; i++) {
+          toUserIds.push(results[i].get('user_id'))
+        }
+        if (toUserIds != null && toUserIds.length > 0) {
+          for (var i = 0; i < toUserIds.length; i++) {
+            //无需通知操作人本身
+            if (toUserIds[i] != Bmob.User.current().id) {
+              var notification = new Notification()
+              notification.set('to_user_id', toUserIds[i])
+              notification.set('content', content)
+              notification.set('type', _type)
+              notification.set('is_read', false)
+              notification.set('request_id', requestId)
+              notification.set('project', project)
+              notification.set('from_user', fromUser)
+
+              notificationObjects.push(notification)  //存储本地通知对象
+            }
+          }
+
+          if (notificationObjects != null && notificationObjects.length > 0) {
+            Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+              // 通知添加成功
+              console.log("添加项目成员通知成功！")
+            },
+              function (error) {
+                // 通知添加失败处理
+              })
+          }
+        }
+
+      },
+      error: function (error) {
+        //项目成员查询失败
+      }
+    })
+  },
   /**
  * @autor mr.li
  * @parameter projId项目id，announceId公告id

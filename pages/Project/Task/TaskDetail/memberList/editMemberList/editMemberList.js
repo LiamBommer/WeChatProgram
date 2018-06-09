@@ -241,7 +241,14 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorage({
+      key: 'TaskDetail-memberList-EditMemberList',
+      success: function(res) {},
+    })
+    wx.removeStorage({
+      key: 'TaskDetail-memberList-TaskId',
+      success: function (res) { },
+    })
   },
 
   /**

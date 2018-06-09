@@ -2,31 +2,18 @@
 //初始化bmob SDK
 const Bmob = require('./utils/bmob.js')
 Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
+var user = new Bmob.User();//实例化
+
 
 App({
-
-  onLaunch: function (options) {
-
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-
-
-
-
-
-    
+  
+  //登录函数
+  // 登录 mr.li 代码是Bmob封装好的接口
+  //登录注册集合类，接口默认第一次注册，否则返回用户信息
+  userLogin:function(){
     var that = this
-
-    // 登录 mr.li 代码是Bmob封装好的接口
-    //登录注册集合类，接口默认第一次注册，否则返回用户信息
-    var user = new Bmob.User();//实例化
     wx.login({
-
       success: function (res) {
-
         user.loginWithWeapp(res.code).then(function (user) {
           var openid = user.get("authData").weapp.openid;
           //console.log(user, 'user', user.id, res);
@@ -55,7 +42,7 @@ App({
               }
             });
 
-            
+
             //保存用户其他信息，比如昵称头像之类的
             wx.getSetting({
               success: res => {
@@ -96,16 +83,25 @@ App({
                 }
               }
             })
-
-
           }
 
         }, function (err) {
           console.log(err, 'errr');
         });
-
       }
     });
+  },
+  
+  onLaunch: function (options) {
+
+    // 展示本地存储能力
+    var logs = wx.getStorageSync('logs') || []
+    logs.unshift(Date.now())
+    wx.setStorageSync('logs', logs)
+
+    var that = this
+    that.userLogin()
+ 
     // user.auth()   //这行代码可以替换上面的wx.login
 
   },
