@@ -8,18 +8,17 @@
 
 .Mine-Meeting-container .Meeting-title{
     color: #888888;
-    margin-left: 40rpx;
-    margin-top: 16rpx;
-    margin-bottom: 16rpx;
+    background-color: #f2f2f2;
+    padding: 30rpx 0rpx 16rpx 40rpx;
     font-size: 28rpx;
     width: 100%;
 }
 
-.Mine-Meeting-container .Meeting-item{ 
+.Mine-Meeting-container .Meeting-item{
     background: #fff;
     color: #000;
     width: 100%;
-    height: 110rpx;
+    height: 140rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
