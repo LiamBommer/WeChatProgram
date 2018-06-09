@@ -601,6 +601,7 @@ function modifyMeetingMember(projId, meetingId,oldmemberIds, newmemberIds){
   var Meetingmember = Bmob.Object.extend('meeting_member')
   var meetingmemberQuery = new Bmob.Query(Meetingmember)
   var meetingmemberArr = []
+  var meeting = Bmob.Object.createWithoutData('meeting', meetingId)
 
   if (oldmemberIds != null && oldmemberIds.length > 0){
     meetingmemberQuery.containedIn('user', oldmemberIds)
@@ -613,9 +614,10 @@ function modifyMeetingMember(projId, meetingId,oldmemberIds, newmemberIds){
         if (newmemberIds != null && newmemberIds.length > 0){
           for(var i in newmemberIds){
             var member = new Meetingmember()
-            var user = Bmob.Object.createWithoutData('_User',newmemberIds[i])
+            var user = Bmob.Object.createWithoutData('_User',newmemberIds[i])           
             member.set('meeting_id',meetingId)
             member.set('user',user)
+            member.set('meeting',meeting)
             meetingmemberArr.push(member)
           }
 

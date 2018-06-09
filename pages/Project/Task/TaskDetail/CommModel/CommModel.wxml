@@ -77,7 +77,7 @@
             <!-- 删除 -->
             <button class='delete' bindtap='DeleteModel'>删除</button> 
             <!-- 发送 -->
-            <button class='submit' bindtap='SendModel'>发送</button>
+            <button class='submit' bindtap='SendModel' wx:if="{{!isMine}}">发送</button>
           </view>
       </view>
 </view>
