@@ -102,6 +102,7 @@ Page({
      //test.getProjectIdea('852f280d24')
     // test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
      //test.addTaskNotification('123','178dae4e04','测试')
+     //console.log('123,345,45'.split(','))
   },
   /**
    * 生命周期函数--监听页面隐藏
