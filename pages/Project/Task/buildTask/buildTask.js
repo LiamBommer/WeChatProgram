@@ -130,31 +130,35 @@ Page({
     var that = this
     var TaskMember = Bmob.Object.extend("task_member")
 
-    var leader = Bmob.Object.createWithoutData("_User", leaderId);
-      var memberObjects = []
+    var leader = Bmob.Object.createWithoutData("_User", leaderId)
+    var task = Bmob.Object.createWithoutData("task",taskId)
+    var memberObjects = []
     
     var taskMember = new TaskMember()
     taskMember.set('task_id', taskId)
     taskMember.set('user_id', leader)
+    taskMember.set('task',task)
     memberObjects.push(taskMember)  //添加任务负责人id
 
     for(var i= 0;i<memberIds.length;i++){
-    var taskMember = new TaskMember()
-    var member = Bmob.Object.createWithoutData("_User", memberIds[i]);
-    taskMember.set('task_id', taskId)
-    taskMember.set('user_id', member)
-    memberObjects.push(taskMember)  //添加任务成员
-}
+      var taskMember = new TaskMember()
+      var member = Bmob.Object.createWithoutData("_User", memberIds[i])
+      var task = Bmob.Object.createWithoutData("task", taskId)
+      taskMember.set('task_id', taskId)
+      taskMember.set('user_id', member)
+      taskMember.set('task', task)
+      memberObjects.push(taskMember)  //添加任务成员
+    }
 
-//批量添加任务成员
-Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
-  // 成功
-  console.log("批量添加任务成员成功！")
-},
-  function (error) {
-    // 异常处理
-    console.log("批量添加任务成员成功！", error)
-  })
+    //批量添加任务成员
+    Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
+      // 成功
+      console.log("批量添加任务成员成功！")
+    },
+      function (error) {
+        // 异常处理
+        console.log("批量添加任务成员成功！", error)
+      })
 },
 
 /**
