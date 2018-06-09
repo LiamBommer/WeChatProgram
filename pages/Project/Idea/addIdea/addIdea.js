@@ -165,7 +165,8 @@ Page({
       project: project,  //项目
       content: content,   //点子内容
       task: task,        //关联的任务
-      color: color
+      color: color,
+      is_delete: false
     },{
       success: function(result){
         //添加成功

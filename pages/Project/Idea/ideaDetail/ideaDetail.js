@@ -260,13 +260,15 @@ Page({
     var ideaQuery = new Bmob.Query(Idea)
 
     //删除某个点子
-    ideaQuery.equalTo('objectId',ideaId)
-    ideaQuery.destroyAll({
-      success: function () {
+    //ideaQuery.equalTo('objectId',ideaId)
+    ideaQuery.get(ideaId,{
+      success: function (result) {
+        result.set('is_delete',true)
+        result.save()
         //删除成功
         //通知项目其他成员
         var _type = 5  //通知类型
-        // that.addProjectNotification(projId,DELETE_IDEA , _type, ideaId/*点子id*/)  //通知其他项目成员
+        that.addProjectNotification(projId,DELETE_IDEA , _type, ideaId/*点子id*/)  //通知其他项目成员
 
         console.log('删除某个点子成功!')
 
