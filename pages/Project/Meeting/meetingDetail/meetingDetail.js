@@ -433,28 +433,45 @@ Page({
     wx.showLoading({
       title: '正在加载',
     })
-    //获取后台会议详情
-    wx.getStorage({
-      key: 'ProjectMore-meetingId',
-      success:function(res){
-        var meetingId = res.data
-        that.setData({
-          meetingId: res.data
-        })
-        console.log('meetingId',meetingId)
-        that.getOneMeeting(meetingId)//获取会议详情
-        that.getMeetingMember(meetingId)//获取会议成员
-      }
-    })
-    //获取项目ID缓存
-    wx.getStorage({
-      key: 'ProjectMore-projId',
-      success: function (res) {
-        that.setData({
-          projId: res.data
-        })
-      }
-    })
+
+    //获取通知的会议ID
+    var requestId = wx.getStorageSync("Notification-meetingId")
+    var projId = wx.getStorageSync("Notification-projId")
+    if (requestId != "" && projId != '') {
+      console.log("获取通知的会议ID", requestId, projId)
+      that.setData({
+        meetingId: requestId,
+        projId: projId
+      })
+      that.getOneMeeting(requestId)//获取会议详情
+      that.getMeetingMember(requestId)//获取会议成员
+    }
+    else {
+      //获取后台会议详情
+      wx.getStorage({
+        key: 'ProjectMore-meetingId',
+        success: function (res) {
+          var meetingId = res.data
+          that.setData({
+            meetingId: res.data
+          })
+          console.log('meetingId', meetingId)
+          that.getOneMeeting(meetingId)//获取会议详情
+          that.getMeetingMember(meetingId)//获取会议成员
+        }
+      })
+      //获取项目ID缓存
+      wx.getStorage({
+        key: 'ProjectMore-projId',
+        success: function (res) {
+          that.setData({
+            projId: res.data
+          })
+        }
+      })
+    }
+
+    
     //获取会议内容
     var content = wx.getStorageSync("meetingDetail-Content-content")
     that.setData({

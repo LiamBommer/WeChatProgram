@@ -202,6 +202,62 @@ Page({
     })
 
   },
+
+
+  /**
+   *2018-05-19
+   *@author mr.li
+   @parameter announcementId公告id
+   *获取公告详情object类型
+   *获取所需的公告详情
+   * 
+   */
+  getAnnouncementDetail:function (announcementId){
+    var that = this
+    var Announcement = Bmob.Object.extend("annoucement")
+    var announceQuery = new Bmob.Query(Announcement)
+
+    var detailObject = {}
+
+    //获取指定的公告内容
+    announceQuery.equalTo("objectId", announcementId)
+    announceQuery.include('publisher')
+    announceQuery.first({
+      success: function (result) {
+        console.log("获取指定的公告内容成功！")
+        var announcement = result
+
+        //在这里设置setdata,获取已读和未读成员在函数function getReadAnnounce(announcementId)
+        console.log("获取指定的公告内容成功！", announcement)
+        that.setData({
+          id: announcement.id,
+          title: announcement.attributes.title,
+          content: announcement.attributes.content,
+          note_time: announcement.createdAt.substring(0,16),
+          belonging: announcement.attributes.proj_name,
+          note_user: announcement.attributes.publisher.nickName,
+          is_showmember: announcement.attributes.is_showmember
+        })
+
+        if (announcement.attributes.content == "" || announcement.attributes.content.length == 0) {
+          // 公告不为空时显示公告
+          that.setData({
+            content: '此公告无详情',
+            text_color: '#888888'
+          })
+        }
+
+       wx.hideLoading()
+
+
+      },
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+      }
+    })
+
+
+  },
   /**
  *2018-05-19
  *@author mr.li
@@ -389,27 +445,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    var projectName = wx.getStorageSync("Project-name")
-    var Announcement = wx.getStorageSync("AnnouncementDetail")//公告内容
-
-    that.setData({
-      id: Announcement.id,
-      title: Announcement.title,
-      content: Announcement.content,
-      note_time: Announcement.time,
-      belonging: projectName,
-      note_user: Announcement.memberName,
-      is_showmember: Announcement.is_showmember
-    })
-
-    if (Announcement.content == "" || Announcement.content.length == 0) {
-      // 公告不为空时显示公告
-      that.setData({
-        content: '此公告无详情',
-        text_color: '#888888'
-      })
-    }
+   
 
   },
 
@@ -425,7 +461,24 @@ Page({
    */
   onShow: function () {
    var that = this
+   wx.showLoading({
+     title: '正在加载',
+   })
 
+   //获取通知的公告ID
+   var requestId = wx.getStorageSync("Notification-announcementId")
+   if (requestId != "") {
+     that.getAnnouncementDetail(requestId)
+     that.getReadAnnounce(requestId)
+   }
+   else {
+     // 获取公告id，进行查询
+     var Announcement = wx.getStorageSync("ProjectMore-AnnouncementDetail")//公告内容
+     that.getAnnouncementDetail(Announcement.id)
+     that.getReadAnnounce(Announcement.id)
+   }
+
+   
    var content = wx.getStorageSync("announcementDetail-Content-content")//公告内容
    console.log('公告内容：'+content)
    
@@ -435,8 +488,6 @@ Page({
      })
    }
 
-   var Announcement = wx.getStorageSync("AnnouncementDetail")//公告内容
-   that.getReadAnnounce(Announcement.id)
   },
 
   /**

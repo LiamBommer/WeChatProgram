@@ -75,83 +75,129 @@ Page({
           wx.navigateBack()
         }
         else {
-          that.addMeetingMember(that.data.projId, that.data.meetingId, memberIds)
-          that.deleteMeetingMember(that.data.projId, that.data.meetingId, NomemberIds)
+          // that.addMeetingMember(that.data.projId, that.data.meetingId, memberIds)
+          // that.deleteMeetingMember(that.data.projId, that.data.meetingId, NomemberIds)
           
         }
   },
-  
-  
-  /**
- * parameter projId项目的id ，meetingId 会议id, memberIds 新添加的成员id数组
- * 非创建会议时添加会议成员，请与addCreateMeetingMember 区分开
- * 内部调用通知项目成员的函数addProjectNotification
- */
-  addMeetingMember:function (projId, meetingId, memberIds){
-
-    var that = this
-    var Meetingmember = Bmob.Object.extend('meeting_member')
-    var meetingmemberArr = []
-
-    if(memberIds !=null && memberIds.length > 0) {
-        for (var i in memberIds) {
-        var memberId = memberIds[i]
-        var user = Bmob.Object.createWithoutData("_User", memberId)
-        var meetingmember = new Meetingmember()
-        meetingmember.set('meeting_id', meetingId)
-        meetingmember.set('user', user)
-        meetingmemberArr.push(meetingmember)
-      }
-
-      if (meetingmemberArr != null && meetingmemberArr.length > 0) {
-        Bmob.Object.saveAll(meetingmemberArr).then(function (meetingmemberArr) {
-          //批量增加会议成员成功
-          console.log("批量增加会议成员成功!");
-          //记录操作
-          var _type = 4  //通知类型，会议通知
-          that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*创建的会议id*/)  //通知其他项目成员
-          wx.navigateBack()
-        },
-          function (error) {
-            // 异常处理
-            console.log("批量增加会议成员成功失败！", error);
-          })
-      }
-    }
-
-  },
 
   /**
- * parameter projId项目的id ， memberIds 需要删除的成员id数组
- * 删除成员，目前提供的是删除多个成员的接口
- * 内部调用通知项目成员的函数addProjectNotification
+ * @parameter projId项目id ，meetingId会议id，oldmemberIds 旧的成员id数组, newmemberIds 新的成员id数组
+ * 修改会议成员， 删掉原来的成员id数组,添加新的成员ids数组
  */
-  deleteMeetingMember:function (projId, meetingId, memberIds) {
-
-    var that = this
+  modifyMeetingMember:function (projId, meetingId, oldmemberIds, newmemberIds){
+    var that =  this
     var Meetingmember = Bmob.Object.extend('meeting_member')
     var meetingmemberQuery = new Bmob.Query(Meetingmember)
+    var meetingmemberArr = []
 
-    if (memberIds != null && memberIds.length > 0) {
-      meetingmemberQuery.containedIn('user', memberIds)
-      //将查询出的全部删除
+    if (oldmemberIds != null && oldmemberIds.length > 0) {
+        meetingmemberQuery.containedIn('user', oldmemberIds)
+        meetingmemberQuery.equalTo('meeting_id', meetingId)
+
       meetingmemberQuery.destroyAll({
         success: function () {
           //删除成功
-          console.log('删除会议成员成功！')
-          //记录操作
-          var _type = 4  //通知类型，会议通知
-          that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*创建的会议id*/)  //通知其他项目成员
+          //然后添加新的成员
+          if (newmemberIds != null && newmemberIds.length > 0) {
+            for (var i in newmemberIds) {
+              var member = new Meetingmember()
+              var user = Bmob.Object.createWithoutData('_User', newmemberIds[i])
+              member.set('meeting_id', meetingId)
+              member.set('user', user)
+              meetingmemberArr.push(member)
+            }
+
+            if (meetingmemberArr != null && meetingmemberArr.length > 0) {
+              Bmob.Object.saveAll(meetingmemberArr).then(function (results) {
+                // 重新添加关联的任务成功
+                var _type = 4  //通知类型
+                that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+                console.log('修改会议关联成员成功！')
+              },
+                function (error) {
+                  // 异常处理
+                  console.log('修改会议关联成员成功！')
+                })
+            }
+          }
+
           wx.navigateBack()
-        },
-        error: function (err) {
-          // 删除失败
-          console.log('删除会议成员失败！', err)
         }
       })
     }
-
   },
+  
+//   /**
+//  * parameter projId项目的id ，meetingId 会议id, memberIds 新添加的成员id数组
+//  * 非创建会议时添加会议成员，请与addCreateMeetingMember 区分开
+//  * 内部调用通知项目成员的函数addProjectNotification
+//  */
+//   addMeetingMember:function (projId, meetingId, memberIds){
+
+//     var that = this
+//     var Meetingmember = Bmob.Object.extend('meeting_member')
+//     var meetingmemberArr = []
+
+//     if(memberIds !=null && memberIds.length > 0) {
+//         for (var i in memberIds) {
+//         var memberId = memberIds[i]
+//         var user = Bmob.Object.createWithoutData("_User", memberId)
+//         var meetingmember = new Meetingmember()
+//         meetingmember.set('meeting_id', meetingId)
+//         meetingmember.set('user', user)
+//         meetingmemberArr.push(meetingmember)
+//       }
+
+//       if (meetingmemberArr != null && meetingmemberArr.length > 0) {
+//         Bmob.Object.saveAll(meetingmemberArr).then(function (meetingmemberArr) {
+//           //批量增加会议成员成功
+//           console.log("批量增加会议成员成功!");
+//           //记录操作
+//           var _type = 4  //通知类型，会议通知
+//           that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*创建的会议id*/)  //通知其他项目成员
+//           wx.navigateBack()
+//         },
+//           function (error) {
+//             // 异常处理
+//             console.log("批量增加会议成员成功失败！", error);
+//           })
+//       }
+//     }
+
+//   },
+
+//   /**
+//  * parameter projId项目的id ， memberIds 需要删除的成员id数组
+//  * 删除成员，目前提供的是删除多个成员的接口
+//  * 内部调用通知项目成员的函数addProjectNotification
+//  */
+//   deleteMeetingMember:function (projId, meetingId, memberIds) {
+
+//     var that = this
+//     var Meetingmember = Bmob.Object.extend('meeting_member')
+//     var meetingmemberQuery = new Bmob.Query(Meetingmember)
+
+//     if (memberIds != null && memberIds.length > 0) {
+//       meetingmemberQuery.containedIn('user', memberIds)
+//       //将查询出的全部删除
+//       meetingmemberQuery.destroyAll({
+//         success: function () {
+//           //删除成功
+//           console.log('删除会议成员成功！')
+//           //记录操作
+//           var _type = 4  //通知类型，会议通知
+//           that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*创建的会议id*/)  //通知其他项目成员
+//           wx.navigateBack()
+//         },
+//         error: function (err) {
+//           // 删除失败
+//           console.log('删除会议成员失败！', err)
+//         }
+//       })
+//     }
+
+//   },
 
 /**
  * @parameter projId 项目id

@@ -16,6 +16,7 @@
   background: #fff;
   width: 100%;
   height: 140rpx;
+  padding-bottom:16rpx;
 }
 
 .Mine-container .userinfo .taglist{
@@ -45,11 +46,10 @@
 }
 
 .Mine-container .item{
-    font-size: 34rpx;
     background: #fff;
     color: #000;
     width: 100%;
-    height: 100rpx;
+    height: 80rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,8 +62,8 @@
 }
 
 .Mine-container .item .item-one .item-icon{
-    width: 50rpx;
-    height: 50rpx;
+    width: 40rpx;
+    height: 40rpx;
     margin-left: 40rpx;
 }
 
