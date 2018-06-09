@@ -718,7 +718,7 @@ addTaskNotification:function (projId, taskId, content) {
     taskmemberQuery.find().then(function (results) {
       // 返回成功
       for (var i = 0; i < results.length; i++) {
-        toUserIds.push(results[i].id)
+        toUserIds.push(results[i].get('user_id').id)
       }
 
       if (toUserIds != null && toUserIds.length > 0) {
