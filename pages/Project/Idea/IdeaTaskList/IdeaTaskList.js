@@ -288,7 +288,7 @@ Page({
           // 详情页
           // 获取本日程的详情
           wx.getStorage({
-            key: 'IdeaDetail-taskId',
+            key: 'IdeaDetail-oriTaskId',
             success: function(res) {
               that.setData({
                 TaskId: res.data

@@ -92,7 +92,7 @@ Page({
       success: function () {
 
         wx.setStorage({
-          key: 'IdeaDetail-taskId',
+          key: 'IdeaDetail-oriTaskId',
           data: that.data.taskId,
           success: function() {
 
@@ -242,6 +242,20 @@ Page({
    */
   onLoad: function (options) {
 
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
    var that = this
 
     wx.showLoading({
@@ -258,22 +272,6 @@ Page({
         })
       }
     })
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-   var that = this
 
     // 获取点子id，进行查询
     wx.getStorage({
@@ -300,7 +298,23 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync("ideaDetail-Content-content")
+
+    // 清空缓存列表
+
+    //  点子内容修改
+    wx.removeStorageSync("ideaDetail-content")
+
+    // 给关联任务页的标识
+    wx.removeStorageSync('isIdeaDetail')
+
+    // 本点子详情缓存
+    // wx.removeStorageSync('IdeaDetail-ideaDetail')
+
+    // 本点子id
+    wx.removeStorageSync('ProjectMore-ideaDetail-id')
+
+    // 本点子任务的id
+    wx.removeStorageSync('IdeaDetail-oriTaskId')
   },
 
   /**

@@ -270,9 +270,15 @@ Page({
   onUnload: function () {
 
     // 清空缓存列表
-    wx.setStorage({
+
+    // 页面标识
+    wx.removeStorage({
+      key: 'isIdeaDetail',
+    })
+
+    // 选中的任务列表id
+    wx.removeStorage({
       key: 'IdeaTaskList-TaskId',
-      data: {},
     })
 
   },

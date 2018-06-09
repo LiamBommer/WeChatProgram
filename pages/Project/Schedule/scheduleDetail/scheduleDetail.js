@@ -550,14 +550,6 @@ Page({
   onUnload: function () {
 
     // 清空缓存列表
-    // 以免干扰创建日程页面
-
-    // wx.setStorage({
-    //   key: 'ideaDetail-content',
-    //   data: '',
-    // })
-
-    ////////////////////////////
 
     // 本日程id
     wx.removeStorageSync('ProjectMore-scheduleDetail-id')
