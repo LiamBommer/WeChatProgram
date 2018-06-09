@@ -377,7 +377,18 @@ addTaskRecord:function (taskId, userName, record){
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorage({
+      key: 'TaskDetail-taskId',
+      success: function(res) {},
+    })
+    wx.removeStorage({
+      key: 'TaskDetail-member',
+      success: function (res) { },
+    })
+    wx.removeStorage({
+      key: 'TaskDetail-projectMember',
+      success: function (res) { },
+    })
   },
 
   /**

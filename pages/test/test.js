@@ -100,7 +100,8 @@ Page({
      //test.createIdea('852f280d24', '46afed01fb','测试')
      //test.modifyRelatedTask('852f280d24','0f244d82b7','73e7efc50d')
      //test.getProjectIdea('852f280d24')
-     test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
+    // test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
+     //test.addTaskNotification('123','178dae4e04','测试')
   },
   /**
    * 生命周期函数--监听页面隐藏

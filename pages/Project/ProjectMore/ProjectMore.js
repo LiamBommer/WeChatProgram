@@ -1331,42 +1331,42 @@ Page({
     })
 
 
-    //其他次执行
-    if (that.data.exitTask == true)//只刷新任务页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      that.getTaskLists(currentProjId);//获取任务ID
-      that.getProjectMember(currentProjId);//获取项目成员
-    }
-    //其他次执行
-    if (that.data.exitAnnouncement == true)//只刷新公告页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      that.getAnnouncements(currentProjId)//获取公告详情
-    }
-    //其他次执行
-    if (that.data.exitSchedule == true)//只刷新日程页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      that.getSchedules(currentProjId)      // 获取日程列表
-    }
-    //其他次执行
-    if (that.data.exitMeeting == true)//只刷新会议页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      that.getMeeting(currentProjId)//获取会议详情
-    }
-    //其他次执行
-    if (that.data.exitIdea == true)//只刷新墙页
-    {
-      var currentProjId = that.data.currentProjId
-      console.log("当前项目ID", currentProjId)
-      // that.getMeeting(currentProjId)//获取会议详情
-    }
+    // //其他次执行
+    // if (that.data.exitTask == true)//只刷新任务页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   that.getTaskLists(currentProjId);//获取任务ID
+    //   that.getProjectMember(currentProjId);//获取项目成员
+    // }
+    // //其他次执行
+    // if (that.data.exitAnnouncement == true)//只刷新公告页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   that.getAnnouncements(currentProjId)//获取公告详情
+    // }
+    // //其他次执行
+    // if (that.data.exitSchedule == true)//只刷新日程页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   that.getSchedules(currentProjId)      // 获取日程列表
+    // }
+    // //其他次执行
+    // if (that.data.exitMeeting == true)//只刷新会议页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   that.getMeeting(currentProjId)//获取会议详情
+    // }
+    // //其他次执行
+    // if (that.data.exitIdea == true)//只刷新墙页
+    // {
+    //   var currentProjId = that.data.currentProjId
+    //   console.log("当前项目ID", currentProjId)
+    //   // that.getMeeting(currentProjId)//获取会议详情
+    // }
 
 
 

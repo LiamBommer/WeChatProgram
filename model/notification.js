@@ -169,9 +169,8 @@ function addTaskNotification(projId,taskId,  content){
   taskmemberQuery.find().then(function (results) {
     // 返回成功
     for(var i=0;i<results.length;i++){
-      toUserIds.push(results[i].id)
+      toUserIds.push(results[i].get('user_id').id)
     }
-    
     if (toUserIds != null && toUserIds.length > 0){
       var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
       var project = Bmob.Object.createWithoutData("project", projId)
@@ -195,7 +194,7 @@ function addTaskNotification(projId,taskId,  content){
         //在数据库添加通知
         Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
           // 成功
-          console.log("添加任务成员通知成功！")
+          console.log("添加任务成员通知成功！",notificationObjects)
 
 
         },
