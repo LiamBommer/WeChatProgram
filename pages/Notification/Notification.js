@@ -366,11 +366,11 @@ getNotification:function (userId) {
     var notificationArr = []
 
     //获取用户的所有通知
+    notificationQuery.limit(50)
     notificationQuery.equalTo("to_user_id", userId)
     notificationQuery.include('project')
     notificationQuery.include('from_user')
-    notificationQuery.descending("createdAt")
-    notificationQuery.limit(50)
+    notificationQuery.descending("createdAt")  
     notificationQuery.find({
       success: function (results) {
         console.log("results", results)

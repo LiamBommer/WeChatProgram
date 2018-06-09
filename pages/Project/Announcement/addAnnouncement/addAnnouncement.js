@@ -63,7 +63,7 @@ Page({
    */
   createAnnouncement:function (projId, projName, title, content, is_showmember){
   var that = this
-    var Announcement = Bmob.Object.extend("annoucement")  //数据库的名字拼错了，但是现在还是和后台的数据库是一样的
+  var Announcement = Bmob.Object.extend("annoucement")  //数据库的名字拼错了，但是现在还是和后台的数据库是一样的
   var announcement = new Announcement()
   var currentUser = Bmob.User.current()  //获取当前用户
   var announceId = "0"  //用来存储创建成功后的公告id
@@ -80,7 +80,8 @@ Page({
       proj_id: projId,
       proj_name: projName,
       publisher: user,  //发布人信息，与_User表关联
-      read_num: 0
+      read_num: 0,
+      is_delete: false
     }, {
         success: function (result) {
           // 添加成功

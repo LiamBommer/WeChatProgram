@@ -46,9 +46,10 @@ Page({
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtask = new Subtask()
-
+    var parentTask = Bmob.Object.createWithoutData("task", taskId)   //父任务(子任务的上级)
     subtask.set("task_id", taskId)
     subtask.set("title", title)
+    subtask.set("task", parentTask)
     subtask.set("is_finish", false)
     if (leaderId != null) {
       subtask.set("user", Bmob.Object.createWithoutData("_User", leaderId))

@@ -1,5 +1,6 @@
 
 var Bmob = require('../../../../utils/bmob.js')
+var DELETE_ANNOUNCEMENT = '删除了项目公告'
 Page({
 
   /**
@@ -192,7 +193,7 @@ Page({
             title: '正在删除...',
           })
           // delete
-          that.deleteAnnouncement(that.data.id)
+          that.deleteAnnouncement(wx.getStorageSync('Project-detail').id,that.data.id)
           
         }
         else{//点击取消
@@ -374,28 +375,90 @@ Page({
       }
     })
   },
+  /**
+     * 2018-05-31
+     * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
+     * 页面所有携带的请求数据，比如（taskId，meetingId 等）
+     * 存储通知,往往都是批量添加的
+     */
+  addProjectNotification: function (projId, content, _type, requestId) {
+    var that = this
+    var Projectmember = Bmob.Object.extend('proj_member')
+    var projectkmemberQuery = new Bmob.Query(Projectmember)
+    var Notification = Bmob.Object.extend('notification')
+    var toUserIds = []  //被通知的用户的id数组
+    var notificationObjects = []
 
+    var project = Bmob.Object.createWithoutData("project", projId)
+    var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
+
+    //查询项目下的所有成员id
+    projectkmemberQuery.equalTo('proj_id', projId)
+    projectkmemberQuery.find({
+      success: function (results) {
+        //成功
+        for (var i = 0; i < results.length; i++) {
+          toUserIds.push(results[i].get('user_id'))
+        }
+        if (toUserIds != null && toUserIds.length > 0) {
+          for (var i = 0; i < toUserIds.length; i++) {
+            //无需通知操作人本身
+            if (toUserIds[i] != Bmob.User.current().id) {
+              var notification = new Notification()
+              notification.set('to_user_id', toUserIds[i])
+              notification.set('content', content)
+              notification.set('type', _type)
+              notification.set('is_read', false)
+              notification.set('request_id', requestId)
+              notification.set('project', project)
+              notification.set('from_user', fromUser)
+
+              notificationObjects.push(notification)  //存储本地通知对象
+            }
+          }
+
+          if (notificationObjects != null && notificationObjects.length > 0) {
+            Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+              // 通知添加成功
+              console.log("添加项目成员通知成功！")
+            },
+              function (error) {
+                // 通知添加失败处理
+              })
+          }
+        }
+
+      },
+      error: function (error) {
+        //项目成员查询失败
+      }
+    })
+  },
   /**
    *2018-05-19
    *@author mr.li
    @parameter announcementId 公告id
    *
-   *删除公告，并删除与此公告有关的已读和未读成员信息
+   *删除公告，设置is_delete字段
    */
-  deleteAnnouncement:function (announcementId){
+  deleteAnnouncement:function (projId,announcementId){
   var that = this
-    var Announcement = Bmob.Object.extend("annoucement")
+  var Announcement = Bmob.Object.extend("annoucement")
   var announcementQuery = new Bmob.Query(Announcement)
   var AnnouncementRead = Bmob.Object.extend("annoucement_read")
   var announcementReadQuery = new Bmob.Query(AnnouncementRead)
 
   //删除指定公告
-  announcementQuery.equalTo("objectId", announcementId)
-  announcementQuery.destroyAll({
-      success: function () {
+  // announcementQuery.equalTo("objectId", announcementId)
+  announcementQuery.get(announcementId,{
+      success: function (result) {
         //删除成功
+        result.set('is_delete',true)
+        result.save()
         console.log("删除公告成功！")
-
+        //通知项目其他成员
+        var _type = 2
+        that.addProjectNotification(projId,DELETE_ANNOUNCEMENT,_type,announcementId)
         // 隐藏loading弹窗
         wx.hideLoading()
 
@@ -425,18 +488,18 @@ Page({
       }
     })
 
-  //删除指定公告的已读和未读成员信息
-  announcementReadQuery.equalTo("annouce_id", announcementId)
-  announcementReadQuery.destroyAll({
-      success: function () {
-        //删除成功
-        console.log("删除指定公告的已读和未读成员信息成功")
-      },
-      error: function (err) {
-        // 删除失败
-        console.log("删除指定公告的已读和未读成员信息失败", err)
-      }
-    })
+  // //删除指定公告的已读和未读成员信息
+  // announcementReadQuery.equalTo("annouce_id", announcementId)
+  // announcementReadQuery.destroyAll({
+  //     success: function () {
+  //       //删除成功
+  //       console.log("删除指定公告的已读和未读成员信息成功")
+  //     },
+  //     error: function (err) {
+  //       // 删除失败
+  //       console.log("删除指定公告的已读和未读成员信息失败", err)
+  //     }
+  //   })
   },
 
   
