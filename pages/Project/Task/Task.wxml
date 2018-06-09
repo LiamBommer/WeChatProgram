@@ -27,10 +27,9 @@
                       <view class='taskitemDone'>
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
-                          <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
-                                <checkbox class='item-checkbox' value='{{index}}' data-checked="{{tasks.is_finish}}"  data-index="{{index}}"
-                                 bindtap="ClickTask"  id="{{tasks.objectId}}"
+                                <checkbox class='item-checkbox' value='{{index}}' data-checked="{{tasks.is_finish}}"  
+                                data-index="{{index}}" bindtap="ClickTask"  id="{{tasks.objectId}}"
                                 checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
                               <view class='task' bindtap='showTask'  data-index="{{index}}">{{tasks.title}}</view>
@@ -53,12 +52,11 @@
                       <view class='taskitem' >
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
-                          <!-- data-index="{{index}}" bindtap="ClickTask" -->
                               <checkbox-group bindchange="checkboxChange" >
                                 <checkbox class='item-checkbox' id='{{tasks.objectId}}' value='{{index}}' checked='{{tasks.is_finish}}'
                                 data-index="{{index}}" data-checked="{{tasks.is_finish}}" bindtap="ClickTask"/>
                               </checkbox-group>
-                              <view class='task'bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                              <view class='task' bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
                           <!-- 内容下部分 -->
                           <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >

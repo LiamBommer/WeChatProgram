@@ -1,23 +1,33 @@
 <!--pages/Notification/Notification.wxml-->
-<view class='Announcement-container'>
+<view class='Announcement-container' bindtouchstart="touchstart" >
 
   <block wx:for="{{Notification}}">
-      <!-- 列表项 -->
-      <view class='item'>
-        <!-- 列表左 -->
-        <view class='item-first'>
-          <image class='item-icon' src='{{item.icon}}'></image>
-          <view class='item-text'>
-            <view class='item-title'>{{item.title}}</view>
-            <view class='item-content'>{{item.content}}</view>
+
+      <view class="touch-item '{{item.NotificationisTouchMove ? 'touch-move-active' : ''}}" >
+        <!-- 列表项 -->
+          <view style='{{item.NotificationtxtStyle}}'
+          class='item contentminddle' bindtap='ClickMessage' data-index="{{index}}" id='{{item.id}}'bindtouchmove="touchmoveNotification">
+            <!-- 列表左 -->
+            <view class='item-first'>
+              <image class='item-icon' src='{{item.icon}}'></image>
+              <view style='display:{{item.isRead? "none":""}}' class='item-message'>1</view>
+              <view class='item-text' style='margin-left:{{item.isRead? "40rpx":"14rpx"}}'>
+                <view class='item-read'>项目：{{item.projectName}}</view>
+                <view class='item-content'>{{item.content}}</view>
+              </view>
+            </view>
+            <!-- 列表右 -->
+            <view class='item-second'>
+              <view class='item-time'>{{item.time}}</view>
+            </view>
           </view>
-        </view>
-        <!-- 列表右 -->
-        <view class='item-second'>
-          <view class='item-time'>{{item.time}}</view>
-          <view class='item-read'>{{item.project}}</view>
-        </view>
-      </view>
+          <!-- 标记已读 -->
+          <view class="read" id='{{item.id}}' data-index="{{index}}" catchtap="readNotification" >标位已读
+          </view>
+          <!--删除按钮  -->
+          <view class="del" id='{{item.id}}' catchtap="delNotification" >删除
+          </view>
+      </view>  
   </block>
   
 

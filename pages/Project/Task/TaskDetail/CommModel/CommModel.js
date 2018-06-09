@@ -263,8 +263,8 @@ Page({
             that.setData({
               ModelLike: modelArr,
             })
-            wx.hideLoading()
         }
+        wx.hideLoading()
         console.log("沟通模板:")
         console.log("ModelComment", that.data.ModelComment)
         console.log("ModelQuestion", that.data.ModelQuestion)
