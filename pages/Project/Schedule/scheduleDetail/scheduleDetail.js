@@ -152,7 +152,6 @@ Page({
               url: '../ScheduleTaskList/ScheduleTaskList',
             })
 
-
           }
         })
 
@@ -546,13 +545,18 @@ Page({
     // 清空缓存列表
     // 以免干扰创建日程页面
     wx.setStorage({
-      key: 'ScheduleTaskList-TaskId',
+      key: 'ScheduleDetail-scheduleDetail',
       data: {},
     })
 
     wx.setStorage({
       key: 'isScheduleDetail',
       data: false,
+    })
+
+    wx.setStorage({
+      key: 'ideaDetail-content',
+      data: '',
     })
 
   },
@@ -575,6 +579,22 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+    var that = this
+    var currentUserName = getApp().globalData.nickName
+    var scheduleContent = that.data.scheduleContent
+
+    // 分享
+    return {
+      title: currentUserName + '给你分享了日程: ' + scheduleContent,
+      path: "pages/Project/Schedule/scheduleDetail/scheduleDetail",
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: 'success',
+        })
+      },
+    }
 
   }
 })

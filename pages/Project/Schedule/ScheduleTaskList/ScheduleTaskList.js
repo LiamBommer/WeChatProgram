@@ -34,8 +34,8 @@ Page({
       // taskId 为数组
       TaskId: e.detail.value,
     });
-    console.log('cb列表：')
-    console.log(e)
+    // console.log('cb列表：')
+    // console.log(e)
   },
 
   //完成
@@ -46,8 +46,8 @@ Page({
       mask: 'true'
     })
 
-    var that = this;
-    var TaskId = that.data.TaskId;  //被选中的任务ID
+    var that = this
+    var TaskId = that.data.TaskId  //被选中的任务ID
 
     // 从日程详情页进入，需要修改任务列表至日程
     if (that.data.isScheduleDetail == true) {
@@ -309,18 +309,34 @@ Page({
         that.setData({
           isScheduleDetail: res.data
         })
-      }
-    })
 
-    // 获取本日程的详情
-    wx.getStorage({
-      key: 'ScheduleDetail-scheduleDetail',
-      success: function(res) {
-        that.setData({
-          scheduleDetail: res.data,
-          TaskId: res.data.taskIds
-        })
-      },
+        if(that.data.isScheduleDetail == true) {
+          // 详情页
+          // 获取本日程的详情
+          wx.getStorage({
+            key: 'ScheduleDetail-scheduleDetail',
+            success: function(res) {
+              that.setData({
+                scheduleDetail: res.data,
+                TaskId: res.data.taskIds
+              })
+            },
+          })
+
+        } else {
+          // 创建页
+          // 获取关联任务列表里的数据
+          wx.getStorage({
+            key: 'ScheduleTaskList-TaskId',
+            success: function(res) {
+              that.setData({
+                TaskId: res.data
+              })
+            },
+          })
+        }
+        
+      }
     })
 
     // 从缓存获取项目信息
@@ -372,7 +388,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync("meetingDetail-membericon")
+
   },
 
   /**

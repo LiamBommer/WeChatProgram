@@ -39,10 +39,10 @@ function getProjectIdea(projId) {
           'taskId': results[i].get('task')!=null && results[i].get('task').is_delete != true ? results[i].get('task')                           .objectId : '',//关联的任务id
           'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
           'projectName': results[i].get('project').name,  //项目名称
-          'content': results[i].get('content') || '',  //点子内容         
+          'content': results[i].get('content') || '',  //点子内容
           'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
           'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
-          'cretaedAt': results[i].createdAt || '',  //点子创建时间     
+          'cretaedAt': results[i].createdAt || '',  //点子创建时间
         }
         ideaArr.push(ideaObject)
       }
@@ -72,7 +72,7 @@ function modifyIdeaContent(projId,ideaId,newContent){
 
   var Idea = Bmob.Object.extend('idea')
   var ideaQuery = new Bmob.Query(Idea)
-  
+
   ideaQuery.get(ideaId,{
     success: function(result){
       result.set('content',newContent)
@@ -298,11 +298,11 @@ function modifyRelatedTask(projId,ideaId, taskId){
  * 'taskTitle'  //任务名称
  * 'projectName'  //项目名称
  * 'content'  //点子内容
- * 'createdAt'  //点子创建时间 
+ * 'createdAt'  //点子创建时间
  * }
  */
-function getOneTaskDetail(ideaId){
-  
+function getOneIdeaDetail(ideaId){
+
   var Idea = Bmob.Object.extend('idea')
   var ideaQuery = new Bmob.Query(Idea)
   var ideaObject = {}
@@ -312,7 +312,7 @@ function getOneTaskDetail(ideaId){
   ideaQuery.include('project')
   ideaQuery.include('user')
   ideaQuery.get(ideaId,{
-    success: function(result){
+    success: function(results){
       //成功
       for(var i in results){
         //判断任务是否已删除
@@ -325,11 +325,14 @@ function getOneTaskDetail(ideaId){
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get
                           ('task').title : '',  //关联的任务名称
 
+            'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get
+                          ('task').title : '',  //关联的任务名称
+
             'projectName': results[i].get('project').title || '', //项目名称
             'content': results[i].get('content') || '',  //点子内容
             'userName': results[i].get('user').nickName || '', //发布人的名字(真正的昵称，而不是其他名字)
             'userPic': results[i].get('user').userPic || '',//发布人的头像
-            'cretaedAt': results[i].createdAt || '',  //点子创建时间          
+            'cretaedAt': results[i].createdAt || '',  //点子创建时间
           }
         }
         //获取的点子详情，ideaObject
@@ -348,7 +351,7 @@ function getOneTaskDetail(ideaId){
 
         }
       },
-        
+
     error: function(error){
       //失败
       console.log('获取某个点子详情失败!')
@@ -391,6 +394,3 @@ module.exports.createIdea = createIdea
 module.exports.addProjectNotification = addProjectNotification
 module.exports.getProjectIdea = getProjectIdea
 module.exports.modifyRelatedTask = modifyRelatedTask
-
-
-
