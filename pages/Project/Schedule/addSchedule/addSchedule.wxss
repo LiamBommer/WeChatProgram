@@ -16,3 +16,9 @@
 .item-view picker {
   width: 100%;
 }
+
+.item-view image {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+}
