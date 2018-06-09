@@ -1,5 +1,6 @@
 
 var Bmob = require('../../../../../utils/bmob.js')
+var MODIFY_IDEA_CONTENT = '修改了点子内容'
 
 Page({
 
@@ -117,7 +118,7 @@ Page({
         //修改成功
         //通知其他项目成员
         var _type = 5   //通知的类型
-        // that.addProjectNotification(projId, MODIFY_IDEA_CONTENT, _type, ideaId)  //通知其他项目成员
+        that.addProjectNotification(projId, MODIFY_IDEA_CONTENT, _type, ideaId)  //通知其他项目成员
         console.log('提示用户修改成功！')
 
         wx.hideLoading()

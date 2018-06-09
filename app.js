@@ -6,7 +6,7 @@ var user = new Bmob.User();//实例化
 
 
 App({
-  
+
   //登录函数
   // 登录 mr.li 代码是Bmob封装好的接口
   //登录注册集合类，接口默认第一次注册，否则返回用户信息
@@ -15,7 +15,9 @@ App({
     wx.login({
       success: function (res) {
         user.loginWithWeapp(res.code).then(function (user) {
+          console.log('CODE换取的数据', user)
           var openid = user.get("authData").weapp.openid;
+          that.globalData.openid = openid
           //console.log(user, 'user', user.id, res);
           if (user.get("nickName")) {
 
@@ -80,6 +82,13 @@ App({
                       }
                     }
                   })
+                } else {
+                  // 没有授权，弹出授权页面
+                  that.globalData.userId = user.id
+                  wx.navigateTo({
+                    url: '../GetUserInfo/GetUserInfo',
+                  })
+
                 }
               }
             })
@@ -91,7 +100,7 @@ App({
       }
     });
   },
-  
+
   onLaunch: function (options) {
 
     // 展示本地存储能力
@@ -101,7 +110,7 @@ App({
 
     var that = this
     that.userLogin()
- 
+
     // user.auth()   //这行代码可以替换上面的wx.login
 
   },
@@ -127,13 +136,13 @@ App({
           wx.navigateTo({
             url: '/pages/Project/JoinProject/JoinProject',
           })
-        } 
+        }
       })
 
     }
   },
 
-  
+
 
   globalData: {
     userInfo: null,

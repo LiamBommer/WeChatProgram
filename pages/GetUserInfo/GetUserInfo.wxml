@@ -1,0 +1,9 @@
+<view class='joinProject-container'>
+  <view class='item'>
+    <image class='item-icon' src='{{projectImgUrl}}'></image>
+    <view class='item-title'>授权获取用户信息</view>
+    <view class='item-content'>我们需要你的头像和昵称才能顺利使用噢</view>
+    <button class='item-create' wx:if="{{canIUse}}" bindgetuserinfo='confirm' size='default' open-type='getUserInfo'>确认</button>
+    <view wx:else>请升级微信版本</view>
+  </view>
+</view>

@@ -1,5 +1,6 @@
 
 var Bmob = require('../../../../utils/bmob.js')
+var ADD_IDEA = "新增加了一个点子"
 
 Page({
 
@@ -165,13 +166,14 @@ Page({
       project: project,  //项目
       content: content,   //点子内容
       task: task,        //关联的任务
-      color: color
+      color: color,
+      is_delete: false
     },{
       success: function(result){
         //添加成功
         //通知其他项目成员
         var _type = 5   //通知的类型
-        // that.addProjectNotification(projId, ADD_IDEA, _type, result.id/*创建的点子id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, ADD_IDEA, _type, result.id/*创建的点子id*/)  //通知其他项目成员
         console.log("提示用户添加点子成功！",result)
 
         // 操作完成 ???
