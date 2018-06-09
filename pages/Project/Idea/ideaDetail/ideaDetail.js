@@ -256,7 +256,7 @@ Page({
   * 内部调用了addProjectNotification
   */
   deleteOneIdea: function (projId, ideaId){
-
+    var that = this
     var Idea = Bmob.Object.extend('idea')
     var ideaQuery = new Bmob.Query(Idea)
 
