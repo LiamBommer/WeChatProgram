@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/ideawall.js')
+var test = require('../../model/notification.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -99,7 +99,8 @@ Page({
      //test.getTasks('852f280d24')
      //test.createIdea('852f280d24', '46afed01fb','测试')
      //test.modifyRelatedTask('852f280d24','0f244d82b7','73e7efc50d')
-     test.getProjectIdea('852f280d24')
+     //test.getProjectIdea('852f280d24')
+     test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
   },
   /**
    * 生命周期函数--监听页面隐藏
