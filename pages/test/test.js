@@ -1,7 +1,7 @@
 // pages/test/test.js
 //测试model的接口
 
-var test = require('../../model/schedule.js')
+var test = require('../../model/notification.js')
 var testBuild = require('../../model/buildProject.js')
 
 function testbuildProject() {
@@ -96,7 +96,11 @@ Page({
      //test.modifyRelatedTasks('123', 'bd14e21fbc', ['e1fb8a8c5b', '0ab197b9e1', '33d0b073cb'], ['e1fb8a8c5b'])
      //test.createIdea('123','userid','测试内容')
      //test.getOneSchedule('e6e551b3d7')
-     test.getTasks('852f280d24')
+     //test.getTasks('852f280d24')
+     //test.createIdea('852f280d24', '46afed01fb','测试')
+     //test.modifyRelatedTask('852f280d24','0f244d82b7','73e7efc50d')
+     //test.getProjectIdea('852f280d24')
+     test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
   },
   /**
    * 生命周期函数--监听页面隐藏

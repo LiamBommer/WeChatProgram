@@ -285,5 +285,107 @@ function deleteOneNotification(notificationId){
     })
   }
 }
+
+/**
+ * 获取项目成员和任务领导人id
+ */
+function getProjMemberAndTaskleaderId(projId, taskId){
+  
+  var projmemberArr = []  //项目成员数组
+  var taskLeaderId = '0'  //任务负责人id
+  //先获取项目成员数组
+  var ProjectMember = Bmob.Object.extend("proj_member")
+  var memberQuery = new Bmob.Query(ProjectMember)
+  var User = Bmob.Object.extend("_User")
+  var userQuery = new Bmob.Query(User)
+
+  var leader_id = "0"
+  var memberId = [] //项目的所有成员id数组
+
+  //获取指定项目的所有成员id，50条
+  memberQuery.equalTo("proj_id", projId)
+  memberQuery.select("user_id", "is_leader")
+  memberQuery.limit(50)
+  memberQuery.find().then(function (results) {
+    //返回成功
+    for (var i = 0; i < results.length; i++) {
+      var object = results[i];
+      if (object.get("is_leader")) {
+        //项目领导，放在数组的第一个
+        leader_id = object.get("user_id")
+        memberId.unshift(leader_id)
+
+      } else {
+        memberId.push(object.get("user_id"))  //将成员id添加到数组
+      }
+    }
+  }).then(function (result) {
+
+    //获取指定项目的所有成员,一次可以获取50条
+    userQuery.select("objectId", "nickName", "userPic")  //查询出用户基本信息，id ，昵称和头像
+    userQuery.limit(50)
+    userQuery.containedIn("objectId", memberId)
+
+    userQuery.find({
+      success: function (results) {
+        // 循环处理查询到的数据
+        for (var i = 0; i < results.length; i++) {
+          var object
+          object = {
+            'checked':'',
+            'id': results[i].id,
+            'nickName': results[i].nickName,
+            'userPic': results[i].userPic
+          }
+
+          if (object.id == leader_id) {
+            //将项目领导放在数组的第一个位置
+            projmemberArr.unshift(object)
+          } else
+            projmemberArr.push(object)
+        }
+        //然后获取taskLeaderId
+        var Task = Bmob.Object.extend('task')
+        var taskQuery = new Bmob.Query(Task)
+
+        taskQuery.include('leader')
+        taskQuery.get(taskId,{
+          success: function(result){
+            //获取任务负责人id成功
+            taskLeaderId = result.get('leader').objectId
+            console.log('获取任务负责人id成功', taskLeaderId,'成员',projmemberArr)
+
+
+
+
+
+
+
+
+
+
+          },
+          error: function(error){
+            //获取任务负责人id失败
+
+          }
+        })
+      },
+      error: function (error) {
+        console.log("查询失败: " + error.code + " " + error.message);
+        //失败情况
+
+
+
+
+
+      }
+    })
+
+  })
+}
 module.exports.addProjectNotification = addProjectNotification
 module.exports.addTaskNotification = addTaskNotification
+module.exports.getProjMemberAndTaskleaderId = getProjMemberAndTaskleaderId
+
+
