@@ -48,37 +48,34 @@ Page({
     // var memberId = that.data.memberId//选中的成员下标
     var ProjectMember = that.data.ProjectMember//项目成员
     var InitProjectMember = that.data.InitProjectMember//初始化项目成员
-    var memberIds = []//新添加的任务成员ID数组
-    var NomemberIds = []//新删除的任务成员ID数组
+    var InitmemberIds = []//原有的成员id数组
+    var memberIds = []//修改后的成员id数组
 
     console.log("InitProjectMember", InitProjectMember)
     console.log("ProjectMember", ProjectMember)
 
     for (var i in InitProjectMember) {
-      if (InitProjectMember[i].checked != ProjectMember[i].checked)//有更改
-      {
-        //新添加的成员id
-        if (ProjectMember[i].checked == true) {
-          memberIds.push(ProjectMember[i].id)
-        }
-        //新删除的成员id
-        else if (ProjectMember[i].checked == false) {
-          NomemberIds.push(ProjectMember[i].id)
-        }
-      }
+      //原有的成员id数组
+      if (InitProjectMember[i].checked == true)
+      InitmemberIds.push(InitProjectMember[i].id)
     }
-    console.log("选中的成员ID", memberIds)
-    console.log("未选中的成员ID", NomemberIds)
+    for (var i in ProjectMember) {
+      //修改后的成员id数组
+      if (ProjectMember[i].checked == true)
+      memberIds.push(ProjectMember[i].id)
+    }
+    console.log("原有选中的成员ID", InitmemberIds)
+    console.log("修改后选中的成员ID", memberIds)
 
-        if (memberIds == "" && NomemberIds == "")//无成员变化
-        {
-          wx.navigateBack()
-        }
-        else {
-          // that.addMeetingMember(that.data.projId, that.data.meetingId, memberIds)
-          // that.deleteMeetingMember(that.data.projId, that.data.meetingId, NomemberIds)
+    // if (memberIds == InitmemberIds)//无成员变化
+    //     {
+    //       wx.navigateBack()
+    //     }
+        // else {
+    console.log("modifyMeetingMember",that.data.projId, that.data.meetingId, InitmemberIds, memberIds)
+    that.modifyMeetingMember(that.data.projId, that.data.meetingId, InitmemberIds,memberIds)
           
-        }
+        // }
   },
 
   /**
@@ -89,6 +86,7 @@ Page({
     var that =  this
     var Meetingmember = Bmob.Object.extend('meeting_member')
     var meetingmemberQuery = new Bmob.Query(Meetingmember)
+    var meeting = Bmob.Object.createWithoutData('meeting', meetingId)
     var meetingmemberArr = []
 
     if (oldmemberIds != null && oldmemberIds.length > 0) {
@@ -97,35 +95,47 @@ Page({
 
       meetingmemberQuery.destroyAll({
         success: function () {
+          console.log("删除成功")
           //删除成功
-          //然后添加新的成员
-          if (newmemberIds != null && newmemberIds.length > 0) {
-            for (var i in newmemberIds) {
-              var member = new Meetingmember()
-              var user = Bmob.Object.createWithoutData('_User', newmemberIds[i])
-              member.set('meeting_id', meetingId)
-              member.set('user', user)
-              meetingmemberArr.push(member)
-            }
+          if(newmemberIds == null || newmemberIds.length == 0)
+            wx.navigateBack()
+            
 
-            if (meetingmemberArr != null && meetingmemberArr.length > 0) {
-              Bmob.Object.saveAll(meetingmemberArr).then(function (results) {
-                // 重新添加关联的任务成功
-                var _type = 4  //通知类型
-                that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
-                console.log('修改会议关联成员成功！')
-              },
-                function (error) {
-                  // 异常处理
-                  console.log('修改会议关联成员成功！')
-                })
-            }
-          }
-
-          wx.navigateBack()
+        },
+        error:function(error){
+          //失败
+          console.log('删除任务成员失败',error)
         }
       })
     }
+      //然后添加新的成员
+      console.log('newmemberIds', newmemberIds)
+      if (newmemberIds != null && newmemberIds.length > 0) {
+        for (var i in newmemberIds) {
+          var member = new Meetingmember()
+          var user = Bmob.Object.createWithoutData('_User', newmemberIds[i])
+          member.set('meeting_id', meetingId)
+          member.set('user', user)
+          member.set('meeting',meeting)
+          meetingmemberArr.push(member)
+        }
+
+        if (meetingmemberArr != null && meetingmemberArr.length > 0) {
+          Bmob.Object.saveAll(meetingmemberArr).then(function (results) {
+            // 重新添加关联的任务成功
+            var _type = 4  //通知类型
+            that.addProjectNotification(projId, MODIFY_MEETING_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+            console.log('修改会议关联成员成功！')
+            wx.navigateBack()
+            
+          },
+            function (error) {
+              // 异常处理
+              console.log('修改会议关联成员失败！')
+            })
+        }
+      }
+    
   },
   
 //   /**

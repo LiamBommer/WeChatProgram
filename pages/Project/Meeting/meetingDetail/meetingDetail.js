@@ -250,6 +250,12 @@ Page({
               member: meetingmemberArr
             })
         }
+        else {
+          console.log('会议成员', meetingmemberArr)
+          that.setData({
+            member:''
+          })
+        }
 
         wx.hideLoading()
       },
