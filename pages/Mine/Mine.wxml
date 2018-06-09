@@ -1,40 +1,41 @@
 <!--pages/Mine/Mine.wxml-->
 <view class="Mine-container">
-  
+
     <!-- 头像昵称 -->
     <view class="userinfo">
       <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
       <block wx:else>
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.userPic}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-        <view class='taglist'>
+        <!-- 暂时删除标签模块 -->
+        <!-- <view class='taglist'>
           <block wx:for="{{Tag}}">
             <text class='item-tag' bindtap='modalinputTag'>{{item}}</text>
-            <modal hidden="{{hiddenmodalputTag}}" title="标签" confirm-text="完成" cancel-text="删除" bindcancel="cancelTag" bindconfirm="confirmTag"> 
-                <input type='text' />  
+            <modal hidden="{{hiddenmodalputTag}}" title="标签" confirm-text="完成" cancel-text="删除" bindcancel="cancelTag" bindconfirm="confirmTag">
+                <input type='text' />
             </modal>
           </block>
-        </view>
+        </view> -->
       </block>
     </view>
 
     <!-- 列表项 -->
-    <view class='item'>
+    <!-- <view class='item'>
       <view class='item-one' >
         <image class='item-icon' src='/img/tag.png'></image>
         <text class='item-text' bindtap='modalinput'>标签</text>
-        <modal hidden="{{hiddenmodalput}}" title="添加标签" confirm-text="完成" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm"> 
-            <input type='text' placeholder="负责任..." />  
+        <modal hidden="{{hiddenmodalput}}" title="添加标签" confirm-text="完成" cancel-text="取消" bindcancel="cancel" bindconfirm="confirm">
+            <input type='text' placeholder="负责任..." />
         </modal>
-      </view> 
-    </view>
+      </view>
+    </view> -->
 
     <!-- 列表项 -->
     <view class='item' bindtap='CommModel'>
       <view class='item-one'>
         <image class='item-icon' src='/img/communication_model.png'></image>
         <view class='item-text'>沟通模板</view>
-      </view> 
+      </view>
     </view>
 
     <!-- 导航栏 -->
@@ -61,4 +62,3 @@
     </view>
 
 </view>
-
