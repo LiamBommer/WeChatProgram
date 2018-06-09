@@ -17,6 +17,7 @@ App({
         user.loginWithWeapp(res.code).then(function (user) {
           console.log('CODE换取的数据', user)
           var openid = user.get("authData").weapp.openid;
+          that.globalData.openid = openid
           //console.log(user, 'user', user.id, res);
           if (user.get("nickName")) {
 
@@ -83,6 +84,7 @@ App({
                   })
                 } else {
                   // 没有授权，弹出授权页面
+                  that.globalData.userId = user.id
                   wx.navigateTo({
                     url: '../GetUserInfo/GetUserInfo',
                   })
