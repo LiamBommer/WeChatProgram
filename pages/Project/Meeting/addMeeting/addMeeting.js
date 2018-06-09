@@ -133,7 +133,6 @@ Page({
         }
       })
   },
-
   /**
  * 2018-05-31
  * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
@@ -208,9 +207,11 @@ Page({
       for (var i in memberIds) {
         var memberId = memberIds[i]
         var user = Bmob.Object.createWithoutData("_User", memberId)
+        var meeting = Bmob.Object.createWithoutData("meeting", meetingId)
         var meetingmember = new Meetingmember()
         meetingmember.set('meeting_id', meetingId)
         meetingmember.set('user', user)
+        meetingmember.set('meeting', meeting)
         meetingmemberArr.push(meetingmember)
       }
 

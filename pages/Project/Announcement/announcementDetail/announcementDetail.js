@@ -502,6 +502,7 @@ Page({
    */
   onUnload: function () {
     wx.removeStorageSync("announcementDetail-Content-content")
+    wx.removeStorageSync("Notification-announcementId")
   },
 
   /**

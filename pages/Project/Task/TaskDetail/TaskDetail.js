@@ -85,7 +85,7 @@ Page({
 
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
-    icon_project:'/img/project.png',
+    icon_project:'/img/taskdetail-project.png',
     icon_person: '/img/member.png',
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
@@ -149,7 +149,7 @@ Page({
     var userName = getApp().globalData.nickName//当前操作用户
     var childTakChecked = !e.currentTarget.dataset.checked//当前子任务是否被选中
     
-    that.finishSubTask(that.data.taskId, childTaskId, childTakChecked, userName)
+    that.finishSubTask(wx.getStorageSync('Project-detail').id,that.data.taskId, childTaskId, childTakChecked, userName)
 
     var ChildTask = "ChildTask[" + index + "].is_finish"
     var ChildTask_isfinish = that.data.ChildTask[index].is_finish
@@ -164,7 +164,7 @@ Page({
   checkboxChange: function () {
     var that = this
     var userName = getApp().globalData.nickName
-    that.finishTask(that.data.taskId, !that.data.checked, userName)
+    that.finishTask(wx.getStorageSync('Project-detail').id,that.data.taskId, !that.data.checked, userName)
   },
 
   //任务标题：点击按钮弹出指定的hiddenmodalput弹出框  
@@ -198,7 +198,7 @@ Page({
       wx.showLoading({
         title: '正在修改...',
       })
-      that.modifyTaskTitle(that.data.taskId, that.data.inputTitle, userName)
+      that.modifyTaskTitle(wx.getStorageSync('Project-detail').id,that.data.taskId, that.data.inputTitle, userName)
       this.setData({
         hiddenmodalputTitle: true,
         title: this.data.inputTitle
@@ -244,7 +244,7 @@ Page({
     var subtaskId = that.data.childtaskId//当前子任务ID
     var index = that.data.childIndex//当前子任务下标
     var userName = getApp().globalData.nickName
-    that.modifySubTaskTitle(subtaskId, that.data.inputChildTitle, userName)
+    that.modifySubTaskTitle(wx.getStorageSync('Project-detail').id, wx.getStorageSync('ProjectMore-Task').objectId,subtaskId, that.data.inputChildTitle, userName)
     var childTitle = "ChildTask[" + index + "].childTitle"
     this.setData({
       hiddenmodalputChildTitle: true,
@@ -410,7 +410,7 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
     var endTime = e.detail.value
-    that.modifyEndTime(taskId, endTime, userName)
+    that.modifyEndTime(wx.getStorageSync('Project-detail').id,taskId, endTime, userName)
     this.setData({
       deadline: e.detail.value
     })
@@ -422,7 +422,7 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
     var notiTime = e.detail.value
-    that.modifyNotiTime(taskId, notiTime, userName)
+    that.modifyNotiTime(wx.getStorageSync('Project-detail').id,taskId, notiTime, userName)
     that.setData({
       showRemindTime: true,
       remindtime: e.detail.value
@@ -435,7 +435,7 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = that.data.taskId
     var feedBackTime = e.detail.value
-    that.modifyFeedbackTime(taskId, feedBackTime, userName)
+    that.modifyFeedbackTime(wx.getStorageSync('Project-detail').id,taskId, feedBackTime, userName)
     this.setData({
       showFeedbackTime:true,
       feedbacktime: e.detail.value
@@ -674,7 +674,8 @@ Page({
   /**
  *添加任务记录
  */
-  addTaskRecord:function (taskId, userName, record){
+  addTaskRecord:function (projId,taskId, userName, record){
+    var that = this
     var TaskRecord = Bmob.Object.extend('task_record')
     var taskrecord = new TaskRecord()
 
@@ -686,7 +687,8 @@ Page({
     }, {
         success: function (result) {
           //添加成功
-
+          //通知任务成员
+          that.addTaskNotification(projId,taskId,record)
         },
         error: function (result, error) {
           //添加失败
@@ -696,10 +698,72 @@ Page({
   },
 
   /**
+ * 2018-05-31
+ * @parameter projId 项目id, taskId任务id，content 通知内容
+ * (request_id 为tskId)
+ * 存储通知,往往都是批量添加的
+ */
+addTaskNotification:function (projId, taskId, content) {
+    var that = this
+    var _type = 1;  //任务是通知的第一种类型
+    var Taskmember = Bmob.Object.extend('task_member')
+    var taskmemberQuery = new Bmob.Query(Taskmember)
+    var toUserIds = []  //需要通知到的任务成员id数组
+    var Notification = Bmob.Object.extend('notification')
+    var notificationObjects = []
+
+    //查询任务成员
+    taskmemberQuery.equalTo('task_id', taskId)
+    taskmemberQuery.select("user_id");
+    taskmemberQuery.find().then(function (results) {
+      // 返回成功
+      for (var i = 0; i < results.length; i++) {
+        toUserIds.push(results[i].id)
+      }
+
+      if (toUserIds != null && toUserIds.length > 0) {
+        var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
+        var project = Bmob.Object.createWithoutData("project", projId)
+
+        for (var i = 0; i < toUserIds.length; i++) {
+          //无需通知操作人本身
+          if (toUserIds[i] != Bmob.User.current().id) {
+            var notification = new Notification()
+            notification.set('to_user_id', toUserIds[i])
+            notification.set('content', content)
+            notification.set('type', _type)
+            notification.set('is_read', false)
+            notification.set('request_id', taskId)
+            notification.set('project', project)
+            notification.set('from_user', fromUser)
+
+            notificationObjects.push(notification)  //存储本地通知对象
+          }
+        }
+        if (notificationObjects != null && notificationObjects.length > 0) {
+          //在数据库添加通知
+          Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+            // 成功
+            console.log("添加任务成员通知成功！",notificationObjects)
+
+
+          },
+            function (error) {
+              // 异常处理
+              console.log("添加任务成员通知失败!", error)
+
+            })
+        }
+      }
+    })
+
+  },
+
+  /**
  * 2018-05-29
  * 更改任务标题
  */
-  modifyTaskTitle: function (taskId, newTitle, userName) {
+  modifyTaskTitle: function (projId,taskId, newTitle, userName) {
 
     var that = this
     var Task = Bmob.Object.extend('task')
@@ -712,7 +776,7 @@ Page({
         result.set('title', newTitle)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_TASK_TITLE)
+        that.addTaskRecord(projId,taskId, userName, MODIFY_TASK_TITLE)
         //成功
         wx.showToast({
           title: '设置成功',
@@ -728,7 +792,7 @@ Page({
  * @parameter taskId 任务id, isFinish 是布尔类型，true表示做完,userName操作人的昵称（用来存在历史操作记录表用）
  * 完成任务
  */
-  finishTask:function (taskId, isFinish, userName){
+  finishTask: function (projId,taskId, isFinish, userName){
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -741,9 +805,9 @@ Page({
         result.save()
         //记录操作
         if(isFinish == true)
-          that.addTaskRecord(taskId, userName, FINISH_TASK + result.get('title'))
+          that.addTaskRecord(projId,taskId, userName, FINISH_TASK + result.get('title'))
         else
-          that.addTaskRecord(taskId, userName, REDO_TASK + result.get('title'))
+          that.addTaskRecord(projId,taskId, userName, REDO_TASK + result.get('title'))
 
       },
       error: function (object, error) {
@@ -799,7 +863,7 @@ Page({
    * @parameter taskId任务id，feedbackMod反馈时间，userName操作人的昵称（用来存在历史操作记录表用）
    * 修改任务截止时间
    */
-  modifyEndTime:function (taskId, endTime, userName){
+  modifyEndTime: function (projId,taskId,endTime, userName){
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -811,7 +875,7 @@ Page({
         result.set('end_time', endTime)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_END_TIME)
+        that.addTaskRecord(projId,taskId, userName, MODIFY_END_TIME)
         //修改截止时间成功
         wx.showToast({
           title: '设置成功',
@@ -829,7 +893,7 @@ Page({
  * @parameter taskId 任务id,userName用户昵称（记录操作用）
  * 删除截止时间
  */
-deleteEndTime:function (taskId, userName) {
+  deleteEndTime: function (projId,taskId, userName) {
     var that =  this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -840,7 +904,7 @@ deleteEndTime:function (taskId, userName) {
         result.set('end_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除截止时间成功")
-        that.addTaskRecord(taskId, userName, DELETE_END_TIME)
+        that.addTaskRecord(projId,taskId, userName, DELETE_END_TIME)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -905,7 +969,7 @@ deleteEndTime:function (taskId, userName) {
           else {
             var userName = getApp().globalData.nickName
             var taskId = that.data.taskId
-            that.deleteEndTime(taskId, userName)
+            that.deleteEndTime(wx.getStorageSync('Project-detail').id,taskId, userName)
             that.setData({
               DeadlineisTouchMove: false,
               DeadlinetxtStyle: "",
@@ -922,7 +986,7 @@ deleteEndTime:function (taskId, userName) {
  * @parameter taskId任务id，notiTime提醒时间，userName操作人的昵称（用来存在历史操作记录表用）
  * 修改提醒时间
  */
-  modifyNotiTime: function (taskId, notiTime, userName) {
+  modifyNotiTime: function (projId,taskId, notiTime, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -934,7 +998,7 @@ deleteEndTime:function (taskId, userName) {
         result.set('noti_time', notiTime)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_NOTI_TIME)
+        that.addTaskRecord(projId,taskId, userName, MODIFY_NOTI_TIME)
         console.log("modifyNotiTime", result)
         //成功
         wx.showToast({
@@ -951,7 +1015,7 @@ deleteEndTime:function (taskId, userName) {
 * @parameter taskId 任务id,userName用户昵称（记录操作用）
 * 删除提醒时间
 */
-  deleteNotiTime: function (taskId, userName) {
+  deleteNotiTime: function (projId,taskId, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -962,7 +1026,7 @@ deleteEndTime:function (taskId, userName) {
         result.set('noti_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除提醒时间成功")
-        that.addTaskRecord(taskId, userName, DELETE_NOTI_TIME)
+        that.addTaskRecord(projId,taskId, userName, DELETE_NOTI_TIME)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -1018,7 +1082,7 @@ deleteEndTime:function (taskId, userName) {
         if (res.confirm) {
           var userName = getApp().globalData.nickName
           var taskId = that.data.taskId
-          that.deleteNotiTime(taskId, userName)
+          that.deleteNotiTime(wx.getStorageSync('Project-detail').id,taskId, userName)
           that.setData({
             RemindtimeisTouchMove: false,
             RemindtimetxtStyle:'' ,
@@ -1036,7 +1100,7 @@ deleteEndTime:function (taskId, userName) {
  * 修改反馈时间
  * 
  */
-  modifyFeedbackTime:function (taskId, feedBackTime, userName){
+  modifyFeedbackTime:function (projId,taskId, feedBackTime, userName){
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -1048,7 +1112,7 @@ deleteEndTime:function (taskId, userName) {
         result.set('feedback_time', feedBackTime)
         result.save()
         //记录操作
-        that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_TIME)
+        that.addTaskRecord(projId,taskId, userName, MODIFY_FEEDBACK_TIME)
 
         //成功
         wx.showToast({
@@ -1065,7 +1129,7 @@ deleteEndTime:function (taskId, userName) {
  * @parameter taskId 任务id,userName用户昵称（记录操作用）
  * 删除反馈时间
  */
-  deleteFeedbackTime: function (taskId, userName) {
+  deleteFeedbackTime: function (projId,taskId, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -1076,7 +1140,7 @@ deleteEndTime:function (taskId, userName) {
         result.set('feedback_time', '')  //设为‘’ 空
         result.save()
         //console.log("删除反馈时间成功")
-        that.addTaskRecord(taskId, userName, DELETE_FEEDBACK_TIME)
+        that.addTaskRecord(projId,taskId, userName, DELETE_FEEDBACK_TIME)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -1131,7 +1195,7 @@ deleteEndTime:function (taskId, userName) {
         if (res.confirm) {
           var userName = getApp().globalData.nickName
           var taskId = that.data.taskId
-          that.deleteFeedbackTime(taskId, userName)
+          that.deleteFeedbackTime(wx.getStorageSync('Project-detail').id,taskId, userName)
           that.setData({
             FeedbackisTouchMove: false,
             FeedbacktxtStyle: '',
@@ -1230,7 +1294,7 @@ deleteEndTime:function (taskId, userName) {
  * @parameter subTaskId 子任务的id，is_finish 为true
  * 完成某个子任务
  */
-  finishSubTask: function (taskId, subTaskId, is_finish ,userName) {
+  finishSubTask: function (projId,taskId, subTaskId, is_finish ,userName) {
       var that = this
       var Subtask = Bmob.Object.extend('sub_task')
       var subtaskQuery = new Bmob.Query(Subtask)
@@ -1243,9 +1307,9 @@ deleteEndTime:function (taskId, userName) {
         result.save()
         //记录
         if (is_finish == true)
-          that.addTaskRecord(taskId, userName, FINISH_SUB_TASK + result.get('title'))
+          that.addTaskRecord(projId,taskId, userName, FINISH_SUB_TASK + result.get('title'))
         else
-          that.addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
+          that.addTaskRecord(projId,taskId, userName, REDO_SUB_TASK + result.get('title'))
 
       },
       error: function (error) {
@@ -1260,7 +1324,7 @@ deleteEndTime:function (taskId, userName) {
  * @parameter subTaskId 子任务的id，is_finish 为false
  * 重做某个子任务
  */
-redoSubTask:function (subTaskId, is_finish) {
+redoSubTask:function (projId,taskId,subTaskId, is_finish) {
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtaskQuery = new Bmob.Query(Subtask)
@@ -1272,7 +1336,7 @@ redoSubTask:function (subTaskId, is_finish) {
         result.set("is_finish", is_finish)
         result.save()
         //记录
-        addTaskRecord(taskId, userName, REDO_SUB_TASK + result.get('title'))
+        addTaskRecord(projId,taskId, userName, REDO_SUB_TASK + result.get('title'))
 
       },
       error: function (error) {
@@ -1287,7 +1351,7 @@ redoSubTask:function (subTaskId, is_finish) {
  * @parameter subTaskId子任务的id ， newTitle 新任务标题
  * 修改子任务标题
  */
-  modifySubTaskTitle: function (subTaskId, newTitle, userName) {
+  modifySubTaskTitle: function (projId,taskId,subTaskId, newTitle, userName) {
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtaskQuery = new Bmob.Query(Subtask)
@@ -1299,7 +1363,7 @@ redoSubTask:function (subTaskId, is_finish) {
         result.set("title", newTitle)
         result.save()
         //记录
-        that.addTaskRecord(taskId, userName, MODIFY_SUB_TASK_TITLE)
+        that.addTaskRecord(projId,taskId, userName, MODIFY_SUB_TASK_TITLE)
         //成功
         wx.showToast({
           title: '设置成功',
@@ -1316,7 +1380,7 @@ redoSubTask:function (subTaskId, is_finish) {
  * @parameter subTaskId 子任务id,userName用户昵称（记录操作用）subTaskTitle子任务名称（记录操作用）
  * 删除子任务
  */
-deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
+deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
     var that = this
     var Subtask = Bmob.Object.extend('sub_task')
     var subtaskQuery = new Bmob.Query(Subtask)
@@ -1329,7 +1393,7 @@ deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
         console.log("删除子任务成功！")
         that.modifySubNum(taskId,-1)
         //记录操作
-        that.addTaskRecord(taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        that.addTaskRecord(projId,taskId, userName, DELETE_SUB_TASK + subTaskTitle)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -1420,7 +1484,7 @@ deleteSubTask:function (taskId,subTaskId, userName, subTaskTitle) {
          var taskId = that.data.taskId
          var subTaskTitle = e.currentTarget.dataset.childTitle
          var userName = getApp().globalData.nickName
-         that.deleteSubTask(taskId,subTaskId, userName, subTaskTitle)
+         that.deleteSubTask(wx.getStorageSync('Project-detail').id,taskId,subTaskId, userName, subTaskTitle)
          that.setData({
            ChildTask: that.data.ChildTask
          })
@@ -1614,18 +1678,42 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     //接受通知的参数ID
     var requestId = wx.getStorageSync("Notification-taskId")
     var projectName = wx.getStorageSync("Notification-projName")
-    console.log("Notification", requestId, projectName)
-    if (requestId != "" && projectName != "" ) {
+    var projmember = wx.getStorageSync("Notification-projmemberArr")
+    var taskLeaderId = wx.getStorageSync("Notification-taskLeaderId")
+    console.log("Notification", requestId, projectName, projmember, taskLeaderId)
+    if (requestId != "" && projectName != "" && projmember != "" && taskLeaderId != "") {
       console.log("Notification", requestId, projectName)
       that.setData({
-        projectName: res.data,
-        // projectMember: memberList
+        taskId: requestId,
+        leaderId: taskLeaderId,
+        projectName: projectName,
+        projectMember:projmember
       })
       that.getTaskDetail(requestId);//获取任务详情
-      that.getTaskMember(requestId, leaderId)//获取任务成员
+      that.getTaskMember(requestId, taskLeaderId)//获取任务成员
       that.getSubtasks(requestId);//获取子任务列表
       that.getTaskRecord(requestId)//获取任务记录
       that.getTaskComment(requestId)//获取评论
+
+      //更改任务负责人时刷新后台
+      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
+      if (requestId != "" && leaderId != "") {
+        console.log("新负责人：刷新后台！", requestId, leaderId)
+        wx.showLoading({
+          title: '正在加载',
+          mask: 'true'
+        })
+        that.setData({
+          leaderId: leaderId
+        })
+        that.getTaskMember(requestId, leaderId)//获取任务成员
+        that.getSubtasks(requestId);//获取子任务列表
+      }
+      else {
+        //返回时刷新后台
+        that.getTaskMember(requestId, that.data.leaderId)//获取任务成员
+        that.getSubtasks(requestId);//获取子任务列表
+      }
     }
     else {
       //任务
@@ -1667,31 +1755,29 @@ sendTaskCommentPicture:function (taskId, publisherId) {
           })
         },
       })
-    }
-    
-    //更改任务负责人时刷新后台
-    var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
-    var taskId = that.data.taskId
-    if (taskId != "" && leaderId != "") {
-      console.log("新负责人：刷新后台！", taskId, leaderId)
-      wx.showLoading({
-        title: '正在加载',
-        mask: 'true'
-      })
-      that.setData({
-        leaderId: leaderId
-      })
-      that.getTaskMember(taskId, leaderId)//获取任务成员
-      that.getSubtasks(taskId);//获取子任务列表
-    }
-    else{
-      //返回时刷新后台
-      that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
-      that.getSubtasks(taskId);//获取子任务列表
-    }
-    
 
+      //更改任务负责人时刷新后台
+      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
+      var taskId = that.data.taskId
+      if (taskId != "" && leaderId != "") {
+        console.log("新负责人：刷新后台！", taskId, leaderId)
+        wx.showLoading({
+          title: '正在加载',
+          mask: 'true'
+        })
+        that.setData({
+          leaderId: leaderId
+        })
+        that.getTaskMember(taskId, leaderId)//获取任务成员
+        that.getSubtasks(taskId);//获取子任务列表
+      }
+      else {
+        //返回时刷新后台
+        that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
+        that.getSubtasks(taskId);//获取子任务列表
+      }
 
+    }
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间
       var currentTime = currentT.substring(9, 15)
@@ -1719,7 +1805,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
           });
         }
       })
-      wx.clearStorage();
+      
 
   },
   
@@ -1736,6 +1822,23 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    */
   onUnload: function () {
     //  wx.removeStorageSync("FeedBack-content")
+    //清除这个页面的缓存
+    wx.removeStorageSync("CommModel-id")
+    wx.removeStorageSync("CommModel-content")
+    wx.removeStorageSync("CommModel")
+    wx.removeStorageSync("TaskDetail-desc")
+    wx.removeStorageSync("changePrincipal-newLeaderId")
+    wx.removeStorageSync("FeedBack-content")
+    wx.removeStorageSync("TaskDetail-feedbackMod")
+    wx.removeStorageSync("TaskDetail-taskId")
+    wx.removeStorageSync("TaskDetail-member")
+    wx.removeStorageSync("buildChildTask-memberList-member")
+    wx.removeStorageSync("ProjectMore-Task")
+    wx.removeStorageSync("ProjectMore-projName")
+    wx.removeStorageSync("Notification-taskId")
+    wx.removeStorageSync("Notification-projName")
+    wx.removeStorageSync("Notification-projmemberArr")
+    wx.removeStorageSync("Notification-taskLeaderId")
   },
 
   /**

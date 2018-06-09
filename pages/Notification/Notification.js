@@ -11,30 +11,30 @@ Page({
     startY: '',
     //通知列表
     Notification:[
-      {
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        project: "鲨鱼派对项目",
-        isRead:'',
-        NotificationisTouchMove:'',
-        NotificationtxtStyle:'',
-      },
-      {
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        project: "鲨鱼派对项目",
-      },
-      {
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        project: "鲨鱼派对项目",
-      },
+      // {
+      //   icon: "/img/me.png",
+      //   title: "我觉得ZHT太牛逼了",
+      //   content: "因为ZHT也很牛逼balabal ...",
+      //   time: "5月1日20:00",
+      //   project: "鲨鱼派对项目",
+      //   isRead:'',
+      //   NotificationisTouchMove:'',
+      //   NotificationtxtStyle:'',
+      // },
+      // {
+      //   icon: "/img/me.png",
+      //   title: "我觉得ZHT太牛逼了",
+      //   content: "因为ZHT也很牛逼balabal ...",
+      //   time: "5月1日20:00",
+      //   project: "鲨鱼派对项目",
+      // },
+      // {
+      //   icon: "/img/me.png",
+      //   title: "我觉得ZHT太牛逼了",
+      //   content: "因为ZHT也很牛逼balabal ...",
+      //   time: "5月1日20:00",
+      //   project: "鲨鱼派对项目",
+      // },
     ],
   
   },
@@ -160,9 +160,8 @@ Page({
       wx.setStorageSync("Notification-taskId", requestId)
       //设置项目名字缓存
       wx.setStorageSync("Notification-projName", projName)
-      wx.navigateTo({
-        url: '../Project/Task/TaskDetail/TaskDetail',
-      })
+      //设置项目成员,任务负责人ID缓存
+      that.getProjMemberAndTaskleaderId(projId, requestId)
     }
     else if (_type == 2)//公告
     {
@@ -219,6 +218,103 @@ Page({
       })
     }
     
+  },
+
+  /**
+ * 获取项目成员和任务领导人id
+ */
+  getProjMemberAndTaskleaderId:function (projId, taskId){
+    var that = this
+    var projmemberArr = []  //项目成员数组
+    var taskLeaderId = '0'  //任务负责人id
+    //先获取项目成员数组
+    var ProjectMember = Bmob.Object.extend("proj_member")
+    var memberQuery = new Bmob.Query(ProjectMember)
+    var User = Bmob.Object.extend("_User")
+    var userQuery = new Bmob.Query(User)
+
+    var leader_id = "0"
+    var memberId = [] //项目的所有成员id数组
+
+    //获取指定项目的所有成员id，50条
+    memberQuery.equalTo("proj_id", projId)
+    memberQuery.select("user_id", "is_leader")
+    memberQuery.limit(50)
+    memberQuery.find().then(function (results) {
+      //返回成功
+      for (var i = 0; i < results.length; i++) {
+        var object = results[i];
+        if (object.get("is_leader")) {
+          //项目领导，放在数组的第一个
+          leader_id = object.get("user_id")
+          memberId.unshift(leader_id)
+
+        } else {
+          memberId.push(object.get("user_id"))  //将成员id添加到数组
+        }
+      }
+    }).then(function (result) {
+
+      //获取指定项目的所有成员,一次可以获取50条
+      userQuery.select("objectId", "nickName", "userPic")  //查询出用户基本信息，id ，昵称和头像
+      userQuery.limit(50)
+      userQuery.containedIn("objectId", memberId)
+
+      userQuery.find({
+        success: function (results) {
+          // 循环处理查询到的数据
+          for (var i = 0; i < results.length; i++) {
+            var object
+            object = {
+              'checked': '',
+              'id': results[i].id,
+              'nickName': results[i].get('nickName'),
+              'userPic': results[i].get('userPic')
+            }
+
+            if (object.id == leader_id) {
+              //将项目领导放在数组的第一个位置
+              projmemberArr.unshift(object)
+            } else
+              projmemberArr.push(object)
+          }
+          //然后获取taskLeaderId
+          var Task = Bmob.Object.extend('task')
+          var taskQuery = new Bmob.Query(Task)
+
+          taskQuery.include('leader')
+          taskQuery.get(taskId, {
+            success: function (result) {
+              //获取任务负责人id成功
+              taskLeaderId = result.get('leader').objectId
+              console.log('获取任务负责人id成功', taskLeaderId, '成员', projmemberArr)
+              //设置缓存
+              wx.setStorageSync("Notification-projmemberArr", projmemberArr)
+              wx.setStorageSync("Notification-taskLeaderId", taskLeaderId)
+              wx.navigateTo({
+                url: '../Project/Task/TaskDetail/TaskDetail',
+              })
+
+
+            },
+            error: function (error) {
+              //获取任务负责人id失败
+
+            }
+          })
+        },
+        error: function (error) {
+          console.log("查询失败: " + error.code + " " + error.message);
+          //失败情况
+
+
+
+
+
+        }
+      })
+
+    })
   },
 
   /**
@@ -305,7 +401,7 @@ getNotification:function (userId) {
         }
 
 
-
+        wx.hideLoading()
 
       },
       error: function (error) {
@@ -315,65 +411,7 @@ getNotification:function (userId) {
     })
   },
 
-/**
- * 2018-05-31
- * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
- * 页面所有携带的请求数据，比如（taskId，meetingId 等）
- * 存储通知,往往都是批量添加的
- */
-// addProjectNotification:function (projId, content, _type, requestId) {
-//     var that = this
-//     var Projectmember = Bmob.Object.extend('proj_member')
-//     var projectkmemberQuery = new Bmob.Query(Projectmember)
-//     var Notification = Bmob.Object.extend('notification')
-//     var toUserIds = []  //被通知的用户的id数组
-//     var notificationObjects = []
 
-//     var project = Bmob.Object.createWithoutData("project", projId)
-//     var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
-
-//     //查询项目下的所有成员id
-//     projectkmemberQuery.equalTo('proj_id', projId)
-//     projectkmemberQuery.find({
-//       success: function (results) {
-//         //成功
-//         for (var i = 0; i < results.length; i++) {
-//           toUserIds.push(results[i].get('user_id'))
-//         }
-//         if (toUserIds != null && toUserIds.length > 0) {
-//           for (var i = 0; i < toUserIds.length; i++) {
-//             //无需通知操作人本身
-//             if (toUserIds[i] != Bmob.User.current().id) {
-//               var notification = new Notification()
-//               notification.set('to_user_id', toUserIds[i])
-//               notification.set('content', content)
-//               notification.set('type', _type)
-//               notification.set('is_read', false)
-//               notification.set('request_id', requestId)
-//               notification.set('project', project)
-//               notification.set('from_user', fromUser)
-
-//               notificationObjects.push(notification)  //存储本地通知对象
-//             }
-//           }
-
-//           if (notificationObjects != null && notificationObjects.length > 0) {
-//             Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
-//               // 通知添加成功
-//               console.log("添加项目成员通知成功！")
-//             },
-//               function (error) {
-//                 // 通知添加失败处理
-//               })
-//           }
-//         }
-
-//       },
-//       error: function (error) {
-//         //项目成员查询失败
-//       }
-//     })
-//   },
 
 /**
  * 2018-05-31
@@ -532,8 +570,12 @@ deleteOneNotification:function (notificationId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '正在加载',
+    })
     var that = this
     var userId = getApp().globalData.userId
+    console.log("userId", userId)
     that.getNotification(userId) 
   },
 
