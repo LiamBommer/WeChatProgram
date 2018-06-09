@@ -383,6 +383,24 @@ function getProjMemberAndTaskleaderId(projId, taskId){
 
   })
 }
+
+/**
+ * 根据requestid删除某些通知
+ */
+function deleteSomeNotification(requestId){
+  var Notification = Bmob.Object.extend('notification')
+  var notificationQuery = new Bmob.Query(Notification)
+
+  notificationQuery.equalTo('request_id')
+  notificationQuery.destroyAll({
+    success: function () {
+      //删除成功
+    },
+    error: function (err) {
+      // 删除失败
+    }
+  })
+}
 module.exports.addProjectNotification = addProjectNotification
 module.exports.addTaskNotification = addTaskNotification
 module.exports.getProjMemberAndTaskleaderId = getProjMemberAndTaskleaderId

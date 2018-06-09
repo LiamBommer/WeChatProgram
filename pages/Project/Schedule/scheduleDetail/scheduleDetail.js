@@ -1,5 +1,12 @@
 
 var Bmob = require('../../../../utils/bmob.js')
+var ADD_SCHEDULE = "添加了新的日程"
+var DELETE_SCHEDULE = "删除了日程"
+var MODIFY_SCHEDULE_START = "修改了日程开始时间"
+var MODIFY_SCHEDULE_END = "修改了日程截止时间"
+var MODIFY_SCHEDULE_TITLE = "修改了日程标题"
+var ADD_SCHEDULE_TASK = "添加了日程关联的任务"
+var MODIFY_RELATED_TASK = "修改了日程关联的任务"
 
 Page({
 
@@ -226,7 +233,7 @@ Page({
         result.save()
 
         var _type = 3  //通知类型
-        // that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE , _type, scheduleId/*日程id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE , _type, scheduleId/*日程id*/)  //通知其他项目成员
 
         wx.hideLoading()
         wx.showToast({
@@ -274,7 +281,7 @@ Page({
         result.save()
 
         var _type = 3  //通知类型
-        // that.addProjectNotification(projId, MODIFY_SCHEDULE_START, _type, scheduleId/*日程id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, MODIFY_SCHEDULE_START, _type, scheduleId/*日程id*/)  //通知其他项目成员
 
         wx.hideLoading()
         wx.showToast({
@@ -321,7 +328,7 @@ Page({
         result.save()
 
         var _type = 3  //通知类型
-        // that.addProjectNotification(projId, MODIFY_SCHEDULE_END, _type, scheduleId/*日程id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, MODIFY_SCHEDULE_END, _type, scheduleId/*日程id*/)  //通知其他项目成员
 
         wx.hideLoading()
         wx.showToast({
@@ -364,7 +371,7 @@ Page({
         console.log("提示用户删除日程成功！")
 
         var _type = 3  //通知类型
-        // that.addProjectNotification(projId, DELETE_SCHEDULE, _type, scheduleId/*日程id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, DELETE_SCHEDULE, _type, scheduleId/*日程id*/)  //通知其他项目成员
 
         wx.hideLoading()
         wx.navigateBack({

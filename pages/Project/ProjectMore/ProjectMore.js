@@ -892,7 +892,7 @@ Page({
    *@author mr.li
    @parameter projId 项目id
    *@return 指定项目的所有公告数组
-   *根据项目id获取所有公告，默认10条（根据时间降序排列，即由近到远）
+   *根据项目id获取所有公告，最多50条（根据时间降序排列，即由近到远）
    *
    */
   getAnnouncements: function (projId) {
@@ -902,10 +902,12 @@ Page({
 
     var annoucementArr = []  //所有公告数组
 
-    //查询出此项目中的所有公告，默认10条
+    //查询出此项目中的所有公告,最多50条
     annoucementQuery.equalTo("proj_id", projId)
+    annoucementQuery.equalTo("is_delete", false)
     annoucementQuery.include("publisher")
     annoucementQuery.descending("createdDate")  //根据时间降序排列
+    annoucementQuery.limit(50)
     annoucementQuery.find({
       success: function (results) {
         //console.log("共查询到公告 " + results.length + " 条记录");

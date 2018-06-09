@@ -1,6 +1,6 @@
 // pages/memberList/memberList.js
 var Bmob = require('../../../../utils/bmob.js')
-
+var MODIFY_RELATED_TASK = '修改了日程关联的任务'
 Page({
 
   /**
@@ -260,7 +260,7 @@ Page({
         Bmob.Object.saveAll(scheduletaskArr).then(function (results) {
           // 重新添加关联的任务成功
           var _type = 3  //通知类型
-          // that.addProjectNotification(projId, MODIFY_RELATED_TASK, _type, scheduleId/*日程id*/)  //通知其他项目成员
+          that.addProjectNotification(projId, MODIFY_RELATED_TASK, _type, scheduleId/*日程id*/)  //通知其他项目成员
           console.log('修改关联任务成功！')
 
           wx.hideLoading()
