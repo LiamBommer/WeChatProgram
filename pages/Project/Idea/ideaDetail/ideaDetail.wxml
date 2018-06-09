@@ -3,7 +3,7 @@
 
  <view class='view-container'>
     <view class='content-view'>
-      <view bindtap='Content' class='content'>
+      <view bindtap='Content' class='content' space='nbsp'>
           {{content}}
       </view>
        <button class='share' hover-class="share-hover"  open-type="share">

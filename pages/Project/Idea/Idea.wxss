@@ -62,11 +62,19 @@
 
 .post-view .content {
   height: 160rpx;
-  padding: 10rpx 0rpx;
+  margin: 26rpx 0rpx;
   font-size: 28rpx;
+  line-height: 40rpx;
+
+  /* 3行省略 */
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow:ellipsis;
+  /* 3行省略 */
+
 }
 
 .post-view .bottom-view {
@@ -93,7 +101,7 @@
   justify-content: center;
   align-items: center;
   margin-top:40rpx;
-}   
+}
 
 .idea-container .noitem .noitem-icon{
   width:150rpx;

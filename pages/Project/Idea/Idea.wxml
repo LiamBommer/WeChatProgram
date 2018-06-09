@@ -22,7 +22,7 @@
               <image src='{{item.userPic}}' class='avatar'></image>
               <text class='username'>{{item.userName}}</text>
             </view>
-            <view class='content'>
+            <view class='content' space='nbsp'>
               {{item.content}}
             </view>
             <view class='bottom-view ver-align space-between'>

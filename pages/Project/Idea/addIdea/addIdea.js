@@ -41,7 +41,7 @@ Page({
   BuildIdea: function (e) {
 
     var that = this
-    var content = e.detail.value.content
+    var content = e.detail.value.content.trim()
     var userId = getApp().globalData.userId
     var projectId = that.data.projectDetail.id
     var taskId = that.data.TaskId

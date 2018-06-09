@@ -1,21 +1,25 @@
 
 .view-container .content-view {
-  height: 200rpx;
+  min-height: 200rpx;
   padding: 16rpx 0rpx;
   display:flex;
   justify-content:space-between;
 }
 
 .view-container .content-view .content{
-  width: 90%;
-  padding-top: 20rpx
+  width: 590rpx;
+  /* padding: 24rpx 0rpx; */
+  font-size: 34rpx;
+  line-height: 50rpx;
+  word-break: break-all;
 }
 
 .content-view .share{
   background-color: #fff;
   border: none;
   margin:0rpx;
-  padding:0rpx
+  padding:0rpx 0rpx 0rpx 40rpx;
+  height: 60rpx;
 }
 
 image {
@@ -25,7 +29,7 @@ image {
 
 button[class="share"]::after {
   border: none;
-} 
+}
 
 .content-view .share-hover{
   border: none;
@@ -33,7 +37,7 @@ button[class="share"]::after {
 
 button[hover-class="share-hover"]::after {
   border: none;
-} 
+}
 
 .desc.delete-text {
   color: #e64340;
