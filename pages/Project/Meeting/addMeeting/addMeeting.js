@@ -207,9 +207,11 @@ Page({
       for (var i in memberIds) {
         var memberId = memberIds[i]
         var user = Bmob.Object.createWithoutData("_User", memberId)
+        var meeting = Bmob.Object.createWithoutData("meeting", meetingId)
         var meetingmember = new Meetingmember()
         meetingmember.set('meeting_id', meetingId)
         meetingmember.set('user', user)
+        meetingmember.set('meeting', meeting)
         meetingmemberArr.push(meetingmember)
       }
 
