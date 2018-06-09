@@ -7,34 +7,38 @@
 
 .Mine-Idea-container .idea-item{
   width: 100%;
-  height: 120rpx;
+  min-height: 120rpx;
   background: #fff;
   display: flex;
   align-items: center;
+  border-top: 2rpx solid #f2f2f2;
+  border-bottom: 2rpx solid #f2f2f2;
 }
 
 .Mine-Idea-container .idea-item .item-first{
-  width: 800rpx;
+  width: 510rpx;
   display: flex;
   align-items: center;
+  padding-left: 40rpx;
 }
 
 .Mine-Idea-container .idea-item .item-first .item-text{
-   margin-left: 40rpx;
+   font-size: 34rpx;
+   width: 418rpx;
+   line-height: 45rpx;
+   padding: 24rpx 16rpx;
+   word-break: break-all;
+
 }
 
-.Mine-Idea-container .idea-item .item-first .item-text .item-icon{
-   margin-left: 40rpx;
+.Mine-Idea-container .idea-item .item-first .item-icon{
    width: 40rpx;
    height: 40rpx;
 }
 
-.Mine-Idea-container .idea-item .item-first .item-text .item-title{
-   font-size: 30rpx;
-}
-
 .Mine-Idea-container .idea-item .item-second{
    font-size: 25rpx;
-   margin-right: 10rpx;
+   /* margin-right: 10rpx; */
    color: #b2b2b2;
+   width: 200rpx;
 }

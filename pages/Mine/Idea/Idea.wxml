@@ -7,9 +7,9 @@
       <view class='idea-item'>
         <!-- 列表左 -->
         <view class='item-first'>
+          <image class='item-icon' src='/img/idea.png'></image>
           <view class='item-text'>
-            <image class='item-icon' src='/img/idea.png'></image>
-            <view class='item-title'>{{item.content}}</view>
+            {{item.content}}
           </view>
         </view>
         <!-- 列表右 -->
