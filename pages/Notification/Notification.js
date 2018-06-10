@@ -213,6 +213,7 @@ Page({
       })
       //设置墙ID缓存
       wx.setStorageSync("Notification-ideaId", requestId)
+      wx.setStorageSync("Notification-projId", projId)
       wx.navigateTo({
         url: '../Project/Idea/ideaDetail/ideaDetail',
       })
