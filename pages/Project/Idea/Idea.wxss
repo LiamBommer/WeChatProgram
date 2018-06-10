@@ -32,6 +32,7 @@
   flex-direction: column;
   background-color: #567b95;
   color: white;
+  margin-right:15rpx;
 }
 
 .post-view .post:nth-child(even) {
@@ -44,6 +45,7 @@
   flex-direction: column;
   background-color: #567b95;
   color: white;
+  margin-left:15rpx;
 }
 
 .post-view .user-info {

@@ -31,10 +31,12 @@
     </view> -->
 
     <!-- 列表项 -->
-    <view class='item' bindtap='CommModel'>
-      <view class='item-one'>
-        <image class='item-icon' src='/img/communication_model.png'></image>
-        <view class='item-text'>沟通模板</view>
+    <view class='item-container'>
+      <view class='item' bindtap='CommModel'>
+        <view class='item-one'>
+          <image class='item-icon' src='/img/communication_model.png'></image>
+          <view class='item-text'>沟通模板</view>
+        </view>
       </view>
     </view>
 

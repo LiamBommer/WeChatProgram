@@ -23,11 +23,11 @@
 }
 
 image {
-  height: 48rpx;
-  width: 48rpx;
+  height: 40rpx;
+  width: 40rpx;
 }
 
-.item-view image {
+.radius{
   border-radius: 50%;
 }
 

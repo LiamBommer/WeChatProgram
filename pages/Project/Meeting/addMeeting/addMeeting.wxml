@@ -11,7 +11,7 @@
 
         <view class="item-view ver-align">
           <image src='{{icon_deadline}}'></image>
-          <picker class='desc' mode="date" start="2015-09-01"  value="{{stattime}}" bindchange="StatTimeChange">
+          <picker class='desc' mode="date" start="2015-09-01"  value="{{starttime}}" bindchange="StartTimeChange">
               <view>
                 {{starttime}}
               </view>

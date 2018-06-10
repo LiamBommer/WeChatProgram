@@ -85,6 +85,7 @@ Page({
     var newStartTime = e.detail.value
     var newtime = that.data.time
     that.modifyMeetingStartTime(projId, meetingId, newStartTime, newtime)
+    console.log("newStartTime",newStartTime)
     this.setData({
       starttime: newStartTime
     })

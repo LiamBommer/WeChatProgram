@@ -32,7 +32,7 @@ Page({
   },
 
   // 开始时间
-  starttimeChange: function (e) {
+  StartTimeChange: function (e) {
     console.log("starttime", e.detail.value)
     this.setData({
       starttime: e.detail.value

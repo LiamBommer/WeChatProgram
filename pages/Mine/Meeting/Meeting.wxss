@@ -18,7 +18,7 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 140rpx;
+    height: 135rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
