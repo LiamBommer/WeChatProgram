@@ -1,22 +1,26 @@
 <!--pages/Mine/Task/Task.wxml-->
 
 <view class='Mine-Task-container'>
-  <block wx:for="{{Task}}">
-    <!-- 列表项 -->
-    <view class='task-item' bindtap='TaskDetail'>
-      <!-- 列表左 -->
-      <view class='item-first'>
-        <checkbox class='item-checkbox'/>
-        <view class='item-text'>
-          <view class='item-title'>{{item.content}}</view>
-          <view class='item-content'>{{item.project}}</view>
+
+    <block wx:for="{{Task}}" wx:key="{{id}}">
+      <!-- 列表项 -->
+      <!-- <view class='task-item' bindtap='TaskDetail'> -->
+      <view class='task-item'>
+        <!-- 列表左 -->
+        <view class='item-first'>
+          <checkbox-group  bindchange='taskFinishAction' data-id='{{item.id}}' data-project-id='{{item.projectId}}'>
+            <checkbox class='item-checkbox' value='{{item.id}}'/>
+          </checkbox-group>
+          <view class='item-text'>
+            <view class='item-title'>{{item.taskTitle}}</view>
+            <view class='item-content'>{{item.projectName}}</view>
+          </view>
+        </view>
+        <!-- 列表右 -->
+        <view class='item-second'>
+          <view class='item-time'>{{item.taskEndTime}}</view>
         </view>
       </view>
-      <!-- 列表右 -->
-      <view class='item-second'>
-        <view class='item-time'>{{item.time}}</view>
-      </view>
-    </view>
-  </block>
-  
+    </block>
+
 </view>

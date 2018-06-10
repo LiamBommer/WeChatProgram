@@ -46,6 +46,6 @@
     </view>
   </view>
 
- <button type='warn' size='default' bindtap='DeleteProject'>退出项目</button>
+ <button type='warn' size='default' bindtap='DeleteProject'>解散项目</button>
 
 </view>

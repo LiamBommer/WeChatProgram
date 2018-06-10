@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background:#fff;
 }
 
 .Mine-container .userinfo {
@@ -53,12 +54,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1rpx solid #f2f2f2;
+    margin-left:80rpx;
 }
 
 .Mine-container .item .item-one{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left:-40rpx;
 }
 
 .Mine-container .item .item-one .item-icon{
@@ -80,6 +84,7 @@
   font-size: 30rpx;
   background: #fff;
   color: #888888;
+  border-bottom: 1rpx solid #f2f2f2;
 }
 
 .Mine-container .nav .nav-select{

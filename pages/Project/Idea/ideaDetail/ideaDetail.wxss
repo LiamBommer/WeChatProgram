@@ -23,8 +23,12 @@
 }
 
 image {
-  height: 40rpx;
-  width: 40rpx;
+  height: 48rpx;
+  width: 48rpx;
+}
+
+.item-view image {
+  border-radius: 50%;
 }
 
 button[class="share"]::after {

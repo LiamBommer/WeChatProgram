@@ -295,38 +295,34 @@ Page({
           projectDetail: res.data
         })
 
-        that.getTasks(res.data.id)
+        // 从缓存中拿关联的任务列表
+        wx.getStorage({
+          key: 'IdeaTaskList-TaskId',
+          success: function (res) {
 
-      },
-    })
+            // 选中关联任务数组不为空
+            if (JSON.stringify(res.data) != '{}') {
 
-    // 从缓存中拿关联的任务列表
-    wx.getStorage({
-      key: 'IdeaTaskList-TaskId',
-      success: function (res) {
+              // 关联数组存进数据
+              that.setData({
+                TaskId: res.data
+              })
 
-        // 选中关联任务数组不为空
-        if (JSON.stringify(res.data) != '{}') {
+              that.getTasks(that.data.projectDetail.id)
 
-          // console.log('Get        IdeaTaskList-TaskId           storage: ', res.data)
-          // console.log('Storages length: ', res.data.length)
+            } else {  // 选中的关联任务数组为空
+              wx.hideLoading()
+            }
 
-          // 关联数组存进数据
-          that.setData({
-            TaskId: res.data
-          })
+          },
 
-        } else {  // 选中的关联任务数组为空
+          fail: function(res) { // 未设置缓存
+            console.log('Fail to get storage: ', res)
+            wx.hideLoading()
+          },
+        })
 
-          wx.hideLoading()
 
-        }
-
-      },
-
-      fail: function(res) { // 未设置缓存
-        console.log('Fail to get storage: ', res)
-        wx.hideLoading()
       },
     })
 

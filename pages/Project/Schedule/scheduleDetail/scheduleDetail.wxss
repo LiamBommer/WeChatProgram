@@ -41,6 +41,12 @@ button[hover-class="share-hover"]::after {
   width: 520rpx;
 }
 
+.item-view image {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+}
+
 .item-view .delete-img {
   padding-left: 40rpx;
 }

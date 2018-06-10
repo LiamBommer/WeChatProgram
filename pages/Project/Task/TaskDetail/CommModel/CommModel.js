@@ -10,6 +10,9 @@ Page({
     exitComment: true,
     exitQuestion: false,
     exitLike: false,
+
+    // 判断是否从我的页面进来，是则隐藏发送按钮
+    isMine: false,
     
     ModelIndex: "",//当前选择的模板
     //意见模板
@@ -338,6 +341,16 @@ Page({
     that.getModel(userId, 1)//获取意见模板
     that.getModel(userId, 2)//获取提问模板
     that.getModel(userId, 3)//获取点赞模板
+
+    // 从缓存中获取页面标识，以判断是否显示发送按钮
+    wx.getStorage({
+      key: 'isMine',
+      success: function(res) {
+        that.setData({
+          isMine: res.data
+        })
+      },
+    })
   },
 
   /**
@@ -351,7 +364,10 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
+    // 清除我的页面标识
+    wx.removeStorageSync('isMine')
+
   },
 
   /**

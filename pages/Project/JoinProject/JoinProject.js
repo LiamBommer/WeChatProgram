@@ -97,8 +97,8 @@ Page({
                   duration: 1000,
                 })
 
-                wx.navigateTo({
-                  url: '../../Project/Project',
+                wx.navigateBack({
+                  delta: 1,
                 })
               },
               error: function (result, error) {
@@ -115,8 +115,8 @@ Page({
             duration: 1000,
           })
 
-          wx.navigateTo({
-            url: '../../Project/Project',
+          wx.navigateBack({
+            delta: 1,
           })
 
         }
@@ -155,7 +155,7 @@ Page({
         that.setData({
           projectShareId: res.data
         })
-        console.log("projectShareId", projectShareId)
+        console.log("projectShareId", res.data)
       },
     })
   },
