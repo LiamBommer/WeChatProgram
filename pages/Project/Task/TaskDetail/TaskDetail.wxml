@@ -47,7 +47,7 @@
         </view>
 
         <!-- 内容隐藏 -->
-      <view class="touch-item '{{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}'>
+      <view class="touch-item {{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}} {{showRemindTimeStyle}}'>
         <view style='{{RemindtimetxtStyle}}'
           class="contentminddle scroll-view-item item-view"bindtouchmove="touchmoveRemindtime" > 
             <image src='/img/alarm.png'></image>

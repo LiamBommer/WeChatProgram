@@ -8,28 +8,17 @@ Page({
    */
   data: {
     //星标项目
-    StarProject: [
-      {
-        id:"",
-        icon: "/img/logo.png",
-        name: "静态项目"
-      }
-    ],
+    StarProject: [],
     //普通项目
-    Project: [
-      {
-        id: "",
-        icon: "",
-        name: ""
-      },
-    ],
+    Project: [],
 
     // 涟漪效果
     rippleViewStyle: '',
     rippleStyle: '',
 
     // Project list animation
-    projectAnimation: {},
+    projectAnimationStyle: '',
+    starProjectAnimationStyle: '',
 
   },
   
@@ -144,13 +133,6 @@ Page({
           // 加载完成
           wx.hideLoading()
 
-          // Motion setting
-          var animation = that.animation;
-          // animation.translateY(-5).step({duration:10,timingFunction:'step-start'});
-          animation.translateY(0).opacity(1).step();
-          that.setData({
-            projectAnimation: animation.export()
-          })
 
 
         },
@@ -197,6 +179,39 @@ Page({
 
   },
 
+  
+  /*
+   * 列表加载动效
+   */
+  projectAnimation: function() {
+    var projectAnimationStyle = ''
+    projectAnimationStyle += '-webkit-animation-name: projectAnimation;'
+    projectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    projectAnimationStyle += "-webkit-animation-timing-function: ease;"
+    projectAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      projectAnimationStyle: ''
+    })
+    this.setData({
+      projectAnimationStyle: projectAnimationStyle
+    })
+  },
+  starProjectAnimation: function () {
+    var starProjectAnimationStyle = ''
+    starProjectAnimationStyle += '-webkit-animation-name: starProjectAnimation;'
+    starProjectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    starProjectAnimationStyle += "-webkit-animation-timing-function: ease;"
+    starProjectAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      starProjectAnimationStyle: ''
+    })
+    this.setData({
+      starProjectAnimationStyle: starProjectAnimationStyle
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -226,15 +241,9 @@ Page({
     that.getProjectList()
 
     //animation
-    // Project list animation initialization
-    var animation = wx.createAnimation({
-      duration: 200,    // 300ms
-      timingFunction: 'ease-out',
-    })
-
-    // ???
-    that.animation = animation;
-
+    // Motion setting
+    that.projectAnimation()
+    that.starProjectAnimation()
   },
 
   /**

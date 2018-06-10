@@ -83,6 +83,9 @@ Page({
     showFeedbackModel: false,
     showDescription: false,
 
+    // For Animation
+    showRemindTime: '',
+
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
     icon_project:'/img/taskdetail-project.png',

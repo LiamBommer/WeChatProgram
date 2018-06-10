@@ -281,3 +281,16 @@ button[hover-class="share-hover"]::after {
   -webkit-transform: translateX(0);
   transform: translateX(0);
  }
+
+ /* Animation */
+ @keyframes show {
+   0% {
+    opacity: 0;
+    height: 0rpx;
+   }
+   100% {
+    opacity: 100%;
+    height: auto;
+   }
+ }
+ /* Animation END */

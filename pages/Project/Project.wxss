@@ -120,7 +120,8 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 100rpx;
+    /* height: 100rpx; */
+    /* height: 0rpx; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -237,7 +238,24 @@
 /*** 点击涟漪效果 END ***/
 
 /*** 列表淡入 ***/
-.Project-container .animation-view {
+@keyframes starProjectAnimation {
+  0% {
     opacity: 0;
+    height: 0rpx;
+  }
+  100% {
+    opacity: 1;
+    height: 100rpx;
+  }
+}
+@keyframes projectAnimation {
+  0% {
+    opacity: 0;
+    height: 0rpx;
+  }
+  100% {
+    opacity: 1;
+    height: 100rpx;
+  }
 }
 /*** 列表淡入 END ***/
