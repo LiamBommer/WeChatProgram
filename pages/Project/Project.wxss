@@ -182,3 +182,54 @@
 .Project-container .addProject .addProject-text{
   margin-left: 30rpx;
 }
+
+/*
+ * 点击涟漪效果
+ */
+ .ripple-view {
+  position: absolute;
+  background-color: transparent;
+  border-radius: 50%;
+ }
+
+.ripple {
+  position: absolute;
+  background-color: #888888;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+@keyframes ripple {
+  0%{
+    top: calc((300rpx - 60rpx)/2);
+    left: calc((300rpx - 60rpx)/2);
+    opacity: 70;
+    width: 60rpx;
+    height: 60rpx;
+  }
+  80% {
+    top: calc((300rpx - 120rpx)/2);
+    left: calc((300rpx - 120rpx)/2);
+    opacity: 30;
+    width: 120rpx;
+    height: 120rpx;
+  }
+  100% {
+    top: calc((300rpx - 150rpx)/2);
+    left: calc((300rpx - 150rpx)/2);
+    opacity: 0;
+    width: 130rpx;
+    height: 130rpx;
+  }
+}
+
+@keyframes ripple-view {
+  0% {
+    width: 300rpx;
+    height: 300rpx;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*** 点击涟漪效果 END ***/
