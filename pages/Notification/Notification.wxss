@@ -16,7 +16,6 @@ page{
   justify-content: center;
   align-items: center;
   margin-top:260rpx;
-  margin-left:-80rpx;
 }   
 
 .noitem .noitem-icon{
