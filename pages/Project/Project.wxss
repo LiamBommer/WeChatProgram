@@ -190,12 +190,14 @@
   position: absolute;
   background-color: transparent;
   border-radius: 50%;
+  z-index: 200;
  }
 
 .ripple {
   position: absolute;
   background-color: #888888;
   opacity: 0;
+  z-index: 200;
   border-radius: 50%;
 }
 
