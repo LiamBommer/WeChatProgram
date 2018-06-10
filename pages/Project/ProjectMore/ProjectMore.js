@@ -1028,7 +1028,13 @@ Page({
           })
 
         }
-        wx.hideLoading()
+        else{
+
+          that.setData({
+            Meeting: ''
+          })
+          wx.hideLoading()
+        }
       },
       error: function (error) {
         //获取失败
@@ -1068,13 +1074,14 @@ Page({
         scheduletaskQuery.find({
           success: function (results) {
             var scheduleObjectArr = []
-            console.log('日程人物列表:', results)
+            console.log('日程任务列表:', schedules)
             for (var i = 0; i < schedules.length; i++) {
 
               // 处理开始时间，整理出年月日
-              var startTimeDate = new Date(new Date(schedules[i].get('start_time').replace(/-/g, "/")))
+              var startTimeDate = new Date(schedules[i].get('start_time').replace(/-/g, "/"))
               var startYear = startTimeDate.getFullYear()   // 开始时间年月日
-              var startMonth = startTimeDate.getMonth()
+              var startMonth = startTimeDate.getMonth() + 1
+              console.log("startMonth", startMonth)
               var startDate = startTimeDate.getDate()
 
               var endTimeDate = new Date(new Date(schedules[i].get('end_time').replace(/-/g, "/")))
@@ -1151,7 +1158,6 @@ Page({
                 }
               }
             }
-
             that.setData({
               Schedule: scheduleObjectArr,
               ScheduleYear: scheduleYear
@@ -1270,7 +1276,15 @@ Page({
           that.setData({
             Idea: ideaArr
           })
+          wx.hideLoading()
 
+        }
+        else{
+
+          that.setData({
+            Idea: ''
+          })
+          wx.hideLoading()
         }
       },
       error: function (error) {

@@ -217,7 +217,13 @@ Page({
               Task: taskArr
             })
             wx.hideLoading()
-
+          }
+          else{
+          
+            that.setData({
+              Task: ''
+            })
+            wx.hideLoading()
           }
         }
 
@@ -338,7 +344,6 @@ Page({
    */
   getMyidea: function (userId) {
 
-// >>>>>>> dev-fumin
     var that = this
     var Idea = Bmob.Object.extend('idea')
     var ideaQuery = new Bmob.Query(Idea)
@@ -367,6 +372,14 @@ Page({
           that.setData({
             Idea: ideaArr
           })
+          wx.hideLoading()
+        }
+        else{
+
+          that.setData({
+            Idea: ''
+          })
+          wx.hideLoading()
         }
       },
       error: function (error) {
@@ -395,6 +408,7 @@ Page({
     meetingmemberQuery.equalTo('user', userId)
     meetingmemberQuery.include('meeting')
     meetingmemberQuery.ascending('meeting.start_time')
+    // meetingmemberQuery.ascending('meeting.start_time')
     meetingmemberQuery.find({
       success: function (results) {
         
@@ -450,6 +464,14 @@ Page({
           that.setData({
             Meeting: meetingArr
           })
+          wx.hideLoading()
+        }
+        else{
+
+          that.setData({
+            Meeting:''
+          })
+          wx.hideLoading()
         }
       },
       error: function (error) {
@@ -508,9 +530,9 @@ Page({
     })
 
     // 获取点子列表
+    this.getMyTasks(userId)
     this.getMyidea(userId)
     this.getMyMeeting(userId)
-    this.getMyTasks(userId)
 
   },
 

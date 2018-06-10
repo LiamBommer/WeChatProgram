@@ -18,7 +18,7 @@ Page({
     hiddenmodalputTitle: true,//弹出标题模态框
     meetingId:'',//会议ID
     projId:"",//项目ID
-    title: '策划讨论',//标题
+    title: '',//标题
     inputTitle: '',//输入的标题
     content: "",//会议内容
     meetingRecord:'',//会议记录
@@ -405,9 +405,7 @@ Page({
         //添加记录
         var _type = 4  //通知类型，会议通知
         that.addProjectNotification(projId, DELETE_MEETING, _type, result.id/*创建的会议id*/)  //通知其他项目成员
-        wx.navigateBack({
-          url: '../../ProjectMore/ProjectMore',
-        })
+        wx.navigateBack({})
       },
       error: function (error) {
         //删除失败

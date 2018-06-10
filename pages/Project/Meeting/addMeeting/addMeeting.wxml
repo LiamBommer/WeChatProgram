@@ -23,14 +23,15 @@
             </view>
           </picker>
         </view>
-        <view class="item-view">
+        <!--暂时不做
+         <view class="item-view">
           <image src='{{icon_cycle}}'></image>
           <picker class='desc' bindchange="bindPickerChange" value="{{index}}" range="{{repeatTime}}">
               <view class="picker">
                 {{repeatTime[index]}}重复
               </view>
           </picker>
-        </view>
+        </view> -->
         <view class="item-view ver-align space-between">
           <view class="ver-align">
             <image src='{{icon_member}}'></image>
