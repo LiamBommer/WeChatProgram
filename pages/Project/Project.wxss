@@ -233,3 +233,9 @@
   }
 }
 /*** 点击涟漪效果 END ***/
+
+/*** 列表淡入 ***/
+.Project-container .animation-view {
+    opacity: 0;
+}
+/*** 列表淡入 END ***/

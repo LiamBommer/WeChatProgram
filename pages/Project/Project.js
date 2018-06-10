@@ -28,6 +28,9 @@ Page({
     rippleViewStyle: '',
     rippleStyle: '',
 
+    // Project list animation
+    projectAnimation: {},
+
   },
   
   //点击星标项目
@@ -141,6 +144,15 @@ Page({
           // 加载完成
           wx.hideLoading()
 
+          // Motion setting
+          var animation = that.animation;
+          // animation.translateY(-5).step({duration:10,timingFunction:'step-start'});
+          animation.translateY(0).opacity(1).step();
+          that.setData({
+            projectAnimation: animation.export()
+          })
+
+
         },
         error: function(error) {
           //失败
@@ -212,6 +224,17 @@ Page({
 
     var that = this
     that.getProjectList()
+
+    //animation
+    // Project list animation initialization
+    var animation = wx.createAnimation({
+      duration: 200,    // 300ms
+      timingFunction: 'ease-out',
+    })
+
+    // ???
+    that.animation = animation;
+
   },
 
   /**
