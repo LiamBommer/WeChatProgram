@@ -25,7 +25,7 @@ Page({
     taskId: -1,
     taskTitle: '',
     createdAt: '',
-
+    projId:''  ,    //mrli 添加，接受通知跳转传过来的id
     projectDetail: ''
 
   },
@@ -323,28 +323,45 @@ Page({
       title: '正在加载',
       mask: 'true'
     })
+    //获取点子的点子ID
+    var requestId = wx.getStorageSync("Notification-ideaId")
+    var projId = wx.getStorageSync("Notification-projId")
+    
+    //判断是否从通知 进来
+    if (requestId != "" && projId != '') {
+      console.log("获取通知的点子ID", requestId, projId)
+      wx.setStorageSync('ProjectMore-ideaDetail-id', requestId)   //点进关联任务 ，要用到这个缓存，所以这里先设置
+      that.setData({
+        ideaId: requestId,
+        projId: projId
+      })
+      that.getOneIdeaDetail(requestId)
+      
+    }else{
+      // 获取点子id，进行查询
+      wx.getStorage({
+        key: 'ProjectMore-ideaDetail-id',
+        success: function (res) {
+          that.setData({
+            ideaId: res.data
+          })
+          // Get idea detail
+          that.getOneIdeaDetail(res.data)
+        }
+      })
+    }
+    //mr li 注释了下面的代码
+    // // 获取项目id，通知用
+    // wx.getStorage({
+    //   key: 'Project-detail',
+    //   success: function (res) {
+    //     that.setData({
+    //       projectDetail: res.data
+    //     })
+    //   }
+    // })
 
-    // 获取项目id，通知用
-    wx.getStorage({
-      key: 'Project-detail',
-      success: function (res) {
-        that.setData({
-          projectDetail: res.data
-        })
-      }
-    })
-
-    // 获取点子id，进行查询
-    wx.getStorage({
-      key: 'ProjectMore-ideaDetail-id',
-      success: function (res) {
-        that.setData({
-          ideaId: res.data
-        })
-        // Get idea detail
-        that.getOneIdeaDetail(res.data)
-      }
-    })
+    
 
   },
 
@@ -376,6 +393,11 @@ Page({
 
     // 本点子任务的id
     wx.removeStorageSync('IdeaDetail-oriTaskId')
+    //清除通知带来的缓存
+    wx.removeStorageSync('Notification-ideaId')
+    wx.removeStorageSync('Notification-projId')
+
+    
   },
 
   /**

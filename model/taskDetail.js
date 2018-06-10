@@ -791,6 +791,74 @@ function transferTaskLeader(taskId,newLeaderId){
   })
 }
 
+/**
+ * 修改任务成员,可以同时增加和删除成员
+ * 
+ */
+
+/**
+ * @parameter projId项目id ，meetingId会议id，oldmemberIds 旧的成员id数组, newmemberIds 新的成员id数组
+ * 修改会议成员， 删掉原来的成员id数组,添加新的成员ids数组
+ */
+function modifyTaskMember(projId, taskId, oldmemberIds, newmemberIds) {
+
+  var Taskmember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(Taskmember)
+  var taskmemberArr = []
+  var task = Bmob.Object.createWithoutData('task', taskId)
+  var project = Bmob.Object.createWithoutData('project', project)
+
+  if (oldmemberIds != null && oldmemberIds.length > 0) {
+    taskmemberQuery.containedIn('user_id', oldmemberIds)
+    taskmemberQuery.equalTo('task_id', taskId)
+
+    taskmemberQuery.destroyAll({
+      success: function () {
+        //删除成功
+        if (newmemberIds == null || newmemberIds.length == 0){
+          //在这里做跳转
+
+
+        }
+
+      }
+    })
+  }
+    //然后添加新的成员
+    if (newmemberIds != null && newmemberIds.length > 0) {
+      for (var i in newmemberIds) {
+        var member = new Taskmember()
+        var user = Bmob.Object.createWithoutData('_User', newmemberIds[i])
+        member.set('task_id', taskId)
+        member.set('user_id', user)
+        member.set('task', task)
+        member.set('project', project)
+        taskmemberArr.push(member)
+      }
+
+      if (taskmemberArr != null && taskmemberArr.length > 0) {
+        Bmob.Object.saveAll(taskmemberArr).then(function (results) {
+          // 重新添加关联的任务成功
+          var _type = 1  //通知类型
+          that.addProjectNotification(projId, MODIFY_TASK_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+          console.log('修改任务关联成员成功！')
+          //在这里做跳转
+
+
+        },
+          function (error) {
+            // 异常处理
+            console.log('修改任务关联成员成功！')
+          })
+      }
+    }
+    //做任务记录
+    if ((oldmemberIds != null && oldmemberIds.length > 0) || (newmemberIds != null && newmemberIds.length > 0)) {
+      that.addTaskRecord(taskId, getApp().globalData.nickName, MODIFY_TASK_MEMBER)
+    }
+  
+}
+
 //下面是发布函数用的，你们不用复制
 module.exports.getTaskMember = getTaskMember
 module.exports.addNotiTime = addNotiTime
