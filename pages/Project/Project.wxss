@@ -203,14 +203,14 @@
   0%{
     top: calc((300rpx - 60rpx)/2);
     left: calc((300rpx - 60rpx)/2);
-    opacity: 70;
+    opacity: 20;
     width: 60rpx;
     height: 60rpx;
   }
   80% {
     top: calc((300rpx - 120rpx)/2);
     left: calc((300rpx - 120rpx)/2);
-    opacity: 30;
+    opacity: 10;
     width: 120rpx;
     height: 120rpx;
   }
@@ -218,8 +218,8 @@
     top: calc((300rpx - 150rpx)/2);
     left: calc((300rpx - 150rpx)/2);
     opacity: 0;
-    width: 130rpx;
-    height: 130rpx;
+    width: 180rpx;
+    height: 180rpx;
   }
 }
 
