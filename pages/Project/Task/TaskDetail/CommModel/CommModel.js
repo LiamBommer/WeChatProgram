@@ -10,6 +10,7 @@ Page({
     exitComment: true,
     exitQuestion: false,
     exitLike: false,
+    isSelected: false,
 
     // 判断是否从我的页面进来，是则隐藏发送按钮
     isMine: false,
@@ -37,6 +38,14 @@ Page({
     console.log("radioChange", e.detail.value)
     this.setData({
       ModelIndex: e.detail.value,
+    });
+  },
+
+//点击模板
+  ClickRadio: function () {
+    console.log("ClickRadio")
+    this.setData({
+      isSelected: true,
     });
   },
 
@@ -144,6 +153,7 @@ Page({
                 that.setData({
                   ModelComment: ModelComment,
                   ModelIndex: "",
+                  isSelected: false,
                 });
             }
             if (exitQuestion) {//提问
@@ -152,6 +162,7 @@ Page({
               that.setData({
                 ModelQuestion: ModelQuestion,
                 ModelIndex: "",
+                isSelected: false,
               });
             }
             if (exitLike) {//点赞
@@ -160,6 +171,7 @@ Page({
                 that.setData({
                   ModelLike: ModelLike,
                   ModelIndex: "",
+                  isSelected: false,
                 });
               }
           } 
@@ -341,7 +353,11 @@ Page({
     that.getModel(userId, 1)//获取意见模板
     that.getModel(userId, 2)//获取提问模板
     that.getModel(userId, 3)//获取点赞模板
-
+    
+    //默认删除键消失
+    that.setData({
+      isSelected:false,
+    })
     // 从缓存中获取页面标识，以判断是否显示发送按钮
     wx.getStorage({
       key: 'isMine',

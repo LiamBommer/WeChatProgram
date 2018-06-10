@@ -5,7 +5,7 @@
     <block wx:for="{{ProjectMember}}">
       <block wx:if="{{index == 0}}">
         <!-- 标题 -->
-        <view class='title'>项目负责人</view>
+        <view class='title'>任务负责人</view>
         <!-- 列表项 -->
         <view class='item'>
           <view class='item-one'>
@@ -15,7 +15,7 @@
           <radio class='item-checkbox' value="{{item.objectId}}" checked='{{item.checked}}'/>
         </view>
         <!-- 标题 -->
-        <view class='title'>项目成员</view>
+        <view class='title'>任务成员</view>
       </block>
 
       <block wx:else>

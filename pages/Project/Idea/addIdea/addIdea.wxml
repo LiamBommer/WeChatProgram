@@ -15,7 +15,7 @@
          <block wx:for="{{connectTask}}" wx:key="{{task_id}}">
           <view class="item-view ver-align space-between">
             <text >{{item.task_title}}</text>
-            <image src='{{item.userPic}}'></image>
+            <image class='radius' src='{{item.userPic}}'></image>
           </view>
          </block>
     </view>
