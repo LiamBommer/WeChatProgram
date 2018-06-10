@@ -1449,7 +1449,7 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
            }
            else //左滑
            {
-             v.txtStyle = "margin-left:-" + 200 + "px";
+             v.txtStyle = "margin-left:-" + 400 + "rpx";
              v.isTouchMove = true
            }
         }
@@ -1683,6 +1683,11 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     console.log("Notification", requestId, projectName, projmember, taskLeaderId)
     if (requestId != "" && projectName != "" && projmember != "" && taskLeaderId != "") {
       console.log("Notification", requestId, projectName)
+      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
+      if (leaderId != "") {
+        console.log("新负责人：刷新后台！", leaderId)
+        taskLeaderId =  leaderId //任务负责人id
+      }
       that.setData({
         taskId: requestId,
         leaderId: taskLeaderId,
@@ -1696,24 +1701,24 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getTaskComment(requestId)//获取评论
 
       //更改任务负责人时刷新后台
-      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
-      if (requestId != "" && leaderId != "") {
-        console.log("新负责人：刷新后台！", requestId, leaderId)
-        wx.showLoading({
-          title: '正在加载',
-          mask: 'true'
-        })
-        that.setData({
-          leaderId: leaderId
-        })
-        that.getTaskMember(requestId, leaderId)//获取任务成员
-        that.getSubtasks(requestId);//获取子任务列表
-      }
-      else {
-        //返回时刷新后台
-        that.getTaskMember(requestId, that.data.leaderId)//获取任务成员
-        that.getSubtasks(requestId);//获取子任务列表
-      }
+      // var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
+      // if (requestId != "" && leaderId != "") {
+      //   console.log("新负责人：刷新后台！", requestId, leaderId)
+      //   wx.showLoading({
+      //     title: '正在加载',
+      //     mask: 'true'
+      //   })
+      //   that.setData({
+      //     leaderId: leaderId
+      //   })
+      //   that.getTaskMember(requestId, leaderId)//获取任务成员
+      //   that.getSubtasks(requestId);//获取子任务列表
+      // }
+      // else {
+      //   //返回时刷新后台
+      //   that.getTaskMember(requestId, that.data.leaderId)//获取任务成员
+      //   that.getSubtasks(requestId);//获取子任务列表
+      // }
     }
     else {
       //任务
@@ -1722,13 +1727,18 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         success: function (res) {
           console.log("In ProjectMore-Task", res.data)
           var taskId = res.data.objectId//任务id
-          var leaderId = res.data.leaderId//任务负责人id
+          var taskLeaderId = res.data.leaderId//任务负责人id
+          var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
+          if (leaderId != "") {
+            console.log("新负责人：刷新后台！", leaderId)
+            taskLeaderId = leaderId
+          }
           that.setData({
             taskId: taskId,
-            leaderId: leaderId
+            leaderId: taskLeaderId
           })
           that.getTaskDetail(taskId);//获取任务详情
-          that.getTaskMember(taskId, leaderId)//获取任务成员
+          that.getTaskMember(taskId, taskLeaderId)//获取任务成员
           that.getSubtasks(taskId);//获取子任务列表
           that.getTaskRecord(taskId)//获取任务记录
           that.getTaskComment(taskId)//获取评论
@@ -1757,25 +1767,25 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       })
 
       //更改任务负责人时刷新后台
-      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
-      var taskId = that.data.taskId
-      if (taskId != "" && leaderId != "") {
-        console.log("新负责人：刷新后台！", taskId, leaderId)
-        wx.showLoading({
-          title: '正在加载',
-          mask: 'true'
-        })
-        that.setData({
-          leaderId: leaderId
-        })
-        that.getTaskMember(taskId, leaderId)//获取任务成员
-        that.getSubtasks(taskId);//获取子任务列表
-      }
-      else {
-        //返回时刷新后台
-        that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
-        that.getSubtasks(taskId);//获取子任务列表
-      }
+      // var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
+      // var taskId = that.data.taskId
+      // if (taskId != "" && leaderId != "") {
+      //   console.log("新负责人：刷新后台！", taskId, leaderId)
+      //   wx.showLoading({
+      //     title: '正在加载',
+      //     mask: 'true'
+      //   })
+      //   that.setData({
+      //     leaderId: leaderId
+      //   })
+      //   that.getTaskMember(taskId, leaderId)//获取任务成员
+      //   that.getSubtasks(taskId);//获取子任务列表
+      // }
+      // else {
+      //   //返回时刷新后台
+      //   that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
+      //   that.getSubtasks(taskId);//获取子任务列表
+      // }
 
     }
     //发送沟通模板

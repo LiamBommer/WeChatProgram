@@ -46,36 +46,41 @@
     font-size: 28rpx;
 }
 
-.Meeting-container .item{
+.Meeting-container .item-container{
+  padding:0rpx 40rpx;
+  background: #fff;
+}
+
+.Meeting-container .item-container .item{
     background: #fff;
     color: #000;
     width: 100%;
-    height: 120rpx;
+    height: 125rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1rpx solid #f2f2f2;
 }
 
-.Meeting-container .item .item-first{
+.Meeting-container .item-container  .item .item-first{
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-around;
-    margin-left: 40rpx;
 }
 
-.Meeting-container .item .item-first .item-date{
+.Meeting-container .item-container  .item .item-first .item-date{
     font-size: 34rpx;
     font-weight: bold;
 }
 
-.Meeting-container .item .item-first .item-time{
+.Meeting-container .item-container  .item .item-first .item-time{
     font-size: 26rpx;
     color: #888888;
     margin-top:3rpx;
 }
 
-.Meeting-container .item .item-second{
+.Meeting-container .item-container  .item .item-second{
     font-size: 34rpx;
 }
 

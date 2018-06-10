@@ -258,21 +258,21 @@ button[hover-class="share-hover"]::after {
     margin-right:0;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
-    -webkit-transform: translateX(90px);
-    transform: translateX(90px);
-    margin-left: -90px
+    -webkit-transform: translateX(180rpx);
+    transform: translateX(180rpx);
+    margin-left: -180rpx
   }
 
  .del {
   background-color: #e64340;
-  width: 90px;
+  width: 180rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #fff;
-  -webkit-transform: translateX(90px);
-  transform: translateX(90px);
+  -webkit-transform: translateX(180rpx);
+  transform: translateX(180rpx);
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
  }

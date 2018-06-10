@@ -498,6 +498,8 @@ Page({
    */
   onUnload: function () {
     wx.removeStorageSync("meetingDetail-Content-content")
+    wx.removeStorageSync("ProjectMore-projId")
+    wx.removeStorageSync("ProjectMore-meetingId")
     wx.removeStorageSync("Notification-meetingId")
     wx.removeStorageSync("Notification-projId")
   },
