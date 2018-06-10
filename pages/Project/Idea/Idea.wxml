@@ -1,7 +1,7 @@
 <!--pages/Project/Idea/Idea.wxml-->
 <view class='idea-container'>
 
-  <image src='{{idea.bg_img}}' class='bg-img'
+  <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bg-img'
     style='display: {{idea.img_visible ? "" : "none"}}'></image>
 
  <!-- 无内容 -->
