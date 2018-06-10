@@ -40,7 +40,7 @@
       <block wx:for="{{tasks}}" wx:key="{{task_id}}">
           <view class="item-view ver-align space-between">
             <text >{{item.task_title}}</text>
-            <image src='{{item.task_userPic}}'></image>
+            <image class='radius' src='{{item.task_userPic}}'></image>
           </view>
       </block>
     <view class="item-view">

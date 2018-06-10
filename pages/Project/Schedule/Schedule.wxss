@@ -49,10 +49,10 @@
     background: #fff;
     color: #000;
     width: calc(750rpx -40rpx * 2);
-    min-height: 140rpx;
+    
     display: flex;
     align-items: center;
-    border-top: 1rpx solid #f2f2f2;
+    border-bottom: 1rpx solid #f2f2f2;
     /* justify-content: space-around; */
 }
 
@@ -68,7 +68,7 @@
     justify-content: space-around;
     padding: 24rpx 0rpx;
     font-size: 34rpx;
-    color: #888888;
+    font-weight: bold;
     width:140rpx;
 }
 

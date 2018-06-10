@@ -18,6 +18,7 @@
         </block>
         <block wx:else>
           <!-- 列表项 -->
+        <view class='item-container'>
           <view class='item' bindtap='showMeetingDetail' id='{{item.id}}'>
             <view class='item-first'>
               <view class='item-date'>{{item.day}}日</view>
@@ -28,6 +29,7 @@
             </view>
             <view></view>
           </view>
+        </view>
         </block>
       </block>
       

@@ -26,7 +26,7 @@
     <block wx:if="{{taskId != -1}}">
       <view class="item-view ver-align space-between">
         <text >{{taskTitle}}</text>
-        <image src='{{taskUserPic}}'></image>
+        <image class='radius' src='{{taskUserPic}}'></image>
       </view>
     </block>
     <view class="item-view">

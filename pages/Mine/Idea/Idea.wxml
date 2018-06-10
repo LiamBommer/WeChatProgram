@@ -4,17 +4,19 @@
   <block wx:for="{{Idea}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <!-- <view class='idea-item' bindtap='IdeaDetail' > -->
-      <view class='idea-item'>
-        <!-- 列表左 -->
-        <view class='item-first'>
-          <image class='item-icon' src='/img/idea.png'></image>
-          <view class='item-text'>
-            {{item.content}}
+      <view class='item-container'>
+        <view class='idea-item'>
+          <!-- 列表左 -->
+          <view class='item-first'>
+            <image class='item-icon' src='/img/idea.png'></image>
+            <view class='item-text'>
+              {{item.content}}
+            </view>
           </view>
-        </view>
-        <!-- 列表右 -->
-        <view class='item-second'>
-          <view class='item-time'>{{item.createdAt}}</view>
+          <!-- 列表右 -->
+          <view class='item-second'>
+            <view class='item-time'>{{item.createdAt}}</view>
+          </view>
         </view>
       </view>
   </block>

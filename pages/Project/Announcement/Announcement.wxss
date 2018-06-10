@@ -37,39 +37,44 @@
   margin-top: 40rpx;
 }
 
-.Announcement-container .item{
+.Announcement-container .item-container{
+  padding:0rpx 40rpx;
+  background: #fff;
+}
+
+.Announcement-container .item-container .item{
   width: 100%;
-  min-height: 135rpx;
+  height: 135rpx;
   background: #fff;
   display: flex;
   align-items: center;
+  border-bottom: 1rpx solid #f2f2f2;
 }
 
-.Announcement-container .item .item-first{
+.Announcement-container .item-container .item .item-first{
   width:600rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.Announcement-container .item .item-first .item-icon{
+.Announcement-container .item-container .item .item-first .item-icon{
    width: 60rpx;
    height: 60rpx;
    border-radius: 200rpx;
-   margin-left: 40rpx;
 }
 
-.Announcement-container .item .item-first .item-text{
-  width: 460rpx;
+.Announcement-container .item-container .item .item-first .item-text{
+  width: 420rpx;
   height: 100%;
   margin: 16rpx 20rpx 16rpx 20rpx;
 }
 
-.Announcement-container .item .item-first .item-text .item-title{
+.Announcement-container .item-container .item .item-first .item-text .item-title{
    font-size: 34rpx;
 }
 
-.Announcement-container .item .item-first .item-text .item-content{
+.Announcement-container .item-container .item .item-first .item-text .item-content{
    font-size: 28rpx;
    color: #888888;
    /* 多行省略 */
@@ -83,16 +88,16 @@
    /* 多行省略 */
 }
 
-.Announcement-container .item .item-second{
+.Announcement-container .item-container .item .item-second{
    color: #b2b2b2;
 }
 
-.Announcement-container .item .item-second .item-time{
+.Announcement-container .item-container .item .item-second .item-time{
    font-size: 25rpx;
    color: #b2b2b2;
 }
 
-.Announcement-container .item .item-second .item-read{
+.Announcement-container .item-container .item .item-second .item-read{
    font-size: 28rpx;
    color: #b2b2b2;
 }

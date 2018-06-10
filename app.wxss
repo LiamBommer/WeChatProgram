@@ -88,3 +88,9 @@ button[size="default"] {
   height:80rpx;
   line-height:80rpx;
 }
+/*
+ * 使头像变成圆形
+ */
+ .radius{
+   border-radius: 50%;
+ }

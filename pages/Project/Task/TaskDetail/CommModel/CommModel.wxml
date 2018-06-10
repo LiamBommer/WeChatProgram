@@ -25,7 +25,7 @@
               <block wx:for="{{ModelComment}}">
                   <view class='model' bindtap='ClickModel' data-id='{{item.id}}' data-index="{{index}}" data-type="{{item.type}}">
                     <view class='text' bindtap='ModelDetail'>{{item.content}}</view>
-                    <radio class='item-radio' value="{{index}}"/>
+                    <radio class='item-radio' value="{{index}}" bindtap='ClickRadio'/>
                   </view>
               </block>
             </radio-group>
@@ -43,7 +43,7 @@
                   <block wx:for="{{ModelQuestion}}">
                       <view class='model' bindtap='ClickModel' data-id='{{item.id}}' data-index="{{index}}" data-type="{{item.type}}">
                         <view class='text' bindtap='ModelDetail'>{{item.content}}</view>
-                        <radio class='item-radio' value="{{index}}"/>
+                        <radio class='item-radio' value="{{index}}"bindtap='ClickRadio' />
                       </view>
                   </block>
               </radio-group>
@@ -60,7 +60,7 @@
                   <block wx:for="{{ModelLike}}">
                       <view class='model' bindtap='ClickModel' data-id='{{item.id}}' data-index="{{index}}" data-type="{{item.type}}">
                         <view class='text' bindtap='ModelDetail'>{{item.content}}</view>
-                        <radio class='item-radio' value="{{index}}"/>
+                        <radio class='item-radio' value="{{index}}" bindtap='ClickRadio'/>
                       </view>
                   </block>
               </radio-group>
@@ -75,9 +75,9 @@
           
           <view class='button'>
             <!-- 删除 -->
-            <button class='delete' bindtap='DeleteModel'>删除</button> 
+            <button class='delete' bindtap='DeleteModel' wx:if="{{isSelected}}">删除</button> 
             <!-- 发送 -->
-            <button class='submit' bindtap='SendModel' wx:if="{{!isMine}}">发送</button>
+            <button class='submit' bindtap='SendModel' wx:if="{{!isMine }}">发送</button>
           </view>
       </view>
 </view>
