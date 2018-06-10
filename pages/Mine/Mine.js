@@ -394,30 +394,55 @@ Page({
 
     meetingmemberQuery.equalTo('user', userId)
     meetingmemberQuery.include('meeting')
+    meetingmemberQuery.ascending('meeting.start_time')
     meetingmemberQuery.find({
       success: function (results) {
+        
         //成功
+        var oldtitleTime //存储上一次的年月份
         for (var i in results) {
-          if (results[i].get('meeting').is_delete != true)
-            var meetingObject = {}
+          if (results[i].get('meeting').is_delete != true){
 
-          // 时间处理
-          var startTime = results[i].get('meeting').start_time
-          var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
-          var year = startTime.getFullYear()
-          var month = startTime.getMonth()
-          var date = startTime.getDate()
+            // 时间处理
+            var startTime = results[i].get('meeting').start_time
+            console.log("startTime", startTime)
+            var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
+            var year = startTime.getFullYear()
+            var month = startTime.getMonth()
+            var titleTime = year + '年' + month + '月'
+            var date = startTime.getDate()
+            var id = results[i].get('meeting').objectId //会议id
+            var title = results[i].get('meeting').title  //会议名称
+            var time = results[i].get('meeting').time //会议的时分秒
+            var startTime = results[i].get('meeting').start_time //会议的年月日
 
-          meetingObject = {
-            'id': results[i].get('meeting').objectId, //会议id
-            'title': results[i].get('meeting').title,  //会议名称
-            'time': results[i].get('meeting').time,  //会议的时分秒
-            'startTime': results[i].get('meeting').start_time, //会议的年月日
-            'year': year,
-            'month': month,
-            'date': date,
+            //判断是否跨月份
+            var meetingMonth
+            var meeting
+            if (oldtitleTime == titleTime) {//没有跨月
+              meeting = {
+                'id': id || '',
+                'title': title || '',
+                'time': time || '',
+                'date': date
+              }
+            }
+            else {//跨月份
+              meetingMonth = {
+                'titleTime': titleTime || '',
+              }
+              meeting = {
+                'id': id || '',
+                'title': title || '',
+                'time': time || '',
+                'date': date
+              }
+              meetingArr.push(meetingMonth)
+            }
+            oldtitleTime = titleTime
+            meetingArr.push(meeting)  //存储会议
           }
-          meetingArr.push(meetingObject)
+
         }
         if (meetingArr != null && meetingArr.length > 0) {
           //在这里setData

@@ -20,7 +20,7 @@
   <view class="view-container">
     <view class="item-view">
       <image src='{{icon_deadline}}'></image>
-      <picker class='desc' mode="date" value="{{stattime}}" bindchange="StatTimeChange">
+      <picker class='desc' mode="date" value="{{starttime}}" bindchange="StatTimeChange">
           <view>
             {{starttime}} 
           </view>

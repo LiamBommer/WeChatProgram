@@ -85,6 +85,7 @@ Page({
     var newStartTime = e.detail.value
     var newtime = that.data.time
     that.modifyMeetingStartTime(projId, meetingId, newStartTime, newtime)
+    console.log("newStartTime",newStartTime)
     this.setData({
       starttime: newStartTime
     })
@@ -498,6 +499,8 @@ Page({
    */
   onUnload: function () {
     wx.removeStorageSync("meetingDetail-Content-content")
+    wx.removeStorageSync("ProjectMore-projId")
+    wx.removeStorageSync("ProjectMore-meetingId")
     wx.removeStorageSync("Notification-meetingId")
     wx.removeStorageSync("Notification-projId")
   },
