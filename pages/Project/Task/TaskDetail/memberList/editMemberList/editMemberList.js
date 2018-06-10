@@ -85,14 +85,79 @@ Page({
           })
         }
         else {
-          that.addTaskMember(wx.getStorageSync('Project-detail').id,taskId, memberIds, userName)//添加任务成员
-          that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
-          //通知项目的其他成员,任务成员变更
-          var _type = 1
-          that.addProjectNotification(wx.getStorageSync('Project-detail').id,MODIFY_TASK_MEMBER,_type,taskId) 
+          //mrli 删除了下面两句
+          // that.addTaskMember(wx.getStorageSync('Project-detail').id,taskId, memberIds, userName)//添加任务成员
+          // that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
+          that.modifyTaskMember(wx.getStorageSync('Project-detail').id, taskId, NomemberIds, memberIds)
         }
       },
     })
+  },
+  /**
+ * @parameter projId项目id ，meetingId会议id，oldmemberIds 旧的成员id数组, newmemberIds 新的成员id数组
+ * 修改会议成员， 删掉原来的成员id数组,添加新的成员ids数组
+ */
+  modifyTaskMember:function(projId, taskId, oldmemberIds, newmemberIds) {
+    var that = this
+    var Taskmember = Bmob.Object.extend('task_member')
+    var taskmemberQuery = new Bmob.Query(Taskmember)
+    var taskmemberArr = []
+    var task = Bmob.Object.createWithoutData('task', taskId)
+    var project = Bmob.Object.createWithoutData('project', project)
+
+    if (oldmemberIds != null && oldmemberIds.length > 0) {
+        taskmemberQuery.containedIn('user_id', oldmemberIds)
+        taskmemberQuery.equalTo('task_id', taskId)
+
+        taskmemberQuery.destroyAll({
+          success: function () {
+            //删除成功
+            if (newmemberIds == null || newmemberIds.length == 0) {
+              //在这里做跳转
+              wx.navigateBack()
+
+            }
+          },
+          error: function (error) {
+            //失败
+            console.log('删除会议成员失败', error)
+          }
+        })
+    }
+      //然后添加新的成员
+      if (newmemberIds != null && newmemberIds.length > 0) {
+        for (var i in newmemberIds) {
+          var member = new Taskmember()
+          var user = Bmob.Object.createWithoutData('_User', newmemberIds[i])
+          member.set('task_id', taskId)
+          member.set('user_id', user)
+          member.set('task', task)
+          member.set('project', project)
+          taskmemberArr.push(member)
+        }
+
+        if (taskmemberArr != null && taskmemberArr.length > 0) {
+          Bmob.Object.saveAll(taskmemberArr).then(function (results) {
+            // 重新添加关联的任务成功
+            var _type = 1  //通知类型
+            that.addProjectNotification(projId, MODIFY_TASK_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+            console.log('修改任务关联成员成功！')
+            //在这里做跳转
+            wx.navigateBack()
+
+          },
+            function (error) {
+              // 异常处理
+              console.log('修改任务关联成员成功！')
+            })
+        }
+      }
+
+      //做任务记录
+      if((oldmemberIds != null && oldmemberIds.length > 0) || (newmemberIds != null && newmemberIds.length > 0)){
+        that.addTaskRecord(taskId, getApp().globalData.nickName, MODIFY_TASK_MEMBER)
+      }
+    
   },
   /**
  * 2018-05-31
