@@ -20,33 +20,36 @@
       <!-- </block> -->
       <block wx:for="{{item.schedules}}" wx:for-item="schedules" wx:for-index="scheduleIndex" wx:key="{{scheduleId}}">
 
-        <!-- 列表项 -->
-        <view class='item {{schedules.hasBorder}}' >
+          <!-- 列表项 -->
+        <view class='view-container {{schedules.hasBorder}}' >
+          <view class='item' >
 
-          <view class='item-first' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
-            <view class='item-time'>{{schedules.startMonth}}月{{schedules.startDate}}日</view>
+            <view class='item-first' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
+              <view class='item-time'>{{schedules.startMonth}}月{{schedules.startDate}}日</view>
 
-            <block wx:if="{{schedules.expanded}}">
-              <view class='item-connect'>|</view>
-              <view class='item-time'>{{schedules.endMonth}}月{{schedules.endDate}}日</view>
-            </block>
-          </view>
-          <view class='item-second' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
-            <view class='item-title'>{{schedules.scheduleContent}}</view>
-            <block wx:if="{{schedules.expanded}}">
-              <block wx:for="{{schedules.tasks}}" wx:for-item="task" wx:key="{{task_id}}">
-                  <view class='item-text'>{{task.task_title}}</view>
-                </block>
-            </block>
-          </view>
-          <!-- 任务 -->
-          <block wx:if="{{schedules.expanded}}">
-            <view class='item-third' bindtap='showScheduleDetail' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
-              <image src='/img/pen.png'></image>
+              <block wx:if="{{schedules.expanded}}">
+                <view class='item-connect'>|</view>
+                <view class='item-time'>{{schedules.endMonth}}月{{schedules.endDate}}日</view>
+              </block>
             </view>
-          </block>
+            <view class='item-second' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
+              <view class='item-title'>{{schedules.scheduleContent}}</view>
+              <block wx:if="{{schedules.expanded}}">
+                <block wx:for="{{schedules.tasks}}" wx:for-item="task" wx:key="{{task_id}}">
+                    <view class='item-text'>{{task.task_title}}</view>
+                  </block>
+              </block>
+            </view>
+            <!-- 任务 -->
+            <block wx:if="{{schedules.expanded}}">
+              <view class='item-third' bindtap='showScheduleDetail' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
+                <image src='/img/pen.png'></image>
+              </view>
+            </block>
 
+          </view>
         </view>
+
         <!-- </block> -->
       </block>
     </block>
