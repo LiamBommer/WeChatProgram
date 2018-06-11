@@ -160,6 +160,9 @@ Page({
 
     // Task list animation
     taskAnimationStyle: '',
+    announcementAnimationStyle: '',
+    scheduleAnimationStyle: '',
+    meetingAnimationStyle: '',
 
   },
 
@@ -1218,6 +1221,7 @@ Page({
         [path]: true,
         [pathHasBorder]: 'hasBorder'
       })
+      that.scheduleExpandAnimation()
     }
 
   },
@@ -1319,6 +1323,67 @@ Page({
     })
   },
 
+  announcementAnimation: function () {
+    var announcementAnimationStyle = ''
+    announcementAnimationStyle += '-webkit-animation-name: announcementAnimation;'
+    announcementAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    announcementAnimationStyle += "-webkit-animation-timing-function: ease;"
+    announcementAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      announcementAnimationStyle: ''
+    })
+    this.setData({
+      announcementAnimationStyle: announcementAnimationStyle
+    })
+  },
+
+  scheduleAnimation: function () {
+    var scheduleAnimationStyle = ''
+    scheduleAnimationStyle += '-webkit-animation-name: scheduleAnimation;'
+    scheduleAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    scheduleAnimationStyle += "-webkit-animation-timing-function: ease;"
+    scheduleAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      scheduleAnimationStyle: ''
+    })
+    this.setData({
+      scheduleAnimationStyle: scheduleAnimationStyle
+    })
+  },
+
+  scheduleExpandAnimation: function () {
+    var scheduleExpandAnimationStyle = ''
+    scheduleExpandAnimationStyle += '-webkit-animation-name: scheduleExpandAnimation;'
+    scheduleExpandAnimationStyle += '-webkit-animation-duration: 0.2s;'
+    scheduleExpandAnimationStyle += "-webkit-animation-timing-function: ease;"
+    scheduleExpandAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      scheduleExpandAnimationStyle: '',
+      scheduleAnimationStyle: ''
+    })
+    this.setData({
+      scheduleExpandAnimationStyle: scheduleExpandAnimationStyle
+    })
+  },
+
+  meetingAnimation: function () {
+    var meetingAnimationStyle = ''
+    meetingAnimationStyle += '-webkit-animation-name: meetingAnimation;'
+    meetingAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    meetingAnimationStyle += "-webkit-animation-timing-function: ease;"
+    meetingAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      meetingAnimationStyle: ''
+    })
+    this.setData({
+      meetingAnimationStyle: meetingAnimationStyle
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -1345,6 +1410,9 @@ Page({
 
     // 列表加载动效
     this.taskAnimation()
+    this.announcementAnimation()
+    this.scheduleAnimation()
+    this.meetingAnimation()
 
     var that = this
     // wx.startPullDownRefresh()//刷新

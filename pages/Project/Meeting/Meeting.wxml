@@ -18,8 +18,8 @@
         </block>
         <block wx:else>
           <!-- 列表项 -->
-        <view class='item-container'>
-          <view class='item' bindtap='showMeetingDetail' id='{{item.id}}'>
+        <view class='item-container' style="{{meetingAnimationStyle}}">
+          <view class='item' bindtap='showMeetingDetail' id='{{item.id}}' style="{{meetingAnimationStyle}}">
             <view class='item-first'>
               <view class='item-date'>{{item.day}}日</view>
               <view class='item-time'>{{item.time}}</view>
