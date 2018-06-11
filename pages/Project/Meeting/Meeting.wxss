@@ -96,11 +96,13 @@
 @keyframes meetingAnimation {
   0% {
     opacity: 0;
-     height: 0rpx;
+    /* transform: translateX(-200rpx); */
+      height: 0rpx; 
   }
   100% {
     opacity: 1;
-     height: 126rpx; 
+    /* transform: translateX(0rpx); */
+      height: 126rpx;  
   }
 }
 /*** 会议列表淡入 END ***/

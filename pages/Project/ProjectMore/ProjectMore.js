@@ -164,6 +164,9 @@ Page({
     scheduleAnimationStyle: '',
     meetingAnimationStyle: '',
 
+    // 导航栏tab动画
+    nav_cover_left: 0,
+
   },
 
   //获取当前swiper页的下标
@@ -299,6 +302,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 0,
     });
   },
 
@@ -311,6 +317,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 150,
     });
   },
 
@@ -323,6 +332,9 @@ Page({
       exitSchedule: true,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 300,
     });
   },
 
@@ -335,6 +347,9 @@ Page({
       exitSchedule: false,
       exitMeeting: true,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 450,
     });
   },
 
@@ -347,6 +362,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: true,
+
+      // Nav cover animation
+      nav_cover_left: 600,
     });
   },
 

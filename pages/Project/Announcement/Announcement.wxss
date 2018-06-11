@@ -118,7 +118,7 @@
   }
   100% {
     opacity: 1;
-    height: 135rpx;
+    height: 136rpx;
   }
 }
 /*** 公告列表淡入 END ***/
