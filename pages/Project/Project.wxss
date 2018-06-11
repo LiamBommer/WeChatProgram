@@ -196,7 +196,7 @@
 
 .ripple {
   position: absolute;
-  background-color: #888888;
+  background-color: #b2b2b2;
   opacity: 0;
   z-index: 200;
   border-radius: 50%;
@@ -206,14 +206,14 @@
   0%{
     top: calc((300rpx - 60rpx)/2);
     left: calc((300rpx - 60rpx)/2);
-    opacity: 20;
+    opacity: 1;
     width: 60rpx;
     height: 60rpx;
   }
-  80% {
+  50% {
     top: calc((300rpx - 120rpx)/2);
     left: calc((300rpx - 120rpx)/2);
-    opacity: 10;
+    opacity: 50;
     width: 120rpx;
     height: 120rpx;
   }
@@ -245,7 +245,7 @@
   }
   100% {
     opacity: 1;
-    height: 100rpx;
+    height: 120rpx;
   }
 }
 @keyframes projectAnimation {

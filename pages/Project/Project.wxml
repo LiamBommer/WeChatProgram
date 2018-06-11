@@ -21,7 +21,7 @@
       <image src='/img/star.png'></image>
       <text>星标项目</text>
     </view>
-    <view wx:for="{{StarProject}}" wx:key="{{id}}" class='animation-view'>
+    <view wx:for="{{StarProject}}" wx:key="{{id}}">
       <!-- 置顶列表项 -->
       <view class='staritem' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
         <view class='staritem-one' bindtap='projectmore'>
@@ -37,7 +37,7 @@
 
     <!-- 标题 -->
     <view class='title'>我的项目</view>
-    <view wx:for="{{Project}}" wx:key="{{id}}" class='animation-view'>
+    <view wx:for="{{Project}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <view class='item' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
 
