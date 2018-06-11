@@ -194,27 +194,7 @@ Page({
 
   },
 
-  /**
-  * 用户点击右上角分享
-  */
-  onSareAppMessage: function () {
-
-    var that = this
-    var scheduleContent = that.data.scheduleContent
-
-    // 分享
-    return {
-      title: '日程：' + scheduleContent,
-      path: "pages/Project/Schedule/scheduleDetail",
-      success: function (res) {
-        wx.showToast({
-          title: '分享成功',
-          icon: 'success',
-        })
-      },
-    }
-
-  },
+  
   /**
 * 2018-05-31
 * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
@@ -546,10 +526,26 @@ Page({
   },
 
 
+/**
+   * 分享页面按钮，回到日程列表
+   */
+  showScheduleList: function() {
+    wx.navigateTo({
+      url: '/pages/Project/Project'
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (option) {
+    // 接收页面参数，判断是否从分享进入
+    console.log('页面参数', option)
+    this.setData({
+      isShared: option.isShared,
+      scheduleId: option.scheduleId,
+    })
   },
 
   /**
@@ -568,13 +564,19 @@ Page({
 
     wx.showLoading({
       title: '正在加载',
-      mask: 'true'
+      // mask: 'true'
     })
 
     //获取通知的日程ID
     var requestId = wx.getStorageSync("Notification-scheduleId")
+    var isShared = this.data.isShared
+    
     if (requestId != ""){
       that.getOneSchedule(requestId)
+    }
+    else if(isShared) {
+      // 从分享的页面进入
+      that.getOneSchedule(this.data.scheduleId)
     }
     else{
       // 获取日程id，进行查询
@@ -626,6 +628,9 @@ Page({
     // 本日程详情缓存
     wx.removeStorageSync('ScheduleDetail-scheduleDetail')
 
+    // 通知进入的日程id
+    wx.removeStorageSync('Notification-scheduleId')
+
   },
 
   /**
@@ -650,11 +655,13 @@ Page({
     var that = this
     var currentUserName = getApp().globalData.nickName
     var scheduleContent = that.data.scheduleContent
+    var scheduleId = that.data.scheduleId
+    var projectId = that.data.projectDetail.id
 
     // 分享
     return {
       title: currentUserName + '给你分享了日程: ' + scheduleContent,
-      path: "pages/Project/Schedule/scheduleDetail/scheduleDetail",
+      path: "pages/Project/Schedule/scheduleDetail/scheduleDetail?isShared=true&scheduleId=" + scheduleId,
       success: function (res) {
         wx.showToast({
           title: '分享成功',

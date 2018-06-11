@@ -48,4 +48,7 @@
       <text class='desc delete-text' bindtap='Delete'>删除日程</text>
     </view>
   </view>
+  <block wx:if="{{isShared}}">
+    <button type='primary' size='default' bindtap='showScheduleList'>去往项目</button>
+  </block>
 </view>
