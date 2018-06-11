@@ -88,6 +88,7 @@ Page({
     aniRemindTimeStyle: '',
     aniFeedbackStyle: '',
     aniDescriptionStyle: '',
+    aniChildTaskStyle: '',
 
 
     icon_chatperson: '/img/me.png',
@@ -1302,6 +1303,10 @@ addTaskNotification:function (projId, taskId, content) {
           that.setData({
             ChildTask: ChildTask
           })
+
+          //子任务加载动画
+          that.aniShowChildTask()
+
           console.log("ChildTask:", that.data.ChildTask)
         }
         // 加载完成
@@ -1722,6 +1727,21 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     })
     this.setData({
       aniDescriptionStyle: aniDescriptionStyle
+    })
+  },
+
+  // 子任务
+  aniShowChildTask: function () {
+    var aniChildTaskStyle = ''
+    aniChildTaskStyle += '-webkit-animation-name: showChildTask;'
+    aniChildTaskStyle += '-webkit-animation-duration: 0.4s;'
+    aniChildTaskStyle += "-webkit-animation-timing-function: ease;"
+    aniChildTaskStyle += "-webkit-animation-iteration-count: 1;"
+    this.setData({
+      aniChildTaskStyle: ''
+    })
+    this.setData({
+      aniChildTaskStyle: aniChildTaskStyle
     })
   },
 

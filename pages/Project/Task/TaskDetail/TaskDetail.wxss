@@ -322,4 +322,17 @@ button[hover-class="share-hover"]::after {
     height: 0rpx;
    }
  }
+ @keyframes showChildTask {
+    0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+    /* transform: translateY(-20rpx); */
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    /* transform: translateY(0); */
+  }  
+}
  /* Animation END */

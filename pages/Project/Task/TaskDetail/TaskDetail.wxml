@@ -113,7 +113,7 @@
           <image src='{{icon_add}}' bindtap='AddChildTask'></image>
         </view>
 
-            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" >
+            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" style="{{aniChildTaskStyle}}">
                 <view class="contentminddle item-view ver-align space-between item-padding" bindtouchmove="touchmove" 
                   data-index="{{index}}" 
                   style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
