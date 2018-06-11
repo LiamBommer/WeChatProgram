@@ -32,7 +32,7 @@
 .nav .nav-cover {
   width: calc(750rpx / 5);
   height: 90rpx;
-  position: fixed;
+  position: absolute;
   left: 0rpx;
   background-color: transparent;
   border-bottom: 5rpx solid #09bb07;
