@@ -156,9 +156,10 @@ Page({
 
     //墙列表
     idea: { img_visible: true, bg_img: '',},
-    Idea:[
+    Idea:[],
 
-    ],
+    // Task list animation
+    taskAnimationStyle: '',
 
   },
 
@@ -1300,6 +1301,25 @@ Page({
   },
 
 
+  /*
+    * 列表加载动效
+    */
+  taskAnimation: function () {
+    var taskAnimationStyle = ''
+    taskAnimationStyle += '-webkit-animation-name: taskAnimation;'
+    taskAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    taskAnimationStyle += "-webkit-animation-timing-function: ease;"
+    taskAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      taskAnimationStyle: ''
+    })
+    this.setData({
+      taskAnimationStyle: taskAnimationStyle
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -1323,6 +1343,8 @@ Page({
       mask: 'true'
     })
 
+    // 列表加载动效
+    this.taskAnimation()
 
     var that = this
     // wx.startPullDownRefresh()//刷新
