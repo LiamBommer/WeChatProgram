@@ -2,10 +2,12 @@
 .idea-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 1120rpx;
   background-color: white;
   align-items:center;
 }
+
+
 
 .bg-img {
   width: 100%;
@@ -32,6 +34,7 @@
   flex-direction: column;
   background-color: #567b95;
   color: white;
+  margin-right:15rpx;
 }
 
 .post-view .post:nth-child(even) {
@@ -44,6 +47,7 @@
   flex-direction: column;
   background-color: #567b95;
   color: white;
+  margin-left:15rpx;
 }
 
 .post-view .user-info {

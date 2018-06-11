@@ -5,24 +5,28 @@
   flex-direction: column;
 }
 
-.Mine-Idea-container .idea-item{
+.Mine-Idea-container .item-container {
+  padding: 0 40rpx;
+  background: #fff;
+}
+
+.Mine-Idea-container .item-container .idea-item{
   width: 100%;
   min-height: 120rpx;
   background: #fff;
   display: flex;
   align-items: center;
-  border-top: 1rpx solid #f2f2f2;
+  border-bottom: 1rpx solid #f2f2f2;
 }
 
-.Mine-Idea-container .idea-item .item-first{
+.Mine-Idea-container .item-container  .idea-item .item-first{
   width: 510rpx;
   display: flex;
   align-items: center;
-  padding-left: 40rpx;
 }
 
-.Mine-Idea-container .idea-item .item-first .item-text{
-   font-size: 34rpx;
+.Mine-Idea-container .item-container .idea-item .item-first .item-text{
+   font-size: 28rpx;
    width: 418rpx;
    line-height: 45rpx;
    padding: 24rpx 16rpx;
@@ -30,14 +34,15 @@
 
 }
 
-.Mine-Idea-container .idea-item .item-first .item-icon{
+.Mine-Idea-container .item-container .idea-item .item-first .item-icon{
    width: 40rpx;
    height: 40rpx;
 }
 
-.Mine-Idea-container .idea-item .item-second{
+.Mine-Idea-container .item-container .idea-item .item-second{
    font-size: 25rpx;
    /* margin-right: 10rpx; */
    color: #b2b2b2;
    width: 200rpx;
+   padding-left:40rpx;
 }

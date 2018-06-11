@@ -390,13 +390,6 @@ addProjectNotification: function (projId, content, _type, requestId) {
     })
     that.getProjectMember(projId)//获取项目成员
 
-
-    // var memberList = wx.getStorageSync("ProjectDetail-memberList")
-    // for(var i in memberList)
-    // memberList[i].checked = false
-    // that.setData({
-    //   ProjectMemember: memberList
-    // });
     
 
   },
@@ -412,6 +405,9 @@ addProjectNotification: function (projId, content, _type, requestId) {
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    wx.removeStorageSync("meetingDetail-meetingId")
+    wx.removeStorageSync("meetingDetail-projId")
+    wx.removeStorageSync("meetingDetail-member")
     wx.removeStorageSync("meetingDetail-membericon")
   },
 

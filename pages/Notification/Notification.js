@@ -79,7 +79,7 @@ Page({
         }
         else //左滑
         {
-          v.NotificationtxtStyle = "margin-left:-" + 418 + "px";
+          v.NotificationtxtStyle = "margin-left:-" + 800 + "rpx";
           v.NotificationisTouchMove = true
         }
       }

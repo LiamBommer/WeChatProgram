@@ -14,7 +14,7 @@ Page({
     icon_add: '/img/add.png',
     icon_close: '/img/close.png',
     icon_share: '/img/share.png',
-    icon_project: '/img/project.png',
+    icon_project: '/img/taskdetail-project.png',
 
     // 此条点子的详情
     ideaId: -1,

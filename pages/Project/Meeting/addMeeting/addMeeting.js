@@ -32,7 +32,7 @@ Page({
   },
 
   // 开始时间
-  starttimeChange: function (e) {
+  StartTimeChange: function (e) {
     console.log("starttime", e.detail.value)
     this.setData({
       starttime: e.detail.value
@@ -75,9 +75,9 @@ Page({
         var projId = res.data
         console.log("BuildMeeting")
         console.log(projId, title, content, startTime, memberIds)
-        if (startTime == "" || time == "" || content == "" || title == "" ){
+        if (title == "" ){
          wx.showToast({
-           title: '请填写完整',
+           title: '会议标题还没写呢',
            icon:"none",
            duration:1500,
          })
@@ -260,10 +260,12 @@ Page({
     })
 
     //初始化时间为当前时间
-    var starttime = util.formatTime(new Date())
-    console.log("time", starttime)
+    var utilTime = util.formatTime(new Date())
+    var starttime = utilTime.substring(0, 10)
+    var time = utilTime.substring(11, 16)
     that.setData({
-      starttime: starttime
+      starttime: starttime,
+      time: time
     })
 
     //获取选中成员列表的id缓存

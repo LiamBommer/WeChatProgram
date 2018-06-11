@@ -77,7 +77,6 @@ Page({
       success: function(res) {
         var userName = getApp().globalData.nickName
         var taskId = res.data
-        //  that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
         if (memberIds == "" && NomemberIds == "")//无成员变化
         {
           wx.navigateBack({
@@ -85,9 +84,6 @@ Page({
           })
         }
         else {
-          //mrli 删除了下面两句
-          // that.addTaskMember(wx.getStorageSync('Project-detail').id,taskId, memberIds, userName)//添加任务成员
-          // that.taskMemberDelete(taskId, NomemberIds, userName)//删除任务成员
           that.modifyTaskMember(wx.getStorageSync('Project-detail').id, taskId, NomemberIds, memberIds)
         }
       },
@@ -140,7 +136,7 @@ Page({
           Bmob.Object.saveAll(taskmemberArr).then(function (results) {
             // 重新添加关联的任务成功
             var _type = 1  //通知类型
-            that.addProjectNotification(projId, MODIFY_TASK_MEMBER, _type, meetingId/*会议id*/)  //通知其他项目成员
+            that.addProjectNotification(projId, MODIFY_TASK_MEMBER, _type, taskId/*会议id*/)  //通知其他项目成员
             console.log('修改任务关联成员成功！')
             //在这里做跳转
             wx.navigateBack()

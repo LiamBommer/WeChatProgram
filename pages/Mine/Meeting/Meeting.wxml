@@ -2,9 +2,11 @@
 <view class='Mine-Meeting-container'>
 
   <block wx:for="{{Meeting}}" wx:key="{{id}}">
-      <block wx:if="{{item.month}}">
-      <!-- 标题 -->
-          <view class='Meeting-title'>{{item.year}}年{{item.month}}月</view>
+        <block wx:if="{{item.titleTime}}">
+        <!-- 标题 -->
+          <view class='Meeting-title'>{{item.titleTime}}</view>
+        </block>
+        <block wx:else>
           <!-- 列表项 -->
           <!-- <view class='Meeting-item' bindtap='MeetingDetail'> -->
           <view class='Meeting-item'>
@@ -17,8 +19,9 @@
             </view>
             <view></view>
           </view>
-      </block>
-    </block>
+        </block>
+  </block>
 
+    
 
 </view>
