@@ -4,6 +4,7 @@ var Bmob = require('../../../../utils/bmob.js')
 var FINISH_TASK = "完成任务"
 var REDO_TASK = "重做任务"
 var MODIFY_TASK_TITLE = "更改了任务名称"
+var DELETE_TASK = "删除了任务"
 
 var ADD_NOTI_TIME = "添加了任务提醒时间"
 var MODIFY_NOTI_TIME = "修改了任务提醒时间"
@@ -497,7 +498,7 @@ Page({
       success: function (res) {//删除任务
         if (res.confirm) {
           var userName = getApp().globalData.nickName
-          that.deleteTask(taskId, userName)
+          that.deleteTask(wx.getStorageSync('Project-detail').id,taskId, userName)
           wx.navigateBack({
             url: '../../ProjectMore/ProjectMore',
           })
@@ -1229,10 +1230,10 @@ addTaskNotification:function (projId, taskId, content) {
   },
 
   /**
- * @parameter taskId 任务id,userName用户昵称（记录操作用）
+ * @parameter projId项目id，taskId 任务id,userName用户昵称（记录操作用）
  * 删除任务
  */
-  deleteTask:function (taskId, userName) {
+  deleteTask:function (projId,taskId, userName) {
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -1244,6 +1245,8 @@ addTaskNotification:function (projId, taskId, content) {
         result.save()
         //console.log("删除反馈时间成功")
         //不用记录操作
+        //通知其他任务成员
+        that.addTaskNotification(projId, taskId, DELETE_TASK + result.get('title'))
         wx.showToast({
           title: '删除成功',
           icon:"success"
