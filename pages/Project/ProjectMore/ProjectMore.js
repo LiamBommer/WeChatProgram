@@ -163,6 +163,7 @@ Page({
     announcementAnimationStyle: '',
     scheduleAnimationStyle: '',
     meetingAnimationStyle: '',
+    ideaAnimationStyle: '',
 
     // 导航栏tab动画
     nav_cover_left: 0,
@@ -1402,6 +1403,21 @@ Page({
     })
   },
 
+  ideaAnimation: function () {
+    var ideaAnimationStyle = ''
+    ideaAnimationStyle += '-webkit-animation-name: ideaAnimation;'
+    ideaAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    ideaAnimationStyle += "-webkit-animation-timing-function: ease;"
+    ideaAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      ideaAnimationStyle: ''
+    })
+    this.setData({
+      ideaAnimationStyle: ideaAnimationStyle
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -1431,6 +1447,7 @@ Page({
     this.announcementAnimation()
     this.scheduleAnimation()
     this.meetingAnimation()
+    this.ideaAnimation()
 
     var that = this
     // wx.startPullDownRefresh()//刷新
