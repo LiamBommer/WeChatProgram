@@ -1,6 +1,11 @@
 <!--pages/Project/Project.wxml-->
-<view class='Project-container'>
- <!-- 无内容 -->
+<view class='Project-container' bindtouchstart='itemRippleTap'>
+  <!-- 涟漪效果的圆圈 -->
+  <view class='ripple-view' style='{{rippleViewStyle}}'>
+    <view class='ripple' style='{{rippleStyle}}'></view>
+  </view>
+  <!-- 涟漪效果的圆圈 END -->
+  <!-- 无内容 -->
   <view style='display:{{StarProject.length==0 && Project.length==0 ? "":"none"}}'>
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noProject.png'></image>
@@ -11,44 +16,45 @@
   </view>
   <!-- 有内容 -->
   <view style='display:{{StarProject.length==0 && Project.length==0 ? "none":""}}'>
-        <!-- 置顶标题 -->
-        <view class='startitle'>
-          <image src='/img/star.png'></image>
-          <text>星标项目</text>
+    <!-- 置顶标题 -->
+    <view class='startitle'>
+      <image src='/img/star.png'></image>
+      <text>星标项目</text>
+    </view>
+    <block wx:for="{{StarProject}}" wx:key="{{id}}">
+      <!-- 置顶列表项 -->
+      <view class='staritem' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
+        <view class='staritem-one' bindtap='projectmore'>
+          <image class='staritem-icon' src='{{item.icon}}'></image>
+          <view class='staritem-text'>{{item.name}}</view>
         </view>
-        <block wx:for="{{StarProject}}" wx:key="{{id}}">
-            <!-- 置顶列表项 -->
-            <view class='staritem' bindtap='ClickStarItem' data-index="{{index}}">
-              <view class='staritem-one' bindtap='projectmore'>
-                <image class='staritem-icon'  src='{{item.icon}}'></image>
-                <view class='staritem-text'>{{item.name}}</view>
-              </view>
-              <view class='staritem-two' bindtap='showProjectDetail' data-index="{{index}}">
-                <image class='staritemmore-icon' src='/img/more.png'></image>
-              </view>
-            </view>
-        </block>
-
-
-        <!-- 标题 -->
-        <view class='title'>我的项目</view>
-        <block wx:for="{{Project}}" wx:key="{{id}}">
-            <!-- 列表项 -->
-            <view class='item' bindtap='ClickItem' data-index="{{index}}">
-              <view class='item-one' bindtap='projectmore'>
-                <image class='item-icon' src='{{item.icon}}'></image>
-                <view class='item-text'>{{item.name}}</view>
-              </view>
-              <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}">
-                <image class='itemmore-icon' src='/img/more.png'></image>
-              </view>
-            </view>
-        </block>
-
-        <!-- 添加项目 -->
-        <view class='addProject' bindtap='buildProject'>
-            <image class='addProject-icon' src='/img/add.png'></image>
-            <view class='addProject-text'>添加项目</view>
+        <view class='staritem-two' bindtap='showProjectDetail' data-index="{{index}}">
+          <image class='staritemmore-icon' src='/img/more.png'></image>
         </view>
+      </view>
+    </block>
+
+
+    <!-- 标题 -->
+    <view class='title'>我的项目</view>
+    <view wx:for="{{Project}}" wx:key="{{id}}">
+      <!-- 列表项 -->
+      <view class='item' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
+
+         <view class='item-one' bindtap='projectmore'> 
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>{{item.name}}</view>
+        </view>
+        <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}">
+          <image class='itemmore-icon' src='/img/more.png'></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加项目 -->
+    <view class='addProject' bindtap='buildProject'>
+      <image class='addProject-icon' src='/img/add.png'></image>
+      <view class='addProject-text'>添加项目</view>
+    </view>
   </view>
 </view>

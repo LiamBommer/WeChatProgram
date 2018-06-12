@@ -130,3 +130,16 @@
   background: #09BB07;
   margin-top: 40rpx;
 }
+
+/*** 点子列表淡入 ***/
+@keyframes ideaAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0rpx);
+  }
+}
+/*** 点子列表淡入 END ***/

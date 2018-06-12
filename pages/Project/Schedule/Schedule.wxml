@@ -21,8 +21,8 @@
       <block wx:for="{{item.schedules}}" wx:for-item="schedules" wx:for-index="scheduleIndex" wx:key="{{scheduleId}}">
 
           <!-- 列表项 -->
-        <view class='view-container {{schedules.hasBorder}}' >
-          <view class='item' >
+        <view class='view-container {{schedules.hasBorder}}' style="{{scheduleAnimationStyle}};">
+          <view class='item' style="{{scheduleExpandAnimationStyle}}">
 
             <view class='item-first' bindtap='expandSchedule' data-year-index='{{index}}' data-schedule-index='{{scheduleIndex}}'>
               <view class='item-time'>{{schedules.startMonth}}月{{schedules.startDate}}日</view>

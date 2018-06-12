@@ -14,7 +14,7 @@
       <block wx:for="{{Announcement}}">
         <view class='item-container'>
             <!-- 列表项 -->
-            <view class='item' bindtap='showAnnouncementDetail' data-index="{{index}}">
+            <view class='item' bindtap='showAnnouncementDetail' data-index="{{index}}" style="{{announcementAnimationStyle}}">
               <!-- 列表左 -->
               <view class='item-first'>
                 <image class='item-icon' src='{{item.icon}}'></image>

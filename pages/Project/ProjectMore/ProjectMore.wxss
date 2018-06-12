@@ -19,3 +19,23 @@
 .nav .nav-select{
   color: #09BB07;
 }
+
+.nav .nav-item {
+  width: calc(750rpx / 5);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 5rpx solid transparent;
+}
+
+.nav .nav-cover {
+  width: calc(750rpx / 5);
+  height: 90rpx;
+  position: absolute;
+  left: 0rpx;
+  background-color: transparent;
+  border-bottom: 5rpx solid #09bb07;
+  z-index: 50;
+  transition: left 0.4s ease;
+}

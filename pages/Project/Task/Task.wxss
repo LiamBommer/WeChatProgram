@@ -173,3 +173,19 @@
   margin-left: 17rpx;
   font-size: 28rpx;
 }
+
+/*** 任务项淡入 ***/
+@keyframes taskAnimation {
+    0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+    /* transform: translateY(-20rpx); */
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    /* transform: translateY(0); */
+  }  
+}
+/*** 任务项淡入 END ***/

@@ -85,6 +85,13 @@ Page({
     showFeedbackModel: false,
     showDescription: false,
 
+    // For Animation
+    aniRemindTimeStyle: '',
+    aniFeedbackStyle: '',
+    aniDescriptionStyle: '',
+    aniChildTaskStyle: '',
+
+
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
     icon_project:'/img/taskdetail-project.png',
@@ -274,6 +281,10 @@ Page({
              that.setData({
                showRemindTime: true
              });
+
+             // 弹出动画
+             that.aniShowRemindTime()
+
              wx.showToast({
                title: '添加成功',
              })
@@ -293,6 +304,10 @@ Page({
              that.setData({
                showFeedbackTime: true
              });
+
+             // 弹出动画
+             that.aniShowFeedback()
+
              wx.showToast({
                title: '添加成功',
              })
@@ -331,6 +346,10 @@ Page({
              that.setData({
                showDescription: true
              });
+
+             // 弹出动画
+             that.aniShowDescription()
+
              wx.showToast({
                title: '添加成功',
              })
@@ -1104,6 +1123,9 @@ addTaskNotification:function (projId, taskId, content) {
             remindtime:'',
             showRemindTime:false,
           })
+
+          // 弹出动画
+          that.aniHideRemindTime()
         }
       }
     })
@@ -1295,6 +1317,10 @@ addTaskNotification:function (projId, taskId, content) {
           that.setData({
             ChildTask: ChildTask
           })
+
+          //子任务加载动画
+          that.aniShowChildTask()
+
           console.log("ChildTask:", that.data.ChildTask)
         }
         // 加载完成
@@ -1666,6 +1692,70 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         }
 
       }
+    })
+  },
+
+
+  /**
+   * 动画 - 提醒时间显示
+   */
+  // 提醒时间
+  aniShowRemindTime: function() {
+    var aniRemindTimeStyle = ''
+    aniRemindTimeStyle += '-webkit-animation-name: showMoreContent;'
+    aniRemindTimeStyle += '-webkit-animation-duration: 1.2s;'
+    aniRemindTimeStyle += "-webkit-animation-timing-function: linear;"
+    aniRemindTimeStyle += "-webkit-animation-iteration-count: 1;"
+    this.setData({
+      aniRemindTimeStyle: ''
+    })
+    this.setData({
+      aniRemindTimeStyle: aniRemindTimeStyle
+    })
+  },
+
+  // 反馈时间
+  aniShowFeedback: function() {
+    var aniFeedbackStyle = ''
+    aniFeedbackStyle += '-webkit-animation-name: showMoreContent;'
+    aniFeedbackStyle += '-webkit-animation-duration: 1.2s;'
+    aniFeedbackStyle += "-webkit-animation-timing-function: linear;"
+    aniFeedbackStyle += "-webkit-animation-iteration-count: 1;"
+    this.setData({
+      aniFeedbackStyle: ''
+    })
+    this.setData({
+      aniFeedbackStyle: aniFeedbackStyle
+    })
+  },
+
+  // 任务描述
+  aniShowDescription: function () {
+    var aniDescriptionStyle = ''
+    aniDescriptionStyle += '-webkit-animation-name: showMoreContent;'
+    aniDescriptionStyle += '-webkit-animation-duration: 1.2s;'
+    aniDescriptionStyle += "-webkit-animation-timing-function: linear;"
+    aniDescriptionStyle += "-webkit-animation-iteration-count: 1;"
+    this.setData({
+      aniDescriptionStyle: ''
+    })
+    this.setData({
+      aniDescriptionStyle: aniDescriptionStyle
+    })
+  },
+
+  // 子任务
+  aniShowChildTask: function () {
+    var aniChildTaskStyle = ''
+    aniChildTaskStyle += '-webkit-animation-name: showChildTask;'
+    aniChildTaskStyle += '-webkit-animation-duration: 0.4s;'
+    aniChildTaskStyle += "-webkit-animation-timing-function: ease;"
+    aniChildTaskStyle += "-webkit-animation-iteration-count: 1;"
+    this.setData({
+      aniChildTaskStyle: ''
+    })
+    this.setData({
+      aniChildTaskStyle: aniChildTaskStyle
     })
   },
 

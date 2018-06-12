@@ -281,3 +281,58 @@ button[hover-class="share-hover"]::after {
   -webkit-transform: translateX(0);
   transform: translateX(0);
  }
+
+ /* Animation */
+ @keyframes showMoreContent {
+   0% {
+    opacity: 0;
+    height: 0rpx;
+    background-color: white;
+   }
+   40% {
+    opacity: 1;
+    height: 90rpx;
+    background-color: white;
+   }
+   60% {
+    opacity: 1;
+    height: 90rpx;
+    background-color: white;
+   }
+   70% {
+    background-color: #f2f2f2;
+   }
+   80% {
+     background-color: white;
+   }
+   90% {
+     background-color: #f2f2f2;
+   }
+   100% {
+     background-color: white;
+   }
+ }
+ @keyframes hideRemindTime {
+   0% {
+    opacity: 1;
+    height: 90rpx;
+   }
+   100% {
+    opacity: 0;
+    height: 0rpx;
+   }
+ }
+ @keyframes showChildTask {
+    0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+    /* transform: translateY(-20rpx); */
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    /* transform: translateY(0); */
+  }  
+}
+ /* Animation END */

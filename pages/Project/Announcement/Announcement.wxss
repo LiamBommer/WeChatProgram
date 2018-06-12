@@ -109,3 +109,16 @@
   width: 80rpx;
   height: 80rpx;
 }
+
+/*** 公告列表淡入 ***/
+@keyframes announcementAnimation {
+  0% {
+    opacity: 0;
+    height: 0rpx;
+  }
+  100% {
+    opacity: 1;
+    height: 136rpx;
+  }
+}
+/*** 公告列表淡入 END ***/

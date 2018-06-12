@@ -47,9 +47,10 @@
         </view>
 
         <!-- 内容隐藏 -->
-      <view class="touch-item '{{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}'>
+      <view class="touch-item {{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}; {{aniRemindTimeStyle}}'>
         <view style='{{RemindtimetxtStyle}}'
-          class="contentminddle scroll-view-item item-view"bindtouchmove="touchmoveRemindtime" > 
+          class="contentminddle scroll-view-item item-view"
+          bindtouchmove="touchmoveRemindtime" > 
             <image src='/img/alarm.png'></image>
             <view class='desc'>
                 <picker mode="date" value="{{remindtime}}" bindchange="RemindTimeChange">
@@ -64,7 +65,7 @@
          </view>
       </view>
 
-        <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}'>
+        <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}; {{aniFeedbackStyle}}'>
           <view style='{{FeedbacktxtStyle}}'
             class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveFeedback" >
             <image src='/img/feedback_time.png'></image>
@@ -87,7 +88,7 @@
               <text class='desc'>反馈模板</text>
           </view>
 
-          <view style='display:{{showDescription? "" : "none"}}'
+          <view style='display:{{showDescription? "" : "none"}}; {{aniDescriptionStyle}}'
             class="scroll-view-item item-view" bindtap='Describe'>
             <image src='/img/task_description.png'></image>
             <text class='desc'>任务描述</text>
@@ -112,7 +113,7 @@
           <image src='{{icon_add}}' bindtap='AddChildTask'></image>
         </view>
 
-            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" >
+            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" style="{{aniChildTaskStyle}}">
                 <view class="contentminddle item-view ver-align space-between item-padding" bindtouchmove="touchmove" 
                   data-index="{{index}}" 
                   style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>

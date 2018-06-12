@@ -17,7 +17,7 @@
   <view style='display:{{Idea.length==0? "none":""}}'>
     <view class='post-view'>
       <block wx:for="{{Idea}}" wx:key="{{id}}">
-          <view class='post' style='background-color:{{item.color}}'
+          <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
             bindtap='showIdeaDetail' data-index='{{item.id}}'>
             <view class='user-info ver-align'>
               <image src='{{item.userPic}}' class='avatar'></image>

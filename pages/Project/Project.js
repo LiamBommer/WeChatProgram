@@ -8,21 +8,18 @@ Page({
    */
   data: {
     //星标项目
-    StarProject: [
-      {
-        id:"",
-        icon: "/img/logo.png",
-        name: "静态项目"
-      }
-    ],
+    StarProject: [],
     //普通项目
-    Project: [
-      {
-        id: "",
-        icon: "",
-        name: ""
-      },
-    ]
+    Project: [],
+
+    // 涟漪效果
+    rippleViewStyle: '',
+    rippleStyle: '',
+
+    // Project list animation
+    projectAnimationStyle: '',
+    starProjectAnimationStyle: '',
+
   },
   
   //点击星标项目
@@ -136,6 +133,8 @@ Page({
           // 加载完成
           wx.hideLoading()
 
+
+
         },
         error: function(error) {
           //失败
@@ -148,6 +147,71 @@ Page({
     })
 
   },
+
+  /*
+   * 涟漪点击效果
+   */
+  itemRippleTap: function(e) {
+    
+    // 获取点击位置
+    var x = e.touches[0].pageX - 75
+    var y = e.touches[0].pageY - 75
+    console.log(e.touches[0], 'x: '+x+',y: '+y)
+
+    // 设置动画形态
+    var rippleViewStyle = "top: "+y*2+"rpx; left: "+x*2+"rpx;"
+    rippleViewStyle += "-webkit-animation: ripple-view 0.5s ease;"
+
+    var rippleStyle = "top:"+0+"rpx;left:"+0+"rpx;"
+    rippleStyle += "-webkit-animation-name: ripple;"
+    rippleStyle += "-webkit-animation-duration: 0.5s;"
+    rippleStyle += "-webkit-animation-timing-function: ease;"
+    rippleStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      rippleStyle: '',
+      rippleViewStyle: ''
+    })
+    this.setData({
+      rippleStyle: rippleStyle,
+      rippleViewStyle: rippleViewStyle
+    })
+
+  },
+
+  
+  /*
+   * 列表加载动效
+   */
+  projectAnimation: function() {
+    var projectAnimationStyle = ''
+    projectAnimationStyle += '-webkit-animation-name: projectAnimation;'
+    projectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    projectAnimationStyle += "-webkit-animation-timing-function: ease;"
+    projectAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      projectAnimationStyle: ''
+    })
+    this.setData({
+      projectAnimationStyle: projectAnimationStyle
+    })
+  },
+  starProjectAnimation: function () {
+    var starProjectAnimationStyle = ''
+    starProjectAnimationStyle += '-webkit-animation-name: starProjectAnimation;'
+    starProjectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    starProjectAnimationStyle += "-webkit-animation-timing-function: ease;"
+    starProjectAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      starProjectAnimationStyle: ''
+    })
+    this.setData({
+      starProjectAnimationStyle: starProjectAnimationStyle
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -175,6 +239,11 @@ Page({
 
     var that = this
     that.getProjectList()
+
+    //animation
+    // Motion setting
+    that.projectAnimation()
+    that.starProjectAnimation()
   },
 
   /**

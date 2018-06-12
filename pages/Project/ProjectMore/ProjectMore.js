@@ -156,9 +156,17 @@ Page({
 
     //墙列表
     idea: { img_visible: true, bg_img: '',},
-    Idea:[
+    Idea:[],
 
-    ],
+    // Task list animation
+    taskAnimationStyle: '',
+    announcementAnimationStyle: '',
+    scheduleAnimationStyle: '',
+    meetingAnimationStyle: '',
+    ideaAnimationStyle: '',
+
+    // 导航栏tab动画
+    nav_cover_left: 0,
 
   },
 
@@ -295,6 +303,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 0,
     });
   },
 
@@ -307,6 +318,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 150,
     });
   },
 
@@ -319,6 +333,9 @@ Page({
       exitSchedule: true,
       exitMeeting: false,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 300,
     });
   },
 
@@ -331,6 +348,9 @@ Page({
       exitSchedule: false,
       exitMeeting: true,
       exitIdea: false,
+
+      // Nav cover animation
+      nav_cover_left: 450,
     });
   },
 
@@ -343,6 +363,9 @@ Page({
       exitSchedule: false,
       exitMeeting: false,
       exitIdea: true,
+
+      // Nav cover animation
+      nav_cover_left: 600,
     });
   },
 
@@ -1217,6 +1240,7 @@ Page({
         [path]: true,
         [pathHasBorder]: 'hasBorder'
       })
+      that.scheduleExpandAnimation()
     }
 
   },
@@ -1300,6 +1324,101 @@ Page({
   },
 
 
+  /*
+    * 列表加载动效
+    */
+  taskAnimation: function () {
+    var taskAnimationStyle = ''
+    taskAnimationStyle += '-webkit-animation-name: taskAnimation;'
+    taskAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    taskAnimationStyle += "-webkit-animation-timing-function: ease;"
+    taskAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      taskAnimationStyle: ''
+    })
+    this.setData({
+      taskAnimationStyle: taskAnimationStyle
+    })
+  },
+
+  announcementAnimation: function () {
+    var announcementAnimationStyle = ''
+    announcementAnimationStyle += '-webkit-animation-name: announcementAnimation;'
+    announcementAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    announcementAnimationStyle += "-webkit-animation-timing-function: ease;"
+    announcementAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      announcementAnimationStyle: ''
+    })
+    this.setData({
+      announcementAnimationStyle: announcementAnimationStyle
+    })
+  },
+
+  scheduleAnimation: function () {
+    var scheduleAnimationStyle = ''
+    scheduleAnimationStyle += '-webkit-animation-name: scheduleAnimation;'
+    scheduleAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    scheduleAnimationStyle += "-webkit-animation-timing-function: ease;"
+    scheduleAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      scheduleAnimationStyle: ''
+    })
+    this.setData({
+      scheduleAnimationStyle: scheduleAnimationStyle
+    })
+  },
+
+  scheduleExpandAnimation: function () {
+    var scheduleExpandAnimationStyle = ''
+    scheduleExpandAnimationStyle += '-webkit-animation-name: scheduleExpandAnimation;'
+    scheduleExpandAnimationStyle += '-webkit-animation-duration: 0.2s;'
+    scheduleExpandAnimationStyle += "-webkit-animation-timing-function: ease;"
+    scheduleExpandAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      scheduleExpandAnimationStyle: '',
+      scheduleAnimationStyle: ''
+    })
+    this.setData({
+      scheduleExpandAnimationStyle: scheduleExpandAnimationStyle
+    })
+  },
+
+  meetingAnimation: function () {
+    var meetingAnimationStyle = ''
+    meetingAnimationStyle += '-webkit-animation-name: meetingAnimation;'
+    meetingAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    meetingAnimationStyle += "-webkit-animation-timing-function: ease;"
+    meetingAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      meetingAnimationStyle: ''
+    })
+    this.setData({
+      meetingAnimationStyle: meetingAnimationStyle
+    })
+  },
+
+  ideaAnimation: function () {
+    var ideaAnimationStyle = ''
+    ideaAnimationStyle += '-webkit-animation-name: ideaAnimation;'
+    ideaAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    ideaAnimationStyle += "-webkit-animation-timing-function: ease;"
+    ideaAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      ideaAnimationStyle: ''
+    })
+    this.setData({
+      ideaAnimationStyle: ideaAnimationStyle
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -1323,6 +1442,12 @@ Page({
       mask: 'true'
     })
 
+    // 列表加载动效
+    this.taskAnimation()
+    this.announcementAnimation()
+    this.scheduleAnimation()
+    this.meetingAnimation()
+    this.ideaAnimation()
 
     var that = this
     // wx.startPullDownRefresh()//刷新

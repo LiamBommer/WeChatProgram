@@ -120,7 +120,8 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 100rpx;
+    /* height: 100rpx; */
+    /* height: 0rpx; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -182,3 +183,79 @@
 .Project-container .addProject .addProject-text{
   margin-left: 30rpx;
 }
+
+/*
+ * 点击涟漪效果
+ */
+ .ripple-view {
+  position: absolute;
+  background-color: transparent;
+  border-radius: 50%;
+  z-index: 200;
+ }
+
+.ripple {
+  position: absolute;
+  background-color: #b2b2b2;
+  opacity: 0;
+  z-index: 200;
+  border-radius: 50%;
+}
+
+@keyframes ripple {
+  0%{
+    top: calc((300rpx - 60rpx)/2);
+    left: calc((300rpx - 60rpx)/2);
+    opacity: 1;
+    width: 60rpx;
+    height: 60rpx;
+  }
+  50% {
+    top: calc((300rpx - 120rpx)/2);
+    left: calc((300rpx - 120rpx)/2);
+    opacity: 50;
+    width: 120rpx;
+    height: 120rpx;
+  }
+  100% {
+    top: calc((300rpx - 150rpx)/2);
+    left: calc((300rpx - 150rpx)/2);
+    opacity: 0;
+    width: 180rpx;
+    height: 180rpx;
+  }
+}
+
+@keyframes ripple-view {
+  0% {
+    width: 300rpx;
+    height: 300rpx;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/*** 点击涟漪效果 END ***/
+
+/*** 列表淡入 ***/
+@keyframes starProjectAnimation {
+  0% {
+    opacity: 0;
+    height: 0rpx;
+  }
+  100% {
+    opacity: 1;
+    height: 120rpx;
+  }
+}
+@keyframes projectAnimation {
+  0% {
+    opacity: 0;
+    height: 0rpx;
+  }
+  100% {
+    opacity: 1;
+    height: 100rpx;
+  }
+}
+/*** 列表淡入 END ***/

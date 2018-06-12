@@ -49,7 +49,7 @@
                     </block>
                     
                     <block wx:else>
-                      <view class='taskitem' >
+                      <view class='taskitem' style="{{taskAnimationStyle}}">
                           <!-- 内容上部分 -->
                           <view class='taskitem-top'>
                               <checkbox-group bindchange="checkboxChange" >
