@@ -63,8 +63,8 @@ page{
 }
 
 .item-container .item .item-first .item-icon{
-   width: 70rpx;
-   height: 70rpx;
+   width: 80rpx;
+   height: 80rpx;
    border-radius: 10rpx;
 }
 

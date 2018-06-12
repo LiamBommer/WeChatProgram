@@ -1085,7 +1085,7 @@ Page({
               var startDate = startTimeDate.getDate()
 
               var endTimeDate = new Date(new Date(schedules[i].get('end_time').replace(/-/g, "/")))
-              var endMonth = endTimeDate.getMonth()   // 截至时间月日
+              var endMonth = endTimeDate.getMonth() + 1   // 截至时间月日
               var endDate = endTimeDate.getDate()
 
               var scheduleObject = {}

@@ -56,6 +56,7 @@ Page({
     leaderId:'',//任务负责人ID
     member:[],//任务成员
     projectMember:[],//项目成员
+    phValue:'在此输入文字...',//输入框placeholder内容
     focus:false,//输入框焦点
     show: false,
 
@@ -508,12 +509,12 @@ Page({
 
   //点击沟通模板
   ClickCommModel: function () {
-    // 使页面滚动到评论区
-    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
-      wx.pageScrollTo({
-        scrollTop: rect.height - 200
-      })
-    }).exec()
+    // // 使页面滚动到评论区
+    // wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+    //   wx.pageScrollTo({
+    //     scrollTop: rect.height - 200
+    //   })
+    // }).exec()
     this.setData({
       CommModel: true,
     });
@@ -529,18 +530,19 @@ Page({
       isInputing: true
     });
       // 使页面滚动到评论区
-    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
-      console.log("rect",rect.height)
-      wx.pageScrollTo({
-        scrollTop: rect.height - 200 
-      })
-    }).exec()
+    // wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+    //   console.log("rect",rect.height)
+    //   wx.pageScrollTo({
+    //     scrollTop: rect.height - 200 
+    //   })
+    // }).exec()
   },
+
 
   // 输入框失去焦点，发送按钮变回图片
   inputBlur: function() {
     this.setData({
-      isInputing: false
+      isInputing: false,
     });
   },
 
@@ -584,11 +586,11 @@ Page({
   //聊天框发送图片
   PictrueSelect:function (e) {
     // 使页面滚动到评论区
-    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
-      wx.pageScrollTo({
-        scrollTop: rect.height - 200
-      })
-    }).exec()
+    // wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+    //   wx.pageScrollTo({
+    //     scrollTop: rect.height - 200
+    //   })
+    // }).exec()
     var that = this;
     var taskId = that.data.taskId
     var publisherId = getApp().globalData.userId
@@ -655,11 +657,23 @@ Page({
             feedback_mod: result.attributes.feedback_mod,
           })
         }
+        else {
+          that.setData({
+            showFeedbackModel: false,
+            feedback_mod: "",
+          })
+        }
         //任务描述
         if (result.attributes.desc != null && result.attributes.desc != '') {
           that.setData({
             showDescription: true,
             taskDesc: result.attributes.desc,
+          })
+        }
+        else {
+          that.setData({
+            showDescription: false,
+            taskDesc: "",
           })
         }
         // 加载完成
@@ -1700,25 +1714,6 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getTaskRecord(requestId)//获取任务记录
       that.getTaskComment(requestId)//获取评论
 
-      //更改任务负责人时刷新后台
-      // var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
-      // if (requestId != "" && leaderId != "") {
-      //   console.log("新负责人：刷新后台！", requestId, leaderId)
-      //   wx.showLoading({
-      //     title: '正在加载',
-      //     mask: 'true'
-      //   })
-      //   that.setData({
-      //     leaderId: leaderId
-      //   })
-      //   that.getTaskMember(requestId, leaderId)//获取任务成员
-      //   that.getSubtasks(requestId);//获取子任务列表
-      // }
-      // else {
-      //   //返回时刷新后台
-      //   that.getTaskMember(requestId, that.data.leaderId)//获取任务成员
-      //   that.getSubtasks(requestId);//获取子任务列表
-      // }
     }
     else {
       //任务
@@ -1766,27 +1761,6 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         },
       })
 
-      //更改任务负责人时刷新后台
-      // var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//任务负责人ID
-      // var taskId = that.data.taskId
-      // if (taskId != "" && leaderId != "") {
-      //   console.log("新负责人：刷新后台！", taskId, leaderId)
-      //   wx.showLoading({
-      //     title: '正在加载',
-      //     mask: 'true'
-      //   })
-      //   that.setData({
-      //     leaderId: leaderId
-      //   })
-      //   that.getTaskMember(taskId, leaderId)//获取任务成员
-      //   that.getSubtasks(taskId);//获取子任务列表
-      // }
-      // else {
-      //   //返回时刷新后台
-      //   that.getTaskMember(taskId, that.data.leaderId)//获取任务成员
-      //   that.getSubtasks(taskId);//获取子任务列表
-      // }
-
     }
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间
@@ -1813,6 +1787,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
             Inputcontent: "",
             scrollTop: scrollTop,
           });
+          wx.removeStorageSync("CommModel")
         }
       })
       
@@ -1835,7 +1810,6 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     //清除这个页面的缓存
     wx.removeStorageSync("CommModel-id")
     wx.removeStorageSync("CommModel-content")
-    wx.removeStorageSync("CommModel")
     wx.removeStorageSync("TaskDetail-desc")
     wx.removeStorageSync("changePrincipal-newLeaderId")
     wx.removeStorageSync("FeedBack-content")

@@ -4,20 +4,18 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #f2f2f2;
 }
 
 .Mine-Meeting-container .Meeting-title{
     color: #888888;
-    background-color: #f2f2f2;
-    padding: 30rpx 0rpx 16rpx 40rpx;
     font-size: 28rpx;
-    width: 100%;
+    padding:30rpx 30rpx 16rpx 30rpx;
 }
 
 .Mine-Meeting-container .Meeting-item{
     background: #fff;
     color: #000;
-    width: 100%;
     height: 135rpx;
     display: flex;
     justify-content: space-between;
@@ -29,7 +27,7 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-around;
-    margin-left: 40rpx;
+    padding-left: 40rpx;
 }
 
 .Mine-Meeting-container .Meeting-item .Meeting-item-first .Meeting-item-date{

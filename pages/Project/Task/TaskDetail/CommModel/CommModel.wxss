@@ -58,7 +58,9 @@ radio-group{
 }
 
 .CommModel-container .rightcontent .text{
-  padding-right: 20rpx;
+  padding-bottom:5rpx;
+  padding-right:40rpx;
+  font-size:28rpx;
    /* 多行省略 */
    display: -webkit-box;
    line-height: 40rpx;

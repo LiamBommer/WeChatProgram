@@ -183,8 +183,9 @@
           <form bindsubmit='sendMessage'>
             <view class='input'>
                 <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
-                <input fixed="true" name="review" type='text' placeholder='在此输入文字...' 
-                bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送"
+                <input fixed="true" name="review" type='text' placeholder='{{phValue}}' 
+                bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" 
+                value='{{Inputcontent}}' confirm-type="发送"
                 focus='{{focus}}'cursor-spacing="20"></input>
                 <!-- <image class='face-icon' src='/img/expression.png'></image> -->
                 <!-- 判断是否为操作系统类型 -->
