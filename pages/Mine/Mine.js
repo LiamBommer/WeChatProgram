@@ -408,7 +408,7 @@ Page({
     meetingmemberQuery.equalTo('user', userId)
     meetingmemberQuery.include('meeting')
     meetingmemberQuery.ascending('meeting.start_time')
-    // meetingmemberQuery.ascending('meeting.start_time')
+
     meetingmemberQuery.find({
       success: function (results) {
         

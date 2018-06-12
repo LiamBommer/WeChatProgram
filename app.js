@@ -3,7 +3,7 @@
 const Bmob = require('./utils/bmob.js')
 Bmob.initialize("acb853b88395063829cae5f88c29fb82", "3b85938d52110714c4684edd13de39a4")
 var user = new Bmob.User();//实例化
-
+var communicate_sample_model1= '你可以在任务评论里发送沟通模板'
 
 App({
 
@@ -15,10 +15,7 @@ App({
     wx.login({
       success: function (res) {
         user.loginWithWeapp(res.code).then(function (user) {
-          console.log('CODE换取的数据', user)
           var openid = user.get("authData").weapp.openid;
-          that.globalData.openid = openid
-          //console.log(user, 'user', user.id, res);
           if (user.get("nickName")) {
 
             // 第二次登录，打印用户之前保存的昵称
@@ -74,7 +71,12 @@ App({
                           result.save();
 
                         }
-                      });
+                      })
+                      //为用户添加空的项目“我的项目”
+                      that.buildProject('我的项目','空项目')
+                      //为用户添加实例沟通模板
+                      that.addCommunicateModel(user.id,1,communicate_sample_model1)
+                      
                       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                       // 所以此处加入 callback 以防止这种情况
                       if (that.userInfoReadyCallback) {
@@ -139,10 +141,143 @@ App({
         }
       })
 
-    }
+    } 
   },
+  buildProject: function (title, desc) {
+    var that = this;
+    var Project = Bmob.Object.extend("project")
+    var project = new Project()
+    var currentUser = Bmob.User.current()
+    var leader_id = "0"
+    var leader_name = "0"
+
+    if (currentUser) {
+      leader_id = currentUser.id
+      leader_name = currentUser.get("nickName")
+      console.log("当前用户:", leader_id, leader_name)
+    }
+    console.log(title)
+    console.log(desc)
+    project.save({
+      name: title,
+      desc: desc,
+      leader_id: leader_id,
+      leader_name: leader_name,
+      is_first: false,
+      is_delete: false,
+      img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/05/18/ff3371c040fe5b6380011eb3cb1770a4.png"  //涛哥找的默认图片
+    }, {
+        success: function (result) {
+          console.log("创建项目成功！", result)
+          that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
+          that.createTaskList(result.id/*项目id*/, "未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
+          wx.hideLoading()
+          wx.showToast({
+            title: '成功创建项目',
+            icon: 'success',
+            duration: 1000
+          });
+          wx.switchTab({
+            url: '../Project',
+          })
+        },
+        error: function (result, error) {
+          wx.showToast({
+            title: '失败',
+            icon: 'none',
+          });
+          console.log("创建项目失败！", error)
+          //失败情况
+
+        }
+      })
+
+  },
+  /**
+* 2018-05-19
+* @author mr.li
+* @parameter projId 项目id，title任务看板名称
+* 创建任务看板
+*/
+  createTaskList: function (projId, title) {
+    var that = this
+    var TaskList = Bmob.Object.extend("task_list")
+    var taskList = new TaskList()
+
+    //添加任务看板
+    taskList.save({
+      title: title,
+      proj_id: projId,
+      is_delete: false
+    }, {
+        success: function (result) {
+          //添加任务看板成功
+
+        },
+        error: function (result, error) {
+          //添加任务看板失败
+          console.log("添加任务看板失败!")
+        }
+      })
+  },
+  /**
+ * @author mr.li
+ * @parameter projId项目id，userId用户id
+ * 当用户创建项目时，添加项目成员表，并指定为领导人
+ */
+  addLeader: function (projId, userId) {
+    var ProjectMember = Bmob.Object.extend("proj_member")
+    var projMember = new ProjectMember();
+
+    projMember.save({
+      proj_id: projId,
+      user_id: userId,
+      is_leader: true
+    }, {
+        success: function (result) {
+          //添加成功
+          console.log("保存项目领导成功！")
+        },
+        error: function (result, error) {
+          //添加失败
+          console.log("保存项目领导失败！", error)
+        }
+      })
+  },
+  /**
+  * @parameter userId用户id， _type模板类型 1 代表 ‘意见’，2 代表’提问‘， 3 代表’点赞‘, modelContent 模板内容
+  * 根据用户id 和 模板类型添加模板
+  */
+  addCommunicateModel: function (userId, _type, modelContent) {
+    var that = this
+    var CommunicateMod = Bmob.Object.extend('communicate_mod')
+    var communicatemod = new CommunicateMod()
+
+    //添加指定类型的沟通模板
+    if (modelContent != null && modelContent != '') {
+      communicatemod.save({
+        user_id: userId,  //用户id
+        type: _type,      //模板类型   1 代表 ‘意见’，2 代表’提问‘， 3 代表’点赞‘
+        content: modelContent  //模板内容
+      }, {
+          success: function (result) {
+            //成功
+            console.log('提示用户添加沟通模板成功过！')
+            wx.showToast({
+              title: '添加模板成功',
+            })
+            wx.navigateBack()
 
 
+          },
+          error: function (result, error) {
+            //失败
+            console.log('添加指定类型的沟通模板失败:', error)
+          }
+        })
+    }
+
+  },
 
   globalData: {
     userInfo: null,
