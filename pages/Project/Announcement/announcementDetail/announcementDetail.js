@@ -25,6 +25,8 @@ Page({
     icon_belonging: '/img/belonging.png',
     icon_close: '/img/close.png',
     icon_more: '/img/more.png',
+
+    isShared: false,  // 是否从分享页面进入的标识
     
     //未读成员
     noread: [
@@ -502,13 +504,30 @@ Page({
   //   })
   },
 
+
+  /**
+       * 分享页面按钮，回到首页
+       */
+  showScheduleList: function () {
+    wx.switchTab({
+      url: '/pages/Project/Project',
+    })
+  },
   
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
+
+    // 接收页面参数，判断是否从分享进入
+    console.log('页面参数', options)
+    if(options.isShared) {
+      this.setData({
+        isShared: options.isShared,
+        announcementId: options.announcementId,
+      })
+    }
 
   },
 
@@ -530,9 +549,18 @@ Page({
 
    //获取通知的公告ID
    var requestId = wx.getStorageSync("Notification-announcementId")
+   //获取分享的标识
+   var isShared = this.data.isShared
+
    if (requestId != "") {
      that.getAnnouncementDetail(requestId)
      that.getReadAnnounce(requestId)
+   }
+   else if (isShared) {
+     // 从分享的页面进入
+     var announcementId = that.data.announcementId
+     that.getAnnouncementDetail(announcementId)
+     that.getReadAnnounce(announcementId)
    }
    else {
      // 获取公告id，进行查询
@@ -587,6 +615,23 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+    var that = this
+    var currentUserName = getApp().globalData.nickName
+    var title = that.data.title
+    var announcementId = that.data.id
+
+    // 分享
+    return {
+      title: currentUserName + '分享了公告: ' + title,
+      path: "pages/Project/Announcement/announcementDetail/announcementDetail?isShared=true&announcementId=" + announcementId,
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: 'success',
+        })
+      },
+    }
 
   }
 })

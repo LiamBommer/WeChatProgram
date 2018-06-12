@@ -104,6 +104,9 @@ Page({
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
 
+    // 是否从分享页面进入的标识
+    isShared: false,  
+
     //子任务循环列表
     ChildTask:[
       // {
@@ -1761,9 +1764,30 @@ sendTaskCommentPicture:function (taskId, publisherId) {
 
 
   /**
+       * 分享页面按钮，回到首页
+       */
+  showScheduleList: function () {
+    wx.switchTab({
+      url: '/pages/Project/Project',
+    })
+  },
+
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    // 接收页面参数，判断是否从分享进入
+    console.log('页面参数', options)
+    if (options.isShared) {
+      this.setData({
+        isShared: options.isShared,
+        taskId: options.taskId,
+        leaderId: options.leaderId
+      })
+    }
+
   },
 
   /**
@@ -1788,6 +1812,9 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     var projmember = wx.getStorageSync("Notification-projmemberArr")
     var taskLeaderId = wx.getStorageSync("Notification-taskLeaderId")
     console.log("Notification", requestId, projectName, projmember, taskLeaderId)
+    //获取分享的标识
+    var isShared = this.data.isShared
+
     if (requestId != "" && projectName != "" && projmember != "" && taskLeaderId != "") {
       console.log("Notification", requestId, projectName)
       var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
@@ -1807,6 +1834,16 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getTaskRecord(requestId)//获取任务记录
       that.getTaskComment(requestId)//获取评论
 
+    }
+    else if(isShared) {
+      // 通知进入
+      var taskId = that.data.taskId
+      var leaderId = that.data.leaderId
+      that.getTaskDetail(taskId);//获取任务详情
+      that.getTaskMember(taskId, leaderId)//获取任务成员
+      that.getSubtasks(taskId);//获取子任务列表
+      that.getTaskRecord(taskId)//获取任务记录
+      that.getTaskComment(taskId)//获取评论
     }
     else {
       //任务
@@ -1936,6 +1973,24 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
+
+    var that = this
+    var currentUserName = getApp().globalData.nickName
+    var title = that.data.title
+    var taskId = that.data.taskId
+    var leaderId = that.data.leaderId
+
+    // 分享
+    return {
+      title: currentUserName + '分享了任务: ' + title,
+      path: "pages/Project/Task/TaskDetail/TaskDetail?isShared=true&taskId=" + taskId + "&leaderId=" + leaderId,
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: 'success',
+        })
+      },
+    }
 
   }
 })
