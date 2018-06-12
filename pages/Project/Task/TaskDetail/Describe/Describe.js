@@ -20,6 +20,7 @@ Page({
     var userName = getApp().globalData.nickName
     var taskId = wx.getStorageSync("TaskDetail-taskId")
     var description = content
+    console.log("save",description)
     that.modifyTaskDesc(taskId, description, userName)
     // wx.setStorageSync("FeedBack-content", content)
     wx.navigateBack({
@@ -85,6 +86,8 @@ Page({
 
     taskQuery.get(taskId, {
       success: function (result) {
+        //反馈模板
+        console.log("getTaskDetail:", result.attributes.desc)
         //任务描述
         if (result.attributes.desc != null && result.attributes.desc != '') {
           that.setData({
@@ -146,7 +149,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    wx.removeStorageSync("TaskDetail-feedback")
+    wx.removeStorageSync("TaskDetail-desc")
   },
 
   /**

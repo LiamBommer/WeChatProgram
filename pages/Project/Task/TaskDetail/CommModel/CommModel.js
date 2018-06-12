@@ -18,18 +18,12 @@ Page({
     ModelIndex: "",//当前选择的模板
     //意见模板
     ModelComment: [
-      // { index: 0, content: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
-      // { index: 1, content: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
     ],
     //提问模板
     ModelQuestion: [
-      // { index: 0, content: "模板1 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
-      // { index: 1, content: "模板2 - 微信设计中心已推出了一套网页标准控件库，包括 sketch设计控件库"},
     ], 
     //点赞模板
     ModelLike: [
-      // { index: 0, content: "模板1 - 微信设计中心已推出了一套网页标准控件库" },
-      // { index: 1, content: "模板2 - 微信设计中心已推出了一套网页标准控件库" },
     ],
   },
 
