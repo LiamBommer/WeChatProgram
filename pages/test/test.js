@@ -1,8 +1,29 @@
 // pages/test/test.js
 //测试model的接口
 
+var Bmob = require('../../utils/bmob.js')
 var test = require('../../model/notification.js')
 var testBuild = require('../../model/buildProject.js')
+
+function deleteTaskMember(projId, memberIds) {
+  var that = this
+  var Taskmember = Bmob.Object.extend('task_member')
+  var taskmemberQuery = new Bmob.Query(Taskmember)
+  if (memberIds != null && memberIds.length > 0) {
+    taskmemberQuery.equalTo('project', projId)
+    taskmemberQuery.containedIn('user_id', memberIds)
+    //删除任务成员,一次最多删除50条
+    taskmemberQuery.destroyAll({
+      success: function () {
+        //删除成功
+        console.log("删除项目后删除任务成员成功！")
+      },
+      error: function (err) {
+        // 删除失败
+      }
+    })
+  }
+}
 
 function testbuildProject() {
 
@@ -103,6 +124,8 @@ Page({
     // test.getProjMemberAndTaskleaderId('852f280d24','a291afa244')
      //test.addTaskNotification('123','178dae4e04','测试')
      //console.log('123,345,45'.split(','))
+
+     //deleteTaskMember('0ad77290d6', ['a288eb535e','46afed01fb'])
   },
   /**
    * 生命周期函数--监听页面隐藏

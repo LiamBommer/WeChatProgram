@@ -99,7 +99,7 @@ Page({
     var taskmemberQuery = new Bmob.Query(Taskmember)
     var taskmemberArr = []
     var task = Bmob.Object.createWithoutData('task', taskId)
-    var project = Bmob.Object.createWithoutData('project', project)
+    var project = Bmob.Object.createWithoutData('project', projId)
 
     if (oldmemberIds != null && oldmemberIds.length > 0) {
         taskmemberQuery.containedIn('user_id', oldmemberIds)
@@ -214,40 +214,7 @@ Page({
       }
     })
   },
-  /**
- * 2018-06-02
- *  @parameter taskId 任务id,memberIds新删除的任务成员ID数组,userName用户昵称（记录操作用）
- * 删除任务成员
- */
-  taskMemberDelete: function (taskId, memberIds, userName) {
-    var that = this
-    var Taskmember = Bmob.Object.extend('task_member')
-    var taskmemberQuery = new Bmob.Query(Taskmember)
-    if (memberIds != null && memberIds.length > 0) {
-      taskmemberQuery.equalTo('task_id', taskId)
-      taskmemberQuery.containedIn('user_id', memberIds)
-      //删除任务成员,一次最多删除50条
-      taskmemberQuery.destroyAll({
-        success: function () {
-          //删除成功
-          console.log("删除成功！")
-          //记录操作
-          that.addTaskRecord(taskId, userName, DELETE_TASK_MEMBER)
-
-          console.log("删除任务成员成功！")
-          wx.showToast({
-            title: '删除成功',
-          })
-          wx.navigateBack({
-            url: "../../memberList/memberList"
-          }) 
-        },
-        error: function (err) {
-          // 删除失败
-        }
-      })
-    }
-  },
+ 
 
   /**
  * 2018-06-02

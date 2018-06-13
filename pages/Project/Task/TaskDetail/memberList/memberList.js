@@ -216,9 +216,14 @@ Page({
     var memberObjects = []
 
         var user = Bmob.Object.createWithoutData("_User", memberId)
+        var task = Bmob.Object.createWithoutData("task", taskId)
+        var project = Bmob.Object.createWithoutData("project", wx.getStorageSync('Project-detail').id)
         var taskmember = new Taskmember()
         taskmember.set('user_id', user)
         taskmember.set('task_id', taskId)
+        taskmember.set('task',task)
+        taskmember.set('project', project)
+        
         memberObjects.push(taskmember)
       if (memberObjects != null && memberObjects.length > 0) {
         Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {

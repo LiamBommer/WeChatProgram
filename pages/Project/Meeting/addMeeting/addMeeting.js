@@ -101,6 +101,7 @@ Page({
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
     var meeting = new Meeting()
+    var project = Bmob.Object.createWithoutData('project',projId)
     //添加会议
     meeting.save({
       proj_id: projId,
@@ -108,7 +109,8 @@ Page({
       start_time: startTime,
       time:time,
       content: content,
-      is_delete: false
+      is_delete: false,
+      project:project
 
     }, {
         success: function (result) {
@@ -201,6 +203,8 @@ Page({
 
     var that = this
     var Meetingmember = Bmob.Object.extend('meeting_member')
+    var project = Bmob.Object.createWithoutData('project',projId)
+    
     var meetingmemberArr = []
 
     if (memberIds != null && memberIds.length > 0) {
@@ -212,6 +216,7 @@ Page({
         meetingmember.set('meeting_id', meetingId)
         meetingmember.set('user', user)
         meetingmember.set('meeting', meeting)
+        meetingmember.set('project',project)
         meetingmemberArr.push(meetingmember)
       }
 

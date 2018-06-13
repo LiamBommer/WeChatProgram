@@ -87,6 +87,7 @@ Page({
     var Meetingmember = Bmob.Object.extend('meeting_member')
     var meetingmemberQuery = new Bmob.Query(Meetingmember)
     var meeting = Bmob.Object.createWithoutData('meeting', meetingId)
+    var project = Bmob.Object.createWithoutData('project', projId)
     var meetingmemberArr = []
 
     if (oldmemberIds != null && oldmemberIds.length > 0) {
@@ -117,6 +118,7 @@ Page({
           member.set('meeting_id', meetingId)
           member.set('user', user)
           member.set('meeting',meeting)
+          member.set('project',project)
           meetingmemberArr.push(member)
         }
 
