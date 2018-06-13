@@ -13,7 +13,7 @@
   <view style='display:{{Notification.length==0? "none":""}}'>
    <view class='item-container'>
       <block wx:for="{{Notification}}">
-            <view class="touch-item '{{item.NotificationisTouchMove ? 'touch-move-active' : ''}}" >
+            <view class="touch-item '{{item.NotificationisTouchMove ? 'touch-move-active' : ''}}"  style="{{notificationAnimationStyle}};">
                 <!-- 列表项 -->
                 <view style='{{item.NotificationtxtStyle}}'
                 class='item  contentminddle' bindtap='ClickMessage' data-index="{{index}}" id='{{item.id}}'

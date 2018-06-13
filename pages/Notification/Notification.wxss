@@ -175,3 +175,17 @@ page{
   -webkit-transform: translateX(390rpx);
   transform: translateX(390rpx);
  }
+
+
+/*** 列表淡入 ***/
+@keyframes notificationAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-30rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0rpx);
+  }
+}
+/*** 列表淡入 END ***/

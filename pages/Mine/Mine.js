@@ -35,6 +35,11 @@ Page({
     //我的点子列表
     Idea: [],
 
+    // Animation
+    myTaskAnimationStyle: '', 
+    myMeetingAnimationStyle: '',
+    myIdeaAnimationStyle: '',
+
   },
 
   //编辑已有标签
@@ -483,6 +488,55 @@ Page({
   },
 
 
+  /*
+      * 列表加载动效
+      */
+  myTaskAnimation: function () {
+    var myTaskAnimationStyle = ''
+    myTaskAnimationStyle += '-webkit-animation-name: myTaskAnimation;'
+    myTaskAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    myTaskAnimationStyle += "-webkit-animation-timing-function: ease;"
+    myTaskAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      myTaskAnimationStyle: ''
+    })
+    this.setData({
+      myTaskAnimationStyle: myTaskAnimationStyle
+    })
+  },
+
+  myMeetingAnimation: function () {
+    var myMeetingAnimationStyle = ''
+    myMeetingAnimationStyle += '-webkit-animation-name: myMeetingAnimation;'
+    myMeetingAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    myMeetingAnimationStyle += "-webkit-animation-timing-function: ease;"
+    myMeetingAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      myMeetingAnimationStyle: ''
+    })
+    this.setData({
+      myMeetingAnimationStyle: myMeetingAnimationStyle
+    })
+  },
+
+  myIdeaAnimation: function () {
+    var myIdeaAnimationStyle = ''
+    myIdeaAnimationStyle += '-webkit-animation-name: myIdeaAnimation;'
+    myIdeaAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    myIdeaAnimationStyle += "-webkit-animation-timing-function: ease;"
+    myIdeaAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      myIdeaAnimationStyle: ''
+    })
+    this.setData({
+      myIdeaAnimationStyle: myIdeaAnimationStyle
+    })
+  },
+
+
   onLoad: function () {
     if (app.globalData.userId) {
       var userInfo = {
@@ -528,6 +582,11 @@ Page({
       title: '正在加载',
       mask: 'true'
     })
+
+    // Animation
+    this.myTaskAnimation()
+    this.myMeetingAnimation()
+    this.myIdeaAnimation()
 
     // 获取点子列表
     this.getMyTasks(userId)

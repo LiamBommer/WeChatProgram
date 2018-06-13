@@ -43,3 +43,17 @@
 .Mine-Meeting-container .Meeting-item .Meeting-item-second{
     font-size: 30rpx;
 }
+
+/*** 列表淡入 ***/
+@keyframes myMeetingAnimation {
+  0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+/*** 列表淡入 END ***/

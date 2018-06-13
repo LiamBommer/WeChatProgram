@@ -9,8 +9,12 @@ Page({
   data: {
     startX: '',
     startY: '',
+
+    // 动画
+    notificationAnimationStyle: '',
+
     //通知列表
-    Notification:[
+    Notification: [
       // {
       //   icon: "/img/me.png",
       //   title: "我觉得ZHT太牛逼了",
@@ -36,7 +40,7 @@ Page({
       //   project: "鲨鱼派对项目",
       // },
     ],
-  
+
   },
 
   //手指触摸动作开始 记录起点X坐标
@@ -50,11 +54,11 @@ Page({
       }
     })
 
-      this.setData({
-        startX: e.changedTouches[0].clientX,
-        startY: e.changedTouches[0].clientY,
-        Notification: this.data.Notification,
-      })
+    this.setData({
+      startX: e.changedTouches[0].clientX,
+      startY: e.changedTouches[0].clientY,
+      Notification: this.data.Notification,
+    })
   },
   //滑动删除通知：滑动事件处理
   touchmoveNotification: function (e) {
@@ -122,8 +126,8 @@ Page({
 
   },
 
- //标为已读
-  readNotification:function(e){
+  //标为已读
+  readNotification: function (e) {
     var that = this
     var id = e.currentTarget.id//当前通知id
     var index = e.currentTarget.dataset.index//当前通知下标
@@ -137,7 +141,7 @@ Page({
   },
 
   //点击通知
-  ClickMessage:function(e){
+  ClickMessage: function (e) {
     var that = this
     var index = e.currentTarget.dataset.index//当前通知下标
     var id = e.currentTarget.id//当前通知id
@@ -218,13 +222,13 @@ Page({
         url: '../Project/Idea/ideaDetail/ideaDetail',
       })
     }
-    
+
   },
 
   /**
  * 获取项目成员和任务领导人id
  */
-  getProjMemberAndTaskleaderId:function (projId, taskId){
+  getProjMemberAndTaskleaderId: function (projId, taskId) {
     var that = this
     var projmemberArr = []  //项目成员数组
     var taskLeaderId = '0'  //任务负责人id
@@ -323,7 +327,7 @@ Page({
    * @parameter userId 当前操作用户的id
    * 将用户的通知全部都修改为已读状态
    */
-  readAll:function (userId){
+  readAll: function (userId) {
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
@@ -345,22 +349,22 @@ Page({
       })
   },
 
-/**
- * 2018-05-31
- * @parameter userId 当前操作用户的id
- * 获取用户的所有通知(由近及远排序)
- * 获取的数组，每个元素包括
- * 'id':   //通知的id
-    'fromUserPic':   //通知的来源的人的头像
-    'content':  //通知内容
-    'type':   //通知类型
-    'requestId':   //点击通知时请求的通知详情的对应的 id
-    'isRead':  //判断通知是否已读，fasle为 未读
-    'projectName':   //对应的项目名
-    'createdAt':   //通知创建的时间
- * 
- */
-getNotification:function (userId) {
+  /**
+   * 2018-05-31
+   * @parameter userId 当前操作用户的id
+   * 获取用户的所有通知(由近及远排序)
+   * 获取的数组，每个元素包括
+   * 'id':   //通知的id
+      'fromUserPic':   //通知的来源的人的头像
+      'content':  //通知内容
+      'type':   //通知类型
+      'requestId':   //点击通知时请求的通知详情的对应的 id
+      'isRead':  //判断通知是否已读，fasle为 未读
+      'projectName':   //对应的项目名
+      'createdAt':   //通知创建的时间
+   * 
+   */
+  getNotification: function (userId) {
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
@@ -371,7 +375,7 @@ getNotification:function (userId) {
     notificationQuery.equalTo("to_user_id", userId)
     notificationQuery.include('project')
     notificationQuery.include('from_user')
-    notificationQuery.descending("createdAt")  
+    notificationQuery.descending("createdAt")
     notificationQuery.find({
       success: function (results) {
         console.log("results", results)
@@ -414,74 +418,74 @@ getNotification:function (userId) {
 
 
 
-/**
- * 2018-05-31
- * @parameter projId 项目id, taskId任务id，content 通知内容
- * (request_id 为tskId)
- * 存储通知,往往都是批量添加的
- */
-// addTaskNotification:function (projId, taskId, content) {
-//     var that = this
-//     var _type = 1;  //任务是通知的第一种类型
-//     var Taskmember = Bmob.Object.extend('task_member')
-//     var taskmemberQuery = new Bmob.Query(Taskmember)
-//     var toUserIds = []  //需要通知到的任务成员id数组
-//     var Notification = Bmob.Object.extend('notification')
-//     var notificationObjects = []
+  /**
+   * 2018-05-31
+   * @parameter projId 项目id, taskId任务id，content 通知内容
+   * (request_id 为tskId)
+   * 存储通知,往往都是批量添加的
+   */
+  // addTaskNotification:function (projId, taskId, content) {
+  //     var that = this
+  //     var _type = 1;  //任务是通知的第一种类型
+  //     var Taskmember = Bmob.Object.extend('task_member')
+  //     var taskmemberQuery = new Bmob.Query(Taskmember)
+  //     var toUserIds = []  //需要通知到的任务成员id数组
+  //     var Notification = Bmob.Object.extend('notification')
+  //     var notificationObjects = []
 
-//     //查询任务成员
-//     taskmemberQuery.equalTo('task_id', taskId)
-//     taskmemberQuery.select("user_id");
-//     taskmemberQuery.find().then(function (results) {
-//       // 返回成功
-//       for (var i = 0; i < results.length; i++) {
-//         toUserIds.push(results[i].id)
-//       }
+  //     //查询任务成员
+  //     taskmemberQuery.equalTo('task_id', taskId)
+  //     taskmemberQuery.select("user_id");
+  //     taskmemberQuery.find().then(function (results) {
+  //       // 返回成功
+  //       for (var i = 0; i < results.length; i++) {
+  //         toUserIds.push(results[i].id)
+  //       }
 
-//       if (toUserIds != null && toUserIds.length > 0) {
-//         var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
-//         var project = Bmob.Object.createWithoutData("project", projId)
+  //       if (toUserIds != null && toUserIds.length > 0) {
+  //         var fromUser = Bmob.Object.createWithoutData("_User", Bmob.User.current().id)
+  //         var project = Bmob.Object.createWithoutData("project", projId)
 
-//         for (var i = 0; i < toUserIds.length; i++) {
-//           //无需通知操作人本身
-//           if (toUserIds[i] != Bmob.User.current().id) {
-//             var notification = new Notification()
-//             notification.set('to_user_id', toUserIds[i])
-//             notification.set('content', content)
-//             notification.set('type', _type)
-//             notification.set('is_read', false)
-//             notification.set('request_id', taskId)
-//             notification.set('project', project)
-//             notification.set('from_user', fromUser)
+  //         for (var i = 0; i < toUserIds.length; i++) {
+  //           //无需通知操作人本身
+  //           if (toUserIds[i] != Bmob.User.current().id) {
+  //             var notification = new Notification()
+  //             notification.set('to_user_id', toUserIds[i])
+  //             notification.set('content', content)
+  //             notification.set('type', _type)
+  //             notification.set('is_read', false)
+  //             notification.set('request_id', taskId)
+  //             notification.set('project', project)
+  //             notification.set('from_user', fromUser)
 
-//             notificationObjects.push(notification)  //存储本地通知对象
-//           }
-//         }
-//         if (notificationObjects != null && notificationObjects.length > 0) {
-//           //在数据库添加通知
-//           Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
-//             // 成功
-//             console.log("添加任务成员通知成功！")
+  //             notificationObjects.push(notification)  //存储本地通知对象
+  //           }
+  //         }
+  //         if (notificationObjects != null && notificationObjects.length > 0) {
+  //           //在数据库添加通知
+  //           Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
+  //             // 成功
+  //             console.log("添加任务成员通知成功！")
 
 
-//           },
-//             function (error) {
-//               // 异常处理
-//               console.log("添加任务成员通知失败!", error)
+  //           },
+  //             function (error) {
+  //               // 异常处理
+  //               console.log("添加任务成员通知失败!", error)
 
-//             })
-//         }
-//       }
-//     })
+  //             })
+  //         }
+  //       }
+  //     })
 
-//   },
+  //   },
 
-/**
- * 2018-06-02
- * @parameter notificationId通知id
- * 用户点开某个通知，已读某一个通知
- */
-readOneNotification:function (notificationId) {
+  /**
+   * 2018-06-02
+   * @parameter notificationId通知id
+   * 用户点开某个通知，已读某一个通知
+   */
+  readOneNotification: function (notificationId) {
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
@@ -500,12 +504,12 @@ readOneNotification:function (notificationId) {
     })
   },
 
-/**
- * 2018-06-02
- * @parameter userId 用户id
- * 删除某位用户的所有通知
- */
-deleteUserNotification:function (userId) {
+  /**
+   * 2018-06-02
+   * @parameter userId 用户id
+   * 删除某位用户的所有通知
+   */
+  deleteUserNotification: function (userId) {
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
@@ -527,12 +531,12 @@ deleteUserNotification:function (userId) {
 
   },
 
-/**
- * 2018-06-02
- * @parameter notificationId通知id
- * 删除某一条通知
- */
-deleteOneNotification:function (notificationId) {
+  /**
+   * 2018-06-02
+   * @parameter notificationId通知id
+   * 删除某一条通知
+   */
+  deleteOneNotification: function (notificationId) {
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
@@ -553,18 +557,38 @@ deleteOneNotification:function (notificationId) {
     }
   },
 
+
+  /*
+      * 列表加载动效
+      */
+  notificationAnimation: function () {
+    var notificationAnimationStyle = ''
+    notificationAnimationStyle += '-webkit-animation-name: notificationAnimation;'
+    notificationAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    notificationAnimationStyle += "-webkit-animation-timing-function: ease;"
+    notificationAnimationStyle += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      notificationAnimationStyle: ''
+    })
+    this.setData({
+      notificationAnimationStyle: notificationAnimationStyle
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -577,41 +601,45 @@ deleteOneNotification:function (notificationId) {
     var that = this
     var userId = getApp().globalData.userId
     console.log("userId", userId)
-    that.getNotification(userId) 
+
+    // 加载动画
+    that.notificationAnimation()
+
+    that.getNotification(userId)
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

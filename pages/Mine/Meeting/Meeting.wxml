@@ -1,7 +1,7 @@
 <!--pages/Mine/Meeting/Meeting.wxml-->
 <view class='Mine-Meeting-container'>
 
-  <block wx:for="{{Meeting}}" wx:key="{{id}}">
+  <view wx:for="{{Meeting}}" wx:key="{{id}}" style="{{myMeetingAnimationStyle}};">
         <block wx:if="{{item.titleTime}}">
         <!-- 标题 -->
           <view class='Meeting-title'>{{item.titleTime}}</view>
@@ -20,7 +20,7 @@
             <view></view>
           </view>
         </block>
-  </block>
+  </view>
 
     
 
