@@ -130,13 +130,17 @@ Page({
  */
   addLeader:function (projId, userId){
     var ProjectMember = Bmob.Object.extend("proj_member")
-  var projMember = new ProjectMember();
+    var projMember = new ProjectMember();
+    var project = Bmob.Object.createWithoutData('project',projId)
 
-    projMember.save({
-      proj_id: projId,
-      user_id: userId,
-      is_leader: true
-    }, {
+    projMember.set('proj_id',projId)
+    projMember.set('user_id',userId)
+    projMember.set('is_leader',true)
+    projMember.set('is_first',false)
+    projMember.set('project',project)
+    
+
+    projMember.save(null, {
         success: function (result) {
           //添加成功
           console.log("保存项目领导成功！")

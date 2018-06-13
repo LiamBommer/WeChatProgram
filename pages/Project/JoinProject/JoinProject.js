@@ -82,10 +82,13 @@ Page({
         if (result == null) {
 
           // 未在项目中，加入项目
+          var project = Bmob.Object.createWithoutData('project',projectId)  //与项目关联，可用来优化项目页获取用的项目信息
           projectmember.save({
             proj_id: projectId,
             user_id: userId,
-            is_leader: false
+            is_leader: false,
+            project: project,
+            is_first: false,  // 用来标记每个用户的星标项目 mrli
 
           }, {
               success: function (result) {

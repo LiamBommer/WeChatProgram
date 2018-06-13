@@ -143,6 +143,7 @@ App({
 
     } 
   },
+  //创建项目
   buildProject: function (title, desc) {
     var that = this;
     var Project = Bmob.Object.extend("project")

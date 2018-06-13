@@ -64,6 +64,7 @@ Page({
  *获取用户的所有项目 ,默认10条
  *
  */
+/**
   getProjectList: function() {
     var that = this
 
@@ -147,6 +148,68 @@ Page({
     })
 
   },
+ */
+/**
+ * mrli 2018-06-12
+ * 获取用户的所有项目，默认10条
+ */
+
+getProjectList:function(){
+  var that = this
+  var Projectmember = Bmob.Object.extend('proj_member')
+  var projectmemberQuery = new Bmob.Query(Projectmember)
+  var projectArr = []
+  var starprojectArr = []
+
+  projectmemberQuery.equalTo('user_id', Bmob.User.current().id/*当前用户的id*/)
+  projectmemberQuery.include('project')
+  //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
+
+  projectmemberQuery.find({
+    success: function(results){
+      //成功
+      console.log("getProjectList", results)
+      for(var i in results){
+        var result = results[i]
+        var object = {}
+        var starobject = {}
+
+        if (result.get('project').is_delete!=true && result.attributes.is_first == false)//非星标项目
+        {
+          object = {
+            icon: result.attributes.project.img_url,
+            name: result.attributes.project.name,
+            id: result.attributes.project.objectId,
+            checked: false
+          }
+          projectArr.push(object)
+        }
+        if (result.get('project').is_delete != true && result.attributes.is_first == true)//星标项目
+        {
+          starobject = {
+            icon: result.attributes.project.img_url,
+            name: result.attributes.project.name,
+            id: result.attributes.project.objectId,
+            checked: true
+          }
+          starprojectArr.push(starobject)
+        }
+      }
+
+      console.log("Project", projectArr)
+      console.log("StarProject", starprojectArr)
+      that.setData({ Project: projectArr })
+      that.setData({ StarProject: starprojectArr })
+      // 加载完成
+      wx.hideLoading()
+    },
+    error: function(error){
+      //失败
+      console.log("查询用户所在的所有项目失败: " + error.code + " " + error.message)
+    }
+  })
+
+},
 
   /*
    * 涟漪点击效果

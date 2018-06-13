@@ -337,7 +337,7 @@ Page({
            project_img : detailObject.attributes.img_url,
            project_name: detailObject.attributes.name,
            project_desc: proj_desc,
-           SwitchChecked: detailObject.attributes.is_first,
+           SwitchChecked: wx.getStorageSync('Project-detail').checked,  //用了缓存来标记用户的项目是否置顶
            text_color: text_color
         });
 
@@ -459,7 +459,7 @@ Page({
    * 
    * 置顶项目
    */
-
+/** 
   makeProjectFirst:function (projId, isFirst){
     var Project = Bmob.Object.extend("project")
     var projectQuery = new Bmob.Query(Project)
@@ -489,13 +489,50 @@ Page({
       }
     })
   },
+*/
 
+/**
+ * 重构 makeProjectFirst
+ * 置顶项目，每个用户都有ta自己的字段 is_first来设置置顶项目
+ */
+  makeProjectFirst: function (projId, isFirst) {
+    var Projectmember = Bmob.Object.extend("proj_member")
+    var projectmemberQuery = new Bmob.Query(Projectmember)
+
+    projectmemberQuery.equalTo('proj_id',projId)
+    projectmemberQuery.equalTo('user_id', getApp().globalData.userId)
+    projectmemberQuery.first({
+      success: function (result) {
+        result.set("is_first", isFirst)
+        result.save()
+        //成功的情况
+        console.log("设置成功")
+        wx.hideLoading()
+        wx.showToast({
+          title: '设置成功',
+          icon: 'success',
+          duration: 1000
+        })
+      },
+      error: function (object, error) {
+        //失败的情况
+        //console.log(error)
+        wx.hideLoading()
+        wx.showToast({
+          title: '设置失败，请稍后再试',
+          icon: 'success',
+          duration: 1000
+        })
+      }
+    })
+  },
 /**
  * 2018-05-22
  * @parameter 项目id ,isFirst 是否置顶项目，设置为false
  * 
  * 取消置顶项目
  */
+/**
 cancelProjectFirst:function (projId, isFirst) {
     var Project = Bmob.Object.extend("project")
     var projectQuery = new Bmob.Query(Project)
@@ -528,7 +565,45 @@ cancelProjectFirst:function (projId, isFirst) {
       }
     })
   },
- 
+  */
+
+/**
+ * 重构cancelProjectFirst
+ */
+cancelProjectFirst: function (projId, isFirst) {
+  var Projectmember = Bmob.Object.extend("proj_member")
+  var projectmemberQuery = new Bmob.Query(Projectmember)
+
+  projectmemberQuery.equalTo('proj_id', projId)
+  projectmemberQuery.equalTo('user_id', getApp().globalData.userId)
+  projectmemberQuery.first( {
+    success: function (result) {
+      result.set("is_first", false)
+      result.save()
+      //成功的情况
+      wx.hideLoading()
+      wx.showToast({
+        title: '取消成功',
+        icon: 'success',
+        duration: 1000
+      })
+
+    },
+    error: function (object, error) {
+      //失败的情况
+      //console.log(error)
+      wx.hideLoading()
+      wx.showToast({
+        title: '取消失败，请稍后再试',
+        icon: 'success',
+        duration: 1000
+      })
+
+
+
+    }
+  })
+},
   /**
    * @parameter projId项目id 
    * 退出/解散项目
