@@ -4,7 +4,7 @@
   <block wx:for="{{Idea}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <!-- <view class='idea-item' bindtap='IdeaDetail' > -->
-      <view class='item-container'>
+      <view class='item-container' style="{{myTaskAnimationStyle}};">
         <view class='idea-item'>
           <!-- 列表左 -->
           <view class='item-first'>

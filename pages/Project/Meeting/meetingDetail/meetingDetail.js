@@ -16,23 +16,27 @@ Page({
    */
   data: {
     hiddenmodalputTitle: true,//弹出标题模态框
-    meetingId:'',//会议ID
-    projId:"",//项目ID
+    meetingId: '',//会议ID
+    projId: "",//项目ID
     title: '',//标题
     inputTitle: '',//输入的标题
     content: "",//会议内容
-    meetingRecord:'',//会议记录
+    meetingRecord: '',//会议记录
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_cycle: '/img/cycle.png',
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     starttime: '2018-05-22', //开始时间
-    time:"",//时间
+    time: "",//时间
     index: '不',//选择重复时间
     repeatTime: ["每天", "每周", "每月", "每年"],
-    member:[],
-    
+    member: [],
+
+
+    // 是否从分享页面进入的标识
+    isShared: false,
+
   },
   //点击按钮弹出指定的hiddenmodalput弹出框  
   modalinputTitle: function (e) {
@@ -85,7 +89,7 @@ Page({
     var newStartTime = e.detail.value
     var newtime = that.data.time
     that.modifyMeetingStartTime(projId, meetingId, newStartTime, newtime)
-    console.log("newStartTime",newStartTime)
+    console.log("newStartTime", newStartTime)
     this.setData({
       starttime: newStartTime
     })
@@ -117,8 +121,8 @@ Page({
     wx.navigateTo({
       url: './Record/Record',
     })
-  }, 
-  
+  },
+
   //会议内容
   Content: function (e) {
     var that = this
@@ -131,14 +135,14 @@ Page({
     wx.navigateTo({
       url: './Content/Content',
     })
-  }, 
+  },
 
   // 成员列表
   memberList: function (e) {
     var that = this
     var member = that.data.member
     //设置选中项目成员缓存
-    console.log("member",member)
+    console.log("member", member)
     wx.setStorageSync("meetingDetail-member", member)
     //设置项目ID缓存
     wx.setStorageSync("meetingDetail-projId", that.data.projId)
@@ -148,10 +152,10 @@ Page({
       url: './memberList/memberList',
     })
   },
-  
+
   //删除
   Delete: function () {
-   var that = this
+    var that = this
     wx.showModal({
       title: '提示',
       content: '确定要删除此会议吗',
@@ -176,7 +180,7 @@ Page({
 'meetingRecord': result.get('meeting_record') || '' , //会议记录
 
 */
-  getOneMeeting:function (meetingId){
+  getOneMeeting: function (meetingId) {
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
     var meetingQuery = new Bmob.Query(Meeting)
@@ -195,8 +199,8 @@ Page({
           'meetingRecord': result.get('meeting_record') || '', //会议记录
         }
         //获取到的会议 meeting
-        console.log("会议详情",meeting)
-      
+        console.log("会议详情", meeting)
+
         that.setData({
           meetingId: meeting.id,
           title: meeting.title,
@@ -220,7 +224,7 @@ Page({
  * @parameter meetingId会议id
  * 获取会议成员, 有userId ，userPic，nickName
  */
-  getMeetingMember:function (meetingId){
+  getMeetingMember: function (meetingId) {
     var that = this
     var Meetingmember = Bmob.Object.extend('meeting_member')
     var meetingmemberQuery = new Bmob.Query(Meetingmember)
@@ -231,7 +235,7 @@ Page({
     meetingmemberQuery.equalTo('meeting_id', meetingId)
     meetingmemberQuery.include('user')
     meetingmemberQuery.find({
-        success: function (results) {
+      success: function (results) {
         //成功
         for (var i in results) {
           var member
@@ -247,14 +251,14 @@ Page({
           //在这里setData
           //meetingmemberArr 即是获取到的成员数据
           console.log('会议成员', meetingmemberArr)
-            that.setData({
-              member: meetingmemberArr
-            })
+          that.setData({
+            member: meetingmemberArr
+          })
         }
         else {
           console.log('会议成员', meetingmemberArr)
           that.setData({
-            member:''
+            member: ''
           })
         }
 
@@ -272,7 +276,7 @@ Page({
  * 修改会议开始时间
  * 内部调用通知项目成员的函数addProjectNotification
  */
-  modifyMeetingStartTime: function (projId, meetingId, newStartTime, newtime){
+  modifyMeetingStartTime: function (projId, meetingId, newStartTime, newtime) {
 
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
@@ -303,7 +307,7 @@ Page({
    * 页面所有携带的请求数据，比如（taskId，meetingId 等）
    * 存储通知,往往都是批量添加的
    */
-  addProjectNotification:function (projId, content, _type, requestId) {
+  addProjectNotification: function (projId, content, _type, requestId) {
     var that = this
     var Projectmember = Bmob.Object.extend('proj_member')
     var projectkmemberQuery = new Bmob.Query(Projectmember)
@@ -361,7 +365,7 @@ Page({
  * 修改会议标题
  * 内部调用通知项目成员的函数addProjectNotification
  */
-  modifyMeetingTitle:function (projId, meetingId, newTitle) {
+  modifyMeetingTitle: function (projId, meetingId, newTitle) {
 
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
@@ -390,7 +394,7 @@ Page({
    * 删除某个会议
    * 内部调用通知项目成员的函数addProjectNotification
    */
-  deleteOneMeeting:function (projId, meetingId){
+  deleteOneMeeting: function (projId, meetingId) {
 
     var that = this
     var Meeting = Bmob.Object.extend('meeting')
@@ -398,7 +402,7 @@ Page({
 
     //删除某个会议
     meetingQuery.get(meetingId, {
-        success: function (result) {
+      success: function (result) {
         result.set('is_delete', true)
         result.save()
         console.log("删除某个会议成功!")
@@ -415,11 +419,29 @@ Page({
   },
 
 
+  /**
+   * 分享页面按钮，回到首页
+   */
+  showScheduleList: function () {
+    wx.switchTab({
+      url: '/pages/Project/Project',
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    // 接收页面参数，判断是否从分享进入
+    console.log('页面参数', options)
+    if (options.isShared) {
+      this.setData({
+        isShared: options.isShared,
+        meetingId: options.meetingId,
+      })
+    }
 
   },
 
@@ -442,6 +464,9 @@ Page({
     //获取通知的会议ID
     var requestId = wx.getStorageSync("Notification-meetingId")
     var projId = wx.getStorageSync("Notification-projId")
+    //获取分享的标识
+    var isShared = this.data.isShared
+
     if (requestId != "" && projId != '') {
       console.log("获取通知的会议ID", requestId, projId)
       that.setData({
@@ -450,6 +475,11 @@ Page({
       })
       that.getOneMeeting(requestId)//获取会议详情
       that.getMeetingMember(requestId)//获取会议成员
+    }
+    else if(isShared) {
+      var meetingId = that.data.meetingId
+      that.getOneMeeting(meetingId)//获取会议详情
+      that.getMeetingMember(meetingId)//获取会议成员
     }
     else {
       //获取后台会议详情
@@ -476,7 +506,7 @@ Page({
       })
     }
 
-    
+
     //获取会议内容
     var content = wx.getStorageSync("meetingDetail-Content-content")
     that.setData({
@@ -521,6 +551,23 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+    var that = this
+    var currentUserName = getApp().globalData.nickName
+    var title = that.data.title
+    var meetingId = that.data.meetingId
+
+    // 分享
+    return {
+      title: currentUserName + '分享了会议: ' + title,
+      path: "pages/Project/Meeting/meetingDetail/meetingDetail?isShared=true&meetingId=" + meetingId,
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: 'success',
+        })
+      },
+    }
 
   }
 })

@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    NotificationId:'',//通知传来的ID
+    NotificationId: '',//通知传来的ID
     icon_share: '/img/share.png',
     icon_deadline: '/img/deadline.png',
     icon_task_list: '/img/task_list.png',
@@ -34,7 +34,10 @@ Page({
     tasks: [],
 
     // 本项目详情，用于通知
-    projectDetail: {}
+    projectDetail: {},
+    
+    // 是否从分享页面进入的标识
+    isShared: false,  
 
   },
 
@@ -153,7 +156,7 @@ Page({
         wx.setStorage({
           key: 'ScheduleDetail-scheduleDetail',
           data: scheduleDetail,
-          success: function() {
+          success: function () {
 
             wx.navigateTo({
               url: '../ScheduleTaskList/ScheduleTaskList',
@@ -194,7 +197,7 @@ Page({
 
   },
 
-  
+
   /**
 * 2018-05-31
 * @parameter projId项目id，toUserIds通知的目标用户id数组，_type是通知的类型(我发了关于这个的文档),requestId是通知跳转
@@ -271,7 +274,7 @@ Page({
         result.save()
 
         var _type = 3  //通知类型
-        that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE , _type, scheduleId/*日程id*/)  //通知其他项目成员
+        that.addProjectNotification(projId, MODIFY_SCHEDULE_TITLE, _type, scheduleId/*日程id*/)  //通知其他项目成员
 
         wx.hideLoading()
         wx.showToast({
@@ -398,7 +401,7 @@ Page({
    *  内部调用了addProjectNotification
    */
   deleteSchedule: function (projId, scheduleId) {
-    
+
     var that = this
     var Schedule = Bmob.Object.extend('schedule')
     var scheduleQuery = new Bmob.Query(Schedule)
@@ -427,7 +430,7 @@ Page({
         console.log("提示用户删除日程失败！\n", error)
         wx.hideLoading()
         wx.showToast({
-          title: '删除失败：'+JSON.stringify(error),
+          title: '删除失败：' + JSON.stringify(error),
           icon: 'success',
           duration: 3000
         })
@@ -449,7 +452,7 @@ Page({
   }
   *
   */
-  getOneSchedule: function (scheduleId){
+  getOneSchedule: function (scheduleId) {
 
     var that = this
     var Schedule = Bmob.Object.extend('schedule')
@@ -458,7 +461,7 @@ Page({
     var scheduletaskQuery = new Bmob.Query(ScheduleTask)
     var scheduleObject = {
       "objectId": '0',     //日程关联任务的id ，不是日程，也不是任务，而是两个的关联的id ，hh后面会设置（好像以后都没有用到）
-      "scheduleId":'',  //日程id
+      "scheduleId": '',  //日程id
       "scheduleContent": '',  //日程内容
       "startTime": '', //日程开始时间,
       "endTime": '', //日程结束时间,
@@ -466,11 +469,11 @@ Page({
     }
 
     //获取日程的基本信息
-    scheduleQuery.get(scheduleId,{
-      success: function(schedule){
+    scheduleQuery.get(scheduleId, {
+      success: function (schedule) {
         //成功，获取schedule
 
-        scheduleObject.scheduleId =  schedule.id //日程id
+        scheduleObject.scheduleId = schedule.id //日程id
         scheduleObject.scheduleContent = schedule.get('content') //日程内容
         scheduleObject.startTime = schedule.get('start_time')//日程开始时间,
         scheduleObject.endTime = schedule.get('end_time')//日程结束时间,
@@ -482,16 +485,16 @@ Page({
         scheduletaskQuery.include('task')
         scheduletaskQuery.include('task.leader')
         scheduletaskQuery.find({
-          success: function(results){
+          success: function (results) {
             //获取关联任务成功
-            console.log('获取关联任务成功',results)
+            console.log('获取关联任务成功', results)
             //注意下面的for循环是 j ，不是 i
             for (var j = 0; j < results.length; j++) {
               if (results[j].get("task").is_delete != true) {
                 var taskObject = {
-                  "task_id": results[j].get("task") != null ? results[j].get("task").objectId :null,  //任务id
-                  "task_title": results[j].get("task") != null ? results[j].get("task").title:null,  //任务标题
-                  "task_userPic": results[j].get("task").leader != null ? results[j].attributes.task.leader.userPic :null //任务负责人头像
+                  "task_id": results[j].get("task") != null ? results[j].get("task").objectId : null,  //任务id
+                  "task_title": results[j].get("task") != null ? results[j].get("task").title : null,  //任务标题
+                  "task_userPic": results[j].get("task").leader != null ? results[j].attributes.task.leader.userPic : null //任务负责人头像
                 }
                 tasks.push(taskObject)
               }
@@ -499,7 +502,7 @@ Page({
             }
 
             //获取成功，scheduleObject,在这里setData
-            console.log('获取成功，scheduleObject',scheduleObject)
+            console.log('获取成功，scheduleObject', scheduleObject)
 
             that.setData({
               scheduleContent: scheduleObject.scheduleContent,
@@ -511,27 +514,27 @@ Page({
 
 
           },
-          error: function(error){
+          error: function (error) {
             //获取关联任务失败
             console.log('获取关联任务失败！')
           }
         })
       },
-      error: function(error){
+      error: function (error) {
         //失败
-        console.log('获取日程失败',error)
+        console.log('获取日程失败', error)
       }
     })
 
   },
 
 
-/**
-   * 分享页面按钮，回到日程列表
-   */
-  showScheduleList: function() {
-    wx.navigateTo({
-      url: '/pages/Project/Project'
+  /**
+     * 分享页面按钮，回到首页
+     */
+  showScheduleList: function () {
+    wx.switchTab({
+      url: '/pages/Project/Project',
     })
   },
 
@@ -539,13 +542,17 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (option) {
+  onLoad: function (options) {
+
     // 接收页面参数，判断是否从分享进入
-    console.log('页面参数', option)
-    this.setData({
-      isShared: option.isShared,
-      scheduleId: option.scheduleId,
-    })
+    console.log('页面参数', options)
+    if(options.isShared) {
+      this.setData({
+        isShared: options.isShared,
+        scheduleId: options.scheduleId,
+      })
+    }
+
   },
 
   /**
@@ -569,16 +576,17 @@ Page({
 
     //获取通知的日程ID
     var requestId = wx.getStorageSync("Notification-scheduleId")
+    //获取分享的日程ID
     var isShared = this.data.isShared
-    
-    if (requestId != ""){
+
+    if (requestId != "") {
       that.getOneSchedule(requestId)
     }
-    else if(isShared) {
+    else if (isShared) {
       // 从分享的页面进入
       that.getOneSchedule(this.data.scheduleId)
     }
-    else{
+    else {
       // 获取日程id，进行查询
       wx.getStorage({
         key: 'ProjectMore-scheduleDetail-id',
@@ -660,7 +668,7 @@ Page({
 
     // 分享
     return {
-      title: currentUserName + '给你分享了日程: ' + scheduleContent,
+      title: currentUserName + '分享了日程: ' + scheduleContent,
       path: "pages/Project/Schedule/scheduleDetail/scheduleDetail?isShared=true&scheduleId=" + scheduleId,
       success: function (res) {
         wx.showToast({

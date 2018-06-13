@@ -26,7 +26,10 @@ Page({
     taskTitle: '',
     createdAt: '',
     projId:''  ,    //mrli 添加，接受通知跳转传过来的id
-    projectDetail: ''
+    projectDetail: '',
+
+    // 是否从分享页面进入的标识
+    isShared: false,  
 
   },
 
@@ -299,9 +302,28 @@ Page({
 
 
   /**
+   * 分享页面按钮，回到首页
+   */
+  showScheduleList: function () {
+    wx.switchTab({
+      url: '/pages/Project/Project',
+    })
+  },
+
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    // 接收页面参数，判断是否从分享进入
+    console.log('页面参数', options)
+    if (options.isShared) {
+      this.setData({
+        isShared: options.isShared,
+        ideaId: options.ideaId,
+      })
+    }
 
   },
 
@@ -326,6 +348,8 @@ Page({
     //获取点子的点子ID
     var requestId = wx.getStorageSync("Notification-ideaId")
     var projId = wx.getStorageSync("Notification-projId")
+    //获取分享的标识
+    var isShared = this.data.isShared
     
     //判断是否从通知 进来
     if (requestId != "" && projId != '') {
@@ -337,7 +361,12 @@ Page({
       })
       that.getOneIdeaDetail(requestId)
       
-    }else{
+    }
+    else if(isShared) {
+      var ideaId = that.data.ideaId
+      that.getOneIdeaDetail(ideaId)
+    }
+    else{
       // 获取点子id，进行查询
       wx.getStorage({
         key: 'ProjectMore-ideaDetail-id',
@@ -418,6 +447,23 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+    var that = this
+    var currentUserName = getApp().globalData.nickName
+    var content = that.data.content
+    var ideaId = that.data.ideaId
+
+    // 分享
+    return {
+      title: currentUserName + '分享了点子: ' + content,
+      path: "pages/Project/Idea/ideaDetail/ideaDetail?isShared=true&ideaId=" + ideaId,
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: 'success',
+        })
+      },
+    }
 
   }
 })
