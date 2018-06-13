@@ -1,6 +1,6 @@
 {
   "pages":[
-    
+    "pages/GetUserInfo/GetUserInfo",
     "pages/Project/Project",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/buildProject/buildProject",
@@ -44,7 +44,7 @@
     "pages/Project/Announcement/addAnnouncement/addAnnouncement",
     "pages/Project/Announcement/announcementDetail/memberList/memberList",
     "pages/Project/Announcement/announcementDetail/Content/Content",
-    "pages/GetUserInfo/GetUserInfo",
+
     "pages/Mine/Mine",
     "pages/Mine/Task/Task",
     "pages/Mine/Meeting/Meeting",
