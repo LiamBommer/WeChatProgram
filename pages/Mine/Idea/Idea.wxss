@@ -46,3 +46,17 @@
    width: 200rpx;
    padding-left:40rpx;
 }
+
+/*** 列表淡入 ***/
+@keyframes myIdeaAnimation {
+  0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+/*** 列表淡入 END ***/

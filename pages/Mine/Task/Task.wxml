@@ -5,7 +5,7 @@
     <block wx:for="{{Task}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <!-- <view class='task-item' bindtap='TaskDetail'> -->
-      <view class='task-item'>
+      <view class='task-item' style="{{myTaskAnimationStyle}};">
         <!-- 列表左 -->
         <view class='item-first'>
           <checkbox-group  bindchange='taskFinishAction' data-id='{{item.id}}' data-project-id='{{item.projectId}}'>

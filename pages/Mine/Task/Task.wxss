@@ -41,3 +41,17 @@
    margin-right: 10rpx;
    color: #b2b2b2;
 }
+
+/*** 列表淡入 ***/
+@keyframes myTaskAnimation {
+  0% {
+    opacity: 0;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+/*** 列表淡入 END ***/
