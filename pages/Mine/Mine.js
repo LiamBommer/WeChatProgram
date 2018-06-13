@@ -411,7 +411,8 @@ Page({
 
     meetingmemberQuery.find({
       success: function (results) {
-        
+         results.sort(that.sortMeeting)
+
         //成功
         var oldtitleTime //存储上一次的年月份
         for (var i in results) {
@@ -422,7 +423,7 @@ Page({
             console.log("startTime", startTime)
             var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
             var year = startTime.getFullYear()
-            var month = startTime.getMonth()
+            var month = startTime.getMonth()+1
             var titleTime = year + '年' + month + '月'
             var date = startTime.getDate()
             var id = results[i].get('meeting').objectId //会议id
@@ -482,6 +483,11 @@ Page({
     })
   },
 
+  //给会议数组排序，对特定的object类型才有效
+  sortMeeting:function(a,b){
+    return a.attributes.meeting.start_time >= b.attributes.meeting.start_time
+
+  },
 
   onLoad: function () {
     if (app.globalData.userId) {
