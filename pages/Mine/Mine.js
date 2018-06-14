@@ -258,11 +258,20 @@ Page({
         result.set('is_finish', isFinish)
         
         wx.hideLoading()
-        wx.showToast({
-          title: '成功修改',
-          icon: 'success',
-          duration: 1000
-        })
+        if (isFinish == true) {
+          wx.showToast({
+            title: '完成任务',
+            icon: 'success',
+            duration: 1000
+          })
+        }
+        else {
+          wx.showToast({
+            title: '取消完成',
+            icon: 'none',
+            duration: 1000
+          })
+        }
 
         result.save()
 
