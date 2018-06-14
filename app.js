@@ -46,8 +46,20 @@ App({
           } 
           else {
             // 没有授权，弹出授权页面
-            that.globalData.userId = user.id
-            
+            //判断是否被邀请加入某个项目
+            if (options.query.projectid) {
+              var projectId = options.query.projectid
+              console.log('要加入的项目ID： ' + projectId)
+              // 数据存入缓存，再跳转页面
+              wx.setStorage({
+                key: 'Project-share-id',
+                data: projectId,
+                success: function () {
+                  //成功，这个会在GetUserInfo.js页面处理
+                }
+              })
+            } 
+            that.globalData.userId = user.id            
             wx.redirectTo({
               url: '../GetUserInfo/GetUserInfo',
             })

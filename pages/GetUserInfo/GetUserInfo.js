@@ -41,11 +41,12 @@ Page({
         
         //跳转到项目主页
         console.log(wx.getStorageSync('Project-share-id'))
-        if (wx.getStorageSync('Project-share-id') == '') {
+        if (wx.getStorageSync('Project-share-id') == ''|| wx.getStorageSync('Project-share-id') == undefined) {
           wx.switchTab({
             url: '../Project/Project',
           })
         } else {
+          console.log('跳转到joinproject')
           wx.redirectTo({
             url: '../Project/JoinProject/JoinProject',
           })
@@ -84,7 +85,7 @@ Page({
 
     if (currentUser) {
       leader_id = currentUser.id
-      leader_name = currentUser.get("nickName")
+      leader_name = getApp().globalData.nickName
       console.log("当前用户:", leader_id, leader_name)
     }
     console.log(title)
@@ -185,12 +186,6 @@ Page({
           success: function (result) {
             //成功
             console.log('提示用户添加沟通模板成功过！')
-            wx.showToast({
-              title: '添加模板成功',
-            })
-            wx.navigateBack()
-
-
           },
           error: function (result, error) {
             //失败
