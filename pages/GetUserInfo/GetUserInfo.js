@@ -14,62 +14,70 @@ Page({
    * 点击按钮，确认获取信息
    */
   confirm: function (res) {
-    console.log('confirm',res)
-    wx.login({
-       success: function (res) {
-         user.loginWithWeapp(res.code).then(function (user) {
-            var openid = user.get("authData").weapp.openid;
-            // 查看是否授权
-            wx.getSetting({
-              success: function (res) {
-                if (res.authSetting['scope.userInfo']) {
-                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                  wx.getUserInfo({
-                    success: function (res) {
-                      console.log('获取用户信息成功', res.userInfo)
-                      getApp().globalData.userId = user.id
-                      getApp().globalData.nickName = res.userInfo.nickName
-                      getApp().globalData.userPic = res.userInfo.avatarUrl
-
-                      // 存进数据库
-                      var u = Bmob.Object.extend("_User");
-                      var query = new Bmob.Query(u);
-
-                      var userId = getApp().globalData.userId
-                      var nickName = res.userInfo.nickName
-                      var avatarUrl = res.userInfo.avatarUrl
-                      // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
-                      query.get(userId, {
-                        success: function (result) {
-                          // 自动绑定之前的账号
-                          result.set("nickName", nickName);
-                          result.set("userPic", avatarUrl);
-                          result.set("openid", openid);
-                          //result.set("gender",gender);  //再添加数据就不能正常初始化了
-                          result.save();
-                          //为用户添加空的项目“我的项目”
-                          //that.buildProject('我的项目','空项目')
-                          //为用户添加实例沟通模板
-                          //that.addCommunicateModel(user.id,1,communicate_sample_model1)
-                          //跳转到项目主页
-                          wx.switchTab({
-                            url: '../Project/Project',
-                          })
-                        }
-                      })
-              
-                      // wx.navigateBack({
-                      //   delta: 1
-                      // })
-                    }
-                  })
-                }
-              }
+    // wx.login({
+    //    success: function (res) {
+    //      user.loginWithWeapp(res.code).then(function (user) {
+    //         var openid = user.get("authData").weapp.openid;
+    //         // 查看是否授权
             
-            })
-         })
-       }
+    //      })
+    //    }
+    // })
+    var userInfo = res.detail.userInfo
+    var nickName = userInfo.nickName
+    var avatarUrl = userInfo.avatarUrl
+    var userId = getApp().globalData.userId
+    getApp().globalData.nickName = nickName
+    getApp().globalData.userPic = avatarUrl
+
+    // 存进数据库
+    var u = Bmob.Object.extend("_User");
+    var query = new Bmob.Query(u);
+    // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
+    query.get(userId, {
+      success: function (result) {
+        // 自动绑定之前的账号
+        result.set("nickName", nickName);
+        result.set("userPic", avatarUrl);
+        //result.set("gender",gender);  //再添加数据就不能正常初始化了
+        result.save();
+        //为用户添加空的项目“我的项目”
+        //that.buildProject('我的项目','空项目')
+        //为用户添加实例沟通模板
+        //that.addCommunicateModel(user.id,1,communicate_sample_model1)
+
+        //跳转到项目主页
+        console.log(wx.getStorageSync('Project-share-id'))
+        if (wx.getStorageSync('Project-share-id') == '') {
+          wx.switchTab({
+            url: '../Project/Project',
+          })
+        } else {
+          wx.redirectTo({
+            url: '../Project/JoinProject/JoinProject',
+          })
+        }
+
+      }
     })
+    // wx.getSetting({
+    //   success: function (res) {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+    //       wx.getUserInfo({
+    //           success: function (res) {
+    //           console.log('获取用户信息成功', res.userInfo)
+              
+
+    //           // wx.navigateBack({
+    //           //   delta: 1
+    //           // })
+    //         }
+    //       })
+    //     }
+    //   }
+
+    // })
 
   },
   //创建项目

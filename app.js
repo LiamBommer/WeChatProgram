@@ -10,12 +10,13 @@ App({
   //登录函数
   // 登录 mr.li 代码是Bmob封装好的接口
   //登录注册集合类，接口默认第一次注册，否则返回用户信息
-  userLogin:function(){
+  userLogin:function(options){
     var that = this
     wx.login({
       success: function (res) {
         user.loginWithWeapp(res.code).then(function (user) {
           var openid = user.get("authData").weapp.openid;
+          
           if (user.get("nickName")) {
 
             // 第二次登录，打印用户之前保存的昵称
@@ -24,10 +25,37 @@ App({
             that.globalData.userId = user.id
             that.globalData.nickName = user.get("nickName")
             that.globalData.userPic = user.get("userPic")
-            wx.switchTab({
-              url: '../Project/Project',
-            })
+            if (options.query.projectid) {
+              var projectId = options.query.projectid
+              console.log('要加入的项目ID： ' + projectId)
+              // 数据存入缓存，再跳转页面
+              wx.showLoading({
+                title: '正在处理...',
+                mask: 'true'
+              })
+              wx.setStorage({
+                key: 'Project-share-id',
+                data: projectId,
+                success: function () {
+                  wx.hideLoading()
+                  // 跳转页面
+                  wx.navigateTo({
+                    url: '/pages/Project/JoinProject/JoinProject',
+                  })
+                }
+              })
+            } 
           } 
+          else {
+            // 没有授权，弹出授权页面
+            that.globalData.userId = user.id
+            
+            wx.redirectTo({
+              url: '../GetUserInfo/GetUserInfo',
+            })
+
+          }
+
           // else {
 
           //   //注册成功的情况
@@ -93,15 +121,6 @@ App({
               
           //   })
           // }
-          // else {
-          //   // 没有授权，弹出授权页面
-          //   that.globalData.userId = user.id
-          //   wx.redirectTo({
-          //     url: '../GetUserInfo/GetUserInfo',
-          //   })
-
-          // }
-          
 
         }, function (err) {
           console.log(err, 'errr');
@@ -118,7 +137,7 @@ App({
     wx.setStorageSync('logs', logs)
 
     var that = this
-    that.userLogin()
+    that.userLogin(options)
 
     // user.auth()   //这行代码可以替换上面的wx.login
 

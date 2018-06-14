@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/GetUserInfo/GetUserInfo",
     "pages/Project/Project",
+    "pages/GetUserInfo/GetUserInfo",
     "pages/Project/ProjectMore/ProjectMore",
     "pages/Project/buildProject/buildProject",
     "pages/Project/JoinProject/JoinProject",
