@@ -99,17 +99,14 @@ Page({
                   title: '加入' + that.data.projectName + '成功！',
                   duration: 1000,
                 })
-
-                wx.navigateBack({
-                  delta: 1,
+                wx.switchTab({
+                  url: '../Project',
                 })
               },
               error: function (result, error) {
                 // 添加失败
-
               }
-            })
-            
+            })           
         } else {
           // 已在项目中
           wx.hideLoading()
@@ -117,15 +114,15 @@ Page({
             title: '你已在项目中！',
             duration: 1000,
           })
-
-          wx.navigateBack({
-            delta: 1,
+          //跳转的项目主页
+          wx.switchTab({
+            url: '../Project / Project',
           })
 
         }
       },
       error: function (error) {
-
+          //失败
       }
     })
   },
@@ -144,7 +141,7 @@ Page({
     var that = this
 
     // 取当前用户id
-    var currentUserId = Bmob.User.current().id
+    var currentUserId = getApp().globalData.userId
     that.setData({
       currentUserId: currentUserId
     })
