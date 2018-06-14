@@ -46,7 +46,7 @@ App({
           } 
           else {
             // 没有授权，弹出授权页面
-            //判断是否被邀请加入某个项目
+            // //判断是否被邀请加入某个项目
             if (options.query.projectid) {
               var projectId = options.query.projectid
               console.log('要加入的项目ID： ' + projectId)
@@ -145,39 +145,17 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    var that = this
-    that.userLogin(options)
-
+    
+    // var that = this
+    // that.userLogin(options)
     // user.auth()   //这行代码可以替换上面的wx.login
 
   },
 
   onShow:function(options){
-    // console.log(options)
-    // if (options.query.projectid) {
-    //   console.log("判断是否是被邀请加入项目。", Bmob.User.current().id)
-    //   var projectId = options.query.projectid
-    //   console.log('要加入的项目ID： ' + projectId)
-
-    //   // 数据存入缓存，再跳转页面
-    //   wx.showLoading({
-    //     title: '正在处理...',
-    //     mask: 'true'
-    //   })
-    //   wx.setStorage({
-    //     key: 'Project-share-id',
-    //     data: projectId,
-    //     success: function () {
-    //       wx.hideLoading()
-    //       // 跳转页面
-    //       wx.navigateTo({
-    //         url: '/pages/Project/JoinProject/JoinProject',
-    //       })
-    //     }
-    //   })
-
-    // } 
+    var that = this
+    that.userLogin(options)
+    
   },
 
   globalData: {

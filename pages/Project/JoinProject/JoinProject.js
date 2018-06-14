@@ -99,7 +99,7 @@ Page({
                   title: '加入' + that.data.projectName + '成功！',
                   duration: 1000,
                 })
-                wx.switchTab({
+                wx.relaunch({
                   url: '../Project',
                 })
               },

@@ -17,9 +17,11 @@ Page({
   confirm: function (res) {
     var that = this
     var userInfo = res.detail.userInfo
+    
     var nickName = userInfo.nickName
     var avatarUrl = userInfo.avatarUrl
     var userId = getApp().globalData.userId
+    console.log('userInfo', userInfo,'userId',userId)
     getApp().globalData.nickName = nickName
     getApp().globalData.userPic = avatarUrl
 
@@ -42,7 +44,7 @@ Page({
         //跳转到项目主页
         console.log(wx.getStorageSync('Project-share-id'))
         if (wx.getStorageSync('Project-share-id') == ''|| wx.getStorageSync('Project-share-id') == undefined) {
-          wx.switchTab({
+          wx.reLaunch({
             url: '../Project/Project',
           })
         } else {
@@ -54,24 +56,6 @@ Page({
 
       }
     })
-    // wx.getSetting({
-    //   success: function (res) {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-    //       wx.getUserInfo({
-    //           success: function (res) {
-    //           console.log('获取用户信息成功', res.userInfo)
-              
-
-    //           // wx.navigateBack({
-    //           //   delta: 1
-    //           // })
-    //         }
-    //       })
-    //     }
-    //   }
-
-    // })
 
   },
   //创建项目
