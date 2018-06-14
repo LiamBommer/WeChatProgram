@@ -1,5 +1,6 @@
 
 const Bmob = require('../../utils/bmob.js')
+var communicate_sample_model1 = '你可以在任务评论里发送沟通模板'
 var user = new Bmob.User();//实例化
 Page({
 
@@ -14,15 +15,7 @@ Page({
    * 点击按钮，确认获取信息
    */
   confirm: function (res) {
-    // wx.login({
-    //    success: function (res) {
-    //      user.loginWithWeapp(res.code).then(function (user) {
-    //         var openid = user.get("authData").weapp.openid;
-    //         // 查看是否授权
-            
-    //      })
-    //    }
-    // })
+    var that = this
     var userInfo = res.detail.userInfo
     var nickName = userInfo.nickName
     var avatarUrl = userInfo.avatarUrl
@@ -42,10 +35,10 @@ Page({
         //result.set("gender",gender);  //再添加数据就不能正常初始化了
         result.save();
         //为用户添加空的项目“我的项目”
-        //that.buildProject('我的项目','空项目')
+        that.buildProject('我的项目','空项目')
         //为用户添加实例沟通模板
-        //that.addCommunicateModel(user.id,1,communicate_sample_model1)
-
+        that.addCommunicateModel(userId,1,communicate_sample_model1)
+        
         //跳转到项目主页
         console.log(wx.getStorageSync('Project-share-id'))
         if (wx.getStorageSync('Project-share-id') == '') {
@@ -109,21 +102,8 @@ Page({
           console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
           that.createTaskList(result.id/*项目id*/, "未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
-          wx.hideLoading()
-          wx.showToast({
-            title: '成功创建项目',
-            icon: 'success',
-            duration: 1000
-          });
-          wx.switchTab({
-            url: '../Project',
-          })
         },
         error: function (result, error) {
-          wx.showToast({
-            title: '失败',
-            icon: 'none',
-          });
           console.log("创建项目失败！", error)
           //失败情况
 
@@ -136,6 +116,7 @@ Page({
 * @author mr.li
 * @parameter projId 项目id，title任务看板名称
 * 创建任务看板
+*内部调用了创建任务
 */
   createTaskList: function (projId, title) {
     var that = this
@@ -150,7 +131,7 @@ Page({
     }, {
         success: function (result) {
           //添加任务看板成功
-
+          return result
         },
         error: function (result, error) {
           //添加任务看板失败
@@ -171,7 +152,9 @@ Page({
     projMember.save({
       proj_id: projId,
       user_id: userId,
-      is_leader: true
+      is_leader: true,
+      project:project,
+      is_first:false
     }, {
         success: function (result) {
           //添加成功
@@ -217,7 +200,93 @@ Page({
     }
 
   },
+  /**
+     * 2018-05-19
+     * @author mr.li
+     * @parameter
+     *  projId
+        listId任务看板id，
+        title任务名称
+        memberId任务负责人ID
+        endTime截止时间
+     * 创建任务，成员id数组里面只需要id，endTime 的数据类型是string
+     */
+  createTask: function (projId, listId, title, memberId, endTime) {
+    var that = this
+    var Task = Bmob.Object.extend("task")
+    var task = new Task()
 
+    var leaderId = memberId  //删除并返回第一个任务负责人的id
+    var leader = Bmob.Object.createWithoutData("_User", leaderId)  //负责人,存储到数据库
+
+    //添加任务
+    task.save({
+      list_id: listId,
+      title: title,
+      leader: leader,  // 数据库关联，用id可以关联一个user
+      end_time: endTime,
+      is_finish: false,
+      has_sub: false,
+      is_delete: false,
+      sub_num: 0,
+      proj_id: projId
+    }, {
+        success: function (result) {
+          //添加成功
+          //添加任务成员信息
+          that.addTaskMembers(projId, result.id/*任务id*/, leaderId, [])
+        },
+        error: function (result, error) {
+          //添加失败
+          console.log("添加任务失败！", error)
+          //提示用户添加失败
+        }
+      })
+
+  },
+
+  /**
+* 2018-05-19
+* @author mr.li
+* @parameter taskId任务id，leaderId任务负责人id，memberIds除负责人以外的任务成员id数组
+* 为任务添加成员
+*/
+  addTaskMembers: function (projId, taskId, leaderId, memberIds) {
+    var that = this
+    var TaskMember = Bmob.Object.extend("task_member")
+
+    var leader = Bmob.Object.createWithoutData("_User", leaderId)
+    var task = Bmob.Object.createWithoutData("task", taskId)
+    var project = Bmob.Object.createWithoutData("project", projId)
+    var memberObjects = []
+
+    var taskMember = new TaskMember()
+    taskMember.set('task_id', taskId)
+    taskMember.set('user_id', leader)
+    taskMember.set('task', task)
+    taskMember.set('project', project)
+    memberObjects.push(taskMember)  //添加任务负责人id
+
+    for (var i = 0; i < memberIds.length; i++) {
+      var taskMember = new TaskMember()
+      var member = Bmob.Object.createWithoutData("_User", memberIds[i])
+      var task = Bmob.Object.createWithoutData("task", taskId)
+      taskMember.set('task_id', taskId)
+      taskMember.set('user_id', member)
+      taskMember.set('task', task)
+      taskMember.set('project', project)
+      memberObjects.push(taskMember)  //添加任务成员
+    }
+
+    //批量添加任务成员
+    Bmob.Object.saveAll(memberObjects).then(function (memberObjects) {
+      // 成功
+    },
+      function (error) {
+        // 异常处理
+        console.log("批量添加任务成员失败！", error)
+      })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
