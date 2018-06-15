@@ -51,7 +51,7 @@
 					"id": 2,
 					"name": "通过二维码加入项目",
 					"pathName": "pages/Project/Project",
-					"query": "projectid=97081fbc44",
+					"query": "projectid=aa545250b7",
 					"scene": "1012"
 				}
 			]
