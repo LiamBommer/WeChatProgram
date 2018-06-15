@@ -116,7 +116,7 @@ Page({
           })
           //跳转的项目主页
           wx.switchTab({
-            url: '../Project / Project',
+            url: '../Project/Project',
           })
 
         }

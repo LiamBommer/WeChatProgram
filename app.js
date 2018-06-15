@@ -42,6 +42,10 @@ App({
                   })
                 }
               })
+            }else{
+              wx.reLaunch({
+                url: '/pages/Project/Project',
+              })
             } 
           } 
           else {
