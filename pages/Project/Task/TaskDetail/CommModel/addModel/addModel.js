@@ -43,8 +43,6 @@ Page({
               title: '添加模板成功',
             })
             wx.navigateBack()
-
-
           },
           error: function (result, error) {
             //失败
