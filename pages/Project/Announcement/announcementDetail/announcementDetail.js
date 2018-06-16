@@ -129,8 +129,8 @@ Page({
         noread: noread
       })
     //增加已读成员
-      console.log("已读成员列表", read)
-      console.log("当前成员ID", CurrentMemberId)
+      // console.log("已读成员列表", read)
+      // console.log("当前成员ID", CurrentMemberId)
       for (var i in read) {
         if (read[i].objectId == CurrentMemberId) {
           hasReadMember = true
@@ -227,11 +227,11 @@ Page({
     announceQuery.include('publisher')
     announceQuery.first({
       success: function (result) {
-        console.log("获取指定的公告内容成功！")
+        // console.log("获取指定的公告内容成功！")
         var announcement = result
 
         //在这里设置setdata,获取已读和未读成员在函数function getReadAnnounce(announcementId)
-        console.log("获取指定的公告内容成功！", announcement)
+        // console.log("获取指定的公告内容成功！", announcement)
         that.setData({
           id: announcement.id,
           title: announcement.attributes.title,
@@ -255,7 +255,7 @@ Page({
 
       },
       error: function (error) {
-        console.log("查询失败: " + error.code + " " + error.message);
+        // console.log("查询失败: " + error.code + " " + error.message);
       }
     })
 
@@ -327,7 +327,7 @@ Page({
 
       },
       error: function (error) {
-        console.log("查询失败: " + error.code + " " + error.message);
+        // console.log("查询失败: " + error.code + " " + error.message);
       }
     })
 
@@ -354,7 +354,7 @@ Page({
         if (!flag) {
           result[0].set("read", true)   //更改状态为已读
           result[0].save()
-          console.log("修改已读状态成功！")
+          // console.log("修改已读状态成功！")
 
           var Announcement = Bmob.Object.extend("annoucement")
           var announcementQuery = new Bmob.Query(Announcement)
@@ -373,7 +373,7 @@ Page({
 
       },
       error: function (error) {
-        console.log("更改某用户的已读状态失败！", error)
+        // console.log("更改某用户的已读状态失败！", error)
       }
     })
   },
@@ -422,7 +422,7 @@ Page({
           if (notificationObjects != null && notificationObjects.length > 0) {
             Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
               // 通知添加成功
-              console.log("添加项目成员通知成功！")
+              // console.log("添加项目成员通知成功！")
             },
               function (error) {
                 // 通知添加失败处理
@@ -457,7 +457,7 @@ Page({
         //删除成功
         result.set('is_delete',true)
         result.save()
-        console.log("删除公告成功！")
+        // console.log("删除公告成功！")
         //通知项目其他成员
         var _type = 2
         that.addProjectNotification(projId,DELETE_ANNOUNCEMENT,_type,announcementId)
@@ -478,7 +478,7 @@ Page({
       },
       error: function (err) {
         // 删除失败
-        console.log("删除公告失败！", err)
+        // console.log("删除公告失败！", err)
         // 隐藏loading弹窗
         wx.hideLoading()
         // 显示失败反馈
@@ -490,18 +490,6 @@ Page({
       }
     })
 
-  // //删除指定公告的已读和未读成员信息
-  // announcementReadQuery.equalTo("annouce_id", announcementId)
-  // announcementReadQuery.destroyAll({
-  //     success: function () {
-  //       //删除成功
-  //       console.log("删除指定公告的已读和未读成员信息成功")
-  //     },
-  //     error: function (err) {
-  //       // 删除失败
-  //       console.log("删除指定公告的已读和未读成员信息失败", err)
-  //     }
-  //   })
   },
 
 
@@ -521,7 +509,7 @@ Page({
   onLoad: function (options) {
 
     // 接收页面参数，判断是否从分享进入
-    console.log('页面参数', options)
+    // console.log('页面参数', options)
     if(options.isShared) {
       this.setData({
         isShared: options.isShared,
@@ -571,7 +559,7 @@ Page({
 
    
    var content = wx.getStorageSync("announcementDetail-Content-content")//公告内容
-   console.log('公告内容：'+content)
+  //  console.log('公告内容：'+content)
    
    if(content != "" || content.length != 0) {
      that.setData({
