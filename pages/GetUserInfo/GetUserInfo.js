@@ -1,6 +1,13 @@
 
 const Bmob = require('../../utils/bmob.js')
 var communicate_sample_model1 = '你可以在任务评论里发送沟通模板'
+//建议
+var communicate_sample_model2 = '我觉得你这样的任务部署和分工挺好的，但我有一些小小的建议，XXXXXXXXXXX，我觉得这样可能会好一点哦～'
+//提问
+var communicate_sample_model3 = '我觉得你说的挺好的，但是我有一个小小的疑问，XXXXXXXXXXXXXXX'
+//赞美
+var communicate_sample_model4 = '你说的太棒了!'
+
 var user = new Bmob.User();//实例化
 Page({
 
@@ -88,11 +95,14 @@ Page({
                   result.set("openid", openid);
                   //result.set("gender",gender);  //再添加数据就不能正常初始化了
                   result.save();
-                // //为用户添加空的项目“我的项目”
-                   that.buildProject('我的项目','空项目')
-                //   //为用户添加实例沟通模板
-                   that.addCommunicateModel(userId,1,communicate_sample_model1)
-
+                  //为用户添加空的项目“我的项目”
+                  that.buildProject('我的项目','空项目')
+                  //为用户添加实例沟通模板
+                  that.addCommunicateModel(userId,1,communicate_sample_model1)     //告诉用户可以在任务评论发送
+                  that.addCommunicateModel(userId, 1, communicate_sample_model2)   //建议
+                  that.addCommunicateModel(userId, 2, communicate_sample_model3)   //提问
+                  that.addCommunicateModel(userId, 3, communicate_sample_model4)   //赞美
+                  
                   //跳转到项目主页
                   console.log(wx.getStorageSync('Project-share-id'))
                   if (wx.getStorageSync('Project-share-id') == ''
