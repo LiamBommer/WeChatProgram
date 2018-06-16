@@ -1814,8 +1814,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     console.log("Notification", requestId, projectName, projmember, taskLeaderId)
     //获取分享的标识
     var isShared = this.data.isShared
-
-    if (requestId != "" && projectName != "" && projmember != "" && taskLeaderId != "") {
+    //mrli 删除了if判断语句里面的 taskLeaderId != "" 因为任务可能没有负责人
+    if (requestId != "" && projectName != "" && projmember != ""/* && taskLeaderId != ""*/) {
       console.log("Notification", requestId, projectName)
       var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
       if (leaderId != "") {
