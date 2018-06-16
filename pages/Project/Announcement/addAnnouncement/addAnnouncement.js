@@ -94,7 +94,7 @@ Page({
           var _type = 2  //通知类型
           that.addProjectNotification(projId, ADD_ANNOUNCEMENT, _type, result.id/*公告的id*/) 
           //提示用户创建公告成功
-          console.log("创建公告成功！", result.id)
+          // console.log("创建公告成功！", result.id)
 
           wx.hideLoading()
           wx.showToast({
@@ -107,7 +107,7 @@ Page({
         error: function (result, error) {
           // 添加失败
           //在这里处理失败的情况
-          console.log("创建公告失败！", error)
+          // console.log("创建公告失败！", error)
 
 
 
@@ -162,7 +162,7 @@ Page({
           if (notificationObjects != null && notificationObjects.length > 0) {
             Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
               // 通知添加成功
-              console.log("添加项目成员通知成功！")
+              // console.log("添加项目成员通知成功！")
             },
               function (error) {
                 // 通知添加失败处理
@@ -212,11 +212,11 @@ Page({
         //保存未读成员列表
         Annoucement_read.saveAll(Annoucement_readObjects).then(function (Annoucement_readObjects) {
           // 成功
-          console.log("保存未读成员列表成功！")
+          // console.log("保存未读成员列表成功！")
         },
           function (error) {
             // 异常处理
-            console.log("保存未读成员列表失败！", error)
+            // console.log("保存未读成员列表失败！", error)
           })
       }
 

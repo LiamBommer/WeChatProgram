@@ -176,7 +176,7 @@ Page({
     that.setData({
       currentItem: e.detail.current
     })
-    console.log(e.detail.current);
+    //console.log(e.detail.current);
   },
 
   //点击任务项
@@ -253,7 +253,7 @@ Page({
       success: function (res) {
         //添加任务列表
         if (res.tapIndex == 0) {
-          console.log("res.tapIndex")
+          //console.log("res.tapIndex")
           var currentProjId = that.data.currentProjId
           var Length = tasklist.length;//数组长度
           tasklist.push({
@@ -289,7 +289,7 @@ Page({
         }
       },
       fail: function (res) {
-        console.log(res.errMsg)
+        //console.log(res.errMsg)
       }
     })
   },
@@ -418,7 +418,7 @@ Page({
       key: 'ProjectMore-projId',
       data: that.data.currentProjId,
     })
-    console.log('ProjectMore-projectMember', that.data.currentProjMember)
+    //console.log('ProjectMore-projectMember', that.data.currentProjMember)
     //设置项目成员缓存
     wx.setStorage({
       key: 'ProjectMore-projectMember',
@@ -447,12 +447,12 @@ Page({
     var taskListIndex = that.data.currentItem
     var projName = that.data.currentProjName
     var index = e.currentTarget.dataset.index
-    console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
+    //console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
       key: "ProjectMore-Task",
       data: that.data.tasklist[taskListIndex].tasks[index],
     })
-    console.log("显示任务详情:", projName)
+    //console.log("显示任务详情:", projName)
     wx.setStorage({
       key: "ProjectMore-projName",
       data: projName,
@@ -468,7 +468,7 @@ Page({
   showMeetingDetail: function(e) {
     var that = this
     var meetingId = e.currentTarget.id
-    console.log("showMeetingDetail", meetingId)
+    //console.log("showMeetingDetail", meetingId)
     //设置会议ID缓存
     wx.setStorage({
       key: 'ProjectMore-meetingId',
@@ -556,12 +556,12 @@ Page({
     }, {
         success: function (result) {
           //添加任务看板成功
-          console.log("提示用户添加任务看板成功!")
+          //console.log("提示用户添加任务看板成功!")
           that.getTaskLists(projId)
         },
         error: function (result, error) {
           //添加任务看板失败
-          console.log("添加任务看板失败!")
+          //console.log("添加任务看板失败!")
         }
       })
   },
@@ -584,17 +584,17 @@ Page({
     tasklistQuery.notEqualTo("is_delete", true)
 
     //第一次默认添加任务看板
-    console.log("taskList", TaskList)
+    //console.log("taskList", TaskList)
     tasklistQuery.find({
 
       success: function(results){
         //这里设置setdata
-        console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
+        //console.log('Successfully got task lists: \n  ' + JSON.stringify(results));
 
-        console.log("getTaskLists:",results)
+        //console.log("getTaskLists:",results)
         //results的第一个是最早创建的
         var listIndex = 0;
-        console.log('results number: ' + results.length)
+        //console.log('results number: ' + results.length)
 
           var taskList = []
           for (var i = 0; i < results.length; i++) {
@@ -633,21 +633,23 @@ Page({
    */
   getTasks: function(listId, listIndex, tasklists){
 
-    console.log('查询任务信息：\nlistId: '+listId+'\nlistIndex: '+listIndex)
+    //console.log('查询任务信息：\nlistId: '+listId+'\nlistIndex: '+listIndex)
 
     var that = this
     var Task = Bmob.Object.extend("task")
     var taskQuery = new Bmob.Query(Task)
+    var finishTaskArr = []    //已完成任务的数组
+    var unfinishTaskArr = []  //未完成任务的数组
 
     //查询出对应的任务看板的所有任务
     taskQuery.limit(20)
     taskQuery.equalTo("list_id",listId)
     taskQuery.notEqualTo("is_delete", true)
     taskQuery.include("leader")  //可以查询出leader
-    taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
+    taskQuery.descending("end_time")  //根据截止时间降序，后面会进行再处理
     taskQuery.find({
       success: function (tasks) {
-        console.log("共查询到任务 " + tasks.length + " 条记录");
+        //console.log("共查询到任务 " + tasks.length + " 条记录");
 
         // 改日期格式
         // 添加属性：日期状态
@@ -655,17 +657,13 @@ Page({
           var timeStatus = that.timeStatus(tasks[i].attributes.end_time)
           tasks[i]['attributes']['timeStatus'] = timeStatus
         }
-        console.log('tasks: ')
-        console.log(tasks)
-        console.log('tasklists: ')
-        console.log(tasklists)
 
 
         // 将任务插入到对应看板列表中
         for (var i in tasks) {
           var object
           object={
-            end_time: tasks[i].attributes.end_time,
+            end_time: tasks[i].attributes.end_time || '',
             has_sub: tasks[i].attributes.has_sub,
             is_delete: tasks[i].attributes.is_delete,
             is_finish: tasks[i].attributes.is_finish,
@@ -676,23 +674,31 @@ Page({
             objectId: tasks[i].id,
             sub_num: tasks[i].attributes.sub_num,
           }
-          tasklists[listIndex].tasks.push(object)
+          if(object.is_finish){
+            finishTaskArr.push(object)
+          }else{
+            if (object.end_time == '' || object.end_time == null){
+              unfinishTaskArr.push(object)
+            }else{
+              unfinishTaskArr.unshift(object)
+            }           
+          }        
         }
-        console.log("tasklists:", tasklists[listIndex])
+        tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
+
 
         that.setData({
           tasklist: tasklists
         })
-        console.log("tasklists:", that.data.tasklist)
+        //console.log("tasklists:", that.data.tasklist)
 
       },
       error: function (error) {
-        console.log("提示用户任务查询失败: " + error.code + " " + error.message);
+        //console.log("提示用户任务查询失败: " + error.code + " " + error.message);
 
       }
     })
   },
-
   timeStatus: function(end_time) {
     // 比较当前时间与截止时间的差值
     var that = this
@@ -730,17 +736,17 @@ Page({
     memberQuery.select("user_id", "is_leader")
     memberQuery.find().then(function (results) {
       //返回成功
-      console.log("共查询到 " + results.length + " 条记录");
+      //console.log("共查询到 " + results.length + " 条记录");
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get("is_leader")) {
           //项目领导，放在数组的第一个
-          console.log("获取项目领导id", object.get('user_id'));
+          //console.log("获取项目领导id", object.get('user_id'));
           leader_id = object.get("user_id")
           memberId.unshift(leader_id)
 
         } else {
-          console.log("获取项目成员id", object.get('user_id'));
+          //console.log("获取项目成员id", object.get('user_id'));
           memberId.push(object.get("user_id"))  //将成员id添加到数组
         }
       }
@@ -754,7 +760,7 @@ Page({
       // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
       userQuery.find({
         success: function (results) {
-          console.log("共查询到项目成员 " + results.length + " 条记录");
+          //console.log("共查询到项目成员 " + results.length + " 条记录");
           // 循环处理查询到的数据
           for (var i = 0; i < results.length; i++) {
             var object = results[i];
@@ -772,7 +778,7 @@ Page({
               userArr.push(user)
           }
           //在这里设置setdata
-          console.log("成员数组",userArr)
+          //console.log("成员数组",userArr)
           that.setData({
             currentProjMember: userArr
           })
@@ -786,7 +792,7 @@ Page({
 
         },
         error: function (error) {
-          console.log("查询失败: " + error.code + " " + error.message);
+          //console.log("查询失败: " + error.code + " " + error.message);
           //失败情况
 
 
@@ -861,15 +867,15 @@ Page({
       success: function (result) {
         result.set('title', newTitle)
         result.save()
-        console.log("更改任务列表名成功")
+        //console.log("更改任务列表名成功")
 
         var index = that.data.currentItem//当前任务列表下标
         var taskList = that.data.tasklist
-        console.log(taskList)
+        //console.log(taskList)
         for (var i in taskList) {
-          console.log(index)
+          //console.log(index)
           if (i == index){
-            console.log(taskList[i].title)
+            //console.log(taskList[i].title)
             taskList[i].title = result.get('title')
           }
         }
@@ -879,7 +885,7 @@ Page({
       },
       error: function (error) {
         //失败
-        console.log("更改任务列表名失败", error)
+        //console.log("更改任务列表名失败", error)
       }
     })
   },
@@ -896,7 +902,7 @@ Page({
       tasklistQuery.destroyAll({
         success: function () {
           //删除成功
-          console.log("提示用户任务列表删除成功!")
+          //console.log("提示用户任务列表删除成功!")
          wx.showToast({
            title: '删除成功',
          })
@@ -933,13 +939,13 @@ Page({
     annoucementQuery.limit(50)
     annoucementQuery.find({
       success: function (results) {
-        //console.log("共查询到公告 " + results.length + " 条记录");
-        console.log('Announcements: \n')
-        console.log(results)
+        ////console.log("共查询到公告 " + results.length + " 条记录");
+        //console.log('Announcements: \n')
+        //console.log(results)
         // 循环处理查询到的数据
         for (var i = 0; i < results.length; i++) {
           var result = results[i]
-          console.log(result)
+          //console.log(result)
           var createdAt = result.createdAt.substring(0, 16)
 
           var object = {}
@@ -957,7 +963,7 @@ Page({
         }
 
         //在这里setdata
-        console.log("查询到的公告数组", annoucementArr)
+        //console.log("查询到的公告数组", annoucementArr)
         that.setData({
           Announcement: annoucementArr
         })
@@ -966,7 +972,7 @@ Page({
 
       },
       error: function (error) {
-        console.log("查询失败: " + error.code + " " + error.message);
+        //console.log("查询失败: " + error.code + " " + error.message);
       }
     })
 
@@ -994,7 +1000,7 @@ Page({
     meetingQuery.find({
       success: function (results) {
         //获取成功
-        console.log("获取会议详情成功：",results)
+        //console.log("获取会议详情成功：",results)
         var oldMonth //存储上一次的月份
         //取数据
         for (var i in results) {
@@ -1004,7 +1010,7 @@ Page({
           var meetingRecord = results[i].get('meeting_record') //会议记录
           var time = results[i].get('time')
           var startTime = results[i].get('start_time')
-          console.log("getMeeting-startTime", startTime)
+          //console.log("getMeeting-startTime", startTime)
           if (startTime != ""){//取时间中的月份和日期
           var month = startTime.substring(0,7)
           var day = startTime.substring(8, 10)
@@ -1045,7 +1051,7 @@ Page({
         }
         if (meetingArr != null && meetingArr.length > 0) {
           //在这里setData
-          console.log("会议详情：",meetingArr)
+          //console.log("会议详情：",meetingArr)
           that.setData({
             Meeting: meetingArr
           })
@@ -1061,7 +1067,7 @@ Page({
       },
       error: function (error) {
         //获取失败
-        console.log("获取某项目下的所有未删除的会议失败!")
+        //console.log("获取某项目下的所有未删除的会议失败!")
       }
     })
   },
@@ -1097,14 +1103,14 @@ Page({
         scheduletaskQuery.find({
           success: function (results) {
             var scheduleObjectArr = []
-            console.log('日程任务列表:', schedules)
+            //console.log('日程任务列表:', schedules)
             for (var i = 0; i < schedules.length; i++) {
 
               // 处理开始时间，整理出年月日
               var startTimeDate = new Date(schedules[i].get('start_time').replace(/-/g, "/"))
               var startYear = startTimeDate.getFullYear()   // 开始时间年月日
               var startMonth = startTimeDate.getMonth() + 1
-              console.log("startMonth", startMonth)
+              //console.log("startMonth", startMonth)
               var startDate = startTimeDate.getDate()
 
               var endTimeDate = new Date(new Date(schedules[i].get('end_time').replace(/-/g, "/")))
@@ -1146,8 +1152,8 @@ Page({
             }
             //scheduleObjectArr才是最终要获取的日程数组，每个日程下面包括有关联的任务的数据
             //在这里setData
-            console.log('日程列表：\n')
-            console.log(scheduleObjectArr)
+            //console.log('日程列表：\n')
+            //console.log(scheduleObjectArr)
 
             // 对日程按年进行排序并分组
             var currentYear = new Date().getFullYear()
@@ -1218,12 +1224,12 @@ Page({
   expandSchedule: function (e) {
 
     var that = this
-    console.log('点击数组信息：', e)
+    //console.log('点击数组信息：', e)
 
     var yearIndex = parseInt(e.currentTarget.dataset.yearIndex)
     var scheduleIndex = parseInt(e.currentTarget.dataset.scheduleIndex)
 
-    console.log('yearIndex: ' + yearIndex + '\nScheIndex: ' + scheduleIndex)
+    //console.log('yearIndex: ' + yearIndex + '\nScheIndex: ' + scheduleIndex)
     var flag = that.data.ScheduleYear[yearIndex].schedules[scheduleIndex].expanded
 
     // path = ScheduleYear[yearIndex].schedules[scheduleIndex].expaned
@@ -1295,7 +1301,7 @@ Page({
         if (ideaArr != null && ideaArr.length > 0) {
           //获取到点子啦
           //在这里setData
-          console.log('获取到的点子们', ideaArr)
+          //console.log('获取到的点子们', ideaArr)
 
           that.setData({
             Idea: ideaArr
@@ -1455,14 +1461,14 @@ Page({
     wx.getStorage({
       key: "Project-detail",
       success: function (res) {
-        console.log("ProjectMore-proj:", res)
+        //console.log("ProjectMore-proj:", res)
         var projId = res.data.id//获取项目ID
         var ProjectName = res.data.name//获取项目名
         that.setData({
           currentProjId: projId,
           currentProjName: ProjectName
         })
-        console.log("onshow:project", res.data)
+        //console.log("onshow:project", res.data)
         that.getTaskLists(projId)       // 获取任务详情
         that.getProjectMember(projId)   // 获取项目成员
         that.getAnnouncements(projId)   // 获取公告详情
@@ -1477,7 +1483,7 @@ Page({
     // if (that.data.exitTask == true)//只刷新任务页
     // {
     //   var currentProjId = that.data.currentProjId
-    //   console.log("当前项目ID", currentProjId)
+    //   //console.log("当前项目ID", currentProjId)
     //   that.getTaskLists(currentProjId);//获取任务ID
     //   that.getProjectMember(currentProjId);//获取项目成员
     // }
@@ -1485,28 +1491,28 @@ Page({
     // if (that.data.exitAnnouncement == true)//只刷新公告页
     // {
     //   var currentProjId = that.data.currentProjId
-    //   console.log("当前项目ID", currentProjId)
+    //   //console.log("当前项目ID", currentProjId)
     //   that.getAnnouncements(currentProjId)//获取公告详情
     // }
     // //其他次执行
     // if (that.data.exitSchedule == true)//只刷新日程页
     // {
     //   var currentProjId = that.data.currentProjId
-    //   console.log("当前项目ID", currentProjId)
+    //   //console.log("当前项目ID", currentProjId)
     //   that.getSchedules(currentProjId)      // 获取日程列表
     // }
     // //其他次执行
     // if (that.data.exitMeeting == true)//只刷新会议页
     // {
     //   var currentProjId = that.data.currentProjId
-    //   console.log("当前项目ID", currentProjId)
+    //   //console.log("当前项目ID", currentProjId)
     //   that.getMeeting(currentProjId)//获取会议详情
     // }
     // //其他次执行
     // if (that.data.exitIdea == true)//只刷新墙页
     // {
     //   var currentProjId = that.data.currentProjId
-    //   console.log("当前项目ID", currentProjId)
+    //   //console.log("当前项目ID", currentProjId)
     //   // that.getMeeting(currentProjId)//获取会议详情
     // }
 

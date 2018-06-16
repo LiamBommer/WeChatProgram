@@ -1,6 +1,13 @@
 
 const Bmob = require('../../utils/bmob.js')
 var communicate_sample_model1 = '你可以在任务评论里发送沟通模板'
+//建议
+var communicate_sample_model2 = '我觉得你这样的任务部署和分工挺好的，但我有一些小小的建议，XXXXXXXXXXX，我觉得这样可能会好一点哦～'
+//提问
+var communicate_sample_model3 = '我觉得你说的挺好的，但是我有一个小小的疑问，XXXXXXXXXXXXXXX'
+//赞美
+var communicate_sample_model4 = '你说的太棒了!'
+
 var user = new Bmob.User();//实例化
 Page({
 
@@ -11,49 +18,63 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
-  /**
-   * 点击按钮，确认获取信息
-   */
-  confirm: function (res) {
+  confirm: function () {
     var that = this
-    var userInfo = res.detail.userInfo
-    
-    var nickName = userInfo.nickName
-    var avatarUrl = userInfo.avatarUrl
-    var userId = getApp().globalData.userId
-    console.log('userInfo', userInfo,'userId',userId)
-    getApp().globalData.nickName = nickName
-    getApp().globalData.userPic = avatarUrl
+    // 查看是否授权
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              //console.log('获取用户信息成功', res.userInfo)
 
-    // 存进数据库
-    var u = Bmob.Object.extend("_User");
-    var query = new Bmob.Query(u);
-    // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
-    query.get(userId, {
-      success: function (result) {
-        // 自动绑定之前的账号
-        result.set("nickName", nickName);
-        result.set("userPic", avatarUrl);
-        //result.set("gender",gender);  //再添加数据就不能正常初始化了
-        result.save();
-        //为用户添加空的项目“我的项目”
-        that.buildProject('我的项目','空项目')
-        //为用户添加实例沟通模板
-        that.addCommunicateModel(userId,1,communicate_sample_model1)
-        
-        //跳转到项目主页
-        console.log(wx.getStorageSync('Project-share-id'))
-        if (wx.getStorageSync('Project-share-id') == ''|| wx.getStorageSync('Project-share-id') == undefined) {
-          wx.reLaunch({
-            url: '../Project/Project',
-          })
-        } else {
-          console.log('跳转到joinproject')
-          wx.redirectTo({
-            url: '../Project/JoinProject/JoinProject',
+              var userId = getApp().globalData.userId
+              var nickName = res.userInfo.nickName
+              var avatarUrl = res.userInfo.avatarUrl
+              var openid = getApp().globalData.openid
+              getApp().globalData.nickName = res.userInfo.nickName
+              getApp().globalData.userPic = res.userInfo.avatarUrl
+
+              // 存进数据库
+              var u = Bmob.Object.extend("_User");
+              var query = new Bmob.Query(u);
+              // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
+              query.get(userId, {
+                success: function (result) {
+                  // 自动绑定之前的账号
+                  result.set("nickName", nickName);
+                  result.set("userPic", avatarUrl);
+                  result.set("openid", openid);
+                  //result.set("gender",gender);  //再添加数据就不能正常初始化了
+                  result.save();
+                  //为用户添加空的项目“我的项目”
+                  that.buildProject('我的项目','空项目')
+                  //为用户添加实例沟通模板
+                  that.addCommunicateModel(userId,1,communicate_sample_model1)     //告诉用户可以在任务评论发送
+                  that.addCommunicateModel(userId, 1, communicate_sample_model2)   //建议
+                  that.addCommunicateModel(userId, 2, communicate_sample_model3)   //提问
+                  that.addCommunicateModel(userId, 3, communicate_sample_model4)   //赞美
+                  
+                  //跳转到项目主页
+                 // console.log(wx.getStorageSync('Project-share-id'))
+                  if (wx.getStorageSync('Project-share-id') == ''
+                      || wx.getStorageSync('Project-share-id') == undefined) {
+                    wx.reLaunch({
+                      url: '../Project/Project',
+                    })
+                  } else {
+                    //console.log('跳转到joinproject')
+                    wx.redirectTo({
+                      url: '../Project/JoinProject/JoinProject',
+                    })
+                  }
+                }
+              })
+
+            }
           })
         }
-
       }
     })
 
@@ -70,10 +91,8 @@ Page({
     if (currentUser) {
       leader_id = currentUser.id
       leader_name = getApp().globalData.nickName
-      console.log("当前用户:", leader_id, leader_name)
+      //console.log("当前用户:", leader_id, leader_name)
     }
-    console.log(title)
-    console.log(desc)
     project.save({
       name: title,
       desc: desc,
@@ -84,12 +103,12 @@ Page({
       img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/05/18/ff3371c040fe5b6380011eb3cb1770a4.png"  //涛哥找的默认图片
     }, {
         success: function (result) {
-          console.log("创建项目成功！", result)
+          //console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
           that.createTaskList(result.id/*项目id*/, "未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
         },
         error: function (result, error) {
-          console.log("创建项目失败！", error)
+          //console.log("创建项目失败！", error)
           //失败情况
 
         }
@@ -143,11 +162,11 @@ Page({
     }, {
         success: function (result) {
           //添加成功
-          console.log("保存项目领导成功！")
+          //console.log("保存项目领导成功！")
         },
         error: function (result, error) {
           //添加失败
-          console.log("保存项目领导失败！", error)
+          //console.log("保存项目领导失败！", error)
         }
       })
   },
@@ -169,11 +188,11 @@ Page({
       }, {
           success: function (result) {
             //成功
-            console.log('提示用户添加沟通模板成功过！')
+            //console.log('提示用户添加沟通模板成功过！')
           },
           error: function (result, error) {
             //失败
-            console.log('添加指定类型的沟通模板失败:', error)
+            //console.log('添加指定类型的沟通模板失败:', error)
           }
         })
     }
@@ -217,7 +236,7 @@ Page({
         },
         error: function (result, error) {
           //添加失败
-          console.log("添加任务失败！", error)
+          //console.log("添加任务失败！", error)
           //提示用户添加失败
         }
       })
@@ -263,7 +282,7 @@ Page({
     },
       function (error) {
         // 异常处理
-        console.log("批量添加任务成员失败！", error)
+       // console.log("批量添加任务成员失败！", error)
       })
   },
   /**

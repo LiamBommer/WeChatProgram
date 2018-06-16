@@ -160,7 +160,7 @@ getProjectList:function(){
   var projectmemberQuery = new Bmob.Query(Projectmember)
   var projectArr = []
   var starprojectArr = []
-  if (getApp().globalData.userId){
+  if (1){
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目

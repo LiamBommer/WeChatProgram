@@ -68,7 +68,7 @@ Page({
       leader_name: leader_name,
       is_first:false,
       is_delete:false,
-      img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/05/18/ff3371c040fe5b6380011eb3cb1770a4.png"  //涛哥找的默认图片
+      img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/06/15/3c7ae525400a2aa0800a0780b701069c.jpg"  //涛哥找的默认图片
     }, {
         success: function (result) {
           console.log("创建项目成功！", result)

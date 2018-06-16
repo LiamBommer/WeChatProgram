@@ -51,9 +51,8 @@
     "pages/Mine/Idea/Idea",
     "pages/Notification/Notification",
     "pages/memberList/memberList",
-    "pages/logs/logs",
-    "test/test",
-    "pages/test/test"
+    "pages/logs/logs"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
