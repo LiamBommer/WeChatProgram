@@ -43,9 +43,10 @@ App({
                 }
               })
             }else{
-              wx.reLaunch({
-                url: '/pages/Project/Project',
-              })
+              if(!options.query.isShared)         //如果是分享页面，则不做跳转
+                wx.reLaunch({
+                 url: '/pages/Project/Project',
+                })
             } 
           } 
           else {
