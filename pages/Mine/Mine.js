@@ -157,7 +157,7 @@ Page({
 
   // 完成/重做任务选中
   taskFinishAction: function(e) {
-    console.log('选中列表信息：', e)
+    //console.log('选中列表信息：', e)
 
     // 选择状态
     var cbValue = e.detail.value
@@ -186,6 +186,7 @@ Page({
   'taskEndTime':  //任务截止时间，只有年月日
   'projectName' ://项目名称
   projectId      //项目id，用来通知任务其他成员
+  'isFinish'     //任务完成情况
   */
   getMyTasks: function (userId) {
 
@@ -203,20 +204,23 @@ Page({
       success: function (results) {
         //成功
         for (var i in results) {
-          if (results[i].get('task').is_delete != true) {
+          if (results[i].get('task').is_delete != true && results[i].get('task').is_finish != true) {
             var taskObject = {}
             taskObject = {
               'id': results[i].get('task').objectId,   //任务id
               'taskTitle': results[i].get('task').title,   //任务标题
-              'taskEndTime': results[i].get('task').end_time, //任务截止时间，只有年月日
+              'taskEndTime': results[i].get('task').end_time || '', //任务截止时间，只有年月日
               'projectName': results[i].get('project').name,  //项目名称
-              'projectId': results[i].get('project').objectId  //项目id
+              'projectId': results[i].get('project').objectId,  //项目id
+              'isFinish':results[i].get('task').is_finish      //任务完成情况
             }
             taskArr.push(taskObject)
           }
           if (taskArr != null && taskArr.length > 0) {
             //在这里setData
-            console.log('我的任务', taskArr)
+            // //console.log('我的任务', taskArr)
+            //排序
+            taskArr.sort(that.sortTask)
 
             that.setData({
               Task: taskArr
@@ -238,14 +242,21 @@ Page({
       }
     })
   },
-
+sortTask:function(a,b){
+  if (a.taskEndTime == '' || a.taskEndTime == null){
+    return 1
+  }
+  if(a.taskEndTime >= b.taskEndTime)
+    return 1
+  return -1
+},
 
   /**
  * @parameter projId 项目id ，taskId 任务id ,isFinish 是否完成（true表示完成，false表示重做任务）
  * 完成/重做我的任务
  */
   finishMytask: function (projId, taskId, isFinish) {
-    console.log('isFinish：' + isFinish)
+    //console.log('isFinish：' + isFinish)
     var that = this
     var Task = Bmob.Object.extend('task')
     var taskQuery = new Bmob.Query(Task)
@@ -332,13 +343,13 @@ Page({
           //在数据库添加通知
           Bmob.Object.saveAll(notificationObjects).then(function (notificationObjects) {
             // 成功
-            console.log("添加任务成员通知成功！", notificationObjects)
+            //console.log("添加任务成员通知成功！", notificationObjects)
 
 
           },
             function (error) {
               // 异常处理
-              console.log("添加任务成员通知失败!", error)
+              //console.log("添加任务成员通知失败!", error)
 
             })
         }
@@ -382,7 +393,7 @@ Page({
 
         if (ideaArr != null && ideaArr.length > 0) {
           //在这里setData
-          console.log('获取点子列表成功', ideaArr)
+          //console.log('获取点子列表成功', ideaArr)
           that.setData({
             Idea: ideaArr
           })
@@ -398,7 +409,7 @@ Page({
       },
       error: function (error) {
         //失败
-        console.log('获取点子列表失败!', error)
+        //console.log('获取点子列表失败!', error)
       }
     })
 
@@ -434,7 +445,7 @@ Page({
 
             // 时间处理
             var startTime = results[i].get('meeting').start_time
-            console.log("startTime", startTime)
+            //console.log("startTime", startTime)
             var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
             var year = startTime.getFullYear()
             var month = startTime.getMonth()+1
@@ -475,7 +486,7 @@ Page({
         }
         if (meetingArr != null && meetingArr.length > 0) {
           //在这里setData
-          console.log('获取用户的会议', meetingArr)
+          //console.log('获取用户的会议', meetingArr)
           that.setData({
             Meeting: meetingArr
           })
@@ -491,7 +502,7 @@ Page({
       },
       error: function (error) {
         //失败
-        console.log('获取我的会议失败：', error)
+        //console.log('获取我的会议失败：', error)
       }
 
     })
@@ -499,7 +510,10 @@ Page({
 
   //给会议数组排序，对特定的object类型才有效
   sortMeeting:function(a,b){
-    return a.attributes.meeting.start_time >= b.attributes.meeting.start_time
+    if (a.attributes.meeting.start_time >= b.attributes.meeting.start_time){
+      return 1
+    }
+    return -1
 
   },
 
@@ -612,7 +626,7 @@ Page({
 
 
   getUserInfo: function (e) {
-    console.log(e)
+    //console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,

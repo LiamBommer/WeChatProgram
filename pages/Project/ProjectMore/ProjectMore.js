@@ -638,13 +638,15 @@ Page({
     var that = this
     var Task = Bmob.Object.extend("task")
     var taskQuery = new Bmob.Query(Task)
+    var finishTaskArr = []    //已完成任务的数组
+    var unfinishTaskArr = []  //未完成任务的数组
 
     //查询出对应的任务看板的所有任务
     taskQuery.limit(20)
     taskQuery.equalTo("list_id",listId)
     taskQuery.notEqualTo("is_delete", true)
     taskQuery.include("leader")  //可以查询出leader
-    taskQuery.ascending("end_time")  //根据截止时间升序（越邻近排序最前面）
+    taskQuery.descending("end_time")  //根据截止时间降序，后面会进行再处理
     taskQuery.find({
       success: function (tasks) {
         //console.log("共查询到任务 " + tasks.length + " 条记录");
@@ -655,17 +657,13 @@ Page({
           var timeStatus = that.timeStatus(tasks[i].attributes.end_time)
           tasks[i]['attributes']['timeStatus'] = timeStatus
         }
-        //console.log('tasks: ')
-        //console.log(tasks)
-        //console.log('tasklists: ')
-        //console.log(tasklists)
 
 
         // 将任务插入到对应看板列表中
         for (var i in tasks) {
           var object
           object={
-            end_time: tasks[i].attributes.end_time,
+            end_time: tasks[i].attributes.end_time || '',
             has_sub: tasks[i].attributes.has_sub,
             is_delete: tasks[i].attributes.is_delete,
             is_finish: tasks[i].attributes.is_finish,
@@ -676,9 +674,18 @@ Page({
             objectId: tasks[i].id,
             sub_num: tasks[i].attributes.sub_num,
           }
-          tasklists[listIndex].tasks.push(object)
+          if(object.is_finish){
+            finishTaskArr.push(object)
+          }else{
+            if (object.end_time == '' || object.end_time == null){
+              unfinishTaskArr.push(object)
+            }else{
+              unfinishTaskArr.unshift(object)
+            }           
+          }        
         }
-        //console.log("tasklists:", tasklists[listIndex])
+        tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
+
 
         that.setData({
           tasklist: tasklists
@@ -692,7 +699,6 @@ Page({
       }
     })
   },
-
   timeStatus: function(end_time) {
     // 比较当前时间与截止时间的差值
     var that = this
