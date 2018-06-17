@@ -158,9 +158,13 @@ App({
   },
 
   onShow:function(options){
-    var that = this
-    that.userLogin(options)
-    
+    console.log("app.js onShow",options)
+    //从相册返回小程序 场景值为null
+    if(options.scene != null ){
+      var that = this
+      that.userLogin(options)
+    }
+  
   },
 
   globalData: {
