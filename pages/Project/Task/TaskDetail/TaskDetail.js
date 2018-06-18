@@ -1439,7 +1439,7 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
         console.log("删除子任务成功！")
         that.modifySubNum(taskId,-1)
         //记录操作
-        that.addTaskRecord(projId,taskId, userName, DELETE_SUB_TASK + subTaskTitle)
+        that.addTaskRecord(projId,taskId, userName, DELETE_SUB_TASK)
         //成功
         wx.showToast({
           title: '删除成功',
@@ -1529,6 +1529,7 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
          var subTaskId = e.currentTarget.dataset.id
          var taskId = that.data.taskId
          var subTaskTitle = e.currentTarget.dataset.childTitle
+         console.log(subTaskTitle)
          var userName = getApp().globalData.nickName
          that.deleteSubTask(wx.getStorageSync('Project-detail').id,taskId,subTaskId, userName, subTaskTitle)
          that.setData({
