@@ -385,7 +385,7 @@ sortTask:function(a,b){
           ideaObject = {
             'id': results[i].id,    //点子id
             'content': results[i].get('content'),  //点子内容
-            'createdAt': results[i].createdAt,   //点子发表时间
+            'createdAt': results[i].createdAt.substring(0,16),   //点子发表时间
             'projectName': results[i].get('project').name  //项目名字
           }
           ideaArr.push(ideaObject)
