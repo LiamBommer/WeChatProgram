@@ -1,4 +1,4 @@
-// pages/Project/Task/TaskDetail/CommModel/addModel/addModel.js
+//minm// pages/Project/Task/TaskDetail/CommModel/addModel/addModel.js
 var Bmob = require('../../../../../../utils/bmob.js')
 Page({
 
@@ -43,8 +43,6 @@ Page({
               title: '添加模板成功',
             })
             wx.navigateBack()
-
-
           },
           error: function (result, error) {
             //失败

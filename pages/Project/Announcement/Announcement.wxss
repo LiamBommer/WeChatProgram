@@ -44,7 +44,7 @@
 
 .Announcement-container .item-container .item{
   width: 100%;
-  height: 135rpx;
+  min-height: 135rpx;
   background: #fff;
   display: flex;
   align-items: center;
