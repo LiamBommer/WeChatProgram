@@ -617,7 +617,7 @@ Page({
     var that = this;
     var taskId = that.data.taskId
     var publisherId = getApp().globalData.userId
-    that.sendTaskCommentPicture(taskId, publisherId, true)//传后台
+    that.sendTaskCommentPicture(taskId, publisherId)//传后台
     
   },
 
@@ -1624,7 +1624,7 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
           chat: commentList
           })
         // 加载完成
-        wx.hideLoading()
+        // wx.hideLoading()
       },
       error: function (error) {
         //获取评论失败
@@ -1654,7 +1654,7 @@ sendTaskComment:function (taskId, publisherId, content,isImg) {
     }, {
         success: function (result) {
           // 添加成功
-          console.log("提示用户评论成功!")
+          // console.log("提示用户评论成功!")
           wx.showToast({
             title: '评论成功',
           })
@@ -1681,7 +1681,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       success: function (res) {
         var tempFilePaths = res.tempFilePaths;
         if (tempFilePaths.length > 0) {
-          var name = "1.jpg";//上传的图片的别名，建议可以用日期命名
+          var name = new Date().getMilliseconds()+".jpg";//上传的图片的别名，建议可以用日期命名
           var file = new Bmob.File(name, tempFilePaths);
           file.save().then(function (res) {
 
@@ -1906,7 +1906,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
           var taskId = that.data.taskId//当前任务ID
           var publisherId = getApp().globalData.userId//当前操作用户ID
           var userPic = getApp().globalData.userPic//当前操作用户头像
-          that.sendTaskComment(taskId, publisherId, content)//传后台
+          that.sendTaskComment(taskId, publisherId, content,false)//传后台
           chat.push({
             content: content, //我发送的内容
             icon: userPic,//我的头像

@@ -968,7 +968,7 @@ Page({
           Announcement: annoucementArr
         })
         // 加载完成
-        wx.hideLoading()
+        // wx.hideLoading()
 
       },
       error: function (error) {
