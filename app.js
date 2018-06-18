@@ -43,7 +43,7 @@ App({
                 }
               })
             }else{
-              if(!options.query.isShared)         //如果是分享页面，则不做跳转
+              if (!options.query.isShared && options.path != "pages/Project/Task/TaskDetail/TaskDetail")         //如果是分享页面，则不做跳转
                 wx.reLaunch({
                  url: '/pages/Project/Project',
                 })
@@ -160,7 +160,7 @@ App({
   onShow:function(options){
     console.log("app.js onShow",options)
     //从相册返回小程序 场景值为null
-    if(options.scene != null ){
+    if (options.scene != null){
       var that = this
       that.userLogin(options)
     }
