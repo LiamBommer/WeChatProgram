@@ -12,9 +12,9 @@
   <!-- 有内容 -->
   <view style='display:{{Announcement.length==0? "none":""}}'>
       <block wx:for="{{Announcement}}">
-        <view class='item-container'>
+        <view class='item-container' style="{{announcementAnimationStyle}}">
             <!-- 列表项 -->
-            <view class='item' bindtap='showAnnouncementDetail' data-index="{{index}}" style="{{announcementAnimationStyle}}">
+            <view class='item' bindtap='showAnnouncementDetail' data-index="{{index}}">
               <!-- 列表左 -->
               <view class='item-first'>
                 <image class='item-icon' src='{{item.icon}}'></image>
