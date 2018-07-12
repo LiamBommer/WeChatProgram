@@ -12,6 +12,18 @@
   <!-- 有内容 -->
   <view style='display:{{Notification.length==0? "none":""}}'>
    <view class='item-container'>
+      <view class='view-container'>
+        <view class='item-view'>
+          <view class='top-control-view ver-align' bindtap='deleteUserNotification'>
+            <text class="desc">删除</text>
+            <image src="/img/delete.png" />
+          </view>
+          <view class='top-control-view ver-align' bindtap='readAll'>
+            <text class="desc">全部已读</text>
+            <image src="/img/read_all.png" />
+          </view>
+        </view>
+      </view>
       <block wx:for="{{Notification}}">
             <view class="touch-item '{{item.NotificationisTouchMove ? 'touch-move-active' : ''}}"  style="{{notificationAnimationStyle}};">
                 <!-- 列表项 -->

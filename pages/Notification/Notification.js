@@ -556,6 +556,122 @@ Page({
       })
     }
   },
+  
+
+  /**
+ * 2018-06-02
+ * @parameter userId 用户id
+ * 删除某位用户的所有已读通知
+ */
+  deleteUserNotification: function () {
+
+    var that = this
+    var userId = getApp().globalData.userId
+    var Notification = Bmob.Object.extend('notification')
+    var notificationQuery = new Bmob.Query(Notification)
+
+    // 弹出模态框提示确认删除
+    wx.showModal({
+      title: '确定要删除所有通知吗？',
+      success: function (res) {
+
+        // 确认删除
+        if(res.confirm) {
+
+          /*
+           *
+           * 这里出错了，删除删不了
+           * 返回错误代码 -1
+           * 
+           * 改完删掉这注释就ok
+           * 
+           */
+
+          //删除某位用户的所有已读通知
+          if (userId != null) {
+            notificationQuery.equalTo('to_user_id', userId)
+            notificationQuery.equalTo('is_read', true)
+            notificationQuery.destroyAll({
+              success: function () {
+                //删除成功
+                console.log("提示用户删除所有通知成功!")
+                wx.showToast({
+                  title: '删除通知成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+              },
+              error: function (err) {
+                // 删除失败
+                console.log("提示用户删除所有通知失败!")
+                console.log(err)
+                wx.showToast({
+                  title: '删除通知失败，请重试',
+                  icon: 'none',
+                  duration: 1500
+                })
+              }
+            })
+          }
+
+        } else if(res.cancel) {
+          // 取消删除
+        }
+
+      }
+    })
+
+
+  },
+
+  /**
+   * 2018-05-31
+   * @parameter userId 当前操作用户的id
+   * 将用户的通知全部都修改为已读状态
+   */
+  readAll: function () {
+
+    var that = this
+    var userId = getApp().globalData.userId
+    var Notification = Bmob.Object.extend('notification')
+    var notificationQuery = new Bmob.Query(Notification)
+
+    // 先在前端修改，减少卡顿时间
+    var notesLength = that.data.Notification.length
+    for(var i=0; i<notesLength; i++) {
+      var path = 'Notification[' + i + '].isRead'
+      that.setData({
+        [path]: true
+      })
+    }
+
+
+    //将用户的通知全部都修改为已读状态
+    notificationQuery.equalTo("to_user_id", userId)
+    notificationQuery.find().then(function (todos) {
+      todos.forEach(function (todo) {
+        todo.set('is_read', true);
+      });
+      return Bmob.Object.saveAll(todos);
+    }).then(function (todos) {
+      // 更新成功
+      // wx.showToast({
+      //   title: '全部已读',
+      //   icon: 'success',
+      //   duration: 1000
+      // })
+
+    },
+      function (error) {
+        // 异常处理
+        wx.showToast({
+          title: '设置已读失败，请重试',
+          icon: 'none',
+          duration: 1500
+        })
+      }
+    )
+  },
 
 
   /*

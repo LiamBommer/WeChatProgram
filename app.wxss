@@ -37,8 +37,7 @@ page {
 }
 
 /*
- * 使页面内元素垂直居中
- * 常用于列表项等地方
+ * 两边排布
  */
 .space-between {
   justify-content: space-between;

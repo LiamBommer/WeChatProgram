@@ -56,6 +56,35 @@ page{
   border-bottom: 1rpx solid #f2f2f2;
 }
 
+/*
+ * 顶部已读栏
+ */
+.item-container .view-container {
+  padding-left: 0rpx;
+  text-align: right;
+}
+
+.item-container .view-container .item-view {
+  justify-content: space-between;
+  /* justify-content: flex-end; */
+}
+
+.item-container .view-container .top-control-view {
+  height: 90rpx;
+  padding: 10rpx 0rpx;
+  /* margin-left: 32rpx; */
+
+}
+
+.top-control-view .desc {
+  padding-left: 0rpx;
+  padding-right: 8rpx;
+}
+/*
+ * 顶部已读栏
+   END
+ */
+
 .item-container .item .item-first{
   width: 100%;
   display: flex;
