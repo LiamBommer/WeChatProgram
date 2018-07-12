@@ -1,7 +1,7 @@
 <!-- addMember.wxml -->
  <view class="addMember-container">
   
-  <view class="item" bindtap='QRCode'>
+  <!-- <view class="item" bindtap='QRCode'>
     <view class='img-view'>
       <image src='/img/saoma.png'></image>
     </view>
@@ -11,7 +11,7 @@
           <text class="list-desc">让他人通过二维码加入</text>
       </view>
     </view>
-  </view>
+  </view> -->
   
   <button class='share' hover-class="share-hover"  open-type="share">
     <view class="item" bindtap='inviteWeChat'>

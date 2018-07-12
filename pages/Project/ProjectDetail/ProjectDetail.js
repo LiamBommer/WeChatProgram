@@ -18,6 +18,8 @@ Page({
     project_img:"/img/logo.png",
     icon_more: '/img/more.png',
     project_response: '',//项目归属人名
+    project_leaderId:'',//项目领导id
+    isLeader:"none",
 
     //成员列表
     member:[
@@ -338,8 +340,11 @@ Page({
            project_name: detailObject.attributes.name,
            project_desc: proj_desc,
            SwitchChecked: wx.getStorageSync('Project-detail').checked,  //用了缓存来标记用户的项目是否置顶
-           text_color: text_color
-        });
+           text_color: text_color,
+           project_leaderId: detailObject.attributes.leader_id,
+           isLeader: detailObject.attributes.leader_id == getApp().globalData.userId ? "" :"none",
+        })
+
 
       },
       error: function (error) {
