@@ -24,11 +24,11 @@ var ADD_END_TIME = "添加了任务截止时间"
 var MODIFY_END_TIME = "修改了任务截止时间"
 var DELETE_END_TIME = "删除了任务截止时间"
 
-var ADD_SUB_TASK = "添加了子任务"
-var MODIFY_SUB_TASK = "修改了子任务"
-var REDO_SUB_TASK = "重做了子任务"
-var DELETE_SUB_TASK = "删除了子任务"
-var FINISH_SUB_TASK = "完成了子任务"
+var ADD_SUB_TASK = "添加了子任务："
+var MODIFY_SUB_TASK = "修改了子任务："
+var REDO_SUB_TASK = "重做了子任务："
+var DELETE_SUB_TASK = "删除了子任务："
+var FINISH_SUB_TASK = "完成了子任务："
 var MODIFY_SUB_TASK_TITLE = "修改了子任务标题"
 
 

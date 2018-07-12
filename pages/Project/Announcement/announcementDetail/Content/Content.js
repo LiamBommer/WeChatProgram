@@ -17,6 +17,10 @@ Page({
     wx.navigateBack({
       url:'../meetingDetail'
     })
+    // var Announcement = Bmob.Object.extend('annoucement')
+    // var announcementQuery = new Bmob.Query(Announcement)
+
+    // // announcementQuery.
   },
 
   /**

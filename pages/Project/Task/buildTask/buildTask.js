@@ -1,6 +1,6 @@
 // pages/Task/buildTask/buildTask.js
 var Bmob = require('../../../../utils/bmob.js')
-var ADD_TASK = '创建了新的任务'
+var ADD_TASK = '创建了新的任务：'
 
 Page({
 

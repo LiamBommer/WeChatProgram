@@ -589,6 +589,7 @@ Page({
 
           //删除某位用户的所有已读通知
           if (userId != null) {
+            notificationQuery.limit(50)            
             notificationQuery.equalTo('to_user_id', userId)
             notificationQuery.equalTo('is_read', true)
             notificationQuery.destroyAll({
@@ -600,6 +601,7 @@ Page({
                   icon: 'success',
                   duration: 1000
                 })
+                
               },
               error: function (err) {
                 // 删除失败
@@ -612,6 +614,8 @@ Page({
                 })
               }
             })
+
+            
           }
 
         } else if(res.cancel) {
@@ -654,12 +658,12 @@ Page({
       });
       return Bmob.Object.saveAll(todos);
     }).then(function (todos) {
-      // 更新成功
-      // wx.showToast({
-      //   title: '全部已读',
-      //   icon: 'success',
-      //   duration: 1000
-      // })
+      //更新成功
+      wx.showToast({
+        title: '全部已读',
+        icon: 'success',
+        duration: 1000
+      })
 
     },
       function (error) {
