@@ -35,6 +35,11 @@
       </block>
 
       <!-- 添加图标 -->
-      <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image>
+      <!-- <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image> -->
+
+      <a class="btn-floating buildicon" bindtap='createAnnoun'>
+        <image class="buildicon-img" src='/img/add_white.png' />
+      </a>
+
   </view>
 </view>
