@@ -66,18 +66,20 @@ Page({
 
     // 点击动画效果延迟
     var that = this
-    var index = e.currentTarget.dataset.index
-    var starPath = 'StarProject[' + index + '].isClicked'
-    var path = 'Project[' + index + '].isClicked'
-    setTimeout(function() {
-      // 无法判断点击的是否是星标项目
-      // 的妥协之策
-      that.setData({
-        [path]: '',
-        [starPath]: ''
-      })
-      wx.navigateTo({url: './ProjectMore/ProjectMore'})
-    }, 120)
+    // var index = e.currentTarget.dataset.index
+    // var starPath = 'StarProject[' + index + '].isClicked'
+    // var path = 'Project[' + index + '].isClicked'
+    wx.navigateTo({ url: './ProjectMore/ProjectMore' })
+    // setTimeout(function() {
+      
+    //   wx.navigateTo({url: './ProjectMore/ProjectMore'})
+    //   // 无法判断点击的是否是星标项目
+    //   // 的妥协之策
+    //   // that.setData({
+    //   //   [path]: '',
+    //   //   [starPath]: ''
+    //   // })
+    // }, 50)
   },
 
   //项目编辑

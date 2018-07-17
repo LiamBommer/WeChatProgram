@@ -138,7 +138,7 @@
     padding:15rpx 0rpx;
 
     /* 点击背景动画 */
-    transition: background-color 0.100s;
+    transition: background-color 0.050s;
     /* 点击背景动画 END */
 }
 
