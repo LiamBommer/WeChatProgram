@@ -78,10 +78,10 @@ Page({
   
   //内容
   Content: function (e) {
-    wx.setStorageSync("announcementDetail-content", this.data.content)
-    wx.navigateTo({
-      url: './Content/Content',
-    })
+    // wx.setStorageSync("announcementDetail-content", this.data.content)
+    // wx.navigateTo({
+    //   url: './Content/Content',
+    // })
   }, 
 
   //点击收到

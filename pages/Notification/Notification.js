@@ -578,28 +578,26 @@ Page({
         // 确认删除
         if(res.confirm) {
 
-          /*
-           *
-           * 这里出错了，删除删不了
-           * 返回错误代码 -1
-           * 
-           * 改完删掉这注释就ok
-           * 
-           */
+          // 先在前端修改，减少卡顿时间
+          that.setData({
+            Notification: []
+          })
 
           //删除某位用户的所有已读通知
           if (userId != null) {
+            notificationQuery.limit(50)            
             notificationQuery.equalTo('to_user_id', userId)
             notificationQuery.equalTo('is_read', true)
             notificationQuery.destroyAll({
               success: function () {
                 //删除成功
                 console.log("提示用户删除所有通知成功!")
-                wx.showToast({
-                  title: '删除通知成功',
-                  icon: 'success',
-                  duration: 1000
-                })
+                // wx.showToast({
+                //   title: '删除通知成功',
+                //   icon: 'success',
+                //   duration: 1000
+                // })
+                
               },
               error: function (err) {
                 // 删除失败
@@ -612,6 +610,8 @@ Page({
                 })
               }
             })
+
+            
           }
 
         } else if(res.cancel) {
@@ -645,7 +645,6 @@ Page({
       })
     }
 
-
     //将用户的通知全部都修改为已读状态
     notificationQuery.equalTo("to_user_id", userId)
     notificationQuery.find().then(function (todos) {
@@ -654,7 +653,7 @@ Page({
       });
       return Bmob.Object.saveAll(todos);
     }).then(function (todos) {
-      // 更新成功
+      //更新成功
       // wx.showToast({
       //   title: '全部已读',
       //   icon: 'success',
