@@ -32,16 +32,21 @@ Page({
               var userId = getApp().globalData.userId
               var nickName = res.userInfo.nickName
               var avatarUrl = res.userInfo.avatarUrl
-              var openid = getApp().globalData.openid
+              
+              wx.setStorageSync("userId", userId)
+              wx.setStorageSync("nickName", nickName)
+              wx.setStorageSync("userPic", avatarUrl)
+              // var openid = getApp().globalData.openid
               getApp().globalData.nickName = res.userInfo.nickName
               getApp().globalData.userPic = res.userInfo.avatarUrl
-
+              
               // 存进数据库
               var u = Bmob.Object.extend("_User");
               var query = new Bmob.Query(u);
               // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
               query.get(userId, {
                 success: function (result) {
+                  wx.setStorageSync('is_login', true)
                   // 自动绑定之前的账号
                   result.set("nickName", nickName);
                   result.set("userPic", avatarUrl);
