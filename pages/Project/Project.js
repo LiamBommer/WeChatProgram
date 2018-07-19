@@ -160,7 +160,12 @@ getProjectList:function(){
   var projectmemberQuery = new Bmob.Query(Projectmember)
   var projectArr = []
   var starprojectArr = []
+  // getApp().globalData.projects != null && getApp().globalData.projects.length < 1
   if (1){
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
@@ -195,7 +200,8 @@ getProjectList:function(){
             starprojectArr.push(starobject)
           }
         }
-
+        getApp().globalData.projects.push(projectArr)
+        getApp().globalData.projects.push(starprojectArr)  //第一次请求后台，然后便不再请求
         console.log("Project", projectArr)
         console.log("StarProject", starprojectArr)
         that.setData({ Project: projectArr })
@@ -250,7 +256,7 @@ getProjectList:function(){
   projectAnimation: function() {
     var projectAnimationStyle = ''
     projectAnimationStyle += '-webkit-animation-name: projectAnimation;'
-    projectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    projectAnimationStyle += '-webkit-animation-duration: 0.5s;'
     projectAnimationStyle += "-webkit-animation-timing-function: ease;"
     projectAnimationStyle += "-webkit-animation-iteration-count: 1;"
 
@@ -264,7 +270,7 @@ getProjectList:function(){
   starProjectAnimation: function () {
     var starProjectAnimationStyle = ''
     starProjectAnimationStyle += '-webkit-animation-name: starProjectAnimation;'
-    starProjectAnimationStyle += '-webkit-animation-duration: 0.4s;'
+    starProjectAnimationStyle += '-webkit-animation-duration: 0.5;'
     starProjectAnimationStyle += "-webkit-animation-timing-function: ease;"
     starProjectAnimationStyle += "-webkit-animation-iteration-count: 1;"
 
@@ -281,7 +287,8 @@ getProjectList:function(){
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+    this.projectAnimation()
+    this.starProjectAnimation()
   },
 
   /**
@@ -296,29 +303,30 @@ getProjectList:function(){
 
     // 等待加载完成后消失
     // getProjectList()
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    
 
     var that = this
     that.getProjectList()
 
-    //animation
-    // Motion setting
-    that.projectAnimation()
-    that.starProjectAnimation()
+    
+    
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function() {
+    getApp().globalData.projects = Array()
+    
+  },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function() {
+    getApp().globalData.projects = Array()
+    
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
