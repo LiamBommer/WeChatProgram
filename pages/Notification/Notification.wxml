@@ -15,7 +15,7 @@
       <view class='view-container'>
         <view class='item-view'>
           <view class='top-control-view ver-align' bindtap='deleteUserNotification'>
-            <text class="desc">全部删除</text>
+            <text class="desc">删除已读</text>
             <image src="/img/delete.png" />
           </view>
           <view class='top-control-view ver-align' bindtap='readAll'>

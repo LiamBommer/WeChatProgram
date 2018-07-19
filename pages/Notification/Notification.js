@@ -572,7 +572,7 @@ Page({
 
     // 弹出模态框提示确认删除
     wx.showModal({
-      title: '确定要删除所有通知吗？',
+      title: '确定要删除所有已读通知吗？',
       success: function (res) {
 
         // 确认删除
