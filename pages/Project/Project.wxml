@@ -1,9 +1,9 @@
 <!--pages/Project/Project.wxml-->
 <view class='Project-container' bindtouchstart='itemRippleTap'>
   <!-- 涟漪效果的圆圈 -->
-  <view class='ripple-view' style='{{rippleViewStyle}}'>
+  <!-- <view class='ripple-view' style='{{rippleViewStyle}}'>
     <view class='ripple' style='{{rippleStyle}}'></view>
-  </view>
+  </view> -->
   <!-- 涟漪效果的圆圈 END -->
   <!-- 无内容 -->
   <view style='display:{{StarProject.length==0 && Project.length==0 ? "":"none"}}'>
@@ -23,8 +23,8 @@
     </view>
     <block wx:for="{{StarProject}}" wx:key="{{id}}">
       <!-- 置顶列表项 -->
-      <view class='staritem' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
-        <view class='staritem-one' bindtap='projectmore'>
+      <view class='staritem {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
+        <view class='staritem-one' bindtap='projectmore' data-index="{{index}}">
           <image class='staritem-icon' src='{{item.icon}}'></image>
           <view class='staritem-text'>{{item.name}}</view>
         </view>
@@ -39,9 +39,8 @@
     <view class='title'>我的项目</view>
     <view wx:for="{{Project}}" wx:key="{{id}}">
       <!-- 列表项 -->
-      <view class='item' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
-
-         <view class='item-one' bindtap='projectmore'> 
+      <view class='item {{item.isClicked}}' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
+         <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
           <image class='item-icon' src='{{item.icon}}'></image>
           <view class='item-text'>{{item.name}}</view>
         </view>

@@ -67,7 +67,17 @@
     align-items: center;
     justify-content: space-between;
     padding:15rpx 0rpx;
+
+    /* 点击背景动画 */
+    transition: background-color 0.100s;
+    /* 点击背景动画 END */
 }
+
+/* 点击背景动画 */
+.Project-container .staritem.clicked{
+  background-color: #e1e1e1;
+}
+/* 点击背景动画 END */
 
 .Project-container .staritem .staritem-one{
     display: flex;
@@ -126,7 +136,17 @@
     align-items: center;
     justify-content: space-between;
     padding:15rpx 0rpx;
+
+    /* 点击背景动画 */
+    transition: background-color 0.050s;
+    /* 点击背景动画 END */
 }
+
+/* 点击背景动画 */
+.Project-container .item.clicked{
+  background-color: #e1e1e1;
+}
+/* 点击背景动画 END */
 
 .Project-container .item .item-one{
     display: flex;
