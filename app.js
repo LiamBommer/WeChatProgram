@@ -191,5 +191,6 @@ App({
     userId:null,
     nickName:null,
     userPic:null,
+    projects:[]
   }
 })
