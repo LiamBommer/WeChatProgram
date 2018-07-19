@@ -125,12 +125,12 @@
                         <text id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" 
                         bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" 
                         data-checked='{{item.is_finish}}'>{{item.childTitle}}</text>
-                        <modal  hidden="{{hiddenmodalputChildTitle}}" 
+                        <!-- <modal  hidden="{{hiddenmodalputChildTitle}}" 
                         title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" 
                         bindconfirm="confirmChildTitle"> 
                             <input id='childTitle' bindinput='childInput' type='text' 
                             value='{{inputChildTitle}}' placeholder="子任务标题" />
-                        </modal> 
+                        </modal>  -->
                     </view>
                     <image class='radius' src='{{item.userPic}}'></image>
                 </view>
