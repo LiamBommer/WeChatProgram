@@ -9,7 +9,7 @@ Page({
    */
   data: {
     //是否选中
-    memberId: "",
+    memberId: -1,
     //项目成员
     ProjectMemember: [
       {
@@ -24,6 +24,7 @@ Page({
   //选择项目成员
   ProjectMememberChange: function (e) {
     var memberId = e.detail.value
+    console.log("测试",memberId)
     this.setData({
       memberId: memberId,
     });
@@ -44,29 +45,30 @@ Page({
     var NomemberId = []
     var NomemberIdLength = 0
     var ProjectMemember = that.data.ProjectMemember;
-    //var projId = wx.getStorageSync("Project-id")
 
+    //判断用户是否对项目成员删除
+    if (memberId == -1 || that.data.ProjectMemember == memberId.length){
+      wx.navigateBack({
+        url: '../ProjectDetail',
+      })
+      return;
+    }
+    
     if (memberIdLength == 0) {//全部未选
-      for (var id in ProjectMemember)
-        NomemberId.push(ProjectMemember[id].id)
+      for (var i in ProjectMemember)
+        NomemberId.push(ProjectMemember[i].id)
     }
     else {//个别未选
-      for (var id in ProjectMemember) {
-
-        for (var i in memberId) {
-          if (ProjectMemember[id].id != memberId[i])
-            NomemberIdLength++
-
-          if (NomemberIdLength == memberIdLength)
-            NomemberId.push(ProjectMemember[id].id)//未选中的成员ID
-           
-        }
-        NomemberIdLength = 0
-
+      var memberMap = {}
+      for (var i in memberId) {
+        var key = memberId[i]
+        memberMap[key] = true     //建一个没被删除的成员的哈希表
+      } 
+      for (var j in ProjectMemember) {
+        if (memberMap[ProjectMemember[j].id] != true)   //在哈希表里面找不到的则是要删除的成员id
+          NomemberId.push(ProjectMemember[j].id)
       }
     }
-
-    
 
     wx.getStorage({
       key: 'Project-detail',
@@ -383,7 +385,8 @@ Page({
         var memberList = res.data
         that.setData({
           ProjectMemember: memberList,
-        });
+        })
+        console.log("projectmember",that.data.ProjectMemember)
       },
     })
     
