@@ -1439,7 +1439,7 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
         console.log("删除子任务成功！")
         that.modifySubNum(taskId,-1)
         //记录操作
-        that.addTaskRecord(projId,taskId, userName, DELETE_SUB_TASK)
+        that.addTaskRecord(projId, taskId, userName, DELETE_SUB_TASK + subTaskTitle)
         //成功
         wx.showToast({
           title: '删除成功',

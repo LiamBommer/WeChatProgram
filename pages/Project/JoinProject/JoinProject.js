@@ -24,7 +24,12 @@ Page({
     })
     // submit
     console.log('加入项目id：' + this.data.projectShareId + '\n用户id：' + this.data.currentUserId)
-    this.joinProject(this.data.projectShareId, this.data.currentUserId)
+    if (this.data.projectShareId == -1){
+      wx.showToast({
+        title: '查询' + result.get('name') + '失败',
+      })
+    }else
+      this.joinProject(this.data.projectShareId, this.data.currentUserId)
 
   },
 

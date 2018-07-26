@@ -1,7 +1,7 @@
 // pages/Task/buildChildTask/buildChildTask.js
 var Bmob = require('../../../../utils/bmob.js')
 
-var ADD_SUB_TASK = "添加了子任务"
+var ADD_SUB_TASK = "添加了子任务:"
 Page({
 
   /**
