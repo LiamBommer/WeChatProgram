@@ -20,7 +20,7 @@
 }
 
 .Mine-Idea-container .item-container  .idea-item .item-first{
-  width: 510rpx;
+  width: calc(100% - 160rpx - 10rpx);
   display: flex;
   align-items: center;
 }
@@ -43,8 +43,8 @@
    font-size: 25rpx;
    /* margin-right: 10rpx; */
    color: #b2b2b2;
-   width: 200rpx;
-   padding-left:40rpx;
+   width: 160rpx;
+   padding-left:10rpx;
 }
 
 /*** 列表淡入 ***/

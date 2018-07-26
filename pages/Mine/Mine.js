@@ -3,7 +3,6 @@
 var Bmob = require('../../utils/bmob.js')
 const app = getApp()
 
-var Bmob = require('../../utils/bmob.js')
 var FINISH_TASK = '完成了任务'
 var REDO_TASK = '重做了任务'
 
@@ -19,6 +18,10 @@ Page({
     exitTask: true,
     exitMeeting: false,
     exitIdea: false,
+
+    // 反馈框
+    hiddenFeedback: true,
+    feedbackInput: '',
 
     //标签
     Tag: [
@@ -95,6 +98,43 @@ Page({
 
     
   },
+
+
+  // 弹出反馈窗
+  Feedback: function() {
+    this.setData({
+      hiddenFeedback: false
+    })
+  },
+
+  cancelFeedback: function () {
+    this.setData({
+      hiddenFeedback: true,
+    });
+  },
+
+  // 反馈框内容
+  feedbackInput: function (e) {
+    var that =  this
+    var feedbackInput = e.detail.value
+    that.setData({
+      feedbackInput: feedbackInput
+    })
+  },
+
+  // 反馈窗提交
+  confirmFeedback: function() {
+
+    // 获取反馈内容
+    var feedback = this.data.feedbackInput
+    
+    // 向后台发送反馈
+
+    this.setData({
+      hiddenFeedback: true,
+    });
+  },
+
 
   //跳转任务详情
   TaskDetail: function () {

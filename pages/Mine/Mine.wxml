@@ -39,6 +39,20 @@
         </view>
       </view>
     </view>
+    <view class='item-container'>
+      <view class='item' bindtap='Feedback'>
+        <view class='item-one'>
+          <image class='item-icon' src='/img/pen.png'></image>
+          <view class='item-text'>我要吐槽</view>
+        </view>
+      </view>
+    </view>
+    <modal hidden="{{hiddenFeedback}}" title="我要吐槽" confirm-text="确定" cancel-text="取消" bindcancel="cancelFeedback" 
+    bindconfirm="confirmFeedback"> 
+          <!-- <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题"  
+          maxlength='20'/> -->
+          <textarea placeholder="请告诉我们不足之处！" bindinput='feedbackInput' value='{{feedbackInput}}' maxlength='300' />
+    </modal> 
 
     <!-- 导航栏 -->
     <view class='nav'>
