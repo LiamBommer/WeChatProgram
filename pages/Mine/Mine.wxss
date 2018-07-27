@@ -92,10 +92,25 @@
   border-bottom: 1rpx solid #f2f2f2;
 }
 
+.Mine-container .nav view {
+  width: calc(100% / 3);
+  margin: 0rpx 20rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .Mine-container .nav .nav-select{
   color: #09BB07;
 }
 
 .Mine-container .nav-more{
   width: 100%;
+}
+
+/* 反馈输入框 */
+modal textarea {
+  width: 550rpx;
+  margin-top: 40rpx;
 }

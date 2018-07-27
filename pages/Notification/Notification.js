@@ -572,15 +572,26 @@ Page({
 
     // 弹出模态框提示确认删除
     wx.showModal({
-      title: '确定要删除所有通知吗？',
+      title: '确定要删除所有已读通知吗？',
       success: function (res) {
 
         // 确认删除
         if(res.confirm) {
 
           // 先在前端修改，减少卡顿时间
+          var notesLength = that.data.Notification.length
+          var newNotification = that.data.Notification
+          console.log(newNotification)
+          for (var i = 0; i < notesLength; i++) {
+            if(newNotification[i]['isRead'] == true) {
+              // 已读的信息
+              newNotification.splice(i, 1)    // 移除从i开始的1个元素
+              notesLength--;
+              i--;
+            }
+          }
           that.setData({
-            Notification: []
+            Notification: newNotification
           })
 
           //删除某位用户的所有已读通知

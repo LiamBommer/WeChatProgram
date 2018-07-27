@@ -58,6 +58,7 @@ button[hover-class="share-hover"]::after {
 
 .item-checkbox{
   margin-right: 10rpx;
+  margin-left:10rpx;
 }
 
 .radius{

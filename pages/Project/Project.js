@@ -9,6 +9,8 @@ Page({
   data: {
     //星标项目
     StarProject: [],
+    // 新增 isClicked 字段，用于动态添加类，显示点击动画
+
     //普通项目
     Project: [],
 
@@ -30,6 +32,12 @@ Page({
       key: "Project-detail",
       data: that.data.StarProject[index],
     })
+
+    // 点击动画效果
+    var path = 'StarProject[' + index + '].isClicked'
+    this.setData({
+      [path]: 'clicked'
+    })
   },
 
   //点击项目
@@ -40,6 +48,12 @@ Page({
       key: "Project-detail",
       data: that.data.Project[index],
     })
+
+    // 点击动画效果
+    var path = 'Project[' + index + '].isClicked'
+    this.setData({
+      [path]: 'clicked'
+    })
   },
 
   //创建项目
@@ -48,8 +62,24 @@ Page({
   },
 
   //项目详情
-  projectmore: function() {
-    wx.navigateTo({url: './ProjectMore/ProjectMore'})
+  projectmore: function(e) {
+
+    // 点击动画效果延迟
+    var that = this
+    // var index = e.currentTarget.dataset.index
+    // var starPath = 'StarProject[' + index + '].isClicked'
+    // var path = 'Project[' + index + '].isClicked'
+    wx.navigateTo({ url: './ProjectMore/ProjectMore' })
+    // setTimeout(function() {
+      
+    //   wx.navigateTo({url: './ProjectMore/ProjectMore'})
+    //   // 无法判断点击的是否是星标项目
+    //   // 的妥协之策
+    //   // that.setData({
+    //   //   [path]: '',
+    //   //   [starPath]: ''
+    //   // })
+    // }, 50)
   },
 
   //项目编辑

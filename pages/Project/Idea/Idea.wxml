@@ -1,8 +1,8 @@
 <!--pages/Project/Idea/Idea.wxml-->
 <view class='idea-container'>
-
+ <!-- style='display: {{idea.img_visible ? "" : "none"}}'  -->
   <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bg-img'
-    style='display: {{idea.img_visible ? "" : "none"}}'></image>
+    ></image>
 
  <!-- 无内容 -->
   <view style='display:{{Idea.length==0? "":"none"}}'>
@@ -36,10 +36,10 @@
 
     <!-- 添加图标 -->
     <!-- <image class='buildicon' bindtap='createIdea' src='/img/create.png'></image> -->
-
-    <a class="btn-floating buildicon" bindtap='createIdea'>
-      <image class="buildicon-img" src='/img/add_white.png' />
-    </a>
+    
+      <a class="btn-floating buildicon" bindtap='createMeeting'>
+        <image class="buildicon-img" src='/img/add_white.png' />
+      </a>
 
   </view>
 </view>
