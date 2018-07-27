@@ -56,11 +56,9 @@ Page({
 
     if (currentUser) {
       leader_id = currentUser.id
-      leader_name = currentUser.get("nickName")
-      console.log("当前用户:", leader_id, leader_name)
+      leader_name = getApp().globalData.nickName
+      // console.log("当前用户:", leader_id, leader_name)
     }
-    console.log(title)
-    console.log(desc)
     project.save({
       name: title,
       desc: desc,

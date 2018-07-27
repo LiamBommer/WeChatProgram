@@ -15,40 +15,41 @@ App({
     var that = this
     //根据缓存判断是否已经登录过，如果登录过就不必再执行登录的网络操作，
     //避免了打开小程序时两次刷新首页
-    if(wx.getStorageSync('is_login')==true){    
-      that.globalData.userId = wx.getStorageSync('userId')
-      that.globalData.nickName = wx.getStorageSync('nickName')
-      that.globalData.userPic = wx.getStorageSync("userPic")
-
-      //判断是否被邀请加入项目
-      if (options.query.projectid) {
-        var projectId = options.query.projectid
-        console.log('要加入的项目ID： ' + projectId)
-        // 数据存入缓存，再跳转页面
-        wx.showLoading({
-          title: '正在处理...',
-          mask: 'true'
-        })
-        wx.setStorage({
-          key: 'Project-share-id',
-          data: projectId,
-          success: function () {
-            wx.hideLoading()
-            // 跳转页面
-            wx.navigateTo({
-              url: '/pages/Project/JoinProject/JoinProject',
-            })
-          }
-        })
-      }
-    }else
+    // if(wx.getStorageSync('is_login')==true){    
+    //   that.globalData.userId = wx.getStorageSync('userId')
+    //   that.globalData.nickName = wx.getStorageSync('nickName')
+    //   that.globalData.userPic = wx.getStorageSync("userPic")
+          
+    //   //判断是否被邀请加入项目
+    //   if (options.query.projectid) {
+    //     var projectId = options.query.projectid
+    //     console.log('要加入的项目ID： ' + projectId)
+    //     // 数据存入缓存，再跳转页面
+    //     wx.showLoading({
+    //       title: '正在处理...',
+    //       mask: 'true'
+    //     })
+    //     wx.setStorage({
+    //       key: 'Project-share-id',
+    //       data: projectId,
+    //       success: function () {
+    //         wx.hideLoading()
+    //         // 跳转页面
+    //         wx.navigateTo({
+    //           url: '/pages/Project/JoinProject/JoinProject',
+    //         })
+    //       }
+    //     })
+    //   }
+    // }else
       //登录操作
       wx.login({
         success: function (res) {
-          user.loginWithWeapp(res.code).then(function (user) {        
+          user.loginWithWeapp(res.code).then(function (user) {  
+                 
             if (user.get("nickName")) {
               // 第二次登录，打印用户之前保存的昵称
-              console.log(user.get("nickName"), '不是第一次登录');
+              console.log(user.get("nickName"),user.id, user.get("openId"),'不是第一次登录');
               wx.setStorageSync('is_login', true)
               wx.setStorageSync("userId", user.id)
               wx.setStorageSync("nickName", user.get("nickName"))
@@ -56,7 +57,7 @@ App({
               that.globalData.userId = wx.getStorageSync('userId')
               that.globalData.nickName = wx.getStorageSync('nickName')
               that.globalData.userPic = wx.getStorageSync("userPic")
-              
+              that.globalData.openId = user.get('authData').weapp.openid
               //判断是否被邀请加入某个项目
               if (options.query.projectid) {
                 var projectId = options.query.projectid
@@ -104,7 +105,8 @@ App({
                   }
                 })
               } 
-              that.globalData.userId = user.id            
+              that.globalData.userId = user.id
+              that.globalData.openId = user.get('authData').weapp.openid            
               wx.redirectTo({
                 url: '../GetUserInfo/GetUserInfo',
               })

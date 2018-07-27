@@ -36,7 +36,7 @@ Page({
               wx.setStorageSync("userId", userId)
               wx.setStorageSync("nickName", nickName)
               wx.setStorageSync("userPic", avatarUrl)
-              // var openid = getApp().globalData.openid
+              var openid = getApp().globalData.openId
               getApp().globalData.nickName = res.userInfo.nickName
               getApp().globalData.userPic = res.userInfo.avatarUrl
               
