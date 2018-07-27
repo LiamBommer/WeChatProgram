@@ -40,6 +40,11 @@ App({
             })
           }
         })
+      } else {
+        if (options.path == "pages/blank")
+          wx.reLaunch({
+            url: '/pages/Project/Project',
+          })
       }
     }else
       //登录操作
@@ -84,7 +89,7 @@ App({
                 //   wx.reLaunch({
                 //    url: '/pages/Project/Project',
                 //   })
-                if (options.path == "pages/Project/Project")
+                if (options.path == "pages/blank")
                   wx.reLaunch({
                     url: '/pages/Project/Project',
                   })

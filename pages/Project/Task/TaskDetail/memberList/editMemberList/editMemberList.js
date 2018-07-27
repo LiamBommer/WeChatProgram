@@ -312,6 +312,7 @@ Page({
     //获取任务管理列表成员
     wx.getStorage({
       key: 'TaskDetail-memberList-EditMemberList',
+      // key: 'TaskDetail-member',
       success: function (res) {
         var memberList = res.data
         console.log('EditMemberList: ', memberList)

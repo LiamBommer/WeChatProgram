@@ -60,6 +60,7 @@ Page({
     phValue:'在此输入文字...',//输入框placeholder内容
     focus:false,//输入框焦点
     show: false,
+    projectId:"",//项目id 
 
     deadline: '2018-06-01',//截止时间
     DeadlineisTouchMove: false,//判断滑动截止时间
@@ -419,6 +420,7 @@ Page({
       data: that.data.member,
     })
     //设置项目成员缓存
+    console.log("wocaonima", that.data.projectMember)
     wx.setStorage({
       key: 'TaskDetail-projectMember',
       data: that.data.projectMember,
@@ -1762,8 +1764,83 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       aniChildTaskStyle: aniChildTaskStyle
     })
   },
+  /**
+   * 2018-05-18
+   * @author mr.li
+   * @parameter projId 项目id
+   * @return 项目成员数组（nickName,userPic）
+   * 先获取所有成员的id，然后获取所有成员的信息（昵称和头像），而且第一条是项目领导
+   */
+  getProjectMembers:function(projId){
+    var that = this
+    var ProjectMember = Bmob.Object.extend("proj_member")
+    var memberQuery = new Bmob.Query(ProjectMember)
+    var User = Bmob.Object.extend("_User")
+    var userQuery = new Bmob.Query(User)
 
+    var leader_id = "0"
+    var memberId = [] //项目的所有成员id数组
+    var userArr = [] //项目所有成员数组
 
+    //获取指定项目的所有成员id，50条
+    memberQuery.equalTo("proj_id", projId)
+    memberQuery.select("user_id", "is_leader")
+    memberQuery.find().then(function (results) {
+        //返回成功
+        console.log("共查询到 " + results.length + " 条记录");
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          if (object.get("is_leader")) {
+            //项目领导，放在数组的第一个
+            console.log("获取项目领导id", object.get('user_id'));
+            leader_id = object.get("user_id")
+            memberId.unshift(leader_id)
+
+          } else {
+            console.log("获取项目成员id", object.get('user_id'));
+            memberId.push(object.get("user_id"))  //将成员id添加到数组
+          }
+        }
+      }).then(function (result) {
+
+        //获取指定项目的所有成员,默认10条
+        userQuery.limit(50)
+        userQuery.containedIn("objectId", memberId)
+
+        // userQuery.matchesKeyInQuery("objectId", "user_id", memberQuery)
+        userQuery.find({
+          success: function (results) {
+            console.log("共查询到项目成员 " + results.length + " 条记录");
+            // 循环处理查询到的数据
+            for (var i = 0; i < results.length; i++) {
+              var object = {}
+              object = {
+                id: results[i].id,
+                userPic: results[i].get("userPic"),
+                nickName: results[i].get("nickName"),
+                checked: ""
+              }
+
+              if (object.id == leader_id) {
+                //将项目领导放在数组的第一个位置
+                userArr.unshift(object)
+              } else
+                userArr.push(object)
+            }
+            that.setData({
+              projectMember:userArr
+            })
+          },
+          error: function (error) {
+            console.log("查询失败: " + error.code + " " + error.message);
+            //失败情况
+
+          }
+        })
+
+      })
+  },
+  
   /**
        * 分享页面按钮，回到首页
        */
@@ -1780,12 +1857,12 @@ sendTaskCommentPicture:function (taskId, publisherId) {
   onLoad: function (options) {
 
     // 接收页面参数，判断是否从分享进入
-    console.log('页面参数', options)
     if (options.isShared) {
       this.setData({
         isShared: options.isShared,
         taskId: options.taskId,
-        leaderId: options.leaderId
+        leaderId: options.leaderId,
+        projectId:options.projectId
       })
     }
 
@@ -1837,14 +1914,18 @@ sendTaskCommentPicture:function (taskId, publisherId) {
 
     }
     else if(isShared) {
-      // 通知进入
+      // 分享进入
       var taskId = that.data.taskId
       var leaderId = that.data.leaderId
+      var projectId = that.data.projectId  //2018.07.27 加的
+
+      that.getProjectMembers(projectId)      
       that.getTaskDetail(taskId);//获取任务详情
       that.getTaskMember(taskId, leaderId)//获取任务成员
       that.getSubtasks(taskId);//获取子任务列表
       that.getTaskRecord(taskId)//获取任务记录
       that.getTaskComment(taskId)//获取评论
+
     }
     else {
       //任务
@@ -1980,11 +2061,11 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     var title = that.data.title
     var taskId = that.data.taskId
     var leaderId = that.data.leaderId
-
+    var projectId = wx.getStorageSync('Project-detail').id
     // 分享
     return {
       title: currentUserName + '分享了任务: ' + title,
-      path: "pages/Project/Task/TaskDetail/TaskDetail?isShared=true&taskId=" + taskId + "&leaderId=" + leaderId,
+      path: "pages/Project/Task/TaskDetail/TaskDetail?isShared=true&taskId=" + taskId + "&leaderId=" + leaderId +             "&projectId=" + projectId ,
       success: function (res) {
         wx.showToast({
           title: '分享成功',
