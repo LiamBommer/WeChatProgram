@@ -46,7 +46,7 @@ Page({
               // 这个 id 是要修改条目的 id，你在生成这个存储并成功时可以获取到，请看前面的文档
               query.get(userId, {
                 success: function (result) {
-                  wx.setStorageSync('is_login', true)  //标记为已登录
+                  wx.setStorageSync('login', true)  //标记为已登录
                   // 自动绑定之前的账号
                   result.set("nickName", nickName);
                   result.set("userPic", avatarUrl);
