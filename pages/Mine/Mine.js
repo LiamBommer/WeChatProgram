@@ -117,7 +117,7 @@ Page({
   feedbackInput: function (e) {
     var that =  this
     var feedbackInput = e.detail.value
-    that.setData({
+    this.setData({
       feedbackInput: feedbackInput
     })
   },
@@ -129,7 +129,31 @@ Page({
     var feedback = this.data.feedbackInput
     
     // 向后台发送反馈
-
+    var app = getApp()
+    //存入数据库
+    var UserSpeak = Bmob.Object.extend('user_speak')
+    var userSpeak = new UserSpeak()
+    userSpeak.save({
+      userId:app.globalData.userId,
+      nickName: app.globalData.nickName,
+      content: feedback
+    }, {
+        success: function (result) {
+          console.log("ojbk")
+          wx.showToast({
+            title: '谢谢您的吐槽！',
+          })
+          
+        },
+        error: function (result, error) {
+          //失败情况
+          wx.showToast({
+            title: '不好意思，吐槽失败了。',
+          })
+        }
+      })
+    
+    
     this.setData({
       hiddenFeedback: true,
     });
