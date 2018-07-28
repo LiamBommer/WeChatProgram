@@ -19,7 +19,7 @@ App({
       that.globalData.userId = wx.getStorageSync('userId')
       that.globalData.nickName = wx.getStorageSync('nickName')
       that.globalData.userPic = wx.getStorageSync("userPic")
-
+      
       //判断是否被邀请加入项目
       if (options.query.projectid) {
         var projectId = options.query.projectid
@@ -44,7 +44,7 @@ App({
         if (options.path == "pages/blank")
           wx.reLaunch({
             url: '/pages/Project/Project',
-          })
+          })         
       }
     }else
       //登录操作
@@ -113,7 +113,7 @@ App({
               that.globalData.userId = user.id
               that.globalData.openId = user.get('authData').weapp.openid            
               wx.redirectTo({
-                url: '../GetUserInfo/GetUserInfo',
+                url: '/pages/GetUserInfo/GetUserInfo',
               })
 
             }
