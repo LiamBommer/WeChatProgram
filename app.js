@@ -45,6 +45,15 @@ App({
           wx.reLaunch({
             url: '/pages/Project/Project',
           })         
+
+                  // 若要测试新手指引，则注释以下4行代码
+                  // 强制跳转至授权页面
+                  // console.log('We reach here, testing new user guide')
+                  // wx.reLaunch({
+                  //   url: '/pages/GetUserInfo/GetUserInfo',
+                  // })
+                  // 新手指引
+
       }
     }else
       //登录操作
@@ -89,10 +98,11 @@ App({
                 //   wx.reLaunch({
                 //    url: '/pages/Project/Project',
                 //   })
-                if (options.path == "pages/blank")
+                if (options.path == "pages/blank") {
                   wx.reLaunch({
                     url: '/pages/Project/Project',
                   })
+                }
               } 
             } 
             else {

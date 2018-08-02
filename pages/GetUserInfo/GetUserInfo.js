@@ -2,9 +2,9 @@
 const Bmob = require('../../utils/bmob.js')
 var communicate_sample_model1 = '你可以在任务评论里发送沟通模板'
 //建议
-var communicate_sample_model2 = '我觉得你这样的任务部署和分工挺好的，但我有一些小小的建议，XXXXXXXXXXX，我觉得这样可能会好一点哦～'
+var communicate_sample_model2 = '我觉得你这样的任务部署和分工挺好的，但我有一些小小的建议：____，我觉得这样可能会好一点哦～'
 //提问
-var communicate_sample_model3 = '我觉得你说的挺好的，但是我有一个小小的疑问，XXXXXXXXXXXXXXX'
+var communicate_sample_model3 = '我觉得你说的挺好的，但是我有一个小小的疑问：____？'
 //赞美
 var communicate_sample_model4 = '你说的太棒了!'
 
@@ -54,26 +54,35 @@ Page({
                   //result.set("gender",gender);  //再添加数据就不能正常初始化了
                   result.save();
                   //为用户添加空的项目“我的项目”
+                  // 若要测试新手指引，则注释以下1行
                   that.buildProject('我的项目','空项目')
                   //为用户添加实例沟通模板
+                  // 若要测试新手指引，则注释以下4行
                   that.addCommunicateModel(userId,1,communicate_sample_model1)     //告诉用户可以在任务评论发送
                   that.addCommunicateModel(userId, 1, communicate_sample_model2)   //建议
                   that.addCommunicateModel(userId, 2, communicate_sample_model3)   //提问
                   that.addCommunicateModel(userId, 3, communicate_sample_model4)   //赞美
                   
+                  // 若要测试新手指引，则取消注释以下2行
+                  // 设置新用户缓存标识，显示新手指引
+                  // wx.setStorageSync('is_beginner', true)
+                  // wx.setStorageSync('guide_step', 0)
+
                   //跳转到项目主页
-                 // console.log(wx.getStorageSync('Project-share-id'))
-                  if (wx.getStorageSync('Project-share-id') == ''
-                      || wx.getStorageSync('Project-share-id') == undefined) {
-                    wx.reLaunch({
-                      url: '../Project/Project',
-                    })
-                  } else {
-                    //console.log('跳转到joinproject')
-                    wx.redirectTo({
-                      url: '../Project/JoinProject/JoinProject',
-                    })
-                  }
+                  // 此操作放到 buildProject 的完成回调中，立即跳转无法获取数据
+
+                  // 若要测试新手指引，则取消注释以下10行
+                  // if (wx.getStorageSync('Project-share-id') == ''
+                  //     || wx.getStorageSync('Project-share-id') == undefined) {
+                  //   wx.reLaunch({
+                  //     url: '../Project/Project',
+                  //   })
+                  // } else {
+                  //   wx.redirectTo({
+                  //     url: '../Project/JoinProject/JoinProject',
+                  //   })
+                  // }
+
                 }
               })
 
@@ -111,6 +120,24 @@ Page({
           //console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
           that.createTaskList(result.id/*项目id*/, "未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
+
+          // 设置新用户缓存标识，显示新手指引
+          wx.setStorageSync('is_beginner', true)
+          wx.setStorageSync('guide_step', 0)
+
+          //跳转到项目主页
+          if (wx.getStorageSync('Project-share-id') == ''
+              || wx.getStorageSync('Project-share-id') == undefined) {
+            wx.reLaunch({
+              url: '../Project/Project',
+            })
+          } else {
+            //console.log('跳转到joinproject')
+            wx.redirectTo({
+              url: '../Project/JoinProject/JoinProject',
+            })
+          }
+                  
         },
         error: function (result, error) {
           //console.log("创建项目失败！", error)

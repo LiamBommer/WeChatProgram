@@ -22,6 +22,43 @@ Page({
     projectAnimationStyle: '',
     starProjectAnimationStyle: '',
 
+    // 新用户标识，显示新手指引
+    // 0 首页欢迎语
+    // 1 高亮项目详情
+    // 2 项目详情页 高亮成员
+    // 3 成员列表 高亮添加成员
+    // 4 返回项目首页 高亮项目
+    // 5 进入任务页 高亮任务列表名
+    // 6 高亮任务
+    // 7 进入任务详情 探索
+    is_beginner: false,
+    guide_step: 0,
+
+    frame_title_0: '欢迎来到一协作',
+    frame_desc_0: '下面是基本使用方法！',
+
+    frame_title_1: '邀请成员加入',
+    frame_desc_1: '点击右上角的图标可以进入项目详情',
+
+  },
+
+  // 新手指引按钮步骤
+  GuideNext: function() {
+    var guide_step = this.data.guide_step
+    guide_step = guide_step + 1
+    this.setData({
+      guide_step: guide_step
+    })
+    wx.setStorageSync('guide_step', guide_step)
+
+    wx.setStorage({
+      key: "Project-detail",
+      data: this.data.Project[0],
+    })
+
+    if(guide_step == 2) {
+      wx.navigateTo({url: './ProjectDetail/ProjectDetail'})
+    }
   },
   
   //点击星标项目
@@ -330,6 +367,16 @@ getProjectList:function(){
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+
+    // 获取新用户标识，显示新手指引
+    var is_beginner = wx.getStorageSync('is_beginner')
+    var guide_step = wx.getStorageSync('guide_step')
+    if(is_beginner != true) is_beginner = false;    // 排除获取不到出错的情况
+    if(!guide_step) guide_step = 0;
+    this.setData({
+      is_beginner: is_beginner,
+      guide_step: guide_step
+    })
 
     // 等待加载完成后消失
     // getProjectList()

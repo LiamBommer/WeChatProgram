@@ -48,4 +48,21 @@
 
  <button type='warn' size='default' bindtap='DeleteProject' style='display:{{isLeader}}'>解散项目</button>
 
+  <!-- 新手指引 -->
+  <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">
+    <view class="guide-mask">
+      <view class="guide-focus" style="display:{{guide_step == 2 ? 'block':'none'}}">
+        <image src='/img/more.png'></image>
+      </view>
+      <view class="guide-frame" style="display:{{guide_step == 2 ? 'flex':'none'}}">
+        <text class="frame-title">{{frame_title_2}}</text>
+        <text class="frame-desc">
+          {{frame_desc_2}}
+        </text>
+        <text class="frame-desc">{{guide_step}}/3</text>
+        <button class="frame-btn" size="default" type="primary" bindtap="GuideNext">好的</button>
+      </view>
+    </view>
+  </view>
+
 </view>

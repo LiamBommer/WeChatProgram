@@ -41,4 +41,21 @@
 
     <button class='addMember' size='default' bindtap='Finish'>完成</button>
 
+    <!-- 新手指引 -->
+    <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">
+      <view class="guide-mask">
+        <view class="guide-focus" style="display:{{guide_step == 3 ? 'block':'none'}}">
+          <image src='/img/add.png'></image>
+        </view>
+        <view class="guide-frame" style="display:{{guide_step == 3 ? 'flex':'none'}}">
+          <text class="frame-title">{{frame_title_3}}</text>
+          <text class="frame-desc">
+            {{frame_desc_3}}
+          </text>
+          <text class="frame-desc">{{guide_step}}/3</text>
+          <button class="frame-btn" size="default" type="primary" bindtap="GuideNext">立马尝试一下！</button>
+        </view>
+      </view>
+    </view>
+
 </view>

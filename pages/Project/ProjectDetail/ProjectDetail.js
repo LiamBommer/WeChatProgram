@@ -30,6 +30,36 @@ Page({
         checked: "",
       }
     ],
+
+    // 新用户标识，显示新手指引
+    // 0 首页欢迎语
+    // 1 高亮项目详情
+    // 2 项目详情页 高亮成员
+    // 3 成员列表 高亮添加成员
+    // 4 返回项目首页 高亮项目
+    // 5 进入任务页 高亮任务列表名
+    // 6 高亮任务
+    // 7 进入任务详情 探索
+    is_beginner: false,
+    guide_step: 2,
+
+    frame_title_2: '邀请成员加入',
+    frame_desc_2: '点击图标可进入成员列表',
+
+  },
+
+  // 新手指引按钮步骤
+  GuideNext: function() {
+    var guide_step = this.data.guide_step
+    guide_step = guide_step + 1
+    this.setData({
+      guide_step: guide_step
+    })
+    wx.setStorageSync('guide_step', guide_step)
+
+    if(guide_step == 3) {
+      wx.navigateTo({url: 'memberList/memberList'})
+    }
   },
 
  
@@ -664,6 +694,16 @@ cancelProjectFirst: function (projId, isFirst) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+    // 获取新用户标识，显示新手指引
+    var is_beginner = wx.getStorageSync('is_beginner')
+    var guide_step = wx.getStorageSync('guide_step')
+    if(is_beginner != true) is_beginner = false;    // 排除获取不到出错的情况
+    if(!guide_step) guide_step = 0;
+    this.setData({
+      is_beginner: is_beginner,
+      guide_step: guide_step
+    })
 
     // 等待加载完成后消失
     // getProjectDetail()
