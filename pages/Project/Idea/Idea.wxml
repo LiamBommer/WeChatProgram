@@ -37,7 +37,7 @@
     <!-- 添加图标 -->
     <!-- <image class='buildicon' bindtap='createIdea' src='/img/create.png'></image> -->
     
-      <a class="btn-floating buildicon" bindtap='createMeeting'>
+      <a class="btn-floating buildicon" bindtap='createIdea'>
         <image class="buildicon-img" src='/img/add_white.png' />
       </a>
 
