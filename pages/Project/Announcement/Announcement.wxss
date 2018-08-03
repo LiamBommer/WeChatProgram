@@ -177,9 +177,9 @@
   box-shadow: 2rpx 8rpx 8rpx 2rpx #b2b2b2;
 }
 
-.btn-floating:hover {
+/* .btn-floating:hover {
   background-color: #76ea75;
-}
+} */
 
 .btn-floating:before {
   border-radius: 0;
