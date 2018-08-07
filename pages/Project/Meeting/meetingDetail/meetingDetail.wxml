@@ -14,7 +14,7 @@
   </view>
   <view class="view-container">
      <view class='content-view' bindtap='Content'>
-       <text class='content' >{{content == ""? '会议内容：' : content}}</text>
+       <text class='content' >{{content == ""? '加载中' : content}}</text>
      </view>
   </view>
   <view class="view-container">

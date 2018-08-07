@@ -18,7 +18,7 @@ Page({
     hiddenmodalputTitle: true,//弹出标题模态框
     meetingId: '',//会议ID
     projId: "",//项目ID
-    title: '',//标题
+    title: '加载中',//标题
     inputTitle: '',//输入的标题
     content: "",//会议内容
     meetingRecord: '',//会议记录

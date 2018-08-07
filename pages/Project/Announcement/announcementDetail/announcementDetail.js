@@ -10,12 +10,12 @@ Page({
     hiddenmodalputTitle: true,//弹出标题模态框
 
     id:"",//公告ID
-    title: '公告标题',//标题
+    title: '加载中',//标题
     inputTitle:'',//输入的标题
-    content: '公告内容',
-    note_time: '2018/05/01',
-    note_user: '产品经理',
-    belonging: '项目名',//项目名
+    content: '加载中',
+    note_time: '',
+    note_user: '',
+    belonging: '加载中',//项目名
 
     has_read: true,  // 本用户是否已读此公告
     is_read_empty: false, // 已读列表是否为空，下同

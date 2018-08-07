@@ -50,8 +50,8 @@ Page({
     taskId:"",//任务ID
     checked:false,//勾选任务
     childChecked:false,//勾选子任务
-    title: '',//任务标题
-    childTitle:"",//子任务标题
+    title: '加载中',//任务标题
+    childTitle:"加载中",//子任务标题
     inputTitle: '',//输入的标题
     inputChildTitle:'',//输入的子任务标题
     leaderId:'',//任务负责人ID

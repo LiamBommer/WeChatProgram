@@ -29,7 +29,7 @@ Page({
 
     // 显示loading
     wx.showLoading({
-      title: '正在星标...',
+      title: '正在创建...',
     })
     // submit
     that.buildProject(title, desc);

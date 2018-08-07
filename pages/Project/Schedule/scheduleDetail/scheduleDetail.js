@@ -28,7 +28,7 @@ Page({
 
     // 本日程的详情
     scheduleId: -1,
-    scheduleContent: '',//标题
+    scheduleContent: '加载中',//标题
     startTime: '',
     endTime: '',
     tasks: [],

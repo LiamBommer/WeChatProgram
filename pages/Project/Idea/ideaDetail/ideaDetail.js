@@ -18,10 +18,10 @@ Page({
 
     // 此条点子的详情
     ideaId: -1,
-    content: '',
+    content: '加载中',
     userName: '',
     userPic: '',
-    projectName: '',
+    projectName: '加载中',
     taskId: -1,
     taskTitle: '',
     createdAt: '',
