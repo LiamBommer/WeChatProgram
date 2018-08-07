@@ -8,10 +8,18 @@ Page({
    */
   data: {
 
+    btn_disabled: false,
+
   },
 
   //获取项目名称，项目描述
   BuildProject: function (e) {
+
+    // 按钮设置disabled
+    this.setData({
+      btn_disabled: true,
+    })
+
     var that = this;
     var title, desc;
     title = e.detail.value.title;

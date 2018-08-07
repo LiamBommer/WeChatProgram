@@ -10,18 +10,21 @@
     background: #fff;
     color: #000;
     width: 100%;
-    height: 120rpx;
+    height: 130rpx;
     display: flex;
     align-items: center;
 }
 
 .buildTask-container .item .item-title{
    margin-left: 40rpx;
+   width: 180rpx;
+   font-size:32rpx;
 }
 
 .buildTask-container .item .item-content{
-  margin-left: 40rpx;
+  margin-left: 20rpx;
     font-size: 34rpx;
+    width: 460rpx;
 }
 
 

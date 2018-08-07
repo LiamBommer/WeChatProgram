@@ -194,7 +194,7 @@
 }
 
 .Project-container .addProject{
-  height: 100rpx;
+  height: 130rpx;
   display: flex;
   align-items: center;
   font-size: 30rpx;
