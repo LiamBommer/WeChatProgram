@@ -1,4 +1,6 @@
 <view class='joinProject-container'>
+  <!-- 直接显示授权窗口 -->
+  <!-- <view class='item' style="display: none"> -->
   <view class='item'>
     <image class='item-icon' src='{{projectImgUrl}}'></image>
     <view class='item-title'>授权获取用户信息</view>

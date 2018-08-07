@@ -62,10 +62,10 @@ Page({
                   result.save();
                   //为用户添加空的项目“我的项目”
                   // 若要测试新手指引，则注释以下1行
-                  that.buildProject('我的项目','空项目')
+                  that.buildProject('我的项目','示例项目')
                   //为用户添加实例沟通模板
                   // 若要测试新手指引，则注释以下4行
-                  that.addCommunicateModel(userId,1,communicate_sample_model1)     //告诉用户可以在任务评论发送
+                  that.addCommunicateModel(userId, 1, communicate_sample_model1)     //告诉用户可以在任务评论发送
                   that.addCommunicateModel(userId, 1, communicate_sample_model2)   //建议
                   that.addCommunicateModel(userId, 2, communicate_sample_model3)   //提问
                   that.addCommunicateModel(userId, 3, communicate_sample_model4)   //赞美
@@ -350,6 +350,9 @@ Page({
     // this.setData({
     //   currentUserId: currentUserId
     // })
+
+    // 按钮点击，默认跳出授权界面
+    // this.confirm()
     
   },
 

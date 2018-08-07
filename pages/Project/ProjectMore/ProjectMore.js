@@ -29,78 +29,14 @@ Page({
 
     //任务列表
     tasklist: [
-
        //任务列表标题
       {
         title:'加载中',
-      //   //任务项
-      //   tasks: [
-      //     {
-      //       is_finish: false,
-      //       title: '寻找嘉宾',
-      //       has_sub:'true',
-      //       end_time: '2018-06-01',
-      //       timeStatus: 'red',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '发送邀请函',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-02',
-      //       timeStatus: 'red',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '物资申请与采购',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-03',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '场地申请与摆摊',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-05',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '活动执行',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-10',
-      //       timeStatus: 'green',
-      //     },
-      //   ]
       },
-
-      // {
-      //   title: '已完成',
-      //   //任务项
-      //   tasks: [
-      //     {
-      //       is_finish: 'true',
-      //       title: '调研同学们需求',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-01',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: 'true',
-      //       title: '撰写策划书',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-07',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: 'true',
-      //       title: '完成策划书审核',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-10',
-      //       timeStatus: 'green',
-      //     },
-      //   ]
-      // },
     ],
+
+    // 底部隐藏判断
+    indicator_dots: true,     // true 为显示
 
     //公告列表
     Announcement: [
@@ -262,6 +198,7 @@ Page({
           that.setData({
             tasklist: tasklist,
             currentItem: Length,
+            indicator_dots: true,
           });
           that.createTaskList(currentProjId, "未完成")//projId 项目id，title任务看板名称
 
@@ -284,6 +221,13 @@ Page({
               tasklist: tasklist,
               currentItem: Length - 2,
             });
+            // 判断列表长度，为1的话则隐藏底部swiper指示点
+            // console.log('任务列表长度：' + tasklist.length)
+            // if(tasklist.length == 1) {
+            //   that.setData({
+            //     indicator_dots: false,
+            //   })
+            // }
             that.deleteTaskList(listId)
           }
         }
@@ -606,6 +550,13 @@ Page({
         //results的第一个是最早创建的
         var listIndex = 0;
         //console.log('results number: ' + results.length)
+
+        // 如果长度为1，则隐藏底部swiper的指示点
+        if(results.length == 1) {
+          that.setData({
+            indicator_dots: false,
+          })
+        }
 
           var taskList = []
           for (var i = 0; i < results.length; i++) {
