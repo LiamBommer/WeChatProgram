@@ -13,8 +13,8 @@ Page({
     SwitchChecked: "",//是否置顶
     title: "",//输入的项目名称
     content: "",//输入的项目描述
-    project_name: '学长说系列分享活动',//项目名称
-    project_desc: '邀请优秀的学长回校宣讲',//项目描述
+    project_name: '加载中',//项目名称
+    project_desc: '加载中',//项目描述
     project_img:"/img/logo.png",
     icon_more: '/img/more.png',
     project_response: '',//项目归属人名
