@@ -1,7 +1,7 @@
 <!--pages/Project/Idea/Idea.wxml-->
 <view class='idea-container'>
  <!-- style='display: {{idea.img_visible ? "" : "none"}}'  -->
-  <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bg-img'
+ <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bgImg'
     ></image>
 
  <!-- 无内容 -->
@@ -15,14 +15,16 @@
   </view>
   <!-- 有内容 -->
   <view style='display:{{Idea.length==0? "none":""}}'>
+   <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bgImg'
+    ></image>
     <view class='post-view'>
       <block wx:for="{{Idea}}" wx:key="{{id}}">
           <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
             bindtap='showIdeaDetail' data-index='{{item.id}}'>
-            <view class='user-info ver-align'>
+            <!-- <view class='user-info ver-align'>
               <image src='{{item.userPic}}' class='avatar'></image>
               <text class='username'>{{item.userName}}</text>
-            </view>
+            </view> -->
             <view class='content' space='nbsp'>
               {{item.content}}
             </view>

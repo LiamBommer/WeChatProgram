@@ -40,24 +40,7 @@ Page({
 
     //公告列表
     Announcement: [
-      {
-        id:'',
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        read: "0人已读",
-        memberName: '',
-      },
-      {
-        id: '',
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        read: "0人已读",
-        memberName: '',
-      },
+
     ],
 
     //日程列表
@@ -67,32 +50,14 @@ Page({
 
     //会议列表
     Meeting: [
-      // {
-      //   month: "2019年5月",
-      // },
-      // {
-      //   day: "22日",
-      //   time: "21:00",
-      //   content: "策划讨论",
-      // },
-      // {
-      //   day: "28日",
-      //   time: "22:30",
-      //   content: "讨论嘉宾人选",
-      // },
-      // {
-      //   month: "2019年6月",
-      // },
-      // {
-      //   day: "1日",
-      //   time: "21:00",
-      //   content: "讨论活动备案",
-      // },
+
     ],
 
     //墙列表
-    idea: { img_visible: true, bg_img: '',},
-    Idea:[],
+    // idea: { img_visible: true, bg_img: '',},
+    Idea:[
+
+    ],
 
     // Task list animation
     taskAnimationStyle: '',
@@ -1269,8 +1234,8 @@ Page({
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
             'projectName': results[i].get('project').name,  //项目名称
             'content': results[i].get('content') || '',  //点子内容
-            'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
-            'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
+            // 'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
+            // 'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
             'color': results[i].get('color') || '', 
           }
