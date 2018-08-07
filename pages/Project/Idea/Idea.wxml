@@ -21,10 +21,10 @@
       <block wx:for="{{Idea}}" wx:key="{{id}}">
           <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
             bindtap='showIdeaDetail' data-index='{{item.id}}'>
-            <!-- <view class='user-info ver-align'>
-              <image src='{{item.userPic}}' class='avatar'></image>
+            <view class='user-info ver-align'>
+              <!-- <image src='{{item.userPic}}' class='avatar'></image> -->
               <text class='username'>{{item.userName}}</text>
-            </view> -->
+            </view> 
             <view class='content' space='nbsp'>
               {{item.content}}
             </view>

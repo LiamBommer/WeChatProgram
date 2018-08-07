@@ -59,6 +59,18 @@ Page({
 
     ],
 
+    //墙里的匿名列表
+    IdeaName: [
+      '某社团大佬', 
+      '某组织精英', 
+      '某团队点子王',  
+      '某竞赛大佬',    
+      '某小鲜肉',   
+      '某协会会长',   
+      '某前辈',   
+      '某OG元老',
+    ],
+
     // Task list animation
     taskAnimationStyle: '',
     announcementAnimationStyle: '',
@@ -1211,7 +1223,16 @@ Page({
     ideaQuery.find({
       success: function (results) {
         //成功
+
+       
+
         for (var i in results) {
+          // 生成随机匿名
+          var max = 7
+          var min = 0
+          var num = Math.floor(Math.random() * (max - min + 1) + min);
+          var IdeaName = that.data.IdeaName[num]
+
           var ideaObject = {}
           ideaObject = {
             'id': results[i].id || '',  //点子的id
@@ -1219,7 +1240,7 @@ Page({
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
             'projectName': results[i].get('project').name,  //项目名称
             'content': results[i].get('content') || '',  //点子内容
-            // 'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
+            'userName': IdeaName,//results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
             // 'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
             'color': results[i].get('color') || '', 

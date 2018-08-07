@@ -22,10 +22,10 @@ Page({
 
     colors: [
       // 设计文档中的颜色
-      '#79bd9a',  // light green
+      '#458B00',  // light green
       '#576b95',  // blue
       '#e64340',  // red
-      '#ffc952'   // yellow
+      '#CD661D'   // yellow
     ],
 
   },
