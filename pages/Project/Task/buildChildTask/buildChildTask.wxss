@@ -17,18 +17,19 @@
 .buildTask-container .item image{
   width:50rpx;
   height:50rpx;
-  margin-left:40rpx;
+  margin-left:20rpx;
   border-radius: 50%;
 }
 
 .buildTask-container .item .item-title{
    margin-left: 40rpx;
+   width: 180rpx;
 }
 
 .buildTask-container .item .item-content{
-  margin-left: 40rpx;
+  margin-left: 20rpx;
   font-size:34rpx;
-  
+  width: 460rpx;
 }
 
 .buildTask-container .submit{

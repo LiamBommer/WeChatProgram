@@ -20,6 +20,13 @@ Page({
 
   confirm: function () {
     var that = this
+
+    // 显示正在加载
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
+
     // 查看是否授权
     wx.getSetting({
       success: function (res) {
@@ -120,6 +127,8 @@ Page({
           //console.log("创建项目成功！", result)
           that.addLeader(result.id, leader_id)  //当用户创建项目时，添加项目成员表，并指定为领导人
           that.createTaskList(result.id/*项目id*/, "未完成"/*默认的任务列表名称*/)  //为用户创建默认的任务列表“未完成”
+
+          wx.hideLoading()
 
           // 设置新用户缓存标识，显示新手指引
           wx.setStorageSync('is_beginner', true)

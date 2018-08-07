@@ -457,9 +457,20 @@ Page({
       key: "ProjectMore-projName",
       data: projName,
     })
+
+    // 去除动画效果
+    this.setData({
+      taskAnimationStyle: ''
+    })
+
+    this.setData({
+      tasklist:''
+    })
+
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
-    });
+    })
+
   },
 
   /**
@@ -691,6 +702,8 @@ Page({
           tasklist: tasklists
         })
         //console.log("tasklists:", that.data.tasklist)
+
+        console.log('获取任务完成！！！')
 
       },
       error: function (error) {
@@ -1340,9 +1353,11 @@ Page({
     taskAnimationStyle += "-webkit-animation-timing-function: ease;"
     taskAnimationStyle += "-webkit-animation-iteration-count: 1;"
 
-    this.setData({
-      taskAnimationStyle: ''
-    })
+    console.log('任务动画执行！！')
+
+    // this.setData({
+    //   taskAnimationStyle: ''
+    // })
     this.setData({
       taskAnimationStyle: taskAnimationStyle
     })
@@ -1429,7 +1444,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 列表加载动效
+    var that = this
+    that.taskAnimation()
+    that.announcementAnimation()
+    that.scheduleAnimation()
+    that.meetingAnimation()
+    that.ideaAnimation()
+    console.log("动画初始化123");
   },
 
   /**
@@ -1448,12 +1470,7 @@ Page({
       mask: 'true'
     })
 
-    // 列表加载动效
-    this.taskAnimation()
-    this.announcementAnimation()
-    this.scheduleAnimation()
-    this.meetingAnimation()
-    this.ideaAnimation()
+    
 
     var that = this
     // wx.startPullDownRefresh()//刷新
