@@ -9,16 +9,12 @@ Page({
   data: {
 
     btn_disabled: false,
+    btn_loading: false,
 
   },
 
   //获取项目名称，项目描述
   BuildProject: function (e) {
-
-    // 按钮设置disabled
-    this.setData({
-      btn_disabled: true,
-    })
 
     var that = this;
     var title, desc;
@@ -34,6 +30,12 @@ Page({
       })
       return;
     }
+
+    // 按钮设置disabled为真，不可再次点击
+    // this.setData({
+    //   btn_disabled: true,
+    //   btn_loading: true,
+    // })
 
     // 显示loading
     wx.showLoading({
