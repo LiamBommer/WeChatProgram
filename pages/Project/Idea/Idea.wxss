@@ -8,8 +8,7 @@
 }
 
 
-
-.bg-img {
+.bgImg {
   width: 100%;
   height: 260rpx;
   background-color: #888888;
