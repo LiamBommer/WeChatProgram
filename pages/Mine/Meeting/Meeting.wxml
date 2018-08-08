@@ -1,27 +1,35 @@
 <!--pages/Mine/Meeting/Meeting.wxml-->
 <view class='Mine-Meeting-container'>
 
-  <view wx:for="{{Meeting}}" wx:key="{{id}}" style="{{myMeetingAnimationStyle}};">
-        <block wx:if="{{item.titleTime}}">
-        <!-- 标题 -->
-          <view class='Meeting-title'>{{item.titleTime}}</view>
-        </block>
-        <block wx:else>
-          <!-- 列表项 -->
-          <!-- <view class='Meeting-item' bindtap='MeetingDetail'> -->
-          <view class='Meeting-item'>
-            <view class='Meeting-item-first'>
-              <view class='Meeting-item-date'>{{item.date}}日</view>
-              <view class='Meeting-item-time'>{{item.time}}</view>
-            </view>
-            <view class='Meeting-item-second'>
-              <view class='Meeting-item-title'>{{item.title}}</view>
-            </view>
-            <view></view>
-          </view>
-        </block>
+  <view class="has-no-content" style="display:{{Meeting.length==0 ? 'block':'none'}}">
+    <view class='noitem'>
+      <image class='noitem-icon' src='/img/noMeeting.png'></image>
+      <view class='noitem-title'>你还未参加任何会议</view>
+      <view class='noitem-content'>召集大家出来一起开会吧</view>
+    </view>
   </view>
 
-    
+  <view class="has-content" style="display:{{Meeting.length==0 ? 'none':'block'}}">
+    <view wx:for="{{Meeting}}" wx:key="{{id}}" style="{{myMeetingAnimationStyle}};">
+      <block wx:if="{{item.titleTime}}">
+      <!-- 标题 -->
+        <view class='Meeting-title'>{{item.titleTime}}</view>
+      </block>
+      <block wx:else>
+        <!-- 列表项 -->
+        <!-- <view class='Meeting-item' bindtap='MeetingDetail'> -->
+        <view class='Meeting-item'>
+          <view class='Meeting-item-first'>
+            <view class='Meeting-item-date'>{{item.date}}日</view>
+            <view class='Meeting-item-time'>{{item.time}}</view>
+          </view>
+          <view class='Meeting-item-second'>
+            <view class='Meeting-item-title'>{{item.title}}</view>
+          </view>
+          <view></view>
+        </view>
+      </block>
+    </view>
+  </view>
 
 </view>

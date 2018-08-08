@@ -6,6 +6,31 @@
   flex-direction: column;
 }
 
+.noitem{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:150rpx;
+}   
+
+.noitem .noitem-icon{
+  width:130rpx;
+  height:130rpx;
+}
+
+.noitem  .noitem-title{
+  font-size: 40rpx;
+  color: #888888;
+  margin-top:20rpx;
+}
+
+.noitem  .noitem-content{
+  font-size: 30rpx;
+  color: #b2b2b2;
+  margin-top:10rpx;
+}
+
 .Mine-Task-container .task-item{
   width: 100%;
   min-height: 120rpx;

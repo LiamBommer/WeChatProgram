@@ -1,6 +1,15 @@
 <!--pages/Mine/Idea/Idea.wxml-->
 <view class='Mine-Idea-container'>
 
+<view class="has-no-content" style="display:{{Idea.length==0 ? 'block':'none'}}">
+  <view class='noitem'>
+    <image class='noitem-icon' src='/img/noIdea.png'></image>
+    <view class='noitem-title'>你还未发表任何点子</view>
+    <view class='noitem-content'>说出你的点子，让大家为你鼓掌</view>
+  </view>
+</view>
+
+<view style="display:{{Idea.length==0 ? 'none':'block'}}">
   <block wx:for="{{Idea}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <!-- <view class='idea-item' bindtap='IdeaDetail' > -->
@@ -20,5 +29,6 @@
         </view>
       </view>
   </block>
+</view>
 
 </view>
