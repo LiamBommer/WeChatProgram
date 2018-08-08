@@ -247,18 +247,23 @@
 }
 
 .item-bottom-list .list-content .task {
-  color: white;
+  color: #888888;
   border-radius: 10rpx;
-  padding: 4rpx 8rpx;
   margin-right: 16rpx;
 }
 .item-bottom-list .list-content .task.green {
-  border: 2rpx solid #09BB07;
-  background-color: rgba(9, 187, 7, 0.6);
+  /* border: 2rpx solid #09BB07; */
+  /* background-color: rgba(9, 187, 7, 0.6); */
+  /* color: #09BB07; */
+  border: 2rpx solid #888888;
+  padding: 4rpx 8rpx;
+  color: #888888;
 }
 .item-bottom-list .list-content .task.red {
   border: 2rpx solid rgb(230, 67, 64);
-  background-color: rgba(230, 67, 64, 0.6);
+  /* background-color: rgba(230, 67, 64, 0.6); */
+  color: rgb(230, 67, 64);
+  padding: 4rpx 8rpx;
 }
 
 .itemmore-icon{

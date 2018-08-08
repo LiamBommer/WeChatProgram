@@ -8,7 +8,8 @@
   </view>
 </view>
 
-<view class='Mine-Task-container' style="display:{{Task.length==0 ? 'none':'block'}}">
+<view style="display:{{Task.length==0 ? 'none':'block'}}">
+  <view class='Mine-Task-container'>
 
     <block wx:for="{{Task}}" wx:key="{{id}}">
       <!-- 列表项 -->
@@ -31,4 +32,5 @@
       </view>
     </block>
 
+  </view>
 </view>

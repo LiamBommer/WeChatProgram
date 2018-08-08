@@ -4,6 +4,7 @@
   padding: 0rpx 40rpx;
   display: flex;
   flex-direction: column;
+  background-color: white;
 }
 
 .noitem{

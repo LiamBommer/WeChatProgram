@@ -1,4 +1,4 @@
-const Bmob = require('./utils/bmob.js')
+const Bmob = require('/utils/bmob.js')
 
 /**
  * 
@@ -212,6 +212,7 @@ function getAllTasks(starProjIdArr, projIdArr){
 function oneProjectDisplay(projId){
 
   var that = this
+  this.getTasks(projId)
 
 }
 
