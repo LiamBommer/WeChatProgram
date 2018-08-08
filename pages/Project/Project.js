@@ -22,6 +22,9 @@ Page({
     projectAnimationStyle: '',
     starProjectAnimationStyle: '',
 
+    // 按钮旋转动效
+    arrow_spin_style: '',
+
     // 新用户标识，显示新手指引
     // 0 首页欢迎语
     // 1 高亮项目详情
@@ -59,6 +62,40 @@ Page({
     if(guide_step == 2) {
       wx.navigateTo({url: './ProjectDetail/ProjectDetail'})
     }
+  },
+
+  // 项目展开控制
+  expandStarProject: function(e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    var project_list = that.data.StarProject
+    var flag = project_list[index].expand
+
+    if(flag == true) flag = false
+    else flag = true
+
+    this.arrowSpinAnimation()
+
+    var path = 'StarProject[' + index + '].expand'
+    that.setData({
+      [path]: flag
+    })
+  },
+  expandProject: function(e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    var project_list = that.data.Project
+    var flag = project_list[index].expand
+
+    if(flag == true) flag = false
+    else flag = true
+
+    this.arrowSpinAnimation()
+
+    var path = 'Project[' + index + '].expand'
+    that.setData({
+      [path]: flag
+    })
   },
   
   //点击星标项目
@@ -251,8 +288,10 @@ getProjectList:function(){
             object = {
               icon: result.attributes.project.img_url,
               name: result.attributes.project.name,
+              description: result.attributes.project.desc,
               id: result.attributes.project.objectId,
-              checked: false
+              checked: false,
+              expand: false,
             }
             projectArr.push(object)
           }
@@ -261,8 +300,10 @@ getProjectList:function(){
             starobject = {
               icon: result.attributes.project.img_url,
               name: result.attributes.project.name,
+              description: result.attributes.project.desc,
               id: result.attributes.project.objectId,
-              checked: true
+              checked: true,
+              expand: true,
             }
             starprojectArr.push(starobject)
           }
@@ -349,13 +390,31 @@ getProjectList:function(){
     })
   },
 
+  /*
+   * 箭头旋转动效
+   */
+  arrowSpinAnimation: function () {
+    var arrow_spin_style = ''
+    arrow_spin_style += '-webkit-animation-name: arrowSpinAnimation;'
+    arrow_spin_style += '-webkit-animation-duration: 0.5;'
+    arrow_spin_style += "-webkit-animation-timing-function: linear;"
+    arrow_spin_style += "-webkit-animation-iteration-count: 1;"
+
+    this.setData({
+      arrow_spin_style: ''
+    })
+    this.setData({
+      arrow_spin_style: arrow_spin_style 
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.projectAnimation()
-    this.starProjectAnimation()
+    // this.projectAnimation()
+    // this.starProjectAnimation()
   },
 
   /**
@@ -384,8 +443,6 @@ getProjectList:function(){
 
     var that = this
     that.getProjectList()
-
-    
     
   },
 

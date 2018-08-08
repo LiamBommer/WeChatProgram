@@ -23,16 +23,55 @@
     </view>
     <view class="projectItem-container">
       <block wx:for="{{StarProject}}" wx:key="{{id}}">
+
       <!-- 置顶列表项 -->
-      <view class='staritem {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
-        <view class='staritem-one' bindtap='projectmore' data-index="{{index}}">
-          <image class='staritem-icon' src='{{item.icon}}'></image>
-          <view class='staritem-text'>{{item.name}}</view>
+      <!-- <view class='item {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" style="{{starProjectAnimationStyle}}">
+        <view class='item-one' bindtap='projectmore' data-index="{{index}}">
+          <image class='item-icon' src='{{item.icon}}'></image>
+          <view class='item-text'>{{item.name}}</view>
         </view>
-        <view class='staritem-two' bindtap='showProjectDetail' data-index="{{index}}">
-          <image class='staritemmore-icon' src='/img/more.png'></image>
+        <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}">
+          <image class='itemmore-icon' src='/img/more.png'></image>
+        </view>
+      </view> -->
+      <view class='item {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
+        <!-- <view class="progress-bar"></view> -->
+        <view class="item-top">
+          <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
+            <image class='item-icon' src='{{item.icon}}'></image>
+            <view class='item-text'>
+              <view class='item-text-top'>{{item.name}}</view>
+              <view class='item-text-bottom'>日程进度</view>
+              <!-- <view class='item-text-bottom'>{{item.schedule}}</view> -->
+            </view>
+          </view>
+          <!-- <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}"> -->
+          <view class='item-two' data-index="{{index}}" bindtap="expandStarProject">
+            <image class='itemmore-icon' src='/img/arrow_down.png' style="{{arrow_spin_style}}"></image>
+          </view>
+        </view>
+        <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
+          <view class="item-bottom-list" bindtap="projectmore">
+            <text class="list-desc">最近会议</text>
+            <text class="list-content">xxx会议</text>
+          </view>
+          <view class="item-bottom-list" bindtap="projectmore">
+            <text class="list-desc">近期任务</text>
+            <view class="list-content">
+              <!-- <text class="task {{task_color}}" wx-for="{{fake_task_list}}" wx-key="">{{item.index}}</text> -->
+              <text class="task {{task_color}}" >计划A</text>、
+              <text class="task {{task_color}}" >计划B</text>
+            </view>
+          </view>
+          <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >
+            <!-- <text class="list-desc">项目详情</text> -->
+            <view class="list-content">
+              <image class='itemmore-icon' src='/img/more.png'></image>
+            </view>
+          </view>
         </view>
       </view>
+
       </block>
     </view>
 
@@ -40,18 +79,47 @@
     <!-- 标题 -->
     <view class='title'>我的项目</view>
     <view class="projectItem-container" >
-      <view wx:for="{{Project}}" wx:key="{{id}}">
+      <block wx:for="{{Project}}" wx:key="{{id}}">
+
         <!-- 列表项 -->
         <view class='item {{item.isClicked}}' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
-          <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
-            <image class='item-icon' src='{{item.icon}}'></image>
-            <view class='item-text'>{{item.name}}</view>
+          <!-- <view class="progress-bar"></view> -->
+          <view class="item-top">
+            <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
+              <image class='item-icon' src='{{item.icon}}'></image>
+              <view class='item-text'>
+                <view class='item-text-top'>{{item.name}}</view>
+                <view class='item-text-bottom'>日程进度</view>
+                <!-- <view class='item-text-bottom'>{{item.schedule}}</view> -->
+              </view>
+            </view>
+            <!-- <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}"> -->
+            <view class='item-two' data-index="{{index}}" bindtap="expandProject">
+              <image class='itemmore-icon' src='/img/arrow_down.png' style="{{arrow_spin_style}}"></image>
+            </view>
           </view>
-          <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}">
-            <image class='itemmore-icon' src='/img/more.png'></image>
+          <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
+            <view class="item-bottom-list" bindtap="projectmore">
+              <text class="list-desc">最近会议</text>
+              <text class="list-content">xxx会议</text>
+            </view>
+            <view class="item-bottom-list" bindtap="projectmore">
+              <text class="list-desc">近期任务</text>
+              <view class="list-content">
+                <!-- <text class="task {{task_color}}" wx-for="{{fake_task_list}}" wx-key="">{{item.index}}</text> -->
+                <text class="task {{task_color}}" >计划A、计划B</text>
+              </view>
+            </view>
+            <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >
+              <!-- <text class="list-desc">项目详情</text> -->
+              <view class="list-content project-detail">
+                <image class='itemmore-icon' src='/img/more.png'></image>
+              </view>
+            </view>
           </view>
         </view>
-      </view>
+
+      </block>
     </view>
 
     <!-- 添加项目 -->
