@@ -247,12 +247,18 @@
 }
 
 .item-bottom-list .list-content .task {
-  border: 2rpx solid #09BB07;
   color: white;
   border-radius: 10rpx;
   padding: 4rpx 8rpx;
-  background-color: rgba(9, 187, 7, 0.6);
   margin-right: 16rpx;
+}
+.item-bottom-list .list-content .task.green {
+  border: 2rpx solid #09BB07;
+  background-color: rgba(9, 187, 7, 0.6);
+}
+.item-bottom-list .list-content .task.red {
+  border: 2rpx solid rgb(230, 67, 64);
+  background-color: rgba(230, 67, 64, 0.6);
 }
 
 .itemmore-icon{
