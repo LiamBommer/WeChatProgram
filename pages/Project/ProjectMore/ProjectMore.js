@@ -753,7 +753,7 @@ Page({
     }).then(function (result) {
 
       //获取指定项目的所有成员,默认10条
-      userQuery.select("nickName", "userPic")  //查询出用户的昵称和头像
+      userQuery.select("nickName", "userPic","openid")  //查询出用户的昵称和头像
       userQuery.limit(50)
       userQuery.containedIn("objectId", memberId)
 
@@ -769,6 +769,7 @@ Page({
               "id":object.id,
               "userPic":object.get("userPic"),
               "nickName": object.get("nickName"),
+              "openId":object.get("openid"),
               "checked":''
             }
             if (user.id == leader_id) {
@@ -787,7 +788,6 @@ Page({
             key: 'ProjectMore-projectMember',
             data: userArr,
           })
-
 
 
         },
