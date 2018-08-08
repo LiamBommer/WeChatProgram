@@ -252,6 +252,7 @@
   border-radius: 10rpx;
   padding: 4rpx 8rpx;
   background-color: rgba(9, 187, 7, 0.6);
+  margin-right: 16rpx;
 }
 
 .itemmore-icon{

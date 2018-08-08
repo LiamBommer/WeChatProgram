@@ -59,8 +59,8 @@
             <text class="list-desc">近期任务</text>
             <view class="list-content">
               <!-- <text class="task {{task_color}}" wx-for="{{fake_task_list}}" wx-key="">{{item.index}}</text> -->
-              <text class="task {{task_color}}" >计划A</text>、
-              <text class="task {{task_color}}" >计划B</text>
+              <text class="task {{task_color}}" >任务A</text>
+              <text class="task {{task_color}}" >任务B</text>
             </view>
           </view>
           <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >
@@ -107,7 +107,8 @@
               <text class="list-desc">近期任务</text>
               <view class="list-content">
                 <!-- <text class="task {{task_color}}" wx-for="{{fake_task_list}}" wx-key="">{{item.index}}</text> -->
-                <text class="task {{task_color}}" >计划A、计划B</text>
+                <text class="task {{task_color}}" >任务A</text>
+                <text class="task {{task_color}}" >任务B</text>
               </view>
             </view>
             <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >

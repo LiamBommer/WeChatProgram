@@ -131,7 +131,7 @@ Page({
           wx.hideLoading()
 
           // 设置新用户缓存标识，显示新手指引
-          wx.setStorageSync('is_beginner', true)
+          // wx.setStorageSync('is_beginner', true)
           wx.setStorageSync('guide_step', 0)
 
           //跳转到项目主页
