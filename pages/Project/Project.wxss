@@ -42,10 +42,8 @@
 }
 
 .Project-container .projectItem-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  padding: 16rpx 0rpx;
+  background-color: white;
 }
 
 .Project-container .startitle{
@@ -56,6 +54,7 @@
     font-size: 34rpx;
     display: flex;
     align-items: center;
+    
 }
 
 .Project-container .startitle image{
@@ -66,19 +65,28 @@
 .Project-container .startitle text{
   padding-left: 20rpx;
 }
-/*
 
 .Project-container .staritem{
     font-size: 34rpx;
     background: #fff;
     color: #000;
-    width: calc(100% - 80rpx);
+    width: 100%;
     height: 120rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding:16rpx 0rpx;
+
+    /* 点击背景动画 */
+    transition: background-color 0.100s;
+    /* 点击背景动画 END */
 }
+
+/* 点击背景动画 */
+.Project-container .staritem.clicked{
+  background-color: #e1e1e1;
+}
+/* 点击背景动画 END */
 
 .Project-container .staritem .staritem-one{
     display: flex;
@@ -115,7 +123,7 @@
     
     width: 40rpx;
     height: 40rpx;
-} */
+}
 
 
 .Project-container .title{
@@ -130,131 +138,57 @@
     font-size: 30rpx;
     background: #fff;
     color: #000;
-    width: calc(100% - 80rpx);
-    min-height: 150rpx;
-    border-radius: 20rpx;
+    width: 100%;
+    /* height: 100rpx; */
+    /* height: 0rpx; */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: column;
-    margin-bottom: 32rpx;
-    box-shadow: 2rpx 2rpx 4rpx #d4d4d4, -2rpx 2rpx 4rpx #d4d4d4;
+    padding: 16rpx 0rpx;
 
     /* 点击背景动画 */
-    /* transition: background-color 0.050s; */
+    transition: background-color 0.050s;
     /* 点击背景动画 END */
 }
 
-.Project-container .item .progress-bar {
-  width: 100%;
-  height: 20rpx;
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-  background: linear-gradient(45deg, rgb(9, 187, 7),rgba(9, 187, 7, 0.8) 30%, white 100%);
-  /* background: linear-gradient(to right, #09bb07, white 120%); */
-}
-
-.Project-container .item .item-top {
-  width: 100%;
-  height: calc(100rpx + 32rpx);
-  /* background-color: #09BB07; */
-  color: black;
-  border-radius: 20rpx;
-  border-bottom: 2rpx solid #f2f2f2;
-  padding: 16rpx 0rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.Project-container .item .item-bottom{
-  width: 100%;
-  min-height: 100rpx;
-  padding: 16rpx 0rpx;
-  display: flex;
-  flex-direction: column;
-}
-
 /* 点击背景动画 */
-/* .Project-container .item.clicked{
+.Project-container .item.clicked{
   background-color: #e1e1e1;
-} */
+}
 /* 点击背景动画 END */
 
-.Project-container .item-top .item-one{
+.Project-container .item .item-one{
     display: flex;
     align-items: center;
-    width: 702rpx;
+    width: 630rpx;
 }
 
-.Project-container .item-top .item-two{
+.Project-container .item .item-two{
     display: flex;
     align-items: center;
-    padding: 0rpx 24rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
     height: 100%;
 }
 
-.Project-container .item-top .item-one .item-icon{
+.Project-container .item .item-one .item-icon{
     width: 100rpx;
     height: 100rpx;
-    margin-left: 32rpx;
+    margin-left: 40rpx;
     border-radius: 10rpx;
 }
 
-.Project-container .item-top .item-one .item-text{
-    margin-left: 24rpx;
-    width: 420rpx;
+.Project-container .item .item-one .item-text{
+    margin-left: 30rpx;
+    width: 460rpx;
     display: block;
     line-height: 40rpx;
-}
-
-.Project-container .item-top .item-one .item-text .item-text-top {
-    font-size: 36rpx;
     overflow: hidden;
     white-space: nowrap;
     text-overflow:ellipsis;
-    margin-bottom: 8rpx;
-}
-.Project-container .item-top .item-one .item-text .item-text-bottom {
-    font-size: 28rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    color: #888888;
 }
 
-.Project-container .item .item-bottom .item-bottom-list{
-  width: calc(100% - 64rpx);
-  min-height: 60rpx;
-  padding: 8rpx 32rpx;
-  font-size: 28rpx;
-  display: flex;
-  align-items: center;
-}
-.Project-container .item .item-bottom .item-bottom-list.project-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-around;
-  padding: 0rpx 32rpx;
-  min-height: 40rpx;
-}
-.item-bottom-list .list-desc {
-  color: #888888;
-}
-.item-bottom-list .list-content {
-  margin-left: 16rpx;
-}
-
-.item-bottom-list .list-content .task {
-  border: 2rpx solid #09BB07;
-  color: white;
-  border-radius: 10rpx;
-  padding: 4rpx 8rpx;
-  background-color: rgba(9, 187, 7, 0.6);
-}
-
-.itemmore-icon{
+.Project-container .item .itemmore-icon{
     width: 40rpx;
     height: 40rpx;
 }
@@ -354,19 +288,6 @@
   }
 }
 /*** 列表淡入 END ***/
-
-/*** 箭头旋转 ***/
-@keyframes arrowSpinAnimation {
-  0% {
-    /* transform: rotate(0deg); */
-    height: 0;
-  }
-  100% {
-    /* transform: rotate(180deg); */
-    height: 40rpx;
-  }
-}
-/*** 箭头旋转 END ***/
 
 /*** 新手指引 ***/
 .guide-container {
