@@ -384,9 +384,9 @@ Page({
       taskAnimationStyle: ''
     })
 
-    this.setData({
-      tasklist:''
-    })
+    // this.setData({
+    //   tasklist:''
+    // })
 
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
@@ -625,13 +625,28 @@ Page({
         }
         tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
 
+        // 先判断是否与目前的列表相同
+        // 若相同，则不刷新
+        // !!!!!!!!!!!!!!!!!!!!! 比较算法需要改进... !!!!!!!!!!!!!!!!!
+        if(that.data.tasklist != '[]') {
+          if(that.data.tasklist == tasklists) {
+              // 不刷新列表
+          } else {
+            // 不相同，刷新列表
+            that.setData({
+              tasklist: tasklists
+            })
+            // wx.showToast({
+            //   title: '已更新',
+            //   icon: 'none',
+            //   duration: 1000
+            // })
+          }
+        }
 
-        that.setData({
-          tasklist: tasklists
-        })
-        //console.log("tasklists:", that.data.tasklist)
-
-        console.log('获取任务完成！！！')
+        // that.setData({
+        //   tasklist: tasklists
+        // })
 
       },
       error: function (error) {
@@ -1383,11 +1398,11 @@ Page({
   onLoad: function (options) {
     // 列表加载动效
     var that = this
-    that.taskAnimation()
-    that.announcementAnimation()
-    that.scheduleAnimation()
-    that.meetingAnimation()
-    that.ideaAnimation()
+    // that.taskAnimation()
+    // that.announcementAnimation()
+    // that.scheduleAnimation()
+    // that.meetingAnimation()
+    // that.ideaAnimation()
     console.log("动画初始化123");
   },
 
@@ -1402,12 +1417,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
-    
 
     var that = this
     // wx.startPullDownRefresh()//刷新
