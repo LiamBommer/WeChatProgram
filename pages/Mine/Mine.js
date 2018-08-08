@@ -289,7 +289,7 @@ Page({
             that.setData({
               Task: taskArr
             })
-            wx.hideLoading()
+            // wx.hideLoading()
           }
           else{
           
@@ -671,10 +671,10 @@ sortTask:function(a,b){
 
     var userId = this.data.userInfo.userId
 
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
     // Animation
     this.myTaskAnimation()

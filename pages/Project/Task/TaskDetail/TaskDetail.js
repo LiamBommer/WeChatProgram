@@ -1879,10 +1879,10 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
     var that = this;
     //接受通知的参数ID
     var requestId = wx.getStorageSync("Notification-taskId")

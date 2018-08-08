@@ -406,7 +406,7 @@ Page({
         }
 
 
-        wx.hideLoading()
+        // wx.hideLoading()
 
       },
       error: function (error) {
@@ -721,9 +721,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '正在加载',
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    // })
     var that = this
     var userId = getApp().globalData.userId
     console.log("userId", userId)
