@@ -1,7 +1,7 @@
 <!-- addAnnouncement.wxml -->
  <view class="addAnnouncement-container">
   
-   <form bindsubmit='BuildAnnouncement'>
+   <form bindsubmit='BuildAnnouncement' report-submit='true'>
       <view class='view-container'>
         <view  class='title-view ver-align'>
           <input class='title' name="title" placeholder='公告标题'/>

@@ -19,10 +19,12 @@ Page({
 
   //完成
   BuildAnnouncement: function (e) {
+
     var that = this
     var title = e.detail.value.title//获取公告标题
     var content = e.detail.value.content//获取公告内容
     var checked = that.data.checked//获取是否显示已读
+    var formId = e.detail.formId
 
     wx.getStorage({
       key: "Project-detail",
@@ -46,7 +48,7 @@ Page({
         })
 
         // submit
-        that.createAnnouncement(ProjectId, ProjectName, title, content, checked)
+        that.createAnnouncement(ProjectId, ProjectName, title, content, checked, formId)
         wx.navigateBack({
           url: "../../ProjectMore/ProjectMore"
         })
@@ -57,11 +59,12 @@ Page({
 
   /**
    * @autor mr.li
-   * @parameter projId项目id， projName项目名称，title公告标题， content公告内容，is_showmember是否显示已读和未读成员
+   * @parameter projId项目id， projName项目名称，title公告标题， content公告内容，is_showmember是否显示已读和未读成员, formId 推送公告通知需要用到的表单id
    * （userId和nickName在函数里面已经获取）
    * 添加公告
    */
-  createAnnouncement:function (projId, projName, title, content, is_showmember){
+  createAnnouncement:function (projId, projName, title, content, is_showmember,formId){
+  console.log("formId"+formId)
   var that = this
   var Announcement = Bmob.Object.extend("annoucement")  //数据库的名字拼错了，但是现在还是和后台的数据库是一样的
   var announcement = new Announcement()
@@ -102,6 +105,46 @@ Page({
             icon: 'success',
             duration: 1000
           })
+
+          //将公告内容推送给项目的其他成员(问题：只能推送一条)
+          // var projMemberArr = wx.getStorage({
+          //   key:'ProjectMore-projectMember',
+          //   success:function(res){
+          //     // console.log("开始推送公告"+res.dat)
+          //     var result = res.data
+          //     var u
+          //     for(u=0;u<result.length;u++){
+          //       var openid = result[u].openId.trim()
+          //       console.log(openid)
+          //       var temp = {
+          //         "touser": openid,
+          //         "template_id": "NEguPFCkfp9aeOG7SVX8igaLJl1uBF19r7qGUrj1M2o", 
+          //         "page": "pages/Project/Announcement/announcementDetail/announcementDetail?isShared=true&announcementId=" + announceId,
+          //         "form_id": formId,
+          //         "data": {
+          //           "keyword1": {
+          //             "value": "SDK测试内容",
+          //             "color": "#173177"
+          //           },
+          //           "keyword2": {
+          //             "value": "199.00"
+          //           },
+          //           "keyword3": {
+          //             "value": "123456789"
+          //           },
+                    
+          //         },
+          //         "emphasis_keyword": "keyword2.DATA"
+          //       }
+          //       Bmob.sendMessage(temp).then(function (obj) {
+          //         console.log('发送成功')
+          //       },
+          //         function (err) {
+          //           console.log("公告推送部分：" + err)
+          //         })
+          //     }
+          //   }
+          // })
 
         },
         error: function (result, error) {
