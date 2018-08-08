@@ -4,6 +4,7 @@
   <!-- <view class='ripple-view' style='{{rippleViewStyle}}'>
     <view class='ripple' style='{{rippleStyle}}'></view>
   </view> -->
+  <!-- 123 -->
   <!-- 涟漪效果的圆圈 END -->
   <!-- 无内容 -->
   <view style='display:{{StarProject.length==0 && Project.length==0 ? "":"none"}}'>
