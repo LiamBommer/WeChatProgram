@@ -51,7 +51,7 @@
     bindconfirm="confirmFeedback"> 
           <!-- <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题"  
           maxlength='20'/> -->
-          <textarea placeholder="请告诉我们不足之处！" bindinput='feedbackInput' value='{{feedbackInput}}' maxlength='300' />
+          <textarea placeholder="我们养生的开发小哥会看心情解决的..." bindinput='feedbackInput' value='{{feedbackInput}}' maxlength='300' />
     </modal> 
 
     <!-- 导航栏 -->

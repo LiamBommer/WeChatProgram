@@ -708,6 +708,8 @@ Page({
    */
   onLoad: function (options) {
 
+    // 加载动画
+    this.notificationAnimation()
   },
 
   /**
@@ -728,8 +730,6 @@ Page({
     var userId = getApp().globalData.userId
     console.log("userId", userId)
 
-    // 加载动画
-    that.notificationAnimation()
 
     that.getNotification(userId)
   },

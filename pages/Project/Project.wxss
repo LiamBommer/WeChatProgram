@@ -272,7 +272,9 @@
 }
 
 .Project-container .addProject{
-  height: 130rpx;
+  width: calc(100% - 80rpx);
+  min-height: 150rpx;
+  border-radius: 20rpx;
   display: flex;
   align-items: center;
   font-size: 30rpx;
