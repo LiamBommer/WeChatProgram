@@ -105,6 +105,11 @@ button[hover-class="share-hover"]::after {
   margin-top: 40rpx;
 }
 
+.chat .taskremind .text{
+  align-items: center;
+  justify-content: space-around;
+}
+
 .chat .person-icon-view {
   height: 100%;
 }

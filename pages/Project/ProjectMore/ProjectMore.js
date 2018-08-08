@@ -29,99 +29,18 @@ Page({
 
     //任务列表
     tasklist: [
-
-       "",//任务列表标题
-      // {
-      //   title:'待处理',
-      //   //任务项
-      //   tasks: [
-      //     {
-      //       is_finish: false,
-      //       title: '寻找嘉宾',
-      //       has_sub:'true',
-      //       end_time: '2018-06-01',
-      //       timeStatus: 'red',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '发送邀请函',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-02',
-      //       timeStatus: 'red',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '物资申请与采购',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-03',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '场地申请与摆摊',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-05',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: false,
-      //       title: '活动执行',
-      //       has_sub: 'true',
-      //       end_time: '2018-06-10',
-      //       timeStatus: 'green',
-      //     },
-      //   ]
-      // },
-
-      // {
-      //   title: '已完成',
-      //   //任务项
-      //   tasks: [
-      //     {
-      //       is_finish: 'true',
-      //       title: '调研同学们需求',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-01',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: 'true',
-      //       title: '撰写策划书',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-07',
-      //       timeStatus: 'green',
-      //     },
-      //     {
-      //       is_finish: 'true',
-      //       title: '完成策划书审核',
-      //       has_sub: 'true',
-      //       end_time: '2018-05-10',
-      //       timeStatus: 'green',
-      //     },
-      //   ]
-      // },
+       //任务列表标题
+      {
+        title:'加载中',
+      },
     ],
+
+    // 底部隐藏判断
+    indicator_dots: true,     // true 为显示
 
     //公告列表
     Announcement: [
-      {
-        id:'',
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        read: "0人已读",
-        memberName: '',
-      },
-      {
-        id: '',
-        icon: "/img/me.png",
-        title: "我觉得ZHT太牛逼了",
-        content: "因为ZHT也很牛逼balabal ...",
-        time: "5月1日20:00",
-        read: "0人已读",
-        memberName: '',
-      },
+
     ],
 
     //日程列表
@@ -131,32 +50,14 @@ Page({
 
     //会议列表
     Meeting: [
-      // {
-      //   month: "2019年5月",
-      // },
-      // {
-      //   day: "22日",
-      //   time: "21:00",
-      //   content: "策划讨论",
-      // },
-      // {
-      //   day: "28日",
-      //   time: "22:30",
-      //   content: "讨论嘉宾人选",
-      // },
-      // {
-      //   month: "2019年6月",
-      // },
-      // {
-      //   day: "1日",
-      //   time: "21:00",
-      //   content: "讨论活动备案",
-      // },
+
     ],
 
     //墙列表
-    idea: { img_visible: true, bg_img: '',},
-    Idea:[],
+    // idea: { img_visible: true, bg_img: '',},
+    Idea:[
+
+    ],
 
     // Task list animation
     taskAnimationStyle: '',
@@ -262,6 +163,7 @@ Page({
           that.setData({
             tasklist: tasklist,
             currentItem: Length,
+            indicator_dots: true,
           });
           that.createTaskList(currentProjId, "未完成")//projId 项目id，title任务看板名称
 
@@ -284,6 +186,13 @@ Page({
               tasklist: tasklist,
               currentItem: Length - 2,
             });
+            // 判断列表长度，为1的话则隐藏底部swiper指示点
+            // console.log('任务列表长度：' + tasklist.length)
+            // if(tasklist.length == 1) {
+            //   that.setData({
+            //     indicator_dots: false,
+            //   })
+            // }
             that.deleteTaskList(listId)
           }
         }
@@ -457,9 +366,20 @@ Page({
       key: "ProjectMore-projName",
       data: projName,
     })
+
+    // 去除动画效果
+    this.setData({
+      taskAnimationStyle: ''
+    })
+
+    // this.setData({
+    //   tasklist:''
+    // })
+
     wx.navigateTo({
       url: '../Task/TaskDetail/TaskDetail'
-    });
+    })
+
   },
 
   /**
@@ -596,6 +516,13 @@ Page({
         var listIndex = 0;
         //console.log('results number: ' + results.length)
 
+        // 如果长度为1，则隐藏底部swiper的指示点
+        if(results.length == 1) {
+          that.setData({
+            indicator_dots: false,
+          })
+        }
+
           var taskList = []
           for (var i = 0; i < results.length; i++) {
             var object
@@ -686,11 +613,28 @@ Page({
         }
         tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
 
+        // 先判断是否与目前的列表相同
+        // 若相同，则不刷新
+        // !!!!!!!!!!!!!!!!!!!!! 比较算法需要改进... !!!!!!!!!!!!!!!!!
+        if(that.data.tasklist != '[]') {
+          if(that.data.tasklist == tasklists) {
+              // 不刷新列表
+          } else {
+            // 不相同，刷新列表
+            that.setData({
+              tasklist: tasklists
+            })
+            // wx.showToast({
+            //   title: '已更新',
+            //   icon: 'none',
+            //   duration: 1000
+            // })
+          }
+        }
 
-        that.setData({
-          tasklist: tasklists
-        })
-        //console.log("tasklists:", that.data.tasklist)
+        // that.setData({
+        //   tasklist: tasklists
+        // })
 
       },
       error: function (error) {
@@ -1290,8 +1234,8 @@ Page({
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
             'projectName': results[i].get('project').name,  //项目名称
             'content': results[i].get('content') || '',  //点子内容
-            'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
-            'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
+            // 'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
+            // 'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
             'color': results[i].get('color') || '', 
           }
@@ -1340,9 +1284,11 @@ Page({
     taskAnimationStyle += "-webkit-animation-timing-function: ease;"
     taskAnimationStyle += "-webkit-animation-iteration-count: 1;"
 
-    this.setData({
-      taskAnimationStyle: ''
-    })
+    console.log('任务动画执行！！')
+
+    // this.setData({
+    //   taskAnimationStyle: ''
+    // })
     this.setData({
       taskAnimationStyle: taskAnimationStyle
     })
@@ -1429,7 +1375,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 列表加载动效
+    var that = this
+    // that.taskAnimation()
+    // that.announcementAnimation()
+    // that.scheduleAnimation()
+    // that.meetingAnimation()
+    // that.ideaAnimation()
+    console.log("动画初始化123");
   },
 
   /**
@@ -1443,17 +1396,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
-    // 列表加载动效
-    this.taskAnimation()
-    this.announcementAnimation()
-    this.scheduleAnimation()
-    this.meetingAnimation()
-    this.ideaAnimation()
 
     var that = this
     // wx.startPullDownRefresh()//刷新

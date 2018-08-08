@@ -28,13 +28,17 @@ button[hover-class="share-hover"]::after {
 
 .view-container .content-view {
   min-height:195rpx;
-  padding-top:8px;
+  padding-top:40rpx;
   word-wrap:break-word;
   overflow:hidden;
   text-overflow:ellipsis;
   display:-webkit-box;
   -webkit-line-clamp:5;
   -webkit-box-orient:vertical;
+}
+
+.view-container .content-view .content {
+  font-size: 34rpx;
 }
 
 .view-container .title-view .title {

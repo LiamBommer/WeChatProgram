@@ -8,10 +8,14 @@ Page({
    */
   data: {
 
+    btn_disabled: false,
+    btn_loading: false,
+
   },
 
   //获取项目名称，项目描述
   BuildProject: function (e) {
+
     var that = this;
     var title, desc;
     title = e.detail.value.title;
@@ -27,9 +31,15 @@ Page({
       return;
     }
 
+    // 按钮设置disabled为真，不可再次点击
+    // this.setData({
+    //   btn_disabled: true,
+    //   btn_loading: true,
+    // })
+
     // 显示loading
     wx.showLoading({
-      title: '正在星标...',
+      title: '正在创建...',
     })
     // submit
     that.buildProject(title, desc);

@@ -53,6 +53,12 @@
 					"pathName": "pages/Project/Project",
 					"query": "projectid=aa545250b7",
 					"scene": "1012"
+				},
+				{
+					"id": -1,
+					"name": "新手指引",
+					"pathName": "pages/GetUserInfo/GetUserInfo",
+					"query": ""
 				}
 			]
 		}

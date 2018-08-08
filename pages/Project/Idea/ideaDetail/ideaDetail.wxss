@@ -1,7 +1,7 @@
 
 .view-container .content-view {
   min-height: 200rpx;
-  padding: 16rpx 0rpx;
+  padding: 40rpx 0rpx 16rpx 0rpx;
   display:flex;
   justify-content:space-between;
 }
