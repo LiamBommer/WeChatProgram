@@ -232,9 +232,9 @@ Page({
     var taskId = e.currentTarget.dataset.id
     var projectId = e.currentTarget.dataset.projectId
 
-    wx.showLoading({
-      title: '正在修改',
-    })
+    // wx.showLoading({
+    //   title: '正在修改',
+    // })
     
     // Submit
     this.finishMytask(projectId, taskId, checked)
@@ -289,14 +289,14 @@ Page({
             that.setData({
               Task: taskArr
             })
-            wx.hideLoading()
+            //wx.hideLoading()
           }
           else{
           
             that.setData({
               Task: ''
             })
-            wx.hideLoading()
+            //wx.hideLoading()
           }
         }
 
@@ -332,7 +332,7 @@ sortTask:function(a,b){
         // result.set('is_finish', true)
         result.set('is_finish', isFinish)
         
-        wx.hideLoading()
+        //wx.hideLoading()
         if (isFinish == true) {
           wx.showToast({
             title: '完成任务',
@@ -461,14 +461,14 @@ sortTask:function(a,b){
           that.setData({
             Idea: ideaArr
           })
-          wx.hideLoading()
+         // wx.hideLoading()
         }
         else{
 
           that.setData({
             Idea: ''
           })
-          wx.hideLoading()
+         // wx.hideLoading()
         }
       },
       error: function (error) {
@@ -554,14 +554,14 @@ sortTask:function(a,b){
           that.setData({
             Meeting: meetingArr
           })
-          wx.hideLoading()
+         // wx.hideLoading()
         }
         else{
 
           that.setData({
             Meeting:''
           })
-          wx.hideLoading()
+         // wx.hideLoading()
         }
       },
       error: function (error) {
@@ -631,6 +631,12 @@ sortTask:function(a,b){
 
 
   onLoad: function () {
+    // Animation
+    this.myTaskAnimation()
+    this.myMeetingAnimation()
+    this.myIdeaAnimation()
+    // console.log("onload")
+
     if (app.globalData.userId) {
       var userInfo = {
         'userId': app.globalData.userId,
@@ -671,15 +677,10 @@ sortTask:function(a,b){
 
     var userId = this.data.userInfo.userId
 
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
-
-    // Animation
-    this.myTaskAnimation()
-    this.myMeetingAnimation()
-    this.myIdeaAnimation()
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
     // 获取点子列表
     this.getMyTasks(userId)

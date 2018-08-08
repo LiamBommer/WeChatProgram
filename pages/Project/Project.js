@@ -229,10 +229,10 @@ getProjectList:function(){
   var starprojectArr = []
   // getApp().globalData.projects != null && getApp().globalData.projects.length < 1
   if (1){
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
@@ -274,7 +274,7 @@ getProjectList:function(){
         that.setData({ Project: projectArr })
         that.setData({ StarProject: starprojectArr })
         // 加载完成
-        wx.hideLoading()
+       // wx.hideLoading()
       },
       error: function (error) {
         //失败

@@ -707,10 +707,10 @@ cancelProjectFirst: function (projId, isFirst) {
 
     // 等待加载完成后消失
     // getProjectDetail()
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
     var that = this
     //项目
