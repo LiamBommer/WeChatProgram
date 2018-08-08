@@ -292,6 +292,8 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: false,
               expand: false,
+              meeting: '暂未有会议',
+              meeting_start_time: '',
               tasks: [
                 {
                   'title': '暂未有将截止的任务'
@@ -309,6 +311,8 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: true,
               expand: true,
+              meeting: '暂未有会议',
+              meeting_start_time: '',
               tasks: [
                 {
                   'title': '暂未有将截止的任务'
@@ -458,6 +462,7 @@ oneProjectDisplay: function(projId, isStarProj){
 
   var that = this
   this.getTasks(projId, isStarProj)
+  this.getMeeting(projId, isStarProj)
 
 },
 
@@ -562,7 +567,7 @@ sortTasks: function (a, b) {
     return 1
   return -1;
 },
-getMeeting:function(projId){
+getMeeting:function(projId, isStarProj){
 
   var that = this
   var Meeting = Bmob.Object.extend('meeting')
@@ -572,7 +577,7 @@ getMeeting:function(projId){
   meetingQuery.limit(50)
   meetingQuery.equalTo('is_delete', false)
   meetingQuery.equalTo('proj_id', projId)
-  meetingQuery.select('title', 'proj_id')
+  meetingQuery.select('title', 'start_time', 'proj_id')
   meetingQuery.find({
       success: function (results) {
         for (var i = 0; i < results.length; i++) {
@@ -589,6 +594,42 @@ getMeeting:function(projId){
         meetingArr.sort(that.sortMeetings)
         //选取最近的一个
         meetingArr = meetingArr.slice(0, 1)
+
+        if(meetingArr.length != 0) {
+
+          if(isStarProj) {
+            var StarProject = that.data.StarProject
+            for(var i=0; i<StarProject.length; i++) {
+              // 找到对应项目，存储
+              if(StarProject[i].id == projId) {
+                var path = 'StarProject[' + i + '].meeting'
+                var path_2 = 'StarProject[' + i + '].meeting_start_time'
+                var time = meetingArr[0].startTime
+                time = time.substr(time.length - 4)
+                that.setData({
+                  [path]: meetingArr[0].title,
+                  // [path_2]: meetingArr[0].startTime
+                  [path_2]: time
+                })
+              }
+            }
+
+          } else {
+            var Project = that.data.Project
+            for(var i=0; i<Project.length; i++) {
+              // 找到对应项目，存储
+              if(Project[i].id == projId) {
+                var path = 'Project[' + i + '].meeting'
+                var path_2 = 'Project[' + i + '].meeting_start_time'
+                that.setData({
+                  [path]: meetingArr[0].title,
+                  [path_2]: meetingArr[0].startTime
+                })
+              }
+            }
+          }
+
+        }
 
         console.log("项目首页展示的会议", meetingArr)
       },
@@ -622,6 +663,8 @@ sortMeetings: function(a, b){
     return 1
   return -1;
 },
+
+
   /*
    * 涟漪点击效果
    */

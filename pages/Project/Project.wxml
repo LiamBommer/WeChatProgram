@@ -52,10 +52,10 @@
           </view>
         </view>
         <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
-          <!-- <view class="item-bottom-list" bindtap="projectmore">
+          <view class="item-bottom-list" bindtap="projectmore">
             <text class="list-desc">最近会议</text>
-            <text class="list-content">xxx会议</text>
-          </view> -->
+            <text class="list-content">{{item.meeting}}</text>
+          </view>
           <view class="item-bottom-list" bindtap="projectmore">
             <text class="list-desc">近期任务</text>
             <view class="list-content">
@@ -102,10 +102,11 @@
             </view>
           </view>
           <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
-            <!-- <view class="item-bottom-list" bindtap="projectmore">
+            <view class="item-bottom-list" bindtap="projectmore">
               <text class="list-desc">最近会议</text>
-              <text class="list-content">xxx会议</text>
-            </view> -->
+              <!-- <text class="list-content">xxx会议</text> -->
+              <text class="list-content">{{item.meeting}}</text>
+            </view>
             <view class="item-bottom-list" bindtap="projectmore">
               <text class="list-desc">近期任务</text>
               <view class="list-content">
