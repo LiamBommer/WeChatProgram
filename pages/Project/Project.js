@@ -562,7 +562,66 @@ sortTasks: function (a, b) {
     return 1
   return -1;
 },
+getMeeting:function(projId){
 
+  var that = this
+  var Meeting = Bmob.Object.extend('meeting')
+  var meetingQuery = new Bmob.Query(Meeting)
+  var meetingArr = []
+
+  meetingQuery.limit(50)
+  meetingQuery.equalTo('is_delete', false)
+  meetingQuery.equalTo('proj_id', projId)
+  meetingQuery.select('title', 'proj_id')
+  meetingQuery.find({
+      success: function (results) {
+        for (var i = 0; i < results.length; i++) {
+          var ob = {
+            title: results[i].attributes.title,
+            startTime: results[i].attributes.start_time,
+            projId: results[i].attributes.proj_id
+          }
+          meetingArr.push(ob)
+
+        }
+
+        //排序
+        meetingArr.sort(that.sortMeetings)
+        //选取最近的一个
+        meetingArr = meetingArr.slice(0, 1)
+
+        console.log("项目首页展示的会议", meetingArr)
+      },
+      error: function (error) {
+        //失败
+        console.log("获取会议" + error)
+      }
+    })
+},
+/**
+ * 对会议排序
+ */
+sortMeetings: function(a, b){
+
+  if(a.startTime == "" || a.startTime == null) {
+    return 1
+  }
+
+  var that = this
+  var currentTime = new Date(new Date().toLocaleDateString())
+  var startTimeA = new Date(new Date(a.startTime.replace(/-/g, "/")))
+  var startTimeB = new Date(new Date(b.startTime.replace(/-/g, "/")))
+
+  var daysA = startTimeA.getTime() - currentTime.getTime()
+  var daysB = startTimeB.getTime() - currentTime.getTime()
+
+  var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
+  var dayB = parseInt(daysB / (1000 * 60 * 60 * 24))
+
+  if (dayA > dayB)
+    return 1
+  return -1;
+},
   /*
    * 涟漪点击效果
    */
