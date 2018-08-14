@@ -161,6 +161,7 @@
   margin-top: 30rpx;
   margin-bottom:10px;
   border: 0.5rpx dashed #b2b2b2;
+  border-radius: 10rpx;
 }
 
 .Task-container .task-container .addTask .addTask-icon{
