@@ -4,12 +4,12 @@
     <form bindsubmit='BuildTask'>
       <!-- 列表项 -->
       <view class='item'>
-          <view class='item-title'>名称</view>
-          <input class='item-content' name='name' placeholder='如摆摊、布置场地、...'></input>
+          <view class='item-title'>子任务名称</view>
+          <input class='item-content' name='name' placeholder='输入子任务名称...'></input>
       </view>
       <!-- 列表项 -->
       <view class='item' bindtap='AddMember'>
-          <view class='item-title'>负责人</view>
+          <view class='item-title'>子任务负责人</view>
           <image class=' image' src= '{{icon}}'></image>
       </view>
 

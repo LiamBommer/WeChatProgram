@@ -144,52 +144,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-<<<<<<< HEAD
     padding: 16rpx 0rpx;
-=======
-    flex-direction: column;
-    margin-bottom: 24rpx;
-    box-shadow: 6rpx 6rpx 10rpx #e9e9e9, -6rpx 6rpx 10rpx #e9e9e9;
->>>>>>> dev-liam
 
     /* 点击背景动画 */
     transition: background-color 0.050s;
     /* 点击背景动画 END */
 }
 
-<<<<<<< HEAD
-=======
-.Project-container .item .progress-bar {
-  width: 100%;
-  height: 20rpx;
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-  background: linear-gradient(45deg, rgb(9, 187, 7),rgba(9, 187, 7, 0.8) 30%, white 100%);
-  /* background: linear-gradient(to right, #09bb07, white 120%); */
-}
-
-.Project-container .item .item-top {
-  width: 100%;
-  height: calc(100rpx + 32rpx);
-  /* background-color: #09BB07; */
-  color: black;
-  border-radius: 20rpx;
-  border-bottom: 2rpx solid #f2f2f2;
-  padding: 8rpx 0rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.Project-container .item .item-bottom{
-  width: 100%;
-  min-height: 100rpx;
-  padding: 8rpx 0rpx;
-  display: flex;
-  flex-direction: column;
-}
-
->>>>>>> dev-liam
 /* 点击背景动画 */
 .Project-container .item.clicked{
   background-color: #e1e1e1;
@@ -233,9 +194,7 @@
 }
 
 .Project-container .addProject{
-  width: calc(100% - 80rpx);
-  min-height: 150rpx;
-  border-radius: 20rpx;
+  height: 130rpx;
   display: flex;
   align-items: center;
   font-size: 30rpx;

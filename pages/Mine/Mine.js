@@ -631,20 +631,12 @@ sortTask:function(a,b){
 
 
   onLoad: function () {
-<<<<<<< HEAD
-=======
-
->>>>>>> dev-liam
     // Animation
     this.myTaskAnimation()
     this.myMeetingAnimation()
     this.myIdeaAnimation()
-<<<<<<< HEAD
     // console.log("onload")
 
-=======
-    
->>>>>>> dev-liam
     if (app.globalData.userId) {
       var userInfo = {
         'userId': app.globalData.userId,
@@ -690,10 +682,6 @@ sortTask:function(a,b){
     //   mask: 'true'
     // })
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dev-liam
     // 获取点子列表
     this.getMyTasks(userId)
     this.getMyidea(userId)

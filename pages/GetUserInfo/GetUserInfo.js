@@ -121,7 +121,6 @@ Page({
       leader_name: leader_name,
       is_first: false,
       is_delete: false,
-      checked: true,
       img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/06/15/3c7ae525400a2aa0800a0780b701069c.jpg" 
     }, {
         success: function (result) {

@@ -15,7 +15,7 @@
   width: 690rpx;
   display: flex;
   flex-direction: column;
-  /* background: #EDEDED; */
+  background: #EDEDED;
 }
 
 .Task-container .task-container .tasktitle{
@@ -78,7 +78,7 @@
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-green{
-   background: #888888;
+   background: #09BB07;
    color: #fff;
    border-radius: 10rpx;
    margin-right: 10rpx;
@@ -161,7 +161,6 @@
   margin-top: 30rpx;
   margin-bottom:10px;
   border: 0.5rpx dashed #b2b2b2;
-  border-radius: 10rpx;
 }
 
 .Task-container .task-container .addTask .addTask-icon{
