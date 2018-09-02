@@ -4,13 +4,13 @@
     <form bindsubmit='BuildProject'>
       <!-- 列表项 -->
     <view class='item'>
-        <view class='item-title'>项目名称</view>
-        <input type='text' class='item-content' name='title' placeholder-class='placeholder' placeholder='输入项目名称...' maxlength='20'></input>
+        <view class='item-title'>名称</view>
+        <input type='text' class='item-content' name='title' placeholder-class='placeholder' placeholder='如学生会、社联...' maxlength='20'></input>
     </view>
     <!-- 列表项 -->
     <view class='item'>
-        <view class='item-title'>项目描述</view>
-        <input type='text' class='item-content' name='desc' placeholder-class='placeholder' placeholder='输入项目描述...'></input>
+        <view class='item-title'>描述</view>
+        <input type='text' class='item-content' name='desc' placeholder-class='placeholder' placeholder='介绍一下这个项目吧'></input>
     </view>
 
     <button class='submit' size='default' form-type='submit' disabled='{{btn_disabled}}' plain style="background-color: #09bb07; " loading='{{btn_loading}}' >完成</button>

@@ -52,14 +52,23 @@
             <image class='itemmore-icon' src='/img/more.png'></image>
           </view>
         </view>
+<<<<<<< HEAD
       </view>
     </view>
+=======
 
-    <!-- 添加项目 -->
-    <view class='addProject' bindtap='buildProject'>
-      <image class='addProject-icon' src='/img/add.png'></image>
-      <view class='addProject-text'>添加项目</view>
+      </block>
+>>>>>>> dev-liam
+
+      <!-- 添加项目 -->
+      <view class='addProject' bindtap='buildProject'>
+        <image class='addProject-icon' src='/img/add.png'></image>
+        <view class='addProject-text'>添加项目</view>
+      </view>
+
     </view>
+
+    
 
     <!-- 新手指引 -->
     <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">

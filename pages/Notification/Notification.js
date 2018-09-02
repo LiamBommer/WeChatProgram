@@ -707,6 +707,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev-liam
     // 加载动画
     this.notificationAnimation()
   },
@@ -729,7 +733,10 @@ Page({
     var userId = getApp().globalData.userId
     console.log("userId", userId)
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> dev-liam
 
     that.getNotification(userId)
   },
