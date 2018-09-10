@@ -9,14 +9,13 @@
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noIdea1.png'></image>
       <view class='noitem-title'></view>
-      <view class='noitem-content'>说出你的点子，让大家为你鼓掌</view>
+      <view class='noitem-content'>咦我有个点子，就在这匿名说吧</view>
       <button class='noitem-create' bindtap='createIdea' size='default'>创建点子</button>
     </view>
   </view>
   <!-- 有内容 -->
   <view style='display:{{Idea.length==0? "none":""}}'>
-   <image src='http://bmob-cdn-19251.b0.upaiyun.com/2018/06/10/0e50318540c5cc55805ecb66c0417140.jpg' class='bgImg'
-    ></image>
+   
     <view class='post-view'>
       <block wx:for="{{Idea}}" wx:key="{{id}}">
           <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'

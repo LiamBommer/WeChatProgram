@@ -7,7 +7,8 @@ const app = getApp()
 
 Page({
   data: {
-    checked:true//是否显示已读
+    checked: true,//是否显示已读
+    submitNum: 0, //点击完成的次数
   },
 
   //是否显示已读
@@ -21,7 +22,9 @@ Page({
   BuildAnnouncement: function (e) {
 
     var that = this
-    var title = e.detail.value.title//获取公告标题
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
+    var title = ""//获取公告标题
     var content = e.detail.value.content//获取公告内容
     var checked = that.data.checked//获取是否显示已读
     var formId = e.detail.formId
@@ -32,10 +35,10 @@ Page({
         var ProjectId = res.data.id//获取项目ID
         var ProjectName = res.data.name//获取项目名
 
-        if (title == "" || title.length == 0) {
+        if (content == "" || content.length == 0) {
           // 提示标题不可为空
           wx.showToast({
-            title: '公告标题不见咯',
+            title: '公告内容不见咯',
             icon: 'none',
             duration: 1500,
           })
@@ -54,7 +57,10 @@ Page({
         })
       },
     })
-   
+      that.setData({
+        submitNum: submitNum + 1
+      })
+    }
   },
 
   /**

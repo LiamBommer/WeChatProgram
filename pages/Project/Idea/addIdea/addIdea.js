@@ -12,6 +12,8 @@ Page({
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
 
+    submitNum: 0, //点击完成的次数
+
     TaskId: -1, // 关联任务的列表id
 
     projectDetail: '',  // 所在项目信息
@@ -26,6 +28,18 @@ Page({
       '#576b95',  // blue
       '#e64340',  // red
       '#ffc952'   // yellow
+    ],
+
+    // 墙里的匿名列表
+    IdeaName: [
+      '某社团大佬',
+      '某组织精英',
+      '某团队点子王',
+      '某竞赛大佬',
+      '某小鲜肉',
+      '某协会会长',
+      '某前辈',
+      '某OG元老',
     ],
 
   },
@@ -51,6 +65,8 @@ Page({
   BuildIdea: function (e) {
 
     var that = this
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
     var content = e.detail.value.content.trim()
     var userId = getApp().globalData.userId
     var projectId = that.data.projectDetail.id
@@ -83,7 +99,12 @@ Page({
       mask: 'true'
     })
     // Submit
-    that.createIdea(projectId,userId,content,taskId, color)
+    that.createIdea(projectId, userId, content, taskId, color)
+    
+      that.setData({
+        submitNum: submitNum + 1
+      })
+    }
   },
 
   /**
@@ -156,12 +177,20 @@ Page({
     var Idea = Bmob.Object.extend('idea')
     var idea = new Idea()
     var user = Bmob.Object.createWithoutData("_User", userId)
+    console.log("ideausername:",user)
     var project = Bmob.Object.createWithoutData("project", projId)
     if(taskId != -1)
     var task = Bmob.Object.createWithoutData("task", taskId)
 
+    // 生成随机匿名
+    var max = 7
+    var min = 0
+    var num = Math.floor(Math.random() * (max - min + 1) + min);
+    var IdeaName = that.data.IdeaName[num]
+
     //添加点子的基本信息
     idea.save({
+      ideaname: IdeaName, //匿名
       user: user,      //用户
       project: project,  //项目
       content: content,   //点子内容

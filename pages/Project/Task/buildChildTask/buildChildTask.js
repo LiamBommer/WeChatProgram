@@ -9,7 +9,8 @@ Page({
    */
   data: {
     icon: '',//成员头像
-    leaderId:"",//成员ID
+    leaderId: "",//成员ID
+    submitNum: 0, //点击完成的次数
   },
 
    // 添加成员
@@ -25,6 +26,8 @@ Page({
   //提交表单
   BuildTask: function (e) {
     var that = this
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
     wx.getStorage({
       key: 'TaskDetail-taskId',
       success: function(res) {
@@ -35,6 +38,10 @@ Page({
         that.createSubTask(wx.getStorageSync('Project-detail').id/*项目id*/,taskId, title, leaderId, userName)
       },
     })
+      that.setData({
+        submitNum: submitNum + 1
+      })
+    }
   }, 
   
   /**

@@ -194,7 +194,6 @@ Page({
       hiddenmodalputTitle: true,
     });
   },
-
   //确认  
   confirmTitle: function (e) {
     var that = this
@@ -228,7 +227,8 @@ Page({
   },
 
 
-  //子任务标题： 点击按钮弹出指定的hiddenmodalput弹出框  
+  //子任务标题： 点击按钮弹出指定的hiddenmodalput弹出框 
+ 
   modalinputChildTitle: function (e) {
     var that = this
     var childtitle = e.currentTarget.dataset.childtitle
@@ -236,12 +236,12 @@ Page({
     var childtaskId = e.currentTarget.dataset.taskid
     var childIndex = e.currentTarget.dataset.index
     if (checked == false){
-      that.setData({
+     that.setData({
         inputChildTitle: childtitle,
         childIndex: childIndex,
         childtaskId:childtaskId,
-        hiddenmodalputChildTitle: false
-      })
+       hiddenmodalputChildTitle: false
+     })
     }
   },
   //取消按钮  
@@ -250,7 +250,6 @@ Page({
       hiddenmodalputChildTitle: true,
     });
   },
-
   //确认  
   confirmChildTitle: function (e) {
     var that = this

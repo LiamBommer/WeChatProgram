@@ -6,7 +6,7 @@
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noSchedule.png'></image>
       <view class='noitem-title'>发布日程</view>
-      <view class='noitem-content'>让所有成员都能了解项目的时间推进</view>
+      <view class='noitem-content'>我要给项目做个时间推进表</view>
       <button class='noitem-create' bindtap='createSchedule' size='default'>创建日程</button>
     </view>
   </view>

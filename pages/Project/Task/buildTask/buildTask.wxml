@@ -5,7 +5,7 @@
       <!-- 列表项 -->
       <view class='item'>
           <view class='item-title'>名称</view>
-          <input class='item-content' name='name' placeholder='如写策划书、采购、场地申请...'></input>
+          <input class='item-content' name='name' placeholder='写策划书、采购、场地申请...'></input>
       </view>
       <!-- 列表项 -->
       <view class='item' >

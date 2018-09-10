@@ -4,8 +4,8 @@
 <view class="has-no-content" style="display:{{Idea.length==0 ? 'block':'none'}}">
   <view class='noitem'>
     <image class='noitem-icon' src='/img/noIdea.png'></image>
-    <view class='noitem-title'>你还未发表任何点子</view>
-    <view class='noitem-content'>说出你的点子，让大家为你鼓掌</view>
+    <view class='noitem-title'>我还未发表任何点子</view>
+    <view class='noitem-content'>我不懒，我这就去告诉大家我的点子</view>
   </view>
 </view>
 

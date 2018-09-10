@@ -32,8 +32,8 @@ Page({
     //我的任务列表
     Task: [],
 
-    //我的会议列表
-    Meeting: [],
+    //我的日程列表
+    Schedule: [],
 
     //我的点子列表
     Idea: [],
@@ -487,90 +487,90 @@ sortTask:function(a,b){
   'time': //会议的时分秒
   'title':  //会议名称
   */
-  getMyMeeting: function (userId) {
+  // getMyMeeting: function (userId) {
 
-    var that = this
-    var Meetingmember = Bmob.Object.extend('meeting_member')
-    var meetingmemberQuery = new Bmob.Query(Meetingmember)
-    var meetingArr = []   //获取的用户的会议数组，没有则为空
+  //   var that = this
+  //   var Meetingmember = Bmob.Object.extend('meeting_member')
+  //   var meetingmemberQuery = new Bmob.Query(Meetingmember)
+  //   var meetingArr = []   //获取的用户的会议数组，没有则为空
 
-    meetingmemberQuery.equalTo('user', userId)
-    meetingmemberQuery.include('meeting')
-    meetingmemberQuery.ascending('meeting.start_time')
+  //   meetingmemberQuery.equalTo('user', userId)
+  //   meetingmemberQuery.include('meeting')
+  //   meetingmemberQuery.ascending('meeting.start_time')
 
-    meetingmemberQuery.find({
-      success: function (results) {
-         results.sort(that.sortMeeting)
+  //   meetingmemberQuery.find({
+  //     success: function (results) {
+  //        results.sort(that.sortMeeting)
 
-        //成功
-        var oldtitleTime //存储上一次的年月份
-        for (var i in results) {
-          if (results[i].get('meeting').is_delete != true){
+  //       //成功
+  //       var oldtitleTime //存储上一次的年月份
+  //       for (var i in results) {
+  //         if (results[i].get('meeting').is_delete != true){
 
-            // 时间处理
-            var startTime = results[i].get('meeting').start_time
-            //console.log("startTime", startTime)
-            var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
-            var year = startTime.getFullYear()
-            var month = startTime.getMonth()+1
-            var titleTime = year + '年' + month + '月'
-            var date = startTime.getDate()
-            var id = results[i].get('meeting').objectId //会议id
-            var title = results[i].get('meeting').title  //会议名称
-            var time = results[i].get('meeting').time //会议的时分秒
-            var startTime = results[i].get('meeting').start_time //会议的年月日
+  //           // 时间处理
+  //           var startTime = results[i].get('meeting').start_time
+  //           //console.log("startTime", startTime)
+  //           var startTime = new Date(new Date(startTime.replace(/-/g, "/")))
+  //           var year = startTime.getFullYear()
+  //           var month = startTime.getMonth()+1
+  //           var titleTime = year + '年' + month + '月'
+  //           var date = startTime.getDate()
+  //           var id = results[i].get('meeting').objectId //会议id
+  //           var title = results[i].get('meeting').title  //会议名称
+  //           var time = results[i].get('meeting').time //会议的时分秒
+  //           var startTime = results[i].get('meeting').start_time //会议的年月日
 
-            //判断是否跨月份
-            var meetingMonth
-            var meeting
-            if (oldtitleTime == titleTime) {//没有跨月
-              meeting = {
-                'id': id || '',
-                'title': title || '',
-                'time': time || '',
-                'date': date
-              }
-            }
-            else {//跨月份
-              meetingMonth = {
-                'titleTime': titleTime || '',
-              }
-              meeting = {
-                'id': id || '',
-                'title': title || '',
-                'time': time || '',
-                'date': date
-              }
-              meetingArr.push(meetingMonth)
-            }
-            oldtitleTime = titleTime
-            meetingArr.push(meeting)  //存储会议
-          }
+  //           //判断是否跨月份
+  //           var meetingMonth
+  //           var meeting
+  //           if (oldtitleTime == titleTime) {//没有跨月
+  //             meeting = {
+  //               'id': id || '',
+  //               'title': title || '',
+  //               'time': time || '',
+  //               'date': date
+  //             }
+  //           }
+  //           else {//跨月份
+  //             meetingMonth = {
+  //               'titleTime': titleTime || '',
+  //             }
+  //             meeting = {
+  //               'id': id || '',
+  //               'title': title || '',
+  //               'time': time || '',
+  //               'date': date
+  //             }
+  //             meetingArr.push(meetingMonth)
+  //           }
+  //           oldtitleTime = titleTime
+  //           meetingArr.push(meeting)  //存储会议
+  //         }
 
-        }
-        if (meetingArr != null && meetingArr.length > 0) {
-          //在这里setData
-          //console.log('获取用户的会议', meetingArr)
-          that.setData({
-            Meeting: meetingArr
-          })
-          wx.hideLoading()
-        }
-        else{
+  //       }
+  //       if (meetingArr != null && meetingArr.length > 0) {
+  //         //在这里setData
+  //         //console.log('获取用户的会议', meetingArr)
+  //         that.setData({
+  //           Meeting: meetingArr
+  //         })
+  //         wx.hideLoading()
+  //       }
+  //       else{
 
-          that.setData({
-            Meeting:''
-          })
-          wx.hideLoading()
-        }
-      },
-      error: function (error) {
-        //失败
-        //console.log('获取我的会议失败：', error)
-      }
+  //         that.setData({
+  //           Meeting:''
+  //         })
+  //         wx.hideLoading()
+  //       }
+  //     },
+  //     error: function (error) {
+  //       //失败
+  //       //console.log('获取我的会议失败：', error)
+  //     }
 
-    })
-  },
+  //   })
+  // },
 
   //给会议数组排序，对特定的object类型才有效
   sortMeeting:function(a,b){
@@ -633,9 +633,9 @@ sortTask:function(a,b){
   onLoad: function () {
 
     // Animation
-    this.myTaskAnimation()
-    this.myMeetingAnimation()
-    this.myIdeaAnimation()
+    // this.myTaskAnimation()
+    // this.myMeetingAnimation()
+    // this.myIdeaAnimation()
     
     if (app.globalData.userId) {
       var userInfo = {
@@ -686,7 +686,7 @@ sortTask:function(a,b){
     // 获取点子列表
     this.getMyTasks(userId)
     this.getMyidea(userId)
-    this.getMyMeeting(userId)
+    // this.getMyMeeting(userId)
 
   },
 

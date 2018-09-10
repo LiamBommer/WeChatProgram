@@ -3,8 +3,8 @@
 <view class="has-no-content" style="display:{{Task.length==0 ? 'block':'none'}}">
   <view class='noitem'>
     <image class='noitem-icon' src='/img/noTask.png'></image>
-    <view class='noitem-title'>你还未参与任何任务</view>
-    <view class='noitem-content'>快去参与任务吧</view>
+    <view class='noitem-title'>我还未参与任何任务</view>
+    <view class='noitem-content'>我工作起来自己都怕，我要去参与任务了</view>
   </view>
 </view>
 

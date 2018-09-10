@@ -58,17 +58,7 @@ Page({
     Idea:[
 
     ],
-    // 墙里的匿名列表
-    IdeaName: [
-    '某社团大佬',
-    '某组织精英',
-    '某团队点子王',
-    '某竞赛大佬',
-    '某小鲜肉',
-    '某协会会长',
-    '某前辈',
-    '某OG元老',
-     ],
+    
 
     // Task list animation
     taskAnimationStyle: '',
@@ -240,7 +230,7 @@ Page({
       exitIdea: false,
 
       // Nav cover animation
-      nav_cover_left: 150,
+      nav_cover_left: 206,
     });
   },
 
@@ -255,24 +245,24 @@ Page({
       exitIdea: false,
 
       // Nav cover animation
-      nav_cover_left: 300,
+      nav_cover_left: 396,
     });
   },
 
-  // 导航栏选择会议
-  selectMeeting: function () {
-    var that = this;
-    that.setData({
-      exitTask: false,
-      exitAnnouncement: false,
-      exitSchedule: false,
-      exitMeeting: true,
-      exitIdea: false,
+  // // 导航栏选择会议
+  // selectMeeting: function () {
+  //   var that = this;
+  //   that.setData({
+  //     exitTask: false,
+  //     exitAnnouncement: false,
+  //     exitSchedule: false,
+  //     exitMeeting: true,
+  //     exitIdea: false,
 
-      // Nav cover animation
-      nav_cover_left: 450,
-    });
-  },
+  //     // Nav cover animation
+  //     nav_cover_left: ,
+  //   });
+  // },
 
   // 导航栏选择墙
   selectIdea: function () {
@@ -1233,16 +1223,13 @@ Page({
     ideaQuery.include('project')
     ideaQuery.include('task')  //获取点子关联的任务
     ideaQuery.include('user')
+    ideaQuery.include('ideaname')
 
     ideaQuery.find({
       success: function (results) {
+        console.log("resultsidea:", results)
         //成功
         for (var i in results) {
-          // 生成随机匿名
-          var max = 7
-          var min = 0
-          var num = Math.floor(Math.random() * (max - min + 1) + min);
-          var IdeaName = that.data.IdeaName[num]
 
           var ideaObject = {}
           ideaObject = {
@@ -1251,7 +1238,7 @@ Page({
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
             'projectName': results[i].get('project').name,  //项目名称
             'content': results[i].get('content') || '',  //点子内容
-             'userName': IdeaName,//results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
+            'userName': results[i].get('ideaname') || '',//results[i].attributes.user.nickName || '',//发布人的名字(真正的昵称，而不是其他名字)
             // 'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
             'color': results[i].get('color') || '', 

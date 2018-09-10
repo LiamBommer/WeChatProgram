@@ -44,7 +44,7 @@
 
 .Announcement-container .item-container .item{
   width: 100%;
-  min-height: 135rpx;
+  min-height: 140rpx;
   background: #fff;
   display: flex;
   align-items: center;
@@ -76,7 +76,7 @@
 
 .Announcement-container .item-container .item .item-first .item-text .item-content{
    font-size: 28rpx;
-   color: #888888;
+   /* color: #888888; */
    /* 多行省略 */
    display: -webkit-box;
    line-height: 40rpx;

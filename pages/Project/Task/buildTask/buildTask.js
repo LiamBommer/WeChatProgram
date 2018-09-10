@@ -12,6 +12,8 @@ Page({
     list_id: 0,  // 所属任务看板id
     taskMemberID:[],//任务成员id列表，第一位为任务负责人
     icon: '',//选中任务成员头像
+
+    submitNum: 0, //点击完成的次数
   },
 
   // 截止时间
@@ -34,6 +36,8 @@ Page({
   //提交表单
   BuildTask:function(e){
     var that = this
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
     console.log('Form data: ' + JSON.stringify(e.detail.value));
     // data validate
     var name = e.detail.value.name
@@ -55,8 +59,10 @@ Page({
         that.createTask(res.data, that.data.list_id, name, memberId[0], end_time)
       },
     })
-
-
+    that.setData({
+      submitNum: submitNum + 1
+    })
+    }
   },
 
   /**

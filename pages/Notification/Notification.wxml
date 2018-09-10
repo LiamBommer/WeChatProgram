@@ -5,8 +5,8 @@
   <view style='display:{{Notification.length==0? "":"none"}}'>
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noNotification.png'></image>
-      <view class='noitem-title'>暂时没有通知哦</view>
-      <view class='noitem-content'>和你有关的项目通知都会在这里显示</view>
+      <view class='noitem-title'>还没有通知哦</view>
+      <view class='noitem-content'>和我有关的项目通知都会在这里出现</view>
     </view>
   </view>
   <!-- 有内容 -->

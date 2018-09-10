@@ -1,5 +1,5 @@
 .view-container .title-view .title {
-  font-size: 40rpx;
+  font-size: 34rpx;
   width: 590rpx;
 }
 

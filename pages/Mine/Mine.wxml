@@ -57,7 +57,7 @@
     <!-- 导航栏 -->
     <view class='nav'>
      <view class='{{exitTask? "nav-select" : ""}}' bindtap='selectTask'>任务</view>
-     <view class='{{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view>
+     <!-- <view class='{{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view> -->
      <view class='{{exitIdea? "nav-select" : ""}}' bindtap='selectIdea'>点子</view>
     </view>
 
@@ -68,9 +68,9 @@
         <include src='./Task/Task' />
       </view>
       <!-- 会议 -->
-      <view style='display:{{exitMeeting? "" : "none"}}'>
+      <!-- <view style='display:{{exitMeeting? "" : "none"}}'>
         <include src='./Meeting/Meeting' />
-      </view>
+      </view> -->
       <!-- 点子 -->
       <view style='display:{{exitIdea? "" : "none"}}'>
         <include src='./Idea/Idea' />

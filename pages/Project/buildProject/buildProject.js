@@ -11,38 +11,49 @@ Page({
     btn_disabled: false,
     btn_loading: false,
 
+    submitNum : 0, //点击完成的次数
+
   },
 
   //获取项目名称，项目描述
   BuildProject: function (e) {
 
     var that = this;
-    var title, desc;
-    title = e.detail.value.title;
-    desc = e.detail.value.desc;
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
+      var title, desc;
+      title = e.detail.value.title;
+      desc = e.detail.value.desc;
 
-    if (title == "" || title.length == 0) {
-      // 提示标题不可为空
-      wx.showToast({
-        title: '项目名称不见咯',
-        icon: 'none',
-        duration: 1500,
+      if (title == "" || title.length == 0) {
+        // 提示标题不可为空
+        wx.showToast({
+          title: '项目名称不见咯',
+          icon: 'none',
+          duration: 1500,
+        })
+        return;
+      }
+
+      // 按钮设置disabled为真，不可再次点击
+      // this.setData({
+      //   btn_disabled: true,
+      //   btn_loading: true,
+      // })
+
+      // 显示loading
+      wx.showLoading({
+        title: '正在创建...',
       })
-      return;
+      // submit 
+      that.buildProject(title, desc);
+      
+      that.setData({
+        submitNum: submitNum + 1
+      })
+      
     }
-
-    // 按钮设置disabled为真，不可再次点击
-    // this.setData({
-    //   btn_disabled: true,
-    //   btn_loading: true,
-    // })
-
-    // 显示loading
-    wx.showLoading({
-      title: '正在创建...',
-    })
-    // submit
-    that.buildProject(title, desc);
+    
   },
 
   /**

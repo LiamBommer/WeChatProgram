@@ -54,7 +54,7 @@
    font-size: 28rpx;
    width: 418rpx;
    line-height: 45rpx;
-   padding: 24rpx 16rpx;
+   padding: 24rpx 40rpx;
    word-break: break-all;
 
 }

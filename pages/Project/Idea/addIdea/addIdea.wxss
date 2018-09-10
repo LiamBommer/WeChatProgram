@@ -6,7 +6,7 @@
 }
 
 .content-view .content {
-  font-size: 40rpx;
+  font-size: 34rpx;
   /* height: 100%; */
-  padding: 20rpx 0rpx;
+  padding: 30rpx 0rpx;
 }

@@ -15,6 +15,7 @@ Page({
     icon_member: '/img/member.png',
     deadline: '',
     stattime: '',
+    submitNum: 0, //点击完成的次数
 
     TaskId: {},   // 关联任务的列表id
 
@@ -29,6 +30,8 @@ Page({
   BuildSchedule: function (e) {
 
     var that = this
+    var submitNum = that.data.submitNum; //点击完成的次数
+    if (submitNum == 0) {//点击完成次数限制在一次
     var title = e.detail.value.title
     var startTime = e.detail.value.startTime
     var endTime = e.detail.value.endTime
@@ -72,8 +75,11 @@ Page({
       mask: 'true'
     })
     // submit
-    that.createSchedule(projectId, title, startTime, endTime, TaskId)
-
+      that.createSchedule(projectId, title, startTime, endTime, TaskId)
+      that.setData({
+        submitNum: submitNum + 1
+      })
+    }
   },
 
   // 截止时间
