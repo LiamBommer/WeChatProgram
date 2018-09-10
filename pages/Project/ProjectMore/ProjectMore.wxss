@@ -21,7 +21,7 @@
 }
 
 .nav .nav-item {
-  width: calc(750rpx / 5);
+  width: calc(750rpx / 3);
   height: 100%;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@
 }
 
 .nav .nav-cover {
-  width: calc(750rpx / 5);
+  width: calc(750rpx / 3);
   height: 90rpx;
   position: absolute;
   left: 0rpx;

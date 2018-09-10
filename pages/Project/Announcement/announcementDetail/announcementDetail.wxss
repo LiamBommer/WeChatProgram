@@ -35,7 +35,7 @@ button[hover-class="share-hover"]::after {
 
 .view-container .content-view {
   min-height: 200rpx;
-  padding: 40rpx 0rpx 16rpx 0rpx;
+  padding: 60rpx 16rpx ;
 }
 
 .view-container .content-view .content{

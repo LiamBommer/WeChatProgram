@@ -6,9 +6,9 @@
       <view bindtap='Content' class='content' space='nbsp'>
           {{content}}
       </view>
-       <button class='share' hover-class="share-hover"  open-type="share">
+       <!-- <button class='share' hover-class="share-hover"  open-type="share">
           <image src='{{icon_share}}'></image>
-       </button>
+       </button> -->
     </view>
     <view class="item-view ver-align">
       <view class='ver-align'>

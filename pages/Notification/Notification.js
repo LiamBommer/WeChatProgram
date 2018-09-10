@@ -709,7 +709,7 @@ Page({
   onLoad: function (options) {
 
     // 加载动画
-    this.notificationAnimation()
+    //this.notificationAnimation()
   },
 
   /**

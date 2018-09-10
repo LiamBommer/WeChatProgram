@@ -230,24 +230,24 @@ Page({
       exitIdea: false,
 
       // Nav cover animation
-      nav_cover_left: 206,
+      nav_cover_left: 250,
     });
   },
 
   // 导航栏选择日程
-  selectSchedule: function () {
-    var that = this;
-    that.setData({
-      exitTask: false,
-      exitAnnouncement: false,
-      exitSchedule: true,
-      exitMeeting: false,
-      exitIdea: false,
+  // selectSchedule: function () {
+  //   var that = this;
+  //   that.setData({
+  //     exitTask: false,
+  //     exitAnnouncement: false,
+  //     exitSchedule: true,
+  //     exitMeeting: false,
+  //     exitIdea: false,
 
-      // Nav cover animation
-      nav_cover_left: 396,
-    });
-  },
+  //     // Nav cover animation
+  //     nav_cover_left: 396,
+  //   });
+  // },
 
   // // 导航栏选择会议
   // selectMeeting: function () {
@@ -258,7 +258,6 @@ Page({
   //     exitSchedule: false,
   //     exitMeeting: true,
   //     exitIdea: false,
-
   //     // Nav cover animation
   //     nav_cover_left: ,
   //   });
@@ -275,7 +274,7 @@ Page({
       exitIdea: true,
 
       // Nav cover animation
-      nav_cover_left: 600,
+      nav_cover_left: 500,
     });
   },
 

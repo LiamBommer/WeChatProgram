@@ -4,7 +4,7 @@
      <view class='nav-cover' style='left: {{nav_cover_left}}rpx;'></view>
      <view class='nav-item {{exitTask? "nav-select" : ""}}' bindtap='selectTask'>任务</view>
      <view class='nav-item {{exitAnnouncement? "nav-select" : ""}}' bindtap='selectAnnouncement'>公告</view>
-     <view class='nav-item {{exitSchedule? "nav-select" : ""}}' bindtap='selectSchedule'>日程</view>
+     <!-- <view class='nav-item {{exitSchedule? "nav-select" : ""}}' bindtap='selectSchedule'>日程</view> -->
      <!-- <view class='nav-item {{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view> -->
      <view class='nav-item {{exitIdea? "nav-select" : ""}}' bindtap='selectIdea'>墙</view>
   </view>
@@ -18,9 +18,9 @@
   <include src='../Announcement/Announcement' />
 </view>
 <!-- 日程 -->
-<view style='display:{{exitSchedule? "" : "none"}}'>
+<!-- <view style='display:{{exitSchedule? "" : "none"}}'>
   <include src='../Schedule/Schedule' />
-</view>
+</view> -->
 <!-- 会议 -->
 <!-- <view style='display:{{exitMeeting? "" : "none"}}'>
   <include src='../Meeting/Meeting' />
