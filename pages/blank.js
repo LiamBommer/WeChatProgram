@@ -1,5 +1,5 @@
 // pages/blank.js
-const test = require('./mode.js')
+//const test = require('./mode.js')
 Page({
 
   /**
