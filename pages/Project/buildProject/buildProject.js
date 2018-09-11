@@ -23,16 +23,19 @@ Page({
   //点击创建项目
   BuildProject: function (e) {
 
-    var that = this;
+    var that = this; 
+    
+    that.setData({//数据分析
+      title: e.detail.value.title,//项目名
+      desc: e.detail.value.desc,//项目描述
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+
     var submitNum = that.data.submitNum; //点击完成的次数
     if (submitNum == 0) {//点击完成次数限制在一次
 
-      that.setData({//数据分析
-        title: e.detail.value.title,//项目名
-        desc: e.detail.value.desc,//项目描述
-        userName: getApp().globalData.nickName,
-        userId: getApp().globalData.userId,
-      })
+    
 
       var title, desc;
       title = e.detail.value.title;
@@ -67,7 +70,6 @@ Page({
         submitNum: submitNum + 1
       })
 
-      console.log("1111111111111111", that.data.title, that.data.desc, that.data.userName, that.data.userId,)
       
     }
     
@@ -206,7 +208,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    that.setData({//数据分析
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
   },
 
   /**

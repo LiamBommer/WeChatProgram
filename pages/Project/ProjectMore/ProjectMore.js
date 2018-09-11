@@ -9,6 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    userName: '',
+    userId: '',
+    currentPage: '',//当前页名称
+
     currentItem: 0,//当前swiper滑块的位置
     index: '',//当前任务列表下标
     check: [],//任务勾选
@@ -216,7 +221,12 @@ Page({
 
       // Nav cover animation
       nav_cover_left: 0,
+
+      //数据分析
+      currentPage:'任务'
     });
+
+    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   // 导航栏选择公告
@@ -231,7 +241,12 @@ Page({
 
       // Nav cover animation
       nav_cover_left: 250,
+
+      //数据分析
+      currentPage: '公告'
     });
+
+    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   // 导航栏选择日程
@@ -275,7 +290,12 @@ Page({
 
       // Nav cover animation
       nav_cover_left: 500,
+
+      //数据分析
+      currentPage: '墙'
     });
+
+    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   /**
@@ -1404,8 +1424,31 @@ Page({
     //   mask: 'true'
     // })
 
-
     var that = this
+
+
+    //数据分析
+    // var exitTask = that.data.exitTask
+    // var exitAnnouncement = that.data.exitAnnouncement
+    // var exitIdea = that.data.exitIdea
+    // var currentPage = ''
+    // if (exitTask){
+    //   currentPage = '任务'
+    // }
+    // else if (exitAnnouncement) {
+    //   currentPage = '公告'
+    // }
+    // else if (exitIdea) {
+    //   currentPage = '墙'
+    // }
+    that.setData({
+      // currentPage: currentPage,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+  
+
+    
     // wx.startPullDownRefresh()//刷新
     //获取项目id和名字
     wx.getStorage({

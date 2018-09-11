@@ -2,11 +2,11 @@
  <!-- 顶部导航栏 -->
   <view class='nav'>
      <view class='nav-cover' style='left: {{nav_cover_left}}rpx;'></view>
-     <view class='nav-item {{exitTask? "nav-select" : ""}}' bindtap='selectTask'>任务</view>
-     <view class='nav-item {{exitAnnouncement? "nav-select" : ""}}' bindtap='selectAnnouncement'>公告</view>
+     <view class='nav-item {{exitTask? "nav-select" : ""}} task' bindtap='selectTask'>任务</view>
+     <view class='nav-item {{exitAnnouncement? "nav-select" : ""}} announcement' bindtap='selectAnnouncement'>公告</view>
      <!-- <view class='nav-item {{exitSchedule? "nav-select" : ""}}' bindtap='selectSchedule'>日程</view> -->
      <!-- <view class='nav-item {{exitMeeting? "nav-select" : ""}}' bindtap='selectMeeting'>会议</view> -->
-     <view class='nav-item {{exitIdea? "nav-select" : ""}}' bindtap='selectIdea'>墙</view>
+     <view class='nav-item {{exitIdea? "nav-select" : ""}} idea' bindtap='selectIdea'>墙</view>
   </view>
 
 <!-- 任务 -->
