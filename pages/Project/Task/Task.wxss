@@ -51,7 +51,7 @@
   width: 100%;
   display: flex;
   padding-left: 20rpx;
-  padding-top: 10rpx;
+  padding-top: 20rpx;
   font-size:30rpx;
 }
 
@@ -117,7 +117,7 @@
   width: 100%;
   display: flex;
   margin-left: 20rpx;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   font-size:30rpx;
 }
 

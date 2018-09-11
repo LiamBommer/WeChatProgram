@@ -65,7 +65,7 @@
 }
 
 .post-view .content {
-  height: 160rpx;
+ 
   margin: 26rpx 0rpx;
   font-size: 30rpx;
   line-height: 40rpx;
