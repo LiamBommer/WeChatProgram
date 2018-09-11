@@ -7,6 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    userName:'',
+    userId:'',
+    projectName:'',//项目名称
     //星标项目
     StarProject: [],
     // 新增 isClicked 字段，用于动态添加类，显示点击动画
@@ -102,9 +106,17 @@ Page({
   ClickStarItem: function(e) {
     var that = this
     var index = e.currentTarget.dataset.index
+    var projectName = e.currentTarget.dataset.name//项目名
     wx.setStorage({
       key: "Project-detail",
       data: that.data.StarProject[index],
+    })
+
+    //数据分析
+    that.setData({
+      projectName: projectName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
     })
 
     // 点击动画效果
@@ -118,9 +130,17 @@ Page({
   ClickItem: function(e) {
     var that = this
     var index = e.currentTarget.dataset.index
+    var projectName = e.currentTarget.dataset.name//项目名
     wx.setStorage({
       key: "Project-detail",
       data: that.data.Project[index],
+    })
+
+    //数据分析
+    that.setData({
+      projectName: projectName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
     })
 
     // 点击动画效果
@@ -132,6 +152,12 @@ Page({
 
   //创建项目
   buildProject: function() {
+    var that = this
+    that.setData({//数据分析
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    
     wx.navigateTo({url: './buildProject/buildProject'})
   },
 

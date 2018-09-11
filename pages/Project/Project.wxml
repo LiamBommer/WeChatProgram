@@ -34,7 +34,7 @@
           <image class='itemmore-icon' src='/img/more.png'></image>
         </view>
       </view> -->
-      <view class='item {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
+      <view class='item {{item.isClicked}}' bindtap='ClickStarItem' data-index="{{index}}" data-name="{{item.name}}" style="{{projectAnimationStyle}}">
         <!-- <view class="progress-bar"></view> -->
         <view class="item-top">
           <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
@@ -84,7 +84,7 @@
       <block wx:for="{{Project}}" wx:key="{{id}}">
 
         <!-- 列表项 -->
-        <view class='item {{item.isClicked}}' bindtap='ClickItem' data-index="{{index}}" style="{{projectAnimationStyle}}">
+        <view class='item {{item.isClicked}}' bindtap='ClickItem' data-index="{{index}}" data-name="{{item.name}}" style="{{projectAnimationStyle}}">
           <!-- <view class="progress-bar"></view> -->
           <view class="item-top">
             <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 

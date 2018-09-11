@@ -15,7 +15,7 @@
 
     <button class='submit' size='default' form-type='submit' disabled='{{btn_disabled}}' plain style="background-color: #09bb07; " loading='{{btn_loading}}' >完成</button>
     </form>
-    
+      
 
 </view>
 

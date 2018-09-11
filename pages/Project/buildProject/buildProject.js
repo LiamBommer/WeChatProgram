@@ -7,6 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    userName: '',
+    userId: '',
+    title: '',//项目名
+    desc:'' ,//项目描述
 
     btn_disabled: false,
     btn_loading: false,
@@ -15,12 +20,20 @@ Page({
 
   },
 
-  //获取项目名称，项目描述
+  //点击创建项目
   BuildProject: function (e) {
 
     var that = this;
     var submitNum = that.data.submitNum; //点击完成的次数
     if (submitNum == 0) {//点击完成次数限制在一次
+
+      that.setData({//数据分析
+        title: e.detail.value.title,//项目名
+        desc: e.detail.value.desc,//项目描述
+        userName: getApp().globalData.nickName,
+        userId: getApp().globalData.userId,
+      })
+
       var title, desc;
       title = e.detail.value.title;
       desc = e.detail.value.desc;
@@ -45,12 +58,16 @@ Page({
       wx.showLoading({
         title: '正在创建...',
       })
+
+
       // submit 
       that.buildProject(title, desc);
       
       that.setData({
         submitNum: submitNum + 1
       })
+
+      console.log("1111111111111111", that.data.title, that.data.desc, that.data.userName, that.data.userId,)
       
     }
     
