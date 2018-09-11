@@ -341,7 +341,6 @@ getProjectList:function(){
   }
 
 },
-
 getAllTasks: function(starProjIdArr, projIdArr){
 
   var that = this
@@ -489,7 +488,6 @@ sortMeetings: function(a, b){
     return 1
   return -1;
 },
-
   /*
    * 涟漪点击效果
    */
