@@ -13,6 +13,9 @@ Page({
     userName: '',
     userId: '',
     currentPage: '',//当前页名称
+    taskName:'',//点进任务详情的任务名
+    announContent: '',//点进公告详情的内容
+    ideaContent: '',//点进点子详情的内容
 
     currentItem: 0,//当前swiper滑块的位置
     index: '',//当前任务列表下标
@@ -21,7 +24,7 @@ Page({
     inputTitle:'',//输入任务列表标题
     listId:'',//当前任务列表Id
     currentProjId:"",//当前项目ID
-    currentProjName: "",//当前项目名
+    currentProjName: "",//当前项目名，数据分析
     currentProjMember: "",//当前项目成员
 
 
@@ -226,7 +229,6 @@ Page({
       currentPage:'任务'
     });
 
-    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   // 导航栏选择公告
@@ -246,7 +248,6 @@ Page({
       currentPage: '公告'
     });
 
-    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   // 导航栏选择日程
@@ -295,7 +296,6 @@ Page({
       currentPage: '墙'
     });
 
-    console.log("1111111111111111111111", that.data.currentPage, that.data.userName, that.data.userId, )
   },
 
   /**
@@ -304,6 +304,11 @@ Page({
   createTask: function (event) {
     var that = this
     var listId = event.currentTarget.dataset.listId
+    //数据分析
+    that.setData({
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
     //设置任务成员缓存
     wx.setStorage({
       key: 'ProjectMore-TaskListId',
@@ -323,13 +328,19 @@ Page({
    * 打开创建公告页面
    */
   createAnnoun: function() {
+    var that = this
+    //数据分析
+    that.setData({
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
     wx.navigateTo({
       url: '../Announcement/addAnnouncement/addAnnouncement'
     });
   },
 
   /**
-   * 打开创建公告页面
+   * 打开创建日程页面
    */
   createSchedule: function() {
     wx.navigateTo({
@@ -362,6 +373,12 @@ Page({
    * 打开创建点子页面
    */
   createIdea: function() {
+    var that = this
+    //数据分析
+    that.setData({
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
     wx.navigateTo({
       url: '../Idea/addIdea/addIdea'
     });
@@ -376,6 +393,14 @@ Page({
     var taskListIndex = that.data.currentItem
     var projName = that.data.currentProjName
     var index = e.currentTarget.dataset.index
+
+    //数据分析
+    that.setData({
+      taskName: that.data.tasklist[taskListIndex].tasks[index].title,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+
     //console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
       key: "ProjectMore-Task",
@@ -425,11 +450,18 @@ Page({
   },
 
   /**
-   * 显示会议详情页面
+   * 显示公告详情页面
    */
   showAnnouncementDetail: function(e) {
+    var that = this
     var index = e.currentTarget.dataset.index
-    wx.setStorageSync("ProjectMore-AnnouncementDetail", this.data.Announcement[index])
+    //数据分析
+    that.setData({
+      announContent: that.data.Announcement[index].content,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    wx.setStorageSync("ProjectMore-AnnouncementDetail", that.data.Announcement[index])
     wx.navigateTo({
       url: '../Announcement/announcementDetail/announcementDetail'
     });
@@ -463,7 +495,18 @@ Page({
    */
   showIdeaDetail: function(e) {
 
+    var that = this
     var ideaId = e.currentTarget.dataset.index
+    var ideaContent = e.currentTarget.dataset.content
+
+    //数据分析
+    that.setData({
+      ideaContent: ideaContent,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    console.log("111111111111111111", that.data.ideaContent, that.data.userName, that.data.userId, )
+
     wx.setStorage({
       key: 'ProjectMore-ideaDetail-id',
       data: ideaId,

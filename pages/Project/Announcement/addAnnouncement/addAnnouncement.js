@@ -7,6 +7,12 @@ const app = getApp()
 
 Page({
   data: {
+    //数据分析
+    userName: '',
+    userId: '',
+    projectName:'',
+    announContent:'',//公告内容
+
     checked: true,//是否显示已读
     submitNum: 0, //点击完成的次数
   },
@@ -29,11 +35,23 @@ Page({
     var checked = that.data.checked//获取是否显示已读
     var formId = e.detail.formId
 
+
     wx.getStorage({
       key: "Project-detail",
-      success: function (res) { 
+      success: function (res) {
+
         var ProjectId = res.data.id//获取项目ID
         var ProjectName = res.data.name//获取项目名
+
+
+        //数据分析
+        that.setData({
+          projectName: ProjectName,
+          announContent: content,
+          userName: getApp().globalData.nickName,
+          userId: getApp().globalData.userId,
+        })
+        console.log("111111111111111111", that.data.projectName, that.data.userName, that.data.userId, that.data.announContent)
 
         if (content == "" || content.length == 0) {
           // 提示标题不可为空

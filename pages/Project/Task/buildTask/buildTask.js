@@ -8,6 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    taskName: '',
+    userName: '',
+    userId: '',
+
     deadline: '',//截止时间
     list_id: 0,  // 所属任务看板id
     taskMemberID:[],//任务成员id列表，第一位为任务负责人
@@ -38,7 +43,14 @@ Page({
     var that = this
     var submitNum = that.data.submitNum; //点击完成的次数
     if (submitNum == 0) {//点击完成次数限制在一次
-    console.log('Form data: ' + JSON.stringify(e.detail.value));
+
+      //数据分析
+      that.setData({
+        taskName: e.detail.value.name,
+        userName: getApp().globalData.nickName,
+        userId: getApp().globalData.userId,
+      })
+
     // data validate
     var name = e.detail.value.name
     var end_time = e.detail.value.time

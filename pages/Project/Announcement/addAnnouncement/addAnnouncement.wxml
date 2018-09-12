@@ -18,7 +18,7 @@
         </view>
       </view>
 
-      <button type='primary' size='default' form-type='submit'>完成</button>
+      <button class='finishBuildAnnoun' type='primary' size='default' form-type='submit'>完成</button>
    </form>
 
 </view>

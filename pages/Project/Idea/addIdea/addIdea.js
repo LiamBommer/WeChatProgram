@@ -8,6 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    projectName: '',
+    ideaContent:'',
+    userName: '',
+    userId: '',
+
     icon_task_list: '/img/task_list.png',
     icon_member: '/img/member.png',
     icon_add: '/img/add.png',
@@ -72,6 +78,17 @@ Page({
     var projectId = that.data.projectDetail.id
     var taskId = that.data.TaskId
 
+
+      //数据分析
+      var projectName = that.data.projectDetail.name
+      that.setData({
+        ideaContent: content,
+        projectName: that.data.projectDetail.name,
+        userName: getApp().globalData.nickName,
+        userId: getApp().globalData.userId,
+      })
+      console.log("111111111111111111", that.data.projectName, that.data.userName, that.data.userId, that.data.ideaContent)
+
     // 生成随机数
     var max = 3
     var min = 0
@@ -87,12 +104,6 @@ Page({
       return;
     }
 
-    console.log('创建点子： \n')
-    console.log('内容: ' + content)
-    console.log('用户: ' + userId)
-    console.log('任务: ' + taskId)
-    console.log('项目id：'+ projectId)
-    console.log('颜色: ' + color)
 
     wx.showLoading({
       title: '正在创建',

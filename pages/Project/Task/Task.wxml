@@ -32,10 +32,10 @@
                                 data-index="{{index}}" bindtap="ClickTask"  id="{{tasks.objectId}}"
                                 checked='{{tasks.is_finish}}'/>
                               </checkbox-group>
-                              <view class='task' bindtap='showTask'  data-index="{{index}}">{{tasks.title}}</view>
+                              <view id='enterTask' class='task taskdetail' bindtap='showTask'  data-index="{{index}}">{{tasks.title}}</view>
                           </view>
                           <!-- 内容下部分 -->
-                          <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
+                          <view id='enterTask'  class='taskitem-bottom taskdetail' bindtap='showTask'data-index="{{index}}" >
                               <view class='taskicon'>
                                   <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
@@ -56,10 +56,10 @@
                                 <checkbox class='item-checkbox' id='{{tasks.objectId}}' value='{{index}}' checked='{{tasks.is_finish}}'
                                 data-index="{{index}}" data-checked="{{tasks.is_finish}}" bindtap="ClickTask"/>
                               </checkbox-group>
-                              <view class='task' bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                              <view id='enterTask'  class='task' bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
                           </view>
                           <!-- 内容下部分 -->
-                          <view class='taskitem-bottom' bindtap='showTask'data-index="{{index}}" >
+                          <view id='enterTask' class='taskitem-bottom' bindtap='showTask' data-index="{{index}}" >
                               <view class='taskicon'>
                                   <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>

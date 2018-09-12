@@ -6,7 +6,7 @@
       <image class='noitem-icon' src='/img/noAnnouncement.png'></image>
       <view class='noitem-title'>发布公告</view>
       <view class='noitem-content'>我有个重要的事情要告诉大家</view>
-      <button class='noitem-create' bindtap='createAnnoun' size='default'>创建公告</button>
+      <button id='buildAnnoun' class='noitem-create' bindtap='createAnnoun' size='default'>创建公告</button>
     </view>
   </view>
   <!-- 有内容 -->
@@ -14,7 +14,7 @@
       <block wx:for="{{Announcement}}">
         <view class='item-container' style="{{announcementAnimationStyle}}">
             <!-- 列表项 -->
-            <view class='item' bindtap='showAnnouncementDetail' data-index="{{index}}">
+            <view class='itemAnoun' bindtap='showAnnouncementDetail' data-index="{{index}}">
               <!-- 列表左 -->
               <view class='item-first'>
                 <image class='item-icon' src='{{item.icon}}'></image>
@@ -37,7 +37,7 @@
       <!-- 添加图标 -->
       <!-- <image class='buildicon' bindtap='createAnnoun' src='/img/create.png'></image> -->
 
-      <a class="btn-floating buildicon" bindtap='createAnnoun'>
+      <a id='buildAnnoun' class="btn-floating buildicon" bindtap='createAnnoun'>
         <image class="buildicon-img" src='/img/add_white.png' />
       </a>
 

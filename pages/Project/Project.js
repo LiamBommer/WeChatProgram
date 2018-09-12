@@ -184,6 +184,15 @@ Page({
 
   //项目编辑
   showProjectDetail: function (e) {
+    var that = this
+    var projectName = e.currentTarget.dataset.name//项目名
+    //数据分析
+    that.setData({
+      projectName: projectName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+
     wx.navigateTo({url: './ProjectDetail/ProjectDetail'})
   },
 
