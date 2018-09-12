@@ -62,7 +62,7 @@ Page({
                   result.save();
                   //为用户添加空的项目“我的项目”
                   // 若要测试新手指引，则注释以下1行
-                  that.buildProject('我的项目','示例项目')
+                  that.buildProject(getApp().globalData.nickName + '的项目','示例项目')
                   //为用户添加实例沟通模板
                   // 若要测试新手指引，则注释以下4行
                   that.addCommunicateModel(userId, 1, communicate_sample_model1)     //告诉用户可以在任务评论发送
@@ -119,7 +119,7 @@ Page({
       desc: desc,
       leader_id: leader_id,
       leader_name: leader_name,
-      is_first: false,
+      is_first: true,
       is_delete: false,
       checked: true,
       img_url: "http://bmob-cdn-19251.b0.upaiyun.com/2018/06/15/3c7ae525400a2aa0800a0780b701069c.jpg" 

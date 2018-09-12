@@ -365,22 +365,29 @@ Page({
    * 
    */
   getNotification: function (userId) {
+    if(userId == "" || userId == null){
+      return;  //如果userId为空则直接返回
+    }
     var that = this
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
     var notificationArr = []
 
     //获取用户的所有通知
+    notificationQuery.descending("createdAt")
     notificationQuery.limit(50)
     notificationQuery.equalTo("to_user_id", userId)
     notificationQuery.include('project')
     notificationQuery.include('from_user')
-    notificationQuery.descending("createdAt")
+  
     notificationQuery.find({
       success: function (results) {
         console.log("results", results)
         //成功
         for (var i in results) {
+          //针对获取通知的那个BUG，暂时的应对方法是判断项目名是否为空来避免（未测试是否可行
+          if (results[i].attributes.project.name == "" || results[i].attributes.project.name == null)
+            continue;
           var notiObject = {}
           notiObject = {
             'id': results[i].id,   //通知的id
