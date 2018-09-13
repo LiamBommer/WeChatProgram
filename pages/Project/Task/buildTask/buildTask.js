@@ -10,6 +10,7 @@ Page({
   data: {
     //数据分析
     taskName: '',
+    projectName:'',
     userName: '',
     userId: '',
 
@@ -45,7 +46,9 @@ Page({
     if (submitNum == 0) {//点击完成次数限制在一次
 
       //数据分析
+      var projectName = wx.getStorageSync('Project-detail').name
       that.setData({
+        projectName: projectName,
         taskName: e.detail.value.name,
         userName: getApp().globalData.nickName,
         userId: getApp().globalData.userId,

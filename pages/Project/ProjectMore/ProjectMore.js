@@ -13,7 +13,8 @@ Page({
     userName: '',
     userId: '',
     currentPage: '',//当前页名称
-    taskName:'',//点进任务详情的任务名
+    taskName:'',//点进任务详情，勾选任务的任务名
+    taskCheck:'',//任务勾选情况true，false
     announContent: '',//点进公告详情的内容
     ideaContent: '',//点进点子详情的内容
 
@@ -106,6 +107,18 @@ Page({
           task[i].is_finish = !task[i].is_finish
         }
     }
+
+    //数据分析
+    that.setData({
+      taskCheck: task[index].is_finish,
+      taskName: task[index].title,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    console.log("111111111111111111", that.data.taskName, that.data.taskCheck, that.data.userName, that.data.userId, )
+
+    console.log()
+
     that.setData({
       tasklist: taskList
     })
@@ -505,7 +518,6 @@ Page({
       userName: getApp().globalData.nickName,
       userId: getApp().globalData.userId,
     })
-    console.log("111111111111111111", that.data.ideaContent, that.data.userName, that.data.userId, )
 
     wx.setStorage({
       key: 'ProjectMore-ideaDetail-id',
@@ -1471,19 +1483,6 @@ Page({
 
 
     //数据分析
-    // var exitTask = that.data.exitTask
-    // var exitAnnouncement = that.data.exitAnnouncement
-    // var exitIdea = that.data.exitIdea
-    // var currentPage = ''
-    // if (exitTask){
-    //   currentPage = '任务'
-    // }
-    // else if (exitAnnouncement) {
-    //   currentPage = '公告'
-    // }
-    // else if (exitIdea) {
-    //   currentPage = '墙'
-    // }
     that.setData({
       // currentPage: currentPage,
       userName: getApp().globalData.nickName,
