@@ -15,10 +15,10 @@
       </view>
       <view class='title-btn' decode='true'>
         <image src='{{icon_more}}' class='share' bindtap='addMorecontent'></image>
-        |
+        <!-- |
         <button class='share right' hover-class="share-hover" open-type="share">
           <image src='{{icon_share}}'></image>
-        </button>
+        </button> -->
       </view>
       <!-- 项目描述 -->
     </view>
@@ -132,6 +132,7 @@
 
   <!-- 反馈 -->
   <view class='view-container' wx:if="{{feedbacktime != '' || feedback_mod != '' || feedbackExpanded == true}}">
+  <!-- <view class='view-container' wx:if="{{ (feedbacktime != '' || feedback_mod != '') && feedbackExpanded == true}}"> -->
 
     <!-- 标题 -->
     <view class="item-view ver-align space-between">
@@ -149,7 +150,8 @@
 
     <!-- 反馈模块 -->
     <view wx:if='{{feedbackExpanded == true}}'>
-      <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}; {{aniFeedbackStyle}}'>
+      <!-- <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}; {{aniFeedbackStyle}}'> -->
+      <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='{{aniFeedbackStyle}}'>
         <view style='{{FeedbacktxtStyle}}' class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveFeedback">
           <!-- <image src='/img/feedback_time.png'></image> -->
           <!-- <view class='desc'> -->

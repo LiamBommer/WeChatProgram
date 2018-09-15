@@ -1947,6 +1947,14 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     //   title: '正在加载',
     //   mask: 'true'
     // })
+
+    // 反馈为空时第一次进入时的显示判断
+    if(this.data.feedbacktime == '' && this.data.feedback_mod == '') {
+      this.setData({
+        feedbackExpanded: false,
+      })
+    }
+
     var that = this;
     //接受通知的参数ID
     var requestId = wx.getStorageSync("Notification-taskId")
