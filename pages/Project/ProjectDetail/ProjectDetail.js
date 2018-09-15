@@ -7,13 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    userName: '',
+    userId: '',
+
     projId:'',//项目ID
     hiddenmodalput: true,//弹出项目描述模态框
     hiddenmodalputTitle: true,//弹出项目名称模态框
     SwitchChecked: "",//是否置顶
     title: "",//输入的项目名称
     content: "",//输入的项目描述
-    project_name: '加载中',//项目名称
+    project_name: '加载中',//项目名称，数据分析
     project_desc: '加载中',//项目描述
     project_img:"/img/logo.png",
     icon_more: '/img/more.png',
@@ -207,6 +211,15 @@ Page({
       wx.showLoading({
         title: '正在星标...',
       })
+
+      //数据分析
+      that.setData({
+        userName: getApp().globalData.nickName,
+        userId: getApp().globalData.userId,
+      })
+
+      console.log("111111111111111111", that.data.project_name, that.data.userName, that.data.userId, )
+
       //置顶
       that.makeProjectFirst(projId, true)
     }
@@ -218,6 +231,8 @@ Page({
       //取消置顶
       that.cancelProjectFirst(projId, false)
     }
+
+    
   },
 
   //删除/退出项目

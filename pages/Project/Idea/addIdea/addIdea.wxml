@@ -20,6 +20,6 @@
          </block>
     </view>
 
-    <button type='primary' size='default' form-type='submit'>完成</button>
+    <button class='finishIdeaBuild' type='primary' size='default' form-type='submit'>完成</button>
   </form>
 </view>

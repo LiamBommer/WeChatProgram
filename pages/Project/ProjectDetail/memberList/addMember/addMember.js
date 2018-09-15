@@ -5,8 +5,12 @@ const app = getApp()
 Page({
 
   data: {
-    projectId: -1,
+    //数据分析
+    userName: '',
+    userId: '',
     projectName: '',
+
+    projectId: -1,
     projectDetail: ''
   },
 
@@ -38,7 +42,15 @@ Page({
   
   //点击分享
   inviteWeChat: function () {
-    
+    var that = this
+    //数据分析
+    var projectName = that.data.projectDetail.name
+    that.setData({
+      projectName: projectName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    console.log("111111111111111111", that.data.projectName, that.data.userName, that.data.userId, )
   },
 
     /**
@@ -59,6 +71,7 @@ Page({
           title: '分享成功',
           icon: 'success',
         })
+      
       },
     }
 

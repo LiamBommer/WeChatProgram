@@ -27,14 +27,15 @@
     </block>
   </block>
 
+  <!-- 数据分析 id='manageTaskMember' id='changeTaskPrincipal' 不要删改 -->
   <view class='addi-container'>
-    <view class='item' bindtap='showEditMemberList'>
+    <view id='manageTaskMember' class='item' bindtap='showEditMemberList'>
       <view class='item-one'>
         <image class='item-icon' src='/img/more.png'></image>
         <view class='item-text'>管理任务成员</view>
       </view>
     </view>
-    <view class='item' bindtap='showChangePrinciple'>
+    <view id='changeTaskPrincipal' class='item' bindtap='showChangePrinciple'>
       <view class='item-one'>
         <image class='item-icon' src='/img/pen.png'></image>
         <view class='item-text'>变更任务负责人</view>

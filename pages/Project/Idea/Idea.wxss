@@ -24,7 +24,7 @@
   justify-content:space-between;
 }
 
-.post-view .post:nth-child(odd) {
+.post-view .postIdea:nth-child(odd) {
   width: 291rpx;
   height: 256rpx;
   margin-bottom: 30rpx;
@@ -37,7 +37,7 @@
   margin-right:15rpx;
 }
 
-.post-view .post:nth-child(even) {
+.post-view .postIdea:nth-child(even) {
   width: 291rpx;
   height: 256rpx;
   margin-bottom: 30rpx;

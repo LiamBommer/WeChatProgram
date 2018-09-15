@@ -10,7 +10,7 @@
       <image class='noitem-icon' src='/img/noIdea1.png'></image>
       <view class='noitem-title'></view>
       <view class='noitem-content'>咦我有个点子，就在这匿名说吧</view>
-      <button class='noitem-create' bindtap='createIdea' size='default'>创建点子</button>
+      <button id='buildIdea' class='noitem-create' bindtap='createIdea' size='default'>创建点子</button>
     </view>
   </view>
   <!-- 有内容 -->
@@ -18,8 +18,8 @@
    
     <view class='post-view'>
       <block wx:for="{{Idea}}" wx:key="{{id}}">
-          <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
-            bindtap='showIdeaDetail' data-index='{{item.id}}'>
+          <view class='postIdea' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
+            bindtap='showIdeaDetail' data-index='{{item.id}}' data-content='{{item.content}}'>
             <view class='user-info ver-align'>
               <!-- <image src='{{item.userPic}}' class='avatar'></image> -->
               <text class='username'>{{item.userName}}</text>
@@ -38,7 +38,7 @@
     <!-- 添加图标 -->
     <!-- <image class='buildicon' bindtap='createIdea' src='/img/create.png'></image> -->
     
-      <view class="btn-floating buildicon" bindtap='createIdea'>
+      <view id='buildIdea' class="btn-floating buildicon" bindtap='createIdea'>
         <image class="buildicon-img" src='/img/add_white.png' />
       </view>
 

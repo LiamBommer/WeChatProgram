@@ -10,8 +10,8 @@ Page({
     //数据分析
     userName: '',
     userId: '',
-    title: '',//项目名
-    desc:'' ,//项目描述
+    proTitle: '',//项目名
+    proDesc:'' ,//项目描述
 
     btn_disabled: false,
     btn_loading: false,
@@ -24,18 +24,18 @@ Page({
   BuildProject: function (e) {
 
     var that = this; 
-    
-    that.setData({//数据分析
-      title: e.detail.value.title,//项目名
-      desc: e.detail.value.desc,//项目描述
-      userName: getApp().globalData.nickName,
-      userId: getApp().globalData.userId,
-    })
+  
 
     var submitNum = that.data.submitNum; //点击完成的次数
     if (submitNum == 0) {//点击完成次数限制在一次
 
-    
+      that.setData({//数据分析
+        proTitle: e.detail.value.title,//项目名
+        proDesc: e.detail.value.desc,//项目描述
+        userName: getApp().globalData.nickName,
+        userId: getApp().globalData.userId,
+      })
+      console.log("11111111111111111111", that.data.userName, that.data.userId, that.data.proTitle, that.data.proDesc)
 
       var title, desc;
       title = e.detail.value.title;
@@ -208,10 +208,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    that.setData({//数据分析
-      userName: getApp().globalData.nickName,
-      userId: getApp().globalData.userId,
-    })
+  
   },
 
   /**
