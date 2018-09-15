@@ -21,10 +21,7 @@ Page({
     var taskId = wx.getStorageSync("TaskDetail-taskId")
     var feedbackMod = content
     that.modifyFeedbackMod(taskId, feedbackMod, userName)
-    wx.setStorageSync("FeedBack-content", content)
-    wx.navigateBack({
-      url: '../TaskDetail',
-    })
+    wx.setStorageSync("TaskDetail-feedbackMod", content)
   },
 
   /**
@@ -45,6 +42,12 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_FEEDBACK_MOD)
+
+        // 移动到这里，解决跳转后还没修改的bug
+        wx.navigateBack({
+          url: '../TaskDetail',
+        })
+
       },
       error: function (object, error) {
         //失败情况

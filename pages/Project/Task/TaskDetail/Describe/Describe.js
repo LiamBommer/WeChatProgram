@@ -23,9 +23,6 @@ Page({
     console.log("save",description)
     that.modifyTaskDesc(taskId, description, userName)
     // wx.setStorageSync("FeedBack-content", content)
-    wx.navigateBack({
-      url: '../TaskDetail',
-    })
   },
   
   //任务描述
@@ -42,6 +39,11 @@ Page({
         result.save()
         //记录操作
         that.addTaskRecord(taskId, userName, MODIFY_TASK_DESC)
+
+        // 移动到这里，解决跳转后还没修改的bug
+        wx.navigateBack({
+          url: '../TaskDetail',
+        })
 
       },
       error: function (object, error) {
