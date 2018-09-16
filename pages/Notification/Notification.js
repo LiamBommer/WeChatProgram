@@ -325,33 +325,6 @@ Page({
   /**
    * 2018-05-31
    * @parameter userId 当前操作用户的id
-   * 将用户的通知全部都修改为已读状态
-   */
-  readAll: function (userId) {
-    var that = this
-    var Notification = Bmob.Object.extend('notification')
-    var notificationQuery = new Bmob.Query(Notification)
-
-    //将用户的通知全部都修改为已读状态
-    notificationQuery.equalTo("to_user_id", userId)
-    notificationQuery.find().then(function (todos) {
-      todos.forEach(function (todo) {
-        todo.set('is_read', true);
-      });
-      return bmob.Object.saveAll(todos);
-    }).then(function (todos) {
-      // 更新成功
-
-
-    },
-      function (error) {
-        // 异常处理
-      })
-  },
-
-  /**
-   * 2018-05-31
-   * @parameter userId 当前操作用户的id
    * 获取用户的所有通知(由近及远排序)
    * 获取的数组，每个元素包括
    * 'id':   //通知的id
@@ -372,22 +345,24 @@ Page({
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
     var notificationArr = []
-
+    
     //获取用户的所有通知
     notificationQuery.descending("createdAt")
     notificationQuery.limit(50)
     notificationQuery.equalTo("to_user_id", userId)
     notificationQuery.include('project')
     notificationQuery.include('from_user')
-  
+    
     notificationQuery.find({
       success: function (results) {
-        console.log("results", results)
+        console.log("getNotification results:", results)
         //成功
-        for (var i in results) {
-          //针对获取通知的那个BUG，暂时的应对方法是判断项目名是否为空来避免（未测试是否可行
-          if (results[i].attributes.project.name == "" || results[i].attributes.project.name == null)
+        for (var i = 0;i<results.length;i++) {
+          //针对获取通知的那个BUG，暂时的应对方法是判断项目名是否为空来避免
+          if (results[i].attributes.project.name == "" || results[i].attributes.project.name == null){
+            deleteArr.push(results[i])
             continue;
+          }
           var notiObject = {}
           notiObject = {
             'id': results[i].id,   //通知的id
@@ -411,6 +386,7 @@ Page({
             Notification: notificationArr
           })
         }
+        
 
 
         // wx.hideLoading()
@@ -511,32 +487,32 @@ Page({
     })
   },
 
-  /**
-   * 2018-06-02
-   * @parameter userId 用户id
-   * 删除某位用户的所有通知
-   */
-  deleteUserNotification: function (userId) {
-    var that = this
-    var Notification = Bmob.Object.extend('notification')
-    var notificationQuery = new Bmob.Query(Notification)
+  // /**
+  //  * 2018-06-02
+  //  * @parameter userId 用户id
+  //  * 删除某位用户的所有通知
+  //  */
+  // deleteUserNotification: function (userId) {
+  //   var that = this
+  //   var Notification = Bmob.Object.extend('notification')
+  //   var notificationQuery = new Bmob.Query(Notification)
 
-    //删除某位用户的所有通知
-    if (userId != null) {
-      notificationQuery.equalTo('to_user_id', userId)
-      notificationQuery.destroyAll({
-        success: function () {
-          //删除成功
-          console.log("提示用户删除所有通知成功!")
-        },
-        error: function (err) {
-          // 删除失败
-          console.log("提示用户删除所有通知失败!")
-        }
-      })
-    }
+  //   //删除某位用户的所有通知
+  //   if (userId != null) {
+  //     notificationQuery.equalTo('to_user_id', userId)
+  //     notificationQuery.destroyAll({
+  //       success: function () {
+  //         //删除成功
+  //         console.log("提示用户删除所有通知成功!")
+  //       },
+  //       error: function (err) {
+  //         // 删除失败
+  //         console.log("提示用户删除所有通知失败!")
+  //       }
+  //     })
+  //   }
 
-  },
+  // },
 
   /**
    * 2018-06-02
@@ -605,6 +581,7 @@ Page({
           if (userId != null) {
             notificationQuery.limit(50)            
             notificationQuery.equalTo('to_user_id', userId)
+            notificationQuery.descending("createdAt")
             notificationQuery.equalTo('is_read', true)
             notificationQuery.destroyAll({
               success: function () {
@@ -665,6 +642,8 @@ Page({
 
     //将用户的通知全部都修改为已读状态
     notificationQuery.equalTo("to_user_id", userId)
+    notificationQuery.limit(50)
+    notificationQuery.descending("createdAt")
     notificationQuery.find().then(function (todos) {
       todos.forEach(function (todo) {
         todo.set('is_read', true);
@@ -735,9 +714,7 @@ Page({
     // })
     var that = this
     var userId = getApp().globalData.userId
-    console.log("userId", userId)
-
-
+    console.log("useId" + userId + "获取通知")
     that.getNotification(userId)
   },
 

@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -60,6 +60,13 @@
 					"name": "新手指引",
 					"pathName": "pages/GetUserInfo/GetUserInfo",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "通知",
+					"pathName": "pages/Notification/Notification",
+					"query": "",
+					"scene": "1012"
 				}
 			]
 		}
