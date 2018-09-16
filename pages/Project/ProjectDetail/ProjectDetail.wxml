@@ -45,8 +45,10 @@
       <switch class='star' checked="{{SwitchChecked}}" bindchange="switchChange"/>
     </view>
   </view>
-
- <button type='warn' size='default' bindtap='DeleteProject' style='display:{{isLeader}}'>解散项目</button>
+  
+ <button type='primary' size='default' bindtap='Addmember'>邀请成员</button>
+ 
+ <button class='Exit' type='warn' bindtap='DeleteProject' style='display:{{isLeader}}'>解散项目</button>
 
   <!-- 新手指引 -->
   <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">
