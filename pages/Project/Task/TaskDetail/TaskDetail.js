@@ -569,10 +569,20 @@ Page({
       success: function (res) {//删除任务
         if (res.confirm) {
           var userName = getApp().globalData.nickName
-          that.deleteTask(wx.getStorageSync('Project-detail').id,taskId, userName)
-          wx.navigateBack({
-            url: '../../ProjectMore/ProjectMore',
-          })
+          if(!that.data.isShared){
+            that.deleteTask(wx.getStorageSync('Project-detail').id, taskId, userName)
+            wx.navigateBack({
+              url: '../../ProjectMore/ProjectMore',
+            })
+          }else{
+            //为了防止别人乱删除被分享的任务，所以通知用户到小程序中删除
+            wx.showToast({
+              title: '不能在分享页面删除哟~',
+              icon: 'none'
+              //image:''  //可以加图片
+            })
+          }
+          
         }
         else if (res.cancel) {
         }
@@ -1605,10 +1615,20 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
          var subTaskTitle = e.currentTarget.dataset.childTitle
          console.log(subTaskTitle)
          var userName = getApp().globalData.nickName
-         that.deleteSubTask(wx.getStorageSync('Project-detail').id,taskId,subTaskId, userName, subTaskTitle)
-         that.setData({
-           ChildTask: that.data.ChildTask
-         })
+         if(!that.data.isShared){
+           that.deleteSubTask(wx.getStorageSync('Project-detail').id, taskId, subTaskId, userName, subTaskTitle)
+           that.setData({
+             ChildTask: that.data.ChildTask
+           })
+         }else{
+           //为了防止别人乱删除被分享的子任务，所以通知用户到小程序中删除
+           wx.showToast({
+             title: '不能在分享页面删除哟~',
+             icon: 'none'
+             //image:''  //可以加图片
+           })
+         }
+         
        }
       }
     })

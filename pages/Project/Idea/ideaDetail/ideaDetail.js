@@ -79,7 +79,17 @@ Page({
             mask: 'true'
           })
           // Submit
-          that.deleteOneIdea(that.data.projectDetail.id, that.data.ideaId)
+          if(!that.data.isShared){
+            that.deleteOneIdea(that.data.projectDetail.id, that.data.ideaId)
+          }else{
+            //为了防止别人乱删除被分享的点子，所以通知用户到小程序中删除
+            wx.showToast({
+              title: '不能在分享页面删除哟~',
+              icon: 'none'
+              //image:''  //可以加图片
+            })
+          }
+          
 
         }
         else {//点击取消
