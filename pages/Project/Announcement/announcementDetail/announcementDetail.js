@@ -210,7 +210,16 @@ Page({
             title: '正在删除...',
           })
           // delete
-          that.deleteAnnouncement(wx.getStorageSync('Project-detail').id,that.data.id)
+          if (!that.data.isShared)
+            that.deleteAnnouncement(wx.getStorageSync('Project-detail').id,that.data.id)
+          else{
+            //为了防止别人乱删除被分享的公告，所以通知用户到小程序中删除
+            wx.showToast({
+              title: '不能在分享页面删除哟~',
+              icon:'none'
+              //image:''  //可以加图片
+            })
+          }   
           
         }
         else{//点击取消

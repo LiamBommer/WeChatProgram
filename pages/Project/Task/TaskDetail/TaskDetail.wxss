@@ -1,15 +1,32 @@
 /* pages/Project/Task/TaskDetail/TaskDetail.wxss */
+
+.view-container {
+  margin-bottom: 40rpx;
+  box-shadow: 6rpx 2rpx 20rpx #e9e9e9, -6rpx 2rpx 20rpx #e9e9e9;
+}
+
 .view-container .title-view .titlenav {
   display: flex;
   font-size: 40rpx;
   align-items: center;
+  width: calc(750 - 80 -  250)rpx;
 }
 
 .title-view .share{
   background-color: #fff;
   border: none;
   margin:0rpx;
-  padding:0rpx
+  padding:0rpx 16rpx;
+}
+.title-view .share.right {
+  padding-right: 0rpx;
+}
+
+.title-view .title-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 button[class="share"]::after {
@@ -34,9 +51,15 @@ button[hover-class="share-hover"]::after {
 }
 
 .view-container .title-view {
-  border-bottom: 2rpx solid #f2f2f2;
+  /* border-bottom: 2rpx solid #f2f2f2; */
   height: 120rpx;
   padding: 16rpx 0rpx;
+}
+
+.view-container .item-view.pro-name {
+  justify-content: flex-end;
+  border: none;
+  color: #888888;
 }
 
 .view-container .item-view.delete{
@@ -57,8 +80,8 @@ button[hover-class="share-hover"]::after {
 }
 
 .item-checkbox{
-  margin-right: 10rpx;
-  margin-left:10rpx;
+  margin-left: 4rpx;
+  margin-right: 16rpx;
 }
 
 .radius{
@@ -73,12 +96,34 @@ button[hover-class="share-hover"]::after {
 
 .title-view .title {
   font-size: 40rpx;
-  width: 544rpx;
+  /* width: 544rpx; */
   display: block;
   line-height: 50rpx;
   overflow: auto;
 }
 
+/* 任务基本信息 */
+.task-desc {
+  min-height: 90rpx;
+  padding: 8rpx 0rpx;
+  color: #888888;
+}
+
+/* 子任务 */
+.child-task-btn image {
+  width: 40rpx;
+  height: 40rpx;
+  padding: 0rpx 16rpx;
+}
+.child-task-btn .right {
+  padding-right: 0rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.child-task-btn .right image {
+  padding-right: 0rpx;
+}
 
 /*
  * 聊天区
@@ -116,7 +161,6 @@ button[hover-class="share-hover"]::after {
 
 .chat .chatperson{
   width: 670rpx;
-  padding: 0rpx 40rpx;
   min-height: 110rpx;
   background-color: white;
   border-bottom: solid 2rpx #f2f2f2;
@@ -286,6 +330,10 @@ button[hover-class="share-hover"]::after {
  .touch-move-active .del {
   -webkit-transform: translateX(0);
   transform: translateX(0);
+ }
+
+ .grey {
+   color: #888888;
  }
 
  /* Animation */

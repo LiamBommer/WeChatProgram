@@ -1,53 +1,60 @@
-<!--pages/Project/Task/TaskDetail/TaskDetail.wxml-->
-<view bindtouchstart="touchstart" >
-  <!-- 标题 -->
-  <view class="view-container" >
-     <view class='title-view ver-align space-between'>
-       <view class='titlenav'>
-        <checkbox-group bindchange="checkboxChange">
-          <checkbox class='item-checkbox' checked='{{checked}}'/>
-        </checkbox-group>
-           <text class='title' bindtap="modalinputTitle" >{{title}}</text> 
-          <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
-                <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" maxlength='15'/>
-          </modal>    
-       </view>
-       <button class='share' hover-class="share-hover"  open-type="share"><image src='{{icon_share}}'></image></button>
+<!-- pages/Project/Task/TaskDetail/TaskDetail.wxml -->
+<view bindtouchstart="touchstart">
 
-     </view>
+  <!-- 标题 -->
+  <view class="view-container">
+    <view class='title-view ver-align space-between'>
+      <view class='titlenav'>
+        <checkbox-group bindchange="checkboxChange">
+          <checkbox class='item-checkbox' checked='{{checked}}' />
+        </checkbox-group>
+        <text class='title' bindtap="modalinputTitle">{{title}}</text>
+        <modal hidden="{{hiddenmodalputTitle}}" title="任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle">
+          <input id='title' bindinput='input' type='text' value='{{inputTitle}}' placeholder="请输入任务标题" maxlength='15' />
+        </modal>
+      </view>
+      <view class='title-btn' decode='true'>
+        <image src='{{icon_more}}' class='share' bindtap='addMorecontent'></image>
+        <!-- |
+        <button class='share right' hover-class="share-hover" open-type="share">
+          <image src='{{icon_share}}'></image>
+        </button> -->
+      </view>
+      <!-- 项目描述 -->
+    </view>
+    <view class='task-desc' bindtap='Describe'>
+      <text wx:if="{{taskDesc == ''}}">暂未有描述</text>
+      <text wx:else>{{taskDesc}}</text>
+    </view>
+    <view class="item-view pro-name">
+      <text class='desc'>{{projectName}}</text>
+    </view>
+    <view class="touch-item '{{DeadlineisTouchMove ? 'touch-move-active' : ''}}">
+      <view style='{{DeadlinetxtStyle}}' class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveDeadline">
+        <!-- <image src='{{icon_deadline}}'></image> -->
+        <!-- <view class='desc'> -->
+        <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
+          <view wx:if="{{deadline == ''}}" class="grey">点击设置截止时间</view>
+          <view wx:else>{{deadline}} 截止</view>
+        </picker>
+        <!-- </view> -->
+      </view>
+      <view class="del" catchtap="delDeadline">删除</view>
+    </view>
+    <view class="item-view space-between" bindtap='MemberList'>
+      <view>
+        <block wx:for="{{member}}">
+          <image class='membericon' src='{{item.userPic}}'></image>
+        </block>
+      </view>
+      <image src='{{icon_more}}'></image>
+    </view>
   </view>
 
-  <!-- 内容 -->
-  <view class="view-container"id='j_page'>
-        <view class="item-view" bindtap='MemberList'>
-          <block wx:for="{{member}}">
-            <image class='membericon' src='{{item.userPic}}'></image>
-          </block>
-        </view>
-
-      <view class="touch-item '{{DeadlineisTouchMove ? 'touch-move-active' : ''}}" >
-        <view style='{{DeadlinetxtStyle}}'
-        class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveDeadline" >
-          <image src='{{icon_deadline}}'></image>
-          <view class='desc'>
-            <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">
-              <view>
-                {{deadline}} 截止
-              </view>
-            </picker>
-          </view>
-        </view> 
-        <view class="del"  catchtap="delDeadline" >删除
-        </view>
-      </view>      
-        
-        <view class="item-view">
-          <image src='{{icon_project}}'></image>
-          <text class='desc'>{{projectName}}/项目名</text>
-        </view>
-
-        <!-- 内容隐藏 -->
-      <view class="touch-item {{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}; {{aniRemindTimeStyle}}'>
+  <!-- 子任务 -->
+  <view class="view-container" id='j_page' wx:if="{{ChildTask.length != 0}}">
+    <!-- 内容隐藏 -->
+    <!-- <view class="touch-item {{RemindtimeisTouchMove ? 'touch-move-active' : ''}}" style='display:{{showRemindTime? "" : "none"}}; {{aniRemindTimeStyle}}'>
         <view style='{{RemindtimetxtStyle}}'
           class="contentminddle scroll-view-item item-view"
           bindtouchmove="touchmoveRemindtime" > 
@@ -63,150 +70,187 @@
           <view class="del"  catchtap="delRemindtime" data-index="{{index}}" data-id='{{item.subtask_id}}' 
           data-title='{{item.childTitle}}'>删除
          </view>
-      </view>
-
-        <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}; {{aniFeedbackStyle}}'>
-          <view style='{{FeedbacktxtStyle}}'
-            class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveFeedback" >
-            <image src='/img/feedback_time.png'></image>
-            <view class='desc'>
-                <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
-                  <view class="picker">
-                    {{feedbacktime}} 反馈
-                  </view>
-                </picker>
-            </view>
-          </view>
-          <view class="del"  catchtap="delFeedback" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>删除
-          </view>
-        </view>
-
-          <view style='display:{{showFeedbackModel? "" : "none"}}'
-            class=" scroll-view-item item-view" bindtap='Feedback'
-           bindtouchmove="touchmove" >
-              <image src='/img/feedback_model.png'></image>
-              <text class='desc'>反馈模板</text>
-          </view>
-
-          <view style='display:{{showDescription? "" : "none"}}; {{aniDescriptionStyle}}'
+      </view> -->
+    <!-- <view style='display:{{showDescription? "" : "none"}}; {{aniDescriptionStyle}}'
             class="scroll-view-item item-view" bindtap='Describe'>
             <image src='/img/task_description.png'></image>
             <text class='desc'>任务描述</text>
-          </view>
-
-        <!-- 添加内容 -->
-        <view class="item-view" bindtap='addMorecontent'>
+          </view> -->
+    <!-- 添加内容 -->
+    <!-- <view class="item-view" bindtap='addMorecontent'>
           <image src='{{icon_add}}'></image>
           <text class='desc'>添加更多内容</text>
-        </view>
-
-        <view class="item-view delete">
+        </view> -->
+    <!-- <view class="item-view delete">
           <image src='{{icon_close}}'></image>
           <view class='desc delete-text' bindtap='DeleteTask'>删除任务</view>
+        </view> -->
+
+    <!-- 子任务标题 -->
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='{{icon_task_list}}'></image>
+        <text class='desc'>子任务</text>
+      </view>
+      <view class='ver-align child-task-btn'>
+        <image src='{{icon_add}}' bindtap='AddChildTask'></image>
+          |
+        <view class='right' bindtap='expandChildTask'>
+          <image src='{{icon_arrow_down}}' style="display:{{childTaskExpanded?'none':'inline-block'}};"></image>
+          <image src='{{icon_arrow_up}}' style="display:{{childTaskExpanded?'inline-block':'none'}};"></image>
         </view>
+      </view>
+    </view>
 
-        <view class="item-view ver-align space-between">
-          <view class='ver-align'>
-            <image src='{{icon_task_list}}'></image>
-            <text class='desc'>子任务</text>
-          </view>
-          <image src='{{icon_add}}' bindtap='AddChildTask'></image>
-        </view>
-
-            <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" style="{{aniChildTaskStyle}}">
-                <view class="contentminddle item-view ver-align space-between item-padding" bindtouchmove="touchmove" 
-                  data-index="{{index}}" 
-                  style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
-                    <view class='childtask'>
-                        <checkbox-group bindchange="childCheckboxChange"> 
-                            <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' 
-                            class='item-checkbox' checked='{{item.is_finish}}' value='{{item.subtask_id}}'/>
-                        </checkbox-group> 
-
-                        
-
-                          <text class='title' id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" 
-                        bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" 
-                        data-checked='{{item.is_finish}}'>{{item.childTitle}}</text>
-                         <!-- <modal  hidden="{{hiddenmodalputChildTitle}}" height='60%'
-                        title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" 
-                        bindconfirm="confirmChildTitle"> 
-                            <input id='childTitle' bindinput='childInput' type='text' 
-                            value='{{inputChildTitle}}' placeholder="子任务标题" />
-                        </modal>     -->
-
-                    </view>
-                    <image class='radius' src='{{item.userPic}}'></image>
-                </view>
-                <view class="del"  catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' 
-                data-title='{{item.childTitle}}'>删除
-                </view>
+    <!-- 子任务列表 -->
+    <view wx:if='{{childTaskExpanded == true}}'>
+      <view wx:for="{{ChildTask}}" class=" touch-item '{{item.isTouchMove ? 'touch-move-active' : ''}} " data-index="{{index}}" style="{{aniChildTaskStyle}}">
+        <view class="contentminddle item-view ver-align space-between item-padding" bindtouchmove="touchmove" data-index="{{index}}" style='{{item.is_finish ? "color: #888888;text-decoration:line-through;" : ""}}{{item.txtStyle}}'>
+          <view class='childtask'>
+            <checkbox-group bindchange="childCheckboxChange">
+              <checkbox bindtap='checkTest' id='{{item.subtask_id}}' data-index="{{index}}" data-checked='{{item.is_finish}}' class='item-checkbox' checked='{{item.is_finish}}' value='{{item.subtask_id}}' />
+            </checkbox-group>
+            <view class='title' id='childText' data-index="{{index}}" data-taskid="{{item.subtask_id}}" bindtap="modalinputChildTitle" data-childtitle="{{item.childTitle}}" data-checked='{{item.is_finish}}'>
+              {{item.childTitle}}
             </view>
-        
-      <block wx:if="{{isShared}}">
-        <button type='primary' size='default' bindtap='showScheduleList'>去往项目</button>
-      </block>
+            <!-- <modal  hidden="{{hiddenmodalputChildTitle}}" height='60%'
+                          title="子任务标题" confirm-text="提交" cancel-text="取消" bindcancel="cancelChildTitle" 
+                          bindconfirm="confirmChildTitle"> 
+                              <input id='childTitle' bindinput='childInput' type='text' 
+                              value='{{inputChildTitle}}' placeholder="子任务标题" />
+                          </modal> -->
+          </view>
+          <image class='radius' src='{{item.userPic}}'></image>
+        </view>
+        <view class="del" catchtap="del" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>
+          删除
+        </view>
+      </view>
+    </view>
 
+    </view>
 
+  <!-- 反馈 -->
+  <view class='view-container' wx:if="{{feedbacktime != '' || feedback_mod != '' || feedbackExpanded == true}}">
+
+    <!-- 标题 -->
+    <view class="item-view ver-align space-between">
+      <view class='ver-align'>
+        <image src='/img/feedback_model.png'></image>
+        <text class='desc'>反馈</text>
+      </view>
+      <view class='ver-align child-task-btn'>
+        <view class='right' bindtap='expandFeedback'>
+          <image src='{{icon_arrow_down}}' style="display:{{feedbackExpanded?'none':'inline-block'}};"></image>
+          <image src='{{icon_arrow_up}}' style="display:{{feedbackExpanded?'inline-block':'none'}};"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 反馈模块 -->
+    <view wx:if='{{feedbackExpanded == true}}'>
+      <!-- <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='display:{{showFeedbackTime? "" : "none"}}; {{aniFeedbackStyle}}'> -->
+      <view class="touch-item '{{FeedbackisTouchMove? 'touch-move-active' : ''}}" style='{{aniFeedbackStyle}}'>
+        <view style='{{FeedbacktxtStyle}}' class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveFeedback">
+          <!-- <image src='/img/feedback_time.png'></image> -->
+          <!-- <view class='desc'> -->
+            <picker mode="date" value="{{feedbacktime}}" bindchange="FeedBacktimeChange">
+              <view wx:if="{{feedbacktime == ''}}" class="grey">点击设置反馈时间</view>
+              <view wx:else class="picker">{{feedbacktime}} 提交反馈</view>
+            </picker>
+          <!-- </view> -->
+        </view>
+        <view class="del" catchtap="delFeedback" data-index="{{index}}" data-id='{{item.subtask_id}}' data-title='{{item.childTitle}}'>
+          删除
+        </view>
+      </view>
+      <view class=" scroll-view-item item-view" bindtap='Feedback' bindtouchmove="touchmove">
+        <view wx:if="{{feedback_mod == ''}}" class='grey'>点击设置反馈模版</view>
+        <view wx:else>{{feedback_mod}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 遗留名字问题 -->
+  <!-- 此处包含所有评论及以下部分 的样式关联 -->
+  <view class='chat'>
+
+    <!-- 评论区 -->
+    <view class='view-container' wx:if="{{chat.length != 0}}">
+      <!-- <scroll-view scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" > -->
+      <!-- 标题 -->
+      <view class="item-view ver-align space-between">
+        <view class='ver-align'>
+          <image src='/img/task_description.png'></image>
+          <text class='desc'>评论</text>
+        </view>
+        <view class='ver-align child-task-btn'>
+          <view class='right' bindtap='expandComment'>
+            <image src='{{icon_arrow_down}}' style="display:{{commentExpanded?'none':'inline-block'}};"></image>
+            <image src='{{icon_arrow_up}}' style="display:{{commentExpanded?'inline-block':'none'}};"></image>
+          </view>
+        </view>
       </view>
 
-      <!-- 聊天框 -->
-      <view class='chat' >
-          <!-- <scroll-view scroll-y scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" >  -->
-          <!-- 信息框 -->
-          <view class='desc-title' >评论</view>
-          <block wx:for = "{{chat}}">
-            <block wx:if = "{{item.judgepictrue}}">
-              <!-- 图片信息框 -->
-              <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
-                <image class='person-icon' src='{{item.icon}}'></image>
-                <view class='person-icon-view'>
-                  <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image>
-                  <view class='time'>{{item.time}}</view>
-                </view>
+      <!-- 列表 -->
+      <view wx:if='{{commentExpanded == true}}'>
+        <block wx:for="{{chat}}">
+          <block wx:if="{{item.judgepictrue}}">
+            <!-- 图片信息框 -->
+            <view class='chatperson' id="chat{{index}}" data-index='{{index}}'>
+              <image class='person-icon' src='{{item.icon}}'></image>
+              <view class='person-icon-view'>
+                <image class='content-img' src="{{item.content}}" data-index='{{index}}' bindtap='previewImage'></image>
+                <view class='time'>{{item.time}}</view>
               </view>
-            </block>
-
-            <block wx:else>
-              <!-- 文字信息框 -->
-              <view class='chatperson' id="chat{{index}}" data-index='{{index}}' >
-                <image class='person-icon' src='{{item.icon}}'></image>
-                <view class='person-icon-view'>
-                  <text class='content'>{{item.content}}</text>
-                  <view class='time'>{{item.time}}</view>
-                </view>
-              </view>
-            </block>
+            </view>
           </block>
-          <!-- </scroll-view>  -->
-
-        <!-- 任务消息 -->
-        <block wx:for = "{{taskremind}}">
-          <view class='taskremind' id="remind{{index}}">
-            <view class='text'>{{item.text}}</view>
-            <view class='time'>{{item.time}}</view>
-          </view>
-        </block>
-<!-- cursor-spacing="20"confirm-hold="true" adjust-position="true"  -->
-        <!-- 输入框 -->
-          <form bindsubmit='sendMessage'>
-            <view class='input'>
-                <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
-                <input fixed="true" name="review" type='text' placeholder='{{phValue}}' 
-                bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" 
-                value='{{Inputcontent}}' confirm-type="发送"
-                focus='{{focus}}'cursor-spacing="20"></input>
-                <!-- <image class='face-icon' src='/img/expression.png'></image> -->
-                <!-- 判断是否为操作系统类型 -->
-                <block wx:if="{{isInputing}}">
-                  <!-- 正在输入时显示发送按钮，否则显示图片 -->
-                  <button id='send-btn' form-type='submit'>发送</button>
-                </block>
-                <block wx:else>
-                  <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
-                </block>
+          <block wx:else>
+            <!-- 文字信息框 -->
+            <view class='chatperson' id="chat{{index}}" data-index='{{index}}'>
+              <image class='person-icon' src='{{item.icon}}'></image>
+              <view class='person-icon-view'>
+                <text class='content'>{{item.content}}</text>
+                <view class='time'>{{item.time}}</view>
+              </view>
             </view>
-          </form>
+          </block>
+        </block>
       </view>
+
+    </view>
+
+    <!-- </scroll-view> -->
+    <!-- 任务消息 -->
+    <block wx:for="{{taskremind}}">
+      <view class='taskremind' id="remind{{index}}">
+        <view class='text'>{{item.text}}</view>
+        <view class='time'>{{item.time}}</view>
+      </view>
+    </block>
+    <!-- cursor-spacing="20"confirm-hold="true" adjust-position="true" -->
+
+    <!-- 输入框 -->
+    <form bindsubmit='sendMessage'>
+      <view class='input'>
+        <image class='template-icon' bindtap='ClickCommModel' src='/img/communication_model.png'></image>
+        <input fixed="true" name="review" type='text' placeholder='{{phValue}}' bindtap='ClickInput' bindblur='inputBlur' bindconfirm="ChatInput" value='{{Inputcontent}}' confirm-type="发送" focus='{{focus}}' cursor-spacing="20"></input>
+        <!-- <image class='face-icon' src='/img/expression.png'></image> -->
+        <!-- 判断是否为操作系统类型 -->
+        <block wx:if="{{isInputing}}">
+          <!-- 正在输入时显示发送按钮，否则显示图片 -->
+          <button id='send-btn' form-type='submit'>发送</button>
+        </block>
+        <block wx:else>
+          <image class='picture-icon' src='/img/picture.png' bindtap='PictrueSelect'></image>
+        </block>
+      </view>
+    </form>
+
+  </view>
 
 </view>
+
+<block wx:if="{{isShared}}">
+  <button type='primary' size='default' bindtap='showScheduleList'>去往项目</button>
+</block>
