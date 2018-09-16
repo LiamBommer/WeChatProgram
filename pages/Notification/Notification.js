@@ -345,7 +345,7 @@ Page({
     var Notification = Bmob.Object.extend('notification')
     var notificationQuery = new Bmob.Query(Notification)
     var notificationArr = []
-    
+
     //获取用户的所有通知
     notificationQuery.descending("createdAt")
     notificationQuery.limit(50)
@@ -360,7 +360,6 @@ Page({
         for (var i = 0;i<results.length;i++) {
           //针对获取通知的那个BUG，暂时的应对方法是判断项目名是否为空来避免
           if (results[i].attributes.project.name == "" || results[i].attributes.project.name == null){
-            deleteArr.push(results[i])
             continue;
           }
           var notiObject = {}
