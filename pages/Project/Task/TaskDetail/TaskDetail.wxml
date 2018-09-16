@@ -47,7 +47,7 @@
           <image class='membericon' src='{{item.userPic}}'></image>
         </block>
       </view>
-      <image src='{{icon_more}}'></image>
+      <!-- <image src='{{icon_more}}'></image> -->
     </view>
   </view>
 
