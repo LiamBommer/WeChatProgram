@@ -13,8 +13,9 @@
     </view>
   </view> -->
   
-  <button class='share' hover-class="share-hover"  open-type="share">
-    <view class="item" bindtap='inviteWeChat'>
+  <!-- 数据分析 .share -->
+  <button class='share' hover-class="share-hover"  open-type="share"  bindtap='inviteWeChat'>
+    <view class="item">
       <view class='img-view'>
         <image src='/img/wechat.png'></image>
       </view>

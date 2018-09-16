@@ -65,7 +65,7 @@
               <text class="task {{task_color}}" >任务B</text> -->
             </view>
           </view>
-          <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >
+          <view class="item-bottom-list project-detail" bindtap='showProjectDetail' data-name="{{item.name}}">
             <!-- <text class="list-desc">项目详情</text> -->
             <view class="list-content">
               <image class='itemmore-icon' src='/img/more.png'></image>
@@ -115,7 +115,7 @@
                 <text class="task {{task_color}}" >任务B</text> -->
               </view>
             </view>
-            <view class="item-bottom-list project-detail" bindtap='showProjectDetail' >
+            <view class="item-bottom-list project-detail" bindtap='showProjectDetail' data-name="{{item.name}}">
               <!-- <text class="list-desc">项目详情</text> -->
               <view class="list-content project-detail">
                 <image class='itemmore-icon' src='/img/more.png'></image>

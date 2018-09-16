@@ -42,7 +42,7 @@
     </view>
     <view class='item-view space-between'>
       <text class='des'>星标项目</text>
-      <switch checked="{{SwitchChecked}}" bindchange="switchChange"/>
+      <switch class='star' checked="{{SwitchChecked}}" bindchange="switchChange"/>
     </view>
   </view>
 

@@ -42,7 +42,7 @@
   background: #fff;
 }
 
-.Announcement-container .item-container .item{
+.Announcement-container .item-container .itemAnoun{
   width: 100%;
   min-height: 150rpx;
   background: #fff;
@@ -51,30 +51,30 @@
   border-bottom: 1rpx solid #f2f2f2;
 }
 
-.Announcement-container .item-container .item .item-first{
+.Announcement-container .item-container .itemAnoun .item-first{
   width:600rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.Announcement-container .item-container .item .item-first .item-icon{
+.Announcement-container .item-container .itemAnoun .item-first .item-icon{
    width: 60rpx;
    height: 60rpx;
    border-radius: 200rpx;
 }
 
-.Announcement-container .item-container .item .item-first .item-text{
+.Announcement-container .item-container .itemAnoun .item-first .item-text{
   width: 420rpx;
   height: 100%;
   margin: 16rpx 24rpx;
 }
 
-.Announcement-container .item-container .item .item-first .item-text .item-title{
+.Announcement-container .item-container .itemAnoun .item-first .item-text .item-title{
    font-size: 34rpx;
 }
 
-.Announcement-container .item-container .item .item-first .item-text .item-content{
+.Announcement-container .item-container .itemAnoun .item-first .item-text .item-content{
    font-size: 30rpx;
    /* color: #888888; */
    /* 多行省略 */
@@ -88,16 +88,16 @@
    /* 多行省略 */
 }
 
-.Announcement-container .item-container .item .item-second{
+.Announcement-container .item-container .itemAnoun .item-second{
    color: #b2b2b2;
 }
 
-.Announcement-container .item-container .item .item-second .item-time{
+.Announcement-container .item-container .itemAnoun .item-second .item-time{
    font-size: 25rpx;
    color: #b2b2b2;
 }
 
-.Announcement-container .item-container .item .item-second .item-read{
+.Announcement-container .item-container .itemAnoun .item-second .item-read{
    font-size: 28rpx;
    color: #b2b2b2;
 }

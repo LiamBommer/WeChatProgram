@@ -8,6 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    projectName: '',
+    ideaContent: '',
+    userName: '',
+    userId: '',
 
     icon_task_list: '/img/task_list.png',
     icon_member: '/img/member.png',
@@ -452,6 +457,15 @@ Page({
     var currentUserName = getApp().globalData.nickName
     var content = that.data.content
     var ideaId = that.data.ideaId
+
+    //数据分析
+    var projectName = that.data.projectName
+    that.setData({
+      projectName: projectName,
+      ideaContent: content,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
 
     // 分享
     return {

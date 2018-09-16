@@ -13,7 +13,7 @@
         <input type='text' class='item-content' name='desc' placeholder-class='placeholder' placeholder='为女生庆祝、宣扬运动...'></input>
     </view>
 
-    <button class='submit' size='default' form-type='submit' disabled='{{btn_disabled}}' plain style="background-color: #09bb07; " loading='{{btn_loading}}' >完成</button>
+    <button id='submit' class='submit' size='default' form-type='submit' disabled='{{btn_disabled}}' plain style="background-color: #09bb07; " loading='{{btn_loading}}' >完成</button>
     </form>
       
 

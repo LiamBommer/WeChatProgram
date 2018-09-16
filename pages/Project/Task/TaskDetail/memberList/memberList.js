@@ -11,7 +11,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    //数据分析
+    taskName:'',
+    projectName:'',
+    userName: '',
+    userId: '',
+
     TaskIndex: "",//是否选中
     taskId:'',//任务Id
     // ProjectIndex: "",
@@ -24,27 +29,7 @@ Page({
     //项目成员
     projectMember:[],
     //任务成员
-    TaskMemember: [
-      // {
-      //   //任务负责人
-      //   index: 0,
-      //   icon:"/img/me.png",
-      //   name: '帅涛' ,
-      //   checked: true,
-      // },
-      // {
-      //   index: 1 ,
-      //   icon: "/img/me.png",
-      //   name: '美国队长',
-      //   checked: true,
-      // },
-      // {
-      //   index: 2,
-      //   icon: "/img/me.png",
-      //   name: '灭霸',
-      //   checked: true,
-      // },
-    ],
+    TaskMemember: [],
     
   },
 
@@ -85,7 +70,17 @@ Page({
 
     console.log("项目成员", projectMember)
     console.log("任务成员", TaskMemember)
-    
+
+    //数据分析
+    var taskName = wx.getStorageSync('ProjectMore-Task').title
+    var projectName = wx.getStorageSync('Project-detail').name
+    that.setData({
+      projectName: projectName,
+      taskName: taskName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+
     for (var i in TaskMemember) {
         for (var j in projectMember) {
           if (TaskMemember[i].objectId == projectMember[j].id) {//项目成员中被选中的任务成员
@@ -127,6 +122,17 @@ Page({
   //变更负责人
   showChangePrinciple: function () {
     var that = this
+    
+    //数据分析
+    var taskName = wx.getStorageSync('ProjectMore-Task').title
+    var projectName = wx.getStorageSync('Project-detail').name
+    that.setData({
+      taskName: taskName,
+      projectName: projectName,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+
     //获取任务成员，第一位为负责人
     wx.setStorage({
       key: 'TaskDetail-memberList-TaskMember',
