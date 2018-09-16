@@ -765,6 +765,14 @@ Page({
             taskDesc: "",
           })
         }
+
+          // 反馈为空时,第一次进入页面时隐藏反馈模块
+          if(that.data.feedbacktime == '' && that.data.feedback_mod == '') {
+            that.setData({
+              feedbackExpanded: false,
+            })
+          }
+
         // 加载完成
         wx.hideLoading()
       },
@@ -1947,13 +1955,6 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     //   title: '正在加载',
     //   mask: 'true'
     // })
-
-    // 反馈为空时第一次进入时的显示判断
-    if(this.data.feedbacktime == '' && this.data.feedback_mod == '') {
-      this.setData({
-        feedbackExpanded: false,
-      })
-    }
 
     var that = this;
     //接受通知的参数ID

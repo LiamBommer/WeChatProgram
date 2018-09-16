@@ -132,7 +132,6 @@
 
   <!-- 反馈 -->
   <view class='view-container' wx:if="{{feedbacktime != '' || feedback_mod != '' || feedbackExpanded == true}}">
-  <!-- <view class='view-container' wx:if="{{ (feedbacktime != '' || feedback_mod != '') && feedbackExpanded == true}}"> -->
 
     <!-- 标题 -->
     <view class="item-view ver-align space-between">
