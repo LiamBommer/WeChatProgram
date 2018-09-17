@@ -41,7 +41,7 @@
         </view>
     </view> -->
 
-    <button class='addMember' size='default' bindtap='Finish'>完成</button>
+    <button class='addMember' size='default' bindtap='Finish' style='display:{{isLeader? "":"none"}}'>完成</button>
 
     <!-- 新手指引 -->
     <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">
