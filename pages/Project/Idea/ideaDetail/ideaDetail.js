@@ -356,14 +356,7 @@ Page({
 
    var that = this
 
-<<<<<<< HEAD
 
-=======
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
->>>>>>> dev-fumin
     //获取点子的点子ID
     var requestId = wx.getStorageSync("Notification-ideaId")
     var projId = wx.getStorageSync("Notification-projId")

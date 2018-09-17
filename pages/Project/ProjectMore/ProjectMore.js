@@ -67,10 +67,7 @@ Page({
     Idea:[
 
     ],
-<<<<<<< HEAD
     
-=======
->>>>>>> dev-fumin
 
     // Task list animation
     taskAnimationStyle: '',
@@ -1308,10 +1305,7 @@ Page({
         console.log("resultsidea:", results)
         //成功
         for (var i in results) {
-<<<<<<< HEAD
 
-=======
->>>>>>> dev-fumin
           var ideaObject = {}
           ideaObject = {
             'id': results[i].id || '',  //点子的id
@@ -1319,11 +1313,7 @@ Page({
             'taskTitle': results[i].get('task') != null && results[i].get('task').is_delete != true ? results[i].get('task')                        .title : '',  //关联的任务名称
             'projectName': results[i].get('project').name,  //项目名称
             'content': results[i].get('content') || '',  //点子内容
-<<<<<<< HEAD
             'userName': results[i].get('ideaname') || '',//results[i].attributes.user.nickName || '',//发布人的名字(真正的昵称，而不是其他名字)
-=======
-            // 'userName': results[i].attributes.user.nickName || '',   //发布人的名字(真正的昵称，而不是其他名字)
->>>>>>> dev-fumin
             // 'userPic': results[i].attributes.user.userPic || '',    //发布人的头像
             'cretaedAt': results[i].createdAt || '',  //点子创建时间
             'color': results[i].get('color') || '', 

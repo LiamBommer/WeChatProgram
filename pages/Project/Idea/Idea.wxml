@@ -18,19 +18,12 @@
    
     <view class='post-view'>
       <block wx:for="{{Idea}}" wx:key="{{id}}">
-<<<<<<< HEAD
           <view class='postIdea' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
             bindtap='showIdeaDetail' data-index='{{item.id}}' data-content='{{item.content}}'>
             <view class='user-info ver-align'>
               <!-- <image src='{{item.userPic}}' class='avatar'></image> -->
-=======
-          <view class='post' style='background-color:{{item.color}}; {{ideaAnimationStyle}}'
-            bindtap='showIdeaDetail' data-index='{{item.id}}'>
-            <!-- <view class='user-info ver-align'>
-              <image src='{{item.userPic}}' class='avatar'></image>
->>>>>>> dev-fumin
               <text class='username'>{{item.userName}}</text>
-            </view> -->
+            </view>
             <view class='content' space='nbsp'>
               {{item.content}}
             </view>

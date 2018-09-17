@@ -301,10 +301,10 @@ getProjectList:function(){
   var starprojectArr = []
   // getApp().globalData.projects != null && getApp().globalData.projects.length < 1
   if (1){
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
@@ -327,7 +327,13 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: false,
               expand: false,
-
+              meeting: '暂未有会议',
+              meeting_start_time: '',
+              tasks: [
+                {
+                  'title': '暂未有将截止的任务'
+                }
+              ]
             }
             projectArr.push(object)
           }
@@ -340,6 +346,13 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: true,
               expand: true,
+              meeting: '暂未有会议',
+              meeting_start_time: '',
+              tasks: [
+                {
+                  'title': '暂未有将截止的任务'
+                }
+              ]
             }
             starprojectArr.push(starobject)
           }
@@ -356,7 +369,7 @@ getProjectList:function(){
           projIdArr.push(projectArr[i].id)
         }
 
-        that.getAllTasks(starProjIdArr,projIdArr)
+        // that.getAllTasks(starProjIdArr,projIdArr)
 
         getApp().globalData.projects.push(projectArr)
         getApp().globalData.projects.push(starprojectArr)  //第一次请求后台，然后便不再请求
@@ -366,7 +379,19 @@ getProjectList:function(){
         that.setData({ StarProject: starprojectArr })
 
         // 加载完成
-        wx.hideLoading()
+        // wx.hideLoading()
+
+        // 获取每个项目的详细信息
+        for(var i=0;i<starProjIdArr.length;i++){
+          // @param2 isStarProj
+          that.oneProjectDisplay(starProjIdArr[i], true)
+        }
+
+        for(var i=0;i<projIdArr.length;i++){
+          // @param2 isStarProj
+          that.oneProjectDisplay(projIdArr[i], false)
+        }
+
       },
       error: function (error) {
         //失败
@@ -376,7 +401,6 @@ getProjectList:function(){
   }
 
 },
-<<<<<<< HEAD
 
 // getAllTasks: function(starProjIdArr, projIdArr){
 
@@ -482,96 +506,104 @@ oneProjectDisplay: function(projId, isStarProj){
  * 获取三个任务
  */
 getTasks:function (projId, isStarProj){
-=======
-getAllTasks: function(starProjIdArr, projIdArr){
->>>>>>> dev-fumin
 
   var that = this
-  var starLen = starProjIdArr.length
-  var len = projIdArr.length
-  var projIds = starProjIdArr.concat(projIdArr)
-  
+  var isStarProj = isStarProj
   var Task = Bmob.Object.extend("task")
   var taskQuery = new Bmob.Query(Task)
-  
-  //预先设置一个以项目id为键的字典，方便后面用来接收对应项目的任务
-  var taskObject = {}
-  for (var i = 0; i < projIds.length; i++) {
-    taskObject[projIds[i]] = []
-  }
 
-  taskQuery.limit(100)    //返回最多100条数据
-  taskQuery.equalTo('is_delete',false)  //获取未删除
-  taskQuery.equalTo('is_finish',false)  //获取未完成
+  taskQuery.limit(50)    //返回最多100条数据
+  taskQuery.equalTo('is_delete', false)  //获取未删除
+  taskQuery.equalTo('is_finish', false)  //获取未完成
+  taskQuery.equalTo("proj_id", projId)  
   taskQuery.select('title', 'end_time', 'proj_id')
-  taskQuery.containedIn("proj_id", projIds)
 
-var taskArr = []
-taskQuery.find({
-  success: function (results) {
-    for (var i = 0; i < results.length; i++) {
-      var object = {
-        title: results[i].attributes.title,
-        endTime: results[i].attributes.end_time,
-        projId: results[i].attributes.proj_id,
-        color:'green'  //用来对任务的紧急程度设置颜色,默认绿色
+  var taskArr = []  
+  taskQuery.find({
+    success:function(results){
+      for (var i = 0; i < results.length; i++) {
+        var object = {
+          title: results[i].attributes.title,
+          endTime: results[i].attributes.end_time,
+          projId: results[i].attributes.proj_id,
+          color: 'green'  //用来对任务的紧急程度设置颜色,默认绿色
+        }
+
+        taskArr.push(object)
       }
 
-      taskArr.push(object)
-    }
+      //排序,按已有的endTime从小到大排序
+      taskArr.sort(that.sortTasks)
+      //取出前三个数据
+      taskArr = taskArr.slice(0, 3)
 
-    for (var i = 0; i < taskArr.length; i++) {
-      taskObject[taskArr[i].projId].push(taskArr[i])
-    }
+      console.log("taskArr", taskArr)  //获取到的任务
 
-    //排序,按已有的endTime从小到大排序
-    for (var i = 0; i < projIds.length; i++) {
-      taskObject[projIds[i]].sort(that.sortTasks)
-    }
+      // 存进对应的项目中
+      if(taskArr.length != 0) {
 
-    //取出前三个任务
-    for (var i = 0; i < projIds.length; i++) {
-      taskObject[projIds[i]] = taskObject[projIds[i]].slice(0,3)
-    }
-    
-    console.log("taskObject",taskObject)  //获取到的任务
-    
+        if(isStarProj) {
+          var StarProject = that.data.StarProject
+          for(var i=0; i<StarProject.length; i++) {
+            // 找到对应项目，存储
+            if(StarProject[i].id == projId) {
+              var path = 'StarProject[' + i + '].tasks'
+              that.setData({
+                [path]: taskArr
+              })
+            }
+          }
 
+        } else {
+          var Project = that.data.Project
+          for(var i=0; i<Project.length; i++) {
+            // 找到对应项目，存储
+            if(Project[i].id == projId) {
+              var path = 'Project[' + i + '].tasks'
+              that.setData({
+                [path]: taskArr
+              })
+            }
+          }
+        }
 
-  },
-  error: function (error) {
+      }
+
+    },
+    error: function(error){
       //失败
-      console.log("错误信息"+error)
-  }
-})
-
-},
-sortTasks: function (a, b) {
-    if(a.endTime == "" || a.endTime == null) {
-      return 1
+      console.log('项目展示获取任务失败' + error)
     }
-
-    // if (a.endTime > b.endTime)
-    //   return -1
-
-    // return 1
-    var that = this
-    var currentTime = new Date(new Date().toLocaleDateString())
-    var endTimeA = new Date(new Date(a.endTime.replace(/-/g, "/")))
-    var endTimeB = new Date(new Date(b.endTime.replace(/-/g, "/")))
-
-    var daysA = endTimeA.getTime() - currentTime.getTime()
-    var daysB = endTimeB.getTime() - currentTime.getTime()
-    
-    var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
-    var dayB = parseInt(daysB / (1000 * 60 * 60 * 24))
-    
-    if(dayA <= 1) a["color"] = 'red'
-    if(dayA > dayB)
-      return 1
-    return -1;
+  })
 },
-getMeeting:function(projId){
+
+sortTasks: function (a, b) {
+  if (a.endTime == "" || a.endTime == null) {
+    return 1
+  }
+
+  // if (a.endTime > b.endTime)
+  //   return -1
+
+  // return 1
+  var that = this
+  var currentTime = new Date(new Date().toLocaleDateString())
+  var endTimeA = new Date(new Date(a.endTime.replace(/-/g, "/")))
+  var endTimeB = new Date(new Date(b.endTime.replace(/-/g, "/")))
+
+  var daysA = endTimeA.getTime() - currentTime.getTime()
+  var daysB = endTimeB.getTime() - currentTime.getTime()
+
+  var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
+  var dayB = parseInt(daysB / (1000 * 60 * 60 * 24))
+
+  if (dayA <= 1) a["color"] = 'red'
+
+  if (dayA > dayB)
+    return 1
+  return -1;
+},
+getMeeting:function(projId, isStarProj){
 
   var that = this
   var Meeting = Bmob.Object.extend('meeting')
@@ -581,7 +613,7 @@ getMeeting:function(projId){
   meetingQuery.limit(50)
   meetingQuery.equalTo('is_delete', false)
   meetingQuery.equalTo('proj_id', projId)
-  meetingQuery.select('title', 'proj_id')
+  meetingQuery.select('title', 'start_time', 'proj_id')
   meetingQuery.find({
       success: function (results) {
         for (var i = 0; i < results.length; i++) {
@@ -598,6 +630,42 @@ getMeeting:function(projId){
         meetingArr.sort(that.sortMeetings)
         //选取最近的一个
         meetingArr = meetingArr.slice(0, 1)
+
+        if(meetingArr.length != 0) {
+
+          if(isStarProj) {
+            var StarProject = that.data.StarProject
+            for(var i=0; i<StarProject.length; i++) {
+              // 找到对应项目，存储
+              if(StarProject[i].id == projId) {
+                var path = 'StarProject[' + i + '].meeting'
+                var path_2 = 'StarProject[' + i + '].meeting_start_time'
+                var time = meetingArr[0].startTime
+                time = time.substr(time.length - 4)
+                that.setData({
+                  [path]: meetingArr[0].title,
+                  // [path_2]: meetingArr[0].startTime
+                  [path_2]: time
+                })
+              }
+            }
+
+          } else {
+            var Project = that.data.Project
+            for(var i=0; i<Project.length; i++) {
+              // 找到对应项目，存储
+              if(Project[i].id == projId) {
+                var path = 'Project[' + i + '].meeting'
+                var path_2 = 'Project[' + i + '].meeting_start_time'
+                that.setData({
+                  [path]: meetingArr[0].title,
+                  [path_2]: meetingArr[0].startTime
+                })
+              }
+            }
+          }
+
+        }
 
         console.log("项目首页展示的会议", meetingArr)
       },
@@ -631,6 +699,8 @@ sortMeetings: function(a, b){
     return 1
   return -1;
 },
+
+
   /*
    * 涟漪点击效果
    */

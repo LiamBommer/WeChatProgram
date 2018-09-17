@@ -1,6 +1,5 @@
 <!--pages/Mine/Task/Task.wxml-->
 
-<<<<<<< HEAD
 <view class="has-no-content" style="display:{{Task.length==0 ? 'block':'none'}}">
   <view class='noitem'>
     <image class='noitem-icon' src='/img/noTask.png'></image>
@@ -11,9 +10,6 @@
 
 <view style="display:{{Task.length==0 ? 'none':'block'}}">
   <view class='Mine-Task-container'>
-=======
-<view class='Mine-Task-container'>
->>>>>>> dev-fumin
 
     <block wx:for="{{Task}}" wx:key="{{id}}">
       <!-- 列表项 -->
@@ -37,4 +33,5 @@
       </view>
     </block>
 
+  </view>
 </view>

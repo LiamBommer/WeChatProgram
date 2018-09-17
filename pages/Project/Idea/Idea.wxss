@@ -62,7 +62,6 @@
 }
 
 .post-view .user-info .username {
-  margin-left: 30rpx;
 }
 
 .post-view .content {
