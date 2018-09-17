@@ -4,6 +4,9 @@
   <!-- <view class='ripple-view' style='{{rippleViewStyle}}'>
     <view class='ripple' style='{{rippleStyle}}'></view>
   </view> -->
+
+  <!-- 123-->
+
   <!-- 涟漪效果的圆圈 END -->
   <!-- 无内容 -->
   <view style='display:{{StarProject.length==0 && Project.length==0 ? "":"none"}}'>
@@ -12,6 +15,7 @@
       <view class='noitem-title'>还没有项目哦</view>
       <view class='noitem-content'>我接手了一个项目，需要更好地管理它</view>
       <button class='noitem-create' bindtap='buildProject' size='default'>创建项目</button>
+
     </view>
   </view>
   <!-- 有内容 -->
