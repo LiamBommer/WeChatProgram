@@ -48,7 +48,12 @@
   
  <button type='primary' size='default' bindtap='Addmember'>邀请成员</button>
  
- <button class='Exit' type='warn' bindtap='DeleteProject' style='display:{{isLeader}}'>解散项目</button>
+ <block wx:if="{{isLeader}}">
+ <button class='Exit' type='warn' bindtap='DeleteProject' >解散项目</button>
+ </block>
+ <block wx:else>
+ <button class='Exit' type='warn' bindtap='DeleteProject' >退出项目</button>
+ </block>
 
   <!-- 新手指引 -->
   <view class="guide-container" style="display:{{is_beginner ? 'block':'none'}}">
