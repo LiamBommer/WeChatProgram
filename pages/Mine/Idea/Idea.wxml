@@ -1,6 +1,7 @@
 <!--pages/Mine/Idea/Idea.wxml-->
 <view class='Mine-Idea-container'>
 
+<<<<<<< HEAD
 <view class="has-no-content" style="display:{{Idea.length==0 ? 'block':'none'}}">
   <view class='noitem'>
     <image class='noitem-icon' src='/img/noIdea.png'></image>
@@ -10,6 +11,8 @@
 </view>
 
 <view style="display:{{Idea.length==0 ? 'none':'block'}}">
+=======
+>>>>>>> dev-fumin
   <block wx:for="{{Idea}}" wx:key="{{id}}">
       <!-- 列表项 -->
       <!-- <view class='idea-item' bindtap='IdeaDetail' > -->
@@ -29,6 +32,5 @@
         </view>
       </view>
   </block>
-</view>
 
 </view>

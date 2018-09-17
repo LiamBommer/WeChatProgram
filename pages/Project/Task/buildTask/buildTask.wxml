@@ -4,12 +4,17 @@
     <form bindsubmit='BuildTask'>
       <!-- 列表项 -->
       <view class='item'>
+<<<<<<< HEAD
           <view class='item-title'>名称</view>
           <input class='item-content' name='name' placeholder='写策划书、采购、场地申请...'></input>
+=======
+          <view class='item-title'>任务名称</view>
+          <input class='item-content' name='name' placeholder='输入任务名称...'></input>
+>>>>>>> dev-fumin
       </view>
       <!-- 列表项 -->
       <view class='item' >
-          <view class='item-title'>负责人</view>
+          <view class='item-title'>任务负责人</view>
           <image class=' image' src= '{{icon}}' bindtap='AddMember'></image>
       </view>
       <!-- 列表项 -->

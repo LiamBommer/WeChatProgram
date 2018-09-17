@@ -569,10 +569,10 @@ Page({
 
     var that = this
 
-    // wx.showLoading({
-    //   title: '正在加载',
-    //   // mask: 'true'
-    // })
+    wx.showLoading({
+      title: '正在加载',
+      // mask: 'true'
+    })
 
     //获取通知的日程ID
     var requestId = wx.getStorageSync("Notification-scheduleId")

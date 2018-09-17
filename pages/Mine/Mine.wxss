@@ -107,7 +107,6 @@
 
 .Mine-container .nav-more{
   width: 100%;
-  background-color: #f2f2f2;
 }
 
 /* 反馈输入框 */

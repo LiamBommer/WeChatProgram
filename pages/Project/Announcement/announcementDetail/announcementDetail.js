@@ -555,9 +555,9 @@ Page({
    */
   onShow: function () {
    var that = this
-  //  wx.showLoading({
-  //    title: '正在加载',
-  //  })
+   wx.showLoading({
+     title: '正在加载',
+   })
 
    //获取通知的公告ID
    var requestId = wx.getStorageSync("Notification-announcementId")

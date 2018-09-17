@@ -1971,12 +1971,19 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+<<<<<<< HEAD
 
     // wx.showLoading({
     //   title: '正在加载',
     //   mask: 'true'
     // })
 
+=======
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
+>>>>>>> dev-fumin
     var that = this;
 
     //接受【通知】的标识

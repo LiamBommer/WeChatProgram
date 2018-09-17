@@ -388,7 +388,7 @@ Page({
         
 
 
-        // wx.hideLoading()
+        wx.hideLoading()
 
       },
       error: function (error) {
@@ -693,8 +693,11 @@ Page({
    */
   onLoad: function (options) {
 
+<<<<<<< HEAD
     // 加载动画
     //this.notificationAnimation()
+=======
+>>>>>>> dev-fumin
   },
 
   /**
@@ -708,12 +711,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // wx.showLoading({
-    //   title: '正在加载',
-    // })
+    wx.showLoading({
+      title: '正在加载',
+    })
     var that = this
     var userId = getApp().globalData.userId
+<<<<<<< HEAD
     console.log("useId" + userId + "获取通知")
+=======
+    console.log("userId", userId)
+
+    // 加载动画
+    that.notificationAnimation()
+
+>>>>>>> dev-fumin
     that.getNotification(userId)
   },
 

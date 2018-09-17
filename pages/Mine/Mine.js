@@ -303,7 +303,7 @@ Page({
             that.setData({
               Task: taskArr
             })
-            // wx.hideLoading()
+            wx.hideLoading()
           }
           else{
           
@@ -743,12 +743,15 @@ sortTask:function(a,b){
 
 
   onLoad: function () {
+<<<<<<< HEAD
 
     // Animation
     // this.myTaskAnimation()
     // this.myMeetingAnimation()
     // this.myIdeaAnimation()
     
+=======
+>>>>>>> dev-fumin
     if (app.globalData.userId) {
       var userInfo = {
         'userId': app.globalData.userId,
@@ -789,11 +792,15 @@ sortTask:function(a,b){
 
     var userId = this.data.userInfo.userId
 
-    // wx.showLoading({
-    //   title: '正在加载',
-    //   mask: 'true'
-    // })
+    wx.showLoading({
+      title: '正在加载',
+      mask: 'true'
+    })
 
+    // Animation
+    this.myTaskAnimation()
+    this.myMeetingAnimation()
+    this.myIdeaAnimation()
 
     // 获取点子列表
     this.getMyTasks(userId)
