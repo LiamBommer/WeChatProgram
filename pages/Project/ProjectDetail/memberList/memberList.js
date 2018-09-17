@@ -10,6 +10,8 @@ Page({
   data: {
     //是否选中
     memberId: -1,
+    //判断项目负责人
+    isLeader:false,
     //项目成员
     ProjectMemember: [
       {
@@ -401,6 +403,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+    //判断当前操作人是否为项目负责人
+    var isLeader = wx.getStorageSync("ProjectDetail-isLeader")
+    this.setData({
+      isLeader: isLeader
+    })
+
 
     // 获取新用户标识，显示新手指引
     var is_beginner = wx.getStorageSync('is_beginner')

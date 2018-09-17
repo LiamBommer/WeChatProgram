@@ -23,7 +23,7 @@ Page({
     icon_more: '/img/more.png',
     project_response: '加载中',//项目归属人名
     project_leaderId:'',//项目领导id
-    isLeader:"none",
+    isLeader: false,
 
     //成员列表
     member:[
@@ -394,8 +394,11 @@ Page({
            SwitchChecked: wx.getStorageSync('Project-detail').checked,  //用了缓存来标记用户的项目是否置顶
            text_color: text_color,
            project_leaderId: detailObject.attributes.leader_id,
-           isLeader: detailObject.attributes.leader_id == getApp().globalData.userId ? "" :"none",
+           isLeader: detailObject.attributes.leader_id == getApp().globalData.userId ? true : false,
         })
+
+        //权限控制，将参数传给成员列表
+        wx.setStorageSync("ProjectDetail-isLeader", that.data.isLeader)
 
 
       },

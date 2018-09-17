@@ -30,7 +30,7 @@
       <text class='desc'>{{projectName}}</text>
     </view>
     <view class="touch-item '{{DeadlineisTouchMove ? 'touch-move-active' : ''}}">
-      <view style='{{DeadlinetxtStyle}}' class="contentminddle scroll-view-item item-view" bindtouchmove="touchmoveDeadline">
+      <view style='{{DeadlinetxtStyle}}' class="contentminddle scroll-view-item item-view deadline" bindtouchmove="touchmoveDeadline">
         <!-- <image src='{{icon_deadline}}'></image> -->
         <!-- <view class='desc'> -->
         <picker mode="date" value="{{deadline}}" bindchange="DeadLineChange">

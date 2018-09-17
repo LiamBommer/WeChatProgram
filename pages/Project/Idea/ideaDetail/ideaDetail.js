@@ -356,18 +356,15 @@ Page({
 
    var that = this
 
-    // wx.showLoading({
-    //   title: '正在加载',
-    //   mask: 'true'
-    // })
+
     //获取点子的点子ID
     var requestId = wx.getStorageSync("Notification-ideaId")
     var projId = wx.getStorageSync("Notification-projId")
     //获取分享的标识
     var isShared = this.data.isShared
     
-    //判断是否从通知 进来
     if (requestId != "" && projId != '') {
+    //从通知进入
       console.log("获取通知的点子ID", requestId, projId)
       wx.setStorageSync('ProjectMore-ideaDetail-id', requestId)   //点进关联任务 ，要用到这个缓存，所以这里先设置
       that.setData({
@@ -378,6 +375,7 @@ Page({
       
     }
     else if(isShared) {
+    //从分享进入
       var ideaId = that.data.ideaId
       that.getOneIdeaDetail(ideaId)
     }
