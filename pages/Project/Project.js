@@ -517,7 +517,8 @@ getTasks:function (projId, isStarProj){
   taskQuery.descending('createdAt')    //根据创建时间降序排列
   taskQuery.equalTo('is_delete', false)  //获取未删除
   taskQuery.equalTo('is_finish', false)  //获取未完成
-  taskQuery.equalTo("proj_id", projId)  
+  taskQuery.equalTo("proj_id", projId)
+  taskQuery.notEqualTo("end_time","")  
   taskQuery.select('title', 'end_time', 'proj_id','createdAt')
 
   var taskArr = []  
