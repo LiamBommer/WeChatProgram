@@ -13,14 +13,15 @@
 
     <block wx:for="{{Task}}" wx:key="{{id}}">
       <!-- 列表项 -->
-      <!-- <view class='task-item' bindtap='TaskDetail'> -->
-      <view class='task-item' style="{{myTaskAnimationStyle}};">
+      <view class='task-item' 
+      style="{{myTaskAnimationStyle}};" >
         <!-- 列表左 -->
         <view class='item-first'>
           <checkbox-group  bindchange='taskFinishAction' data-id='{{item.id}}' data-project-id='{{item.projectId}}'>
             <checkbox class='item-checkbox' value='{{item.id}}' checked='{{item.isFinish}}'/>
           </checkbox-group>
-          <view class='item-text'>
+          <view class='item-text' data-id='{{item.id}}' data-project-id='{{item.projectId}}' data-project-name='{{item.projectName}}'  
+          bindtap='TaskDetail'>
             <view class='item-title'>{{item.taskTitle}}</view>
             <view class='item-content'>{{item.projectName}}</view>
           </view>

@@ -1878,12 +1878,10 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // wx.showLoading({
-    //   title: '正在加载',
-    //   mask: 'true'
-    // })
+    
     var that = this;
-    //接受通知的参数ID
+
+    //接受【通知】的标识
     var requestId = wx.getStorageSync("Notification-taskId")
     var projectName = wx.getStorageSync("Notification-projName")
     var projmember = wx.getStorageSync("Notification-projmemberArr")
@@ -1891,8 +1889,15 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     console.log("Notification", requestId, projectName, projmember, taskLeaderId)
     //获取分享的标识
     var isShared = this.data.isShared
+    //获取【我的】页面的标识
+    var mineTaskId = wx.getStorageSync("Mine-taskId")
+    var mineProjName = wx.getStorageSync("Mine-projName")
+    var mineProjmemberArr = wx.getStorageSync("Mine-projmemberArr")
+    var mineTaskLeaderId = wx.getStorageSync("Mine-taskLeaderId")
+
     //mrli 删除了if判断语句里面的 taskLeaderId != "" 因为任务可能没有负责人
     if (requestId != "" && projectName != "" && projmember != ""/* && taskLeaderId != ""*/) {
+      //【通知】进入
       console.log("Notification", requestId, projectName)
       var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
       if (leaderId != "") {
@@ -1910,7 +1915,26 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getSubtasks(requestId);//获取子任务列表
       that.getTaskRecord(requestId)//获取任务记录
       that.getTaskComment(requestId)//获取评论
-
+    }
+    else if (mineTaskId != "" && mineProjName != "" && mineProjmemberArr != "") {
+      //【我的】进入
+      console.log("Notification", mineTaskId, mineProjName)
+      var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
+      if (leaderId != "") {
+        console.log("新负责人：刷新后台！", leaderId)
+        mineTaskLeaderId = leaderId //任务负责人id
+      }
+      that.setData({
+        taskId: mineTaskId,
+        leaderId: mineTaskLeaderId,
+        projectName: mineProjName,
+        projectMember: mineProjmemberArr
+      })
+      that.getTaskDetail(mineTaskId);//获取任务详情
+      that.getTaskMember(mineTaskId, mineTaskLeaderId)//获取任务成员
+      that.getSubtasks(mineTaskId);//获取子任务列表
+      that.getTaskRecord(mineTaskId)//获取任务记录
+      that.getTaskComment(mineTaskId)//获取评论
     }
     else if(isShared) {
       // 分享进入
@@ -1927,7 +1951,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
 
     }
     else {
-      //任务
+      //任务详情进入
       wx.getStorage({
         key: 'ProjectMore-Task',
         success: function (res) {
@@ -1960,7 +1984,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
           })
         },
       })
-      //项目成员
+      //获取项目成员
       wx.getStorage({
         key: 'ProjectMore-projectMember',
         success: function (res) {
@@ -1973,6 +1997,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       })
 
     }
+
     //发送沟通模板
       var currentT = new Date().toLocaleString()//获取当前时间
       var currentTime = currentT.substring(9, 15)

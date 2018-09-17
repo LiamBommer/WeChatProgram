@@ -161,10 +161,21 @@ Page({
 
 
   //跳转任务详情
-  TaskDetail: function () {
-    wx.navigateTo({
-      url: '../Project/Task/TaskDetail/TaskDetail',
-    })
+  TaskDetail: function (e) {
+    var that = this
+    var requestId = e.currentTarget.dataset.id
+    var projId = e.currentTarget.dataset.projectId
+    var projName = e.currentTarget.dataset.projectName
+    //设置任务ID缓存
+    wx.setStorageSync("Mine-taskId", requestId)
+    //设置项目名字缓存
+    wx.setStorageSync("Mine-projName", projName)
+    //设置项目成员,任务负责人ID缓存
+    that.getProjMemberAndTaskleaderId(projId, requestId)
+
+    // wx.navigateTo({
+    //   url: '../Project/Task/TaskDetail/TaskDetail',
+    // })
   },
 
   //跳转会议详情
@@ -314,6 +325,104 @@ sortTask:function(a,b){
     return 1
   return -1
 },
+
+
+  /**
+ * 获取项目成员和任务领导人id
+ */
+  getProjMemberAndTaskleaderId: function (projId, taskId) {
+    var that = this
+    var projmemberArr = []  //项目成员数组
+    var taskLeaderId = '0'  //任务负责人id
+    //先获取项目成员数组
+    var ProjectMember = Bmob.Object.extend("proj_member")
+    var memberQuery = new Bmob.Query(ProjectMember)
+    var User = Bmob.Object.extend("_User")
+    var userQuery = new Bmob.Query(User)
+
+    var leader_id = "0"
+    var memberId = [] //项目的所有成员id数组
+
+    //获取指定项目的所有成员id，50条
+    memberQuery.equalTo("proj_id", projId)
+    memberQuery.select("user_id", "is_leader")
+    memberQuery.limit(50)
+    memberQuery.find().then(function (results) {
+      //返回成功
+      for (var i = 0; i < results.length; i++) {
+        var object = results[i];
+        if (object.get("is_leader")) {
+          //项目领导，放在数组的第一个
+          leader_id = object.get("user_id")
+          memberId.unshift(leader_id)
+
+        } else {
+          memberId.push(object.get("user_id"))  //将成员id添加到数组
+        }
+      }
+    }).then(function (result) {
+
+      //获取指定项目的所有成员,一次可以获取50条
+      userQuery.select("objectId", "nickName", "userPic")  //查询出用户基本信息，id ，昵称和头像
+      userQuery.limit(50)
+      userQuery.containedIn("objectId", memberId)
+
+      userQuery.find({
+        success: function (results) {
+          // 循环处理查询到的数据
+          for (var i = 0; i < results.length; i++) {
+            var object
+            object = {
+              'checked': '',
+              'id': results[i].id,
+              'nickName': results[i].get('nickName'),
+              'userPic': results[i].get('userPic')
+            }
+
+            if (object.id == leader_id) {
+              //将项目领导放在数组的第一个位置
+              projmemberArr.unshift(object)
+            } else
+              projmemberArr.push(object)
+          }
+          //然后获取taskLeaderId
+          var Task = Bmob.Object.extend('task')
+          var taskQuery = new Bmob.Query(Task)
+
+          taskQuery.include('leader')
+          taskQuery.get(taskId, {
+            success: function (result) {
+              //获取任务负责人id成功
+              taskLeaderId = result.get('leader').objectId
+              console.log('获取任务负责人id成功', taskLeaderId, '成员', projmemberArr)
+              //设置缓存
+              wx.setStorageSync("Mine-projmemberArr", projmemberArr)
+              wx.setStorageSync("Mine-taskLeaderId", taskLeaderId)
+              wx.navigateTo({
+                url: '../Project/Task/TaskDetail/TaskDetail',
+              })
+
+
+            },
+            error: function (error) {
+              //获取任务负责人id失败
+
+            }
+          })
+        },
+        error: function (error) {
+          console.log("查询失败: " + error.code + " " + error.message);
+          //失败情况
+
+
+
+
+
+        }
+      })
+
+    })
+  },
 
   /**
  * @parameter projId 项目id ，taskId 任务id ,isFinish 是否完成（true表示完成，false表示重做任务）

@@ -180,34 +180,34 @@ Page({
         url: '../Project/Announcement/announcementDetail/announcementDetail?',
       })
     }
-    else if (_type == 3)//日程
-    {
-      Notification[index].isRead = true
-      //设置通知已读
-      that.setData({
-        Notification: Notification
-      })
-      //设置日程ID缓存
-      wx.setStorageSync("Notification-scheduleId", requestId)
-      wx.navigateTo({
-        url: '../Project/Schedule/scheduleDetail/scheduleDetail',
-      })
-    }
-    else if (_type == 4)//会议
-    {
-      Notification[index].isRead = true
-      //设置通知已读
-      that.setData({
-        Notification: Notification
-      })
-      //设置会议ID缓存
-      wx.setStorageSync("Notification-meetingId", requestId)
-      //设置项目ID缓存
-      wx.setStorageSync("Notification-projId", projId)
-      wx.navigateTo({
-        url: '../Project/Meeting/meetingDetail/meetingDetail',
-      })
-    }
+    // else if (_type == 3)//日程
+    // {
+    //   Notification[index].isRead = true
+    //   //设置通知已读
+    //   that.setData({
+    //     Notification: Notification
+    //   })
+    //   //设置日程ID缓存
+    //   wx.setStorageSync("Notification-scheduleId", requestId)
+    //   wx.navigateTo({
+    //     url: '../Project/Schedule/scheduleDetail/scheduleDetail',
+    //   })
+    // }
+    // else if (_type == 4)//会议
+    // {
+    //   Notification[index].isRead = true
+    //   //设置通知已读
+    //   that.setData({
+    //     Notification: Notification
+    //   })
+    //   //设置会议ID缓存
+    //   wx.setStorageSync("Notification-meetingId", requestId)
+    //   //设置项目ID缓存
+    //   wx.setStorageSync("Notification-projId", projId)
+    //   wx.navigateTo({
+    //     url: '../Project/Meeting/meetingDetail/meetingDetail',
+    //   })
+    // }
     else if (_type == 5)//墙
     {
       Notification[index].isRead = true
