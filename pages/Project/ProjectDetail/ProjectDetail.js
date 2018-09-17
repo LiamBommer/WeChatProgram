@@ -21,7 +21,7 @@ Page({
     project_desc: '加载中',//项目描述
     project_img:"/img/logo.png",
     icon_more: '/img/more.png',
-    project_response: '',//项目归属人名
+    project_response: '加载中',//项目归属人名
     project_leaderId:'',//项目领导id
     isLeader:"none",
 
@@ -235,7 +235,14 @@ Page({
     
   },
 
-  //删除/退出项目
+  //邀请成员
+  Addmember: function () {
+    wx.navigateTo({
+      url: './memberList/addMember/addMember',
+    })
+  },
+
+  //解散项目
   DeleteProject: function () {
     var that = this
     wx.showModal({
@@ -722,10 +729,10 @@ cancelProjectFirst: function (projId, isFirst) {
 
     // 等待加载完成后消失
     // getProjectDetail()
-    wx.showLoading({
-      title: '正在加载',
-      mask: 'true'
-    })
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
 
     var that = this
     //项目

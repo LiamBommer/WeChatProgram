@@ -122,3 +122,11 @@ modal textarea {
   margin-top: 30rpx;
 }
 /*** 新手指引 END ***/
+
+.Exit{
+  margin-top: 20rpx;
+  margin-bottom:40rpx;
+  width:620rpx;
+  height:80rpx;
+  line-height:80rpx;
+}

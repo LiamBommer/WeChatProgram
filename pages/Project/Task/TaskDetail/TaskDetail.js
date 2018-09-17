@@ -62,6 +62,8 @@ Page({
     show: false,
     projectId:"",//项目id 
 
+    taskDesc: "", // 任务描述
+
     deadline: '2018-06-01',//截止时间
     DeadlineisTouchMove: false,//判断滑动截止时间
     DeadlinetxtStyle:"",//截止时间滑动距离
@@ -74,7 +76,7 @@ Page({
     FeedbackisTouchMove: false,//判断滑动反馈时间
     FeedbacktxtStyle: "",//反馈时间滑动距离
 
-    feedbackMod: "",
+    feedback_mod: "",
     taskDesc: "",
     Inputcontent:'',
     scrollTop: 0,//消息定位
@@ -104,9 +106,17 @@ Page({
     icon_member: '/img/member.png',
     icon_close: '/img/close.png',
     icon_create: '/img/create.png',
+    icon_more: '/img/more.png',
+    icon_arrow_down: '/img/arrow_down.png',
+    icon_arrow_up: '/img/arrow_up.png',
 
     // 是否从分享页面进入的标识
     isShared: false,  
+
+    // 模块展开
+    childTaskExpanded: true,
+    feedbackExpanded: true,
+    commentExpanded: true,
 
     //子任务循环列表
     ChildTask:[
@@ -172,8 +182,39 @@ Page({
 
   },
 
+  // 展开子任务模块
+  expandChildTask: function() {
+    var flag = this.data.childTaskExpanded
+    if(flag == true) flag = false
+    else flag = true
 
-  //勾选任务
+    this.setData({
+      childTaskExpanded: flag
+    })
+  },
+
+  // 展开反馈模块
+  expandFeedback: function() {
+    var flag = this.data.feedbackExpanded
+    if(flag == true) flag = false
+    else flag = true
+
+    this.setData({
+      feedbackExpanded: flag
+    })
+  },
+
+  // 展开评论模块
+  expandComment: function() {
+    var flag = this.data.commentExpanded
+    if(flag == true) flag = false
+    else flag = true
+
+    this.setData({
+      commentExpanded: flag
+    })
+  },
+
   checkboxChange: function () {
     var that = this
     var userName = getApp().globalData.nickName
@@ -276,41 +317,83 @@ Page({
      var that = this;
 
      wx.showActionSheet({
-       itemList: ['提醒时间', '反馈时间', '反馈模板', '任务描述'],
+       itemList: ['添加子任务', '添加反馈', '删除该任务'],
        success: function(res) {
-         // 提醒时间
-         if(res.tapIndex == 0) {
-           if (that.data.showRemindTime == false) {
-             that.setData({
-               showRemindTime: true
-             });
+        //  // 提醒时间
+        //  if(res.tapIndex == 0) {
+        //    if (that.data.showRemindTime == false) {
+        //      that.setData({
+        //        showRemindTime: true
+        //      });
 
-             // 弹出动画
-             that.aniShowRemindTime()
+        //      // 弹出动画
+        //      that.aniShowRemindTime()
 
-             wx.showToast({
-               title: '添加成功',
-             })
-           }
-           else {
-             wx.showToast({
-               title: '已经添加过啦',
-               icon: 'none',
-               duration: 1500,
-             })
-           }
-         }
+        //      wx.showToast({
+        //        title: '添加成功',
+        //      })
+        //    }
+        //    else {
+        //      wx.showToast({
+        //        title: '已经添加过啦',
+        //        icon: 'none',
+        //        duration: 1500,
+        //      })
+        //    }
+        //  }
 
          // 反馈时间
+        //  if(res.tapIndex == 1) {
+        //    if (that.data.showFeedbackTime == false) {
+        //      that.setData({
+        //        showFeedbackTime: true
+        //      });
+
+        //      // 弹出动画
+        //      that.aniShowFeedback()
+
+        //      wx.showToast({
+        //        title: '添加成功',
+        //      })
+        //    }
+        //    else {
+        //      wx.showToast({
+        //        title: '已经添加过啦',
+        //        icon: 'none',
+        //        duration: 1500,
+        //      })
+        //    }
+        //  }
+
+         // 子任务
+         if(res.tapIndex == 0) {
+            that.setData({
+              childTaskExpanded: true,
+            });
+            //  wx.showToast({
+            //    title: '添加成功',
+            //  })
+            that.AddChildTask();
+
+          //  if (that.data.ChildTask.length == 0) {
+          //  }
+          //  else {
+          //    wx.showToast({
+          //      title: '已经添加过啦',
+          //      icon: 'none',
+          //      duration: 1500,
+          //    })
+          //  }
+         }
+
+         // 反馈
          if(res.tapIndex == 1) {
-           if (that.data.showFeedbackTime == false) {
+           if (that.data.showFeedbackModel == false || that.data.showFeedbackTime == false) {
              that.setData({
-               showFeedbackTime: true
+               feedbackExpanded: true,
+               showFeedbackModel: true,
+               showFeedbackTime: true,
              });
-
-             // 弹出动画
-             that.aniShowFeedback()
-
              wx.showToast({
                title: '添加成功',
              })
@@ -324,46 +407,28 @@ Page({
            }
          }
 
-         // 反馈模板
+         // 删除
          if(res.tapIndex == 2) {
-           if (that.data.showFeedbackModel == false) {
-             that.setData({
-               showFeedbackModel: true
-             });
-             wx.showToast({
-               title: '添加成功',
-             })
-           }
-           else {
-             wx.showToast({
-               title: '已经添加过啦',
-               icon: 'none',
-               duration: 1500,
-             })
-           }
-         }
+          //  if (that.data.showDescription == false) {
+          //    that.setData({
+          //      showDescription: true
+          //    });
 
-         // 任务描述
-         if(res.tapIndex == 3) {
-           if (that.data.showDescription == false) {
-             that.setData({
-               showDescription: true
-             });
+          //    // 弹出动画
+          //    that.aniShowDescription()
 
-             // 弹出动画
-             that.aniShowDescription()
-
-             wx.showToast({
-               title: '添加成功',
-             })
-           }
-           else {
-             wx.showToast({
-               title: '已经添加过啦',
-               icon: 'none',
-               duration: 1500,
-             })
-           }
+          //    wx.showToast({
+          //      title: '添加成功',
+          //    })
+          //  }
+          //  else {
+          //    wx.showToast({
+          //      title: '已经添加过啦',
+          //      icon: 'none',
+          //      duration: 1500,
+          //    })
+          //  }
+          that.DeleteTask();
          }
        },
        fail: function(res) {
@@ -504,10 +569,20 @@ Page({
       success: function (res) {//删除任务
         if (res.confirm) {
           var userName = getApp().globalData.nickName
-          that.deleteTask(wx.getStorageSync('Project-detail').id,taskId, userName)
-          wx.navigateBack({
-            url: '../../ProjectMore/ProjectMore',
-          })
+          if(!that.data.isShared){
+            that.deleteTask(wx.getStorageSync('Project-detail').id, taskId, userName)
+            wx.navigateBack({
+              url: '../../ProjectMore/ProjectMore',
+            })
+          }else{
+            //为了防止别人乱删除被分享的任务，所以通知用户到小程序中删除
+            wx.showToast({
+              title: '不能在分享页面删除哟~',
+              icon: 'none'
+              //image:''  //可以加图片
+            })
+          }
+          
         }
         else if (res.cancel) {
         }
@@ -700,6 +775,14 @@ Page({
             taskDesc: "",
           })
         }
+
+          // 反馈为空时,第一次进入页面时隐藏反馈模块
+          if(that.data.feedbacktime == '' && that.data.feedback_mod == '') {
+            that.setData({
+              feedbackExpanded: false,
+            })
+          }
+
         // 加载完成
         wx.hideLoading()
       },
@@ -1532,10 +1615,20 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
          var subTaskTitle = e.currentTarget.dataset.childTitle
          console.log(subTaskTitle)
          var userName = getApp().globalData.nickName
-         that.deleteSubTask(wx.getStorageSync('Project-detail').id,taskId,subTaskId, userName, subTaskTitle)
-         that.setData({
-           ChildTask: that.data.ChildTask
-         })
+         if(!that.data.isShared){
+           that.deleteSubTask(wx.getStorageSync('Project-detail').id, taskId, subTaskId, userName, subTaskTitle)
+           that.setData({
+             ChildTask: that.data.ChildTask
+           })
+         }else{
+           //为了防止别人乱删除被分享的子任务，所以通知用户到小程序中删除
+           wx.showToast({
+             title: '不能在分享页面删除哟~',
+             icon: 'none'
+             //image:''  //可以加图片
+           })
+         }
+         
        }
       }
     })
@@ -1878,7 +1971,12 @@ sendTaskCommentPicture:function (taskId, publisherId) {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
+    // wx.showLoading({
+    //   title: '正在加载',
+    //   mask: 'true'
+    // })
+
     var that = this;
 
     //接受【通知】的标识

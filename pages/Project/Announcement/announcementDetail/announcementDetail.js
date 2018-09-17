@@ -7,15 +7,19 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //数据分析
+    userName: '',
+    userId: '',
+
     hiddenmodalputTitle: true,//弹出标题模态框
 
     id:"",//公告ID
-    title: '加载中',//标题
-    inputTitle:'',//输入的标题
-    content: '加载中',
+    // title: '加载中',//标题
+    // inputTitle:'',//输入的标题
+    content: '加载中',//公告内容，数据分析
     note_time: '',
     note_user: '',
-    belonging: '加载中',//项目名
+    belonging: '加载中',//项目名，数据分析
 
     has_read: true,  // 本用户是否已读此公告
     is_read_empty: false, // 已读列表是否为空，下同
@@ -49,32 +53,32 @@ Page({
 
 
   //点击按钮弹出指定的hiddenmodalput弹出框  
-  modalinputTitle: function () {
-    this.setData({
-      hiddenmodalputTitle: false
-    })
-  },
-  //取消按钮  
-  cancelTitle: function () {
-    this.setData({
-      hiddenmodalputTitle: true,
-    });
-  },
-  //确认  
-  confirmTitle: function (e) {
-    this.setData({
-      hiddenmodalputTitle: true,
-      title: this.data.inputTitle
-    })
-  }, 
+  // modalinputTitle: function () {
+  //   this.setData({
+  //     hiddenmodalputTitle: false
+  //   })
+  // },
+  // //取消按钮  
+  // cancelTitle: function () {
+  //   this.setData({
+  //     hiddenmodalputTitle: true,
+  //   });
+  // },
+  // //确认  
+  // confirmTitle: function (e) {
+  //   this.setData({
+  //     hiddenmodalputTitle: true,
+  //     title: this.data.inputTitle
+  //   })
+  // }, 
 
-  //标题
-  input: function (e){
-    var inputTitle = e.detail.value
-    this.setData({
-      inputTitle: inputTitle
-    })
-  },
+  // //标题
+  // input: function (e){
+  //   var inputTitle = e.detail.value
+  //   this.setData({
+  //     inputTitle: inputTitle
+  //   })
+  // },
   
   //内容
   Content: function (e) {
@@ -97,6 +101,17 @@ Page({
 
     var read = that.data.read
     var noread = that.data.noread
+
+    //数据分析
+    var belonging = that.data.belonging
+    var content = that.data.content
+    that.setData({
+      projectName: belonging,
+      announContent: content,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
+    console.log("111111111111111111", that.data.projectName, that.data.announContent, that.data.userName, that.data.userId, )
 
     // for(var i in read){
     //   if (read[i].objectId == CurrentMemberId)//已点击"收到"
@@ -195,7 +210,16 @@ Page({
             title: '正在删除...',
           })
           // delete
-          that.deleteAnnouncement(wx.getStorageSync('Project-detail').id,that.data.id)
+          if (!that.data.isShared)
+            that.deleteAnnouncement(wx.getStorageSync('Project-detail').id,that.data.id)
+          else{
+            //为了防止别人乱删除被分享的公告，所以通知用户到小程序中删除
+            wx.showToast({
+              title: '不能在分享页面删除哟~',
+              icon:'none'
+              //image:''  //可以加图片
+            })
+          }   
           
         }
         else{//点击取消
@@ -606,12 +630,21 @@ Page({
 
     var that = this
     var currentUserName = getApp().globalData.nickName
-    var title = that.data.title
+    var content = that.data.content
     var announcementId = that.data.id
+
+    //数据分析
+    var projectName = that.data.belonging
+    that.setData({
+      projectName: projectName,
+      announContent: content,
+      userName: getApp().globalData.nickName,
+      userId: getApp().globalData.userId,
+    })
 
     // 分享
     return {
-      title: currentUserName + '分享了公告: ' + title,
+      title: currentUserName + '分享了公告: ' + content,
       path: "pages/Project/Announcement/announcementDetail/announcementDetail?isShared=true&announcementId=" + announcementId,
       success: function (res) {
         wx.showToast({
