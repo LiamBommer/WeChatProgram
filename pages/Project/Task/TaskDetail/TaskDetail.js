@@ -1,10 +1,10 @@
 // pages/Project/Task/TaskDetail/TaskDetail.js
 
 var Bmob = require('../../../../utils/bmob.js')
-var FINISH_TASK = "完成任务"
-var REDO_TASK = "重做任务"
+var FINISH_TASK = "完成任务:"
+var REDO_TASK = "重做任务:"
 var MODIFY_TASK_TITLE = "更改了任务名称"
-var DELETE_TASK = "删除了任务"
+var DELETE_TASK = "删除了任务:"
 
 var ADD_NOTI_TIME = "添加了任务提醒时间"
 var MODIFY_NOTI_TIME = "修改了任务提醒时间"
