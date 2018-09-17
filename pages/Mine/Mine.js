@@ -172,6 +172,10 @@ Page({
     wx.setStorageSync("Mine-projName", projName)
     //设置项目成员,任务负责人ID缓存
     that.getProjMemberAndTaskleaderId(projId, requestId)
+
+    // wx.navigateTo({
+    //   url: '../Project/Task/TaskDetail/TaskDetail',
+    // })
   },
 
   //跳转会议详情
@@ -182,14 +186,7 @@ Page({
   },
 
   //跳转点子详情
-  MeetingDetail: function (e) {
-    var requestId = wx.setStorageSync("Notification-ideaId")
-    var projId = wx.setStorageSync("Notification-projId")
-
-    //设置任务ID缓存
-    wx.setStorageSync("Mine-ideaId", requestId)
-    //设置项目名字缓存
-    wx.setStorageSync("Mine-projId", projId)
+  MeetingDetail: function () {
     wx.navigateTo({
       url: '../Project/Idea/ideaDetail/ideaDetail',
     })

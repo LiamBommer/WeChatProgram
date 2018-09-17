@@ -2016,7 +2016,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     }
     else if (mineTaskId != "" && mineProjName != "" && mineProjmemberArr != "") {
       //【我的】进入
-      console.log("Mine", mineTaskId, mineProjName)
+      console.log("Notification", mineTaskId, mineProjName)
       var leaderId = wx.getStorageSync('changePrincipal-newLeaderId')//更改任务负责人后获得的任务负责人ID
       if (leaderId != "") {
         console.log("新负责人：刷新后台！", leaderId)
@@ -2034,7 +2034,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
       that.getTaskRecord(mineTaskId)//获取任务记录
       that.getTaskComment(mineTaskId)//获取评论
     }
-    else if (isShared) {
+    else if(isShared) {
       // 分享进入
       var taskId = that.data.taskId
       var leaderId = that.data.leaderId
@@ -2157,10 +2157,6 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     wx.removeStorageSync("Notification-projName")
     wx.removeStorageSync("Notification-projmemberArr")
     wx.removeStorageSync("Notification-taskLeaderId")
-    wx.removeStorageSync("Mine-taskId")
-    wx.removeStorageSync("Mine-projName")
-    wx.removeStorageSync("Mine-projmemberArr")
-    wx.removeStorageSync("Mine-taskLeaderId")
   },
 
   /**

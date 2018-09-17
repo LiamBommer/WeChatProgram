@@ -60,11 +60,6 @@ button[hover-class="share-hover"]::after {
   justify-content: flex-end;
   border: none;
   color: #888888;
-  margin-bottom:-10px;
-}
-
-.view-container .item-view.deadline {
-  min-height: 75rpx;
 }
 
 .view-container .item-view.delete{
@@ -109,9 +104,9 @@ button[hover-class="share-hover"]::after {
 
 /* 任务基本信息 */
 .task-desc {
-  min-height: 150rpx;
+  min-height: 90rpx;
   padding: 8rpx 0rpx;
-  /* color: #888888; */
+  color: #888888;
 }
 
 /* 子任务 */
