@@ -67,13 +67,12 @@
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
                                   <block wx:if="{{tasks.feedback_mod != undefined || tasks.feedback_time != undefined}}">
+                                    <block wx:if="{{tasks.feedback_mod != '' || tasks.feedback_time != ''}}">
                                       <image class='icon' src='/img/feedback_model.png'></image>
+                                    </block>
                                   </block>
                                   <!-- <block wx:if="{{tasks.sub_num > 0}}">
-                                      <image class='icon' src='/img/task_list.png'></image>
-                                  </block>
-                                  <block wx:if="{{tasks.sub_num > 0}}">
-                                      <image class='icon' src='/img/task_list.png'></image>
+                                      <image class='icon' src='/img/task_description.png'></image>
                                   </block> -->
                               </view>
                               <block wx:if="{{tasks.end_time.length != 0}}">
