@@ -87,15 +87,15 @@
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-green{
-   background: #888888;
-   color: #fff;
-   border-radius: 10rpx;
-   margin-right: 16rpx;
-   line-height: 45rpx;
-   padding: 0rpx 6rpx;
-   font-size: 24rpx;
-   height:45rpx;
-   margin-bottom:15rpx;
+   background:#888888;
+  color:#fff;
+  border-radius:10rpx;
+  margin-right:16rpx;
+  line-height:38rpx;
+  padding:0rpx 6rpx;
+  font-size:24rpx;
+  height:38rpx;
+  margin-bottom:10rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -103,11 +103,11 @@
    color: #fff;
    border-radius: 10rpx;
    margin-right: 16rpx;
-   line-height: 45rpx;
+   line-height: 38rpx;
    padding: 0rpx 6rpx;
    font-size: 24rpx;
-   height:45rpx;
-   margin-bottom:15rpx;
+   height:38rpx;
+   margin-bottom:10rpx;
 }
 
 
