@@ -66,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 26rpx;
-  padding-top: 20rpx;
+  padding-top: 35rpx;
   padding-left: 20rpx;
 }
 
@@ -94,8 +94,8 @@
   line-height:38rpx;
   padding:0rpx 6rpx;
   font-size:24rpx;
-  height:38rpx;
-  margin-bottom:10rpx;
+  height:37rpx;
+  margin-bottom:15rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -106,8 +106,8 @@
    line-height: 38rpx;
    padding: 0rpx 6rpx;
    font-size: 24rpx;
-   height:38rpx;
-   margin-bottom:10rpx;
+   height:37rpx;
+   margin-bottom:15rpx;
 }
 
 
