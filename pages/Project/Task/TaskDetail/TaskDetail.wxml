@@ -166,7 +166,7 @@
       </view>
       <view class=" scroll-view-item item-view" bindtap='Feedback' bindtouchmove="touchmove">
         <view wx:if="{{feedback_mod == ''}}" class='grey'>点击设置反馈模版</view>
-        <view wx:else>{{feedback_mod}}</view>
+        <view class='feedbackMod' wx:else><text>{{feedback_mod}}</text></view>
       </view>
     </view>
   </view>
