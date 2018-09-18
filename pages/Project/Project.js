@@ -305,12 +305,11 @@ getProjectList:function(){
     //   title: '正在加载',
     //   mask: 'true'
     // })
-    //民哥的代码：项目顺序，一旦使用星标项目无法显示
-    // projectmemberQuery.limit(50)
+    projectmemberQuery.limit(200)
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
-    // projectmemberQuery.descending('createdAt')
+    projectmemberQuery.descending('createdAt')
     projectmemberQuery.include('project')
-    //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
+    
 
     projectmemberQuery.find({
       success: function (results) {
@@ -516,7 +515,7 @@ getTasks:function (projId, isStarProj){
   var taskQuery = new Bmob.Query(Task)
 
   taskQuery.limit(50)    //返回最多50条数据
-  taskQuery.descending('createdAt')    //根据创建时间降序排列
+  // taskQuery.descending('createdAt')    //根据创建时间降序排列
   taskQuery.equalTo('is_delete', false)  //获取未删除
   taskQuery.equalTo('is_finish', false)  //获取未完成
   taskQuery.equalTo("proj_id", projId)
