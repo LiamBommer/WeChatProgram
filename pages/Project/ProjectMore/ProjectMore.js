@@ -1294,7 +1294,9 @@ Page({
 
     //获取某个项目的所有点子
     ideaQuery.equalTo('project', projId)
-    ideaQuery.notEqualTo('is_delete',true)
+    ideaQuery.notEqualTo('is_delete', true)
+    ideaQuery.descending('createdAt')
+    ideaQuery.limit(50)
     ideaQuery.include('project')
     ideaQuery.include('task')  //获取点子关联的任务
     ideaQuery.include('user')

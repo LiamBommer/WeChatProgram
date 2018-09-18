@@ -357,14 +357,19 @@ Page({
    var that = this
 
 
-    //获取点子的点子ID
+    //获取【通知】的点子ID
     var requestId = wx.getStorageSync("Notification-ideaId")
     var projId = wx.getStorageSync("Notification-projId")
     //获取分享的标识
     var isShared = this.data.isShared
+
+
+    //获取【我的】的点子ID
+    var MineRequestId = wx.getStorageSync("Mine-ideaId")
+    var MineProjId = wx.getStorageSync("Mine-projId")
     
     if (requestId != "" && projId != '') {
-    //从通知进入
+    //从【通知】进入
       console.log("获取通知的点子ID", requestId, projId)
       wx.setStorageSync('ProjectMore-ideaDetail-id', requestId)   //点进关联任务 ，要用到这个缓存，所以这里先设置
       that.setData({
@@ -373,6 +378,16 @@ Page({
       })
       that.getOneIdeaDetail(requestId)
       
+    }
+    else if (MineRequestId != "" && MineProjId != '') {
+      //从【我的】进入
+      console.log("获取通知的点子ID", MineRequestId, MineProjId)
+      wx.setStorageSync('ProjectMore-ideaDetail-id', MineRequestId)   //点进关联任务 ，要用到这个缓存，所以这里先设置
+      that.setData({
+        ideaId: MineRequestId,
+        projId: MineProjId
+      })
+      that.getOneIdeaDetail(MineRequestId)
     }
     else if(isShared) {
     //从分享进入
