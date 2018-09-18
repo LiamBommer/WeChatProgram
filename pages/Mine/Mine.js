@@ -560,13 +560,14 @@ sortTask:function(a,b){
           var ideaObject = {}
           ideaObject = {
             'id': results[i].id,    //点子id
+            'projId':results[i].attributes.project.objectId,
             'content': results[i].get('content'),  //点子内容
             'createdAt': results[i].createdAt.substring(0,16),   //点子发表时间
             'projectName': results[i].get('project').name  //项目名字
           }
           ideaArr.push(ideaObject)
         }
-
+        console.log("wocaonima"+ideaArr[1].projId)
         if (ideaArr != null && ideaArr.length > 0) {
           //在这里setData
           //console.log('获取点子列表成功', ideaArr)
