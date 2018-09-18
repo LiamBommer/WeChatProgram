@@ -305,7 +305,9 @@ getProjectList:function(){
     //   title: '正在加载',
     //   mask: 'true'
     // })
+    projectmemberQuery.limit(50)
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
+    projectmemberQuery.descending('createdAt')
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
 
@@ -498,7 +500,7 @@ oneProjectDisplay: function(projId, isStarProj){
 
   var that = this
   this.getTasks(projId, isStarProj)
-  this.getMeeting(projId, isStarProj)
+  // this.getMeeting(projId, isStarProj)
 
 },
 
@@ -512,11 +514,13 @@ getTasks:function (projId, isStarProj){
   var Task = Bmob.Object.extend("task")
   var taskQuery = new Bmob.Query(Task)
 
-  taskQuery.limit(50)    //返回最多100条数据
+  taskQuery.limit(50)    //返回最多50条数据
+  taskQuery.descending('createdAt')    //根据创建时间降序排列
   taskQuery.equalTo('is_delete', false)  //获取未删除
   taskQuery.equalTo('is_finish', false)  //获取未完成
-  taskQuery.equalTo("proj_id", projId)  
-  taskQuery.select('title', 'end_time', 'proj_id')
+  taskQuery.equalTo("proj_id", projId)
+  taskQuery.notEqualTo("end_time","")  
+  taskQuery.select('title', 'end_time', 'proj_id','createdAt')
 
   var taskArr = []  
   taskQuery.find({
