@@ -93,3 +93,10 @@ button[size="default"] {
  .radius{
    border-radius: 50%;
  }
+ 
+/*
+ * 控制内容编辑页的textarea高度
+ */
+ .textarea{
+  height: 1000rpx;
+}
