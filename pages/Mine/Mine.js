@@ -569,6 +569,7 @@ sortTask:function(a,b){
           }
           ideaArr.push(ideaObject)
         }
+
         if (ideaArr != null && ideaArr.length > 0) {
           //在这里setData
           //console.log('获取点子列表成功', ideaArr)
