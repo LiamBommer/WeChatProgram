@@ -660,6 +660,7 @@ Page({
           tasks[i]['attributes']['timeStatus'] = timeStatus
         }
 
+        console.log('任务详情：', tasks)
 
         // 将任务插入到对应看板列表中
         for (var i in tasks) {
@@ -673,6 +674,7 @@ Page({
             timeStatus: tasks[i].attributes.timeStatus,
             title: tasks[i].attributes.title,
             leaderId: tasks[i].attributes.leader.objectId,
+            leaderPic: tasks[i].attributes.leader.userPic,
             objectId: tasks[i].id,
             sub_num: tasks[i].attributes.sub_num,
           }

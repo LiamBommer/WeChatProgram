@@ -57,6 +57,7 @@
                                 data-index="{{index}}" data-checked="{{tasks.is_finish}}" bindtap="ClickTask"/>
                               </checkbox-group>
                               <view id='enterTask'  class='task' bindtap='showTask' data-index="{{index}}">{{tasks.title}}</view>
+                              <image class='icon' src='{{tasks.leaderPic}}'></image>
                           </view>
                           <!-- 内容下部分 -->
                           <view id='enterTask' class='taskitem-bottom' bindtap='showTask' data-index="{{index}}" >

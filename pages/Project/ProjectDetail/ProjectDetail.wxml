@@ -52,7 +52,7 @@
  <button class='Exit' type='warn' bindtap='DeleteProject' >解散项目</button>
  </block>
  <block wx:else>
- <button class='Exit' type='warn' bindtap='DeleteProject' >退出项目</button>
+ <button class='Exit' type='default' bindtap='DeleteProject' >退出项目</button>
  </block>
 
   <!-- 新手指引 -->
