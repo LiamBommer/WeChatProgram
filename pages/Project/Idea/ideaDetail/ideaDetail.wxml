@@ -2,10 +2,8 @@
 <view class="idea-detail-container">
 
  <view class='view-container'>
-    <view class='content-view'>
-      <view bindtap='Content' class='content' space='nbsp'>
-          {{content}}
-      </view>
+    <view class='content-view' bindtap='Content'>
+      <text  class='content' >{{content}}</text>
        <!-- <button class='share' hover-class="share-hover"  open-type="share">
           <image src='{{icon_share}}'></image>
        </button> -->
