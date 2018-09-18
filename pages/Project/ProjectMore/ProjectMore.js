@@ -667,7 +667,7 @@ Page({
           var object
           object={
             end_time: tasks[i].attributes.end_time || '',
-            has_sub: tasks[i].attributes.has_sub,
+            // has_sub: tasks[i].attributes.has_sub,  // 用于判断是否有子任务？貌似没用到，wxml中用了下面的 sub_num
             is_delete: tasks[i].attributes.is_delete,
             is_finish: tasks[i].attributes.is_finish,
             list_id: tasks[i].attributes.list_id,
@@ -676,7 +676,9 @@ Page({
             leaderId: tasks[i].attributes.leader.objectId,
             leaderPic: tasks[i].attributes.leader.userPic,
             objectId: tasks[i].id,
-            sub_num: tasks[i].attributes.sub_num,
+            sub_num: tasks[i].attributes.sub_num,   // 子任务数量
+            feedback_mod: tasks[i].attributes.feedback_mod,   // 反馈模版
+            feedback_time: tasks[i].attributes.feedback_time, // 反馈时间
           }
           if(object.is_finish){
             finishTaskArr.push(object)
@@ -689,6 +691,8 @@ Page({
           }        
         }
         tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
+
+        console.log('任务名：' + tasks.title)
 
         // 先判断是否与目前的列表相同
         // 若相同，则不刷新

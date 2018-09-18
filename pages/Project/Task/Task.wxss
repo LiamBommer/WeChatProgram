@@ -80,9 +80,9 @@
   margin-left: 16rpx;
 }
 .Task-container .task-container .taskitem .taskitem-top .icon{
-  width: 40rpx;
-  height: 40rpx;
-  margin-left: 16rpx;
+  width: 46rpx;
+  height: 46rpx;
+  margin-left: 8rpx;
   border-radius: 50%;
 }
 
