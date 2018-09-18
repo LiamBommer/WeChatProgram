@@ -922,13 +922,6 @@ Page({
         success: function () {
           //删除成功
           //console.log("提示用户任务列表删除成功!")
-
-          /*
-          mr li 2018-09-17
-          把列表内的任务全部标记为删除
-          */
-          that.deleteTasksOfTaskList(listId)
-
          wx.showToast({
            title: '删除成功',
          })
@@ -941,31 +934,7 @@ Page({
     }
 
   },
-  /**
-   * 2018-09-17
-   * @author mr.li
-   */
-  deleteTasksOfTaskList:function(taskListId){
-      var that = this
-      var Task = Bmob.Object.extend('task')
-      var taskQuery = new Bmob.Query(Task)
 
-      if(taskListId != null || taskListId != ""){
-        taskQuery.equalTo('list_id',taskListId)
-        taskQuery.find().then(function (todos) {
-          todos.forEach(function (todo) {
-            todo.set('is_delete', true);
-          });
-          return Bmob.Object.saveAll(todos);
-        }).then(function (todos) {
-          // 更新成功
-          console.log("将任务列表的任务都标记为删除")
-        },
-          function (error) {
-            // 异常处理
-          });
-      }
-  },
   /**
    *2018-05-18
    *@author mr.li
@@ -1324,9 +1293,7 @@ Page({
     var ideaArr = []
 
     //获取某个项目的所有点子
-    ideaQuery.limit(50)
     ideaQuery.equalTo('project', projId)
-    ideaQuery.descending('createdAt')
     ideaQuery.notEqualTo('is_delete',true)
     ideaQuery.include('project')
     ideaQuery.include('task')  //获取点子关联的任务
