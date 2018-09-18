@@ -183,12 +183,12 @@ Page({
 
   //跳转点子详情
   MeetingDetail: function (e) {
-    var requestId = wx.setStorageSync("Notification-ideaId")
-    var projId = wx.setStorageSync("Notification-projId")
-
-    //设置任务ID缓存
+    var that = this
+    var requestId = e.currentTarget.dataset.id
+    var projId = e.currentTarget.dataset.projId
+    //设置点子ID缓存
     wx.setStorageSync("Mine-ideaId", requestId)
-    //设置项目名字缓存
+    //设置项目ID缓存
     wx.setStorageSync("Mine-projId", projId)
     wx.navigateTo({
       url: '../Project/Idea/ideaDetail/ideaDetail',
