@@ -307,8 +307,8 @@ getProjectList:function(){
     // })
     //民哥的代码：项目顺序，一旦使用星标项目无法显示
     // projectmemberQuery.limit(50)
-    projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     // projectmemberQuery.descending('createdAt')
+    projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.include('project')
     //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
 

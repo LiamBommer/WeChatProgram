@@ -10,3 +10,7 @@
   /* height: 100%; */
   padding: 30rpx 0rpx;
 }
+
+::-webkit-scrollbar {
+     display: none;
+}
