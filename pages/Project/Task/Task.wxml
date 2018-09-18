@@ -48,6 +48,7 @@
                       </view>
                     </block>
                     
+                    <!-- 这是未完成的任务 -->
                     <block wx:else>
                       <view class='taskitem' style="{{taskAnimationStyle}}">
                           <!-- 内容上部分 -->
@@ -65,6 +66,15 @@
                                   <block wx:if="{{tasks.sub_num > 0}}">
                                       <image class='icon' src='/img/task_list.png'></image>
                                   </block>
+                                  <block wx:if="{{tasks.feedback_mod != undefined || tasks.feedback_time != undefined}}">
+                                      <image class='icon' src='/img/feedback_model.png'></image>
+                                  </block>
+                                  <!-- <block wx:if="{{tasks.sub_num > 0}}">
+                                      <image class='icon' src='/img/task_list.png'></image>
+                                  </block>
+                                  <block wx:if="{{tasks.sub_num > 0}}">
+                                      <image class='icon' src='/img/task_list.png'></image>
+                                  </block> -->
                               </view>
                               <block wx:if="{{tasks.end_time.length != 0}}">
                                 <view class='tasktime-{{tasks.timeStatus}}'>{{tasks.end_time}} 截止</view>

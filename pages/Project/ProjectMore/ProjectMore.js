@@ -677,6 +677,8 @@ Page({
             leaderPic: tasks[i].attributes.leader.userPic,
             objectId: tasks[i].id,
             sub_num: tasks[i].attributes.sub_num,
+            feedback_mod: tasks[i].attributes.feedback_mod,
+            feedback_time: tasks[i].attributes.feedback_time,
           }
           if(object.is_finish){
             finishTaskArr.push(object)
@@ -689,6 +691,10 @@ Page({
           }        
         }
         tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
+
+        console.log('任务名：' + tasks.title)
+        console.log('fb_model：' + tasks.feedback_mod)
+        console.log('fb_time: ' + tasks.feedback_time)
 
         // 先判断是否与目前的列表相同
         // 若相同，则不刷新
