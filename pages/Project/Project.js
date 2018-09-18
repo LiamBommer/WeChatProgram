@@ -305,6 +305,7 @@ getProjectList:function(){
     //   title: '正在加载',
     //   mask: 'true'
     // })
+    //民哥的代码：项目顺序，一旦使用星标项目无法显示
     // projectmemberQuery.limit(50)
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     // projectmemberQuery.descending('createdAt')
