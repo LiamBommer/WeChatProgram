@@ -24,8 +24,6 @@ Page({
   BuildProject: function (e) {
 
     var that = this; 
-  
-
     var submitNum = that.data.submitNum; //点击完成的次数
     if (submitNum == 0) {//点击完成次数限制在一次
 

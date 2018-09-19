@@ -305,11 +305,11 @@ getProjectList:function(){
     //   title: '正在加载',
     //   mask: 'true'
     // })
-    projectmemberQuery.limit(50)
+    projectmemberQuery.limit(200)
     projectmemberQuery.equalTo('user_id', getApp().globalData.userId/*当前用户的id*/)
     projectmemberQuery.descending('createdAt')
     projectmemberQuery.include('project')
-    //projectmemberQuery.equalTo('is_delete',false)  //筛选没有被解散的项目
+    
 
     projectmemberQuery.find({
       success: function (results) {

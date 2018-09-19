@@ -341,6 +341,10 @@ button[hover-class="share-hover"]::after {
    color: #888888;
  }
 
+ .feedbackMod{
+   padding:30rpx 0rpx;
+ }
+
  /* Animation */
  @keyframes showMoreContent {
    0% {
@@ -395,3 +399,4 @@ button[hover-class="share-hover"]::after {
   }  
 }
  /* Animation END */
+

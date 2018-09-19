@@ -49,7 +49,7 @@
  <button type='primary' size='default' bindtap='Addmember'>邀请成员</button>
  
  <block wx:if="{{isLeader}}">
- <button class='Exit' type='warn' bindtap='DeleteProject' >解散项目</button>
+ <button class='Exit' type='default' bindtap='DeleteProject' >解散项目</button>
  </block>
  <block wx:else>
  <button class='Exit' type='default' bindtap='DeleteProject' >退出项目</button>

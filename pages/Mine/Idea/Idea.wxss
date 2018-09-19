@@ -56,7 +56,10 @@
    line-height: 45rpx;
    padding: 24rpx 40rpx;
    word-break: break-all;
-
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .Mine-Idea-container .item-container .idea-item .item-first .item-icon{

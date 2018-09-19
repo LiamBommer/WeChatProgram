@@ -66,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 26rpx;
-  padding-top: 16rpx;
+  padding-top: 35rpx;
   padding-left: 20rpx;
 }
 
@@ -75,8 +75,8 @@
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .taskicon .icon{
-  width: 40rpx;
-  height: 40rpx;
+  width: 35rpx;
+  height: 35rpx;
   margin-left: 16rpx;
 }
 .Task-container .task-container .taskitem .taskitem-top .icon{
@@ -87,15 +87,15 @@
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-green{
-   background: #888888;
-   color: #fff;
-   border-radius: 10rpx;
-   margin-right: 16rpx;
-   line-height: 45rpx;
-   padding: 0rpx 6rpx;
-   font-size: 24rpx;
-   height:45rpx;
-   margin-bottom:15rpx;
+   background:#888888;
+  color:#fff;
+  border-radius:10rpx;
+  margin-right:16rpx;
+  line-height:38rpx;
+  padding:0rpx 6rpx;
+  font-size:24rpx;
+  height:37rpx;
+  margin-bottom:15rpx;
 }
 
 .Task-container .task-container .taskitem .taskitem-bottom .tasktime-red{
@@ -103,10 +103,10 @@
    color: #fff;
    border-radius: 10rpx;
    margin-right: 16rpx;
-   line-height: 45rpx;
+   line-height: 38rpx;
    padding: 0rpx 6rpx;
    font-size: 24rpx;
-   height:45rpx;
+   height:37rpx;
    margin-bottom:15rpx;
 }
 

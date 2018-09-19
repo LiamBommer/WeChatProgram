@@ -175,17 +175,16 @@ Page({
   },
 
   //跳转会议详情
-  MeetingDetail: function () {
-    wx.navigateTo({
-      url: '../Project/Meeting/meetingDetail/meetingDetail',
-    })
-  },
+  // MeetingDetail: function () {
+  //   wx.navigateTo({
+  //     url: '../Project/Meeting/meetingDetail/meetingDetail',
+  //   })
+  // },
 
   //跳转点子详情
-  MeetingDetail: function (e) {
-    var requestId = wx.setStorageSync("Notification-ideaId")
-    var projId = wx.setStorageSync("Notification-projId")
-
+  IdeaDetail: function (e) {
+    var requestId = e.currentTarget.dataset.id
+    var projId = e.currentTarget.dataset.projid
     //设置任务ID缓存
     wx.setStorageSync("Mine-ideaId", requestId)
     //设置项目名字缓存
@@ -539,6 +538,7 @@ sortTask:function(a,b){
   /**
    * 获取我的点子,最多50条
    * 'id':     //点子id
+   * projId：    //项目ID
       'content':  //点子内容
       'createdAt':  //点子发表时间
       'projectName':   //项目名字
@@ -553,6 +553,8 @@ sortTask:function(a,b){
 
     ideaQuery.equalTo('user', userId)
     ideaQuery.include('project')
+    ideaQuery.descending('createdAt')
+    ideaQuery.limit(50)
     ideaQuery.find({
       success: function (results) {
         //成功
@@ -560,14 +562,14 @@ sortTask:function(a,b){
           var ideaObject = {}
           ideaObject = {
             'id': results[i].id,    //点子id
-            'projId':results[i].attributes.project.objectId,
+            'projId': results[i].attributes.project.objectId,//项目ID
             'content': results[i].get('content'),  //点子内容
             'createdAt': results[i].createdAt.substring(0,16),   //点子发表时间
             'projectName': results[i].get('project').name  //项目名字
           }
           ideaArr.push(ideaObject)
         }
-        console.log("wocaonima"+ideaArr[1].projId)
+
         if (ideaArr != null && ideaArr.length > 0) {
           //在这里setData
           //console.log('获取点子列表成功', ideaArr)
