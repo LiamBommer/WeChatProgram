@@ -42,7 +42,7 @@
   width: 650rpx;
   display: flex;
   flex-direction: column;
-  margin-top: 20rpx;
+  margin-top: 25rpx;
   margin-left: 20rpx;
 }
 
@@ -66,7 +66,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 26rpx;
-  padding-top: 35rpx;
+  padding-top: 25rpx;
   padding-left: 20rpx;
 }
 
@@ -93,7 +93,7 @@
   margin-right:16rpx;
   line-height:38rpx;
   padding:0rpx 6rpx;
-  font-size:24rpx;
+  font-size:20rpx;
   height:37rpx;
   margin-bottom:15rpx;
 }
@@ -105,7 +105,7 @@
    margin-right: 16rpx;
    line-height: 38rpx;
    padding: 0rpx 6rpx;
-   font-size: 24rpx;
+   font-size: 20rpx;
    height:37rpx;
    margin-bottom:15rpx;
 }

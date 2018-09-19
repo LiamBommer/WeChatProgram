@@ -530,7 +530,7 @@ getTasks:function (projId, isStarProj){
           title: results[i].attributes.title,
           endTime: results[i].attributes.end_time,
           projId: results[i].attributes.proj_id,
-          color: 'green'  //用来对任务的紧急程度设置颜色,默认绿色
+          color: that.colorTasks(results[i].attributes.end_time)  //用来对任务的紧急程度设置颜色,默认绿色
         }
 
         taskArr.push(object)
@@ -581,15 +581,23 @@ getTasks:function (projId, isStarProj){
   })
 },
 
+//近期任务颜色选取
+colorTasks: function (a) {
+    var that = this
+    var currentTime = new Date(new Date().toLocaleDateString())
+    var endTimeA = new Date(new Date(a.replace(/-/g, "/")))
+    var daysA = endTimeA.getTime() - currentTime.getTime()
+    var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",a, dayA)
+    if (dayA <= 1) return 'red'
+    else return 'green'
+},
+
 sortTasks: function (a, b) {
   if (a.endTime == "" || a.endTime == null) {
     return 1
   }
 
-  // if (a.endTime > b.endTime)
-  //   return -1
-
-  // return 1
   var that = this
   var currentTime = new Date(new Date().toLocaleDateString())
   var endTimeA = new Date(new Date(a.endTime.replace(/-/g, "/")))
@@ -601,12 +609,11 @@ sortTasks: function (a, b) {
   var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
   var dayB = parseInt(daysB / (1000 * 60 * 60 * 24))
 
-  if (dayA <= 1) a["color"] = 'red'
-
   if (dayA > dayB)
     return 1
   return -1;
 },
+
 getMeeting:function(projId, isStarProj){
 
   var that = this
