@@ -515,7 +515,7 @@ getTasks:function (projId, isStarProj){
   var taskQuery = new Bmob.Query(Task)
 
   taskQuery.limit(50)    //返回最多50条数据
-  taskQuery.descending('createdAt')    //根据创建时间降序排列
+  // taskQuery.descending('createdAt')    //根据创建时间降序排列
   taskQuery.equalTo('is_delete', false)  //获取未删除
   taskQuery.equalTo('is_finish', false)  //获取未完成
   taskQuery.equalTo("proj_id", projId)
