@@ -414,6 +414,16 @@ Page({
       userId: getApp().globalData.userId,
     })
 
+    // 获取当前项目的任务列表 id & 标题
+    var tasklist_whole = that.data.tasklist
+    var tasklist = []
+    for(var i=0; i<tasklist_whole.length; i++) {
+      var single = {}
+      single['title'] = tasklist_whole[i].title
+      single['listId'] = tasklist_whole[i].listId
+      tasklist.push(single)
+    }
+
     //console.log("显示任务详情:", that.data.tasklist[taskListIndex].tasks[index])
     wx.setStorage({
       key: "ProjectMore-Task",
@@ -424,6 +434,12 @@ Page({
       key: "ProjectMore-projName",
       data: projName,
     })
+    // 任务列表缓存：用于移动任务
+    // wx.setStorage({
+    //   key: "ProjectMore-TaskList",
+    //   data: tasklist
+    // })
+    wx.setStorageSync("ProjectMore-TaskList", tasklist)
 
     // 去除动画效果
     this.setData({
