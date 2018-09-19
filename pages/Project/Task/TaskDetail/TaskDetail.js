@@ -424,6 +424,18 @@ Page({
             itemList: tasklist_title,
             success: function(res) {
 
+              var index = res.tapIndex
+              var listId = tasklist[index].listId
+              var taskId = that.data.taskId
+
+              /*************************
+               * 
+               * 调用后台,移动至别的列表
+               * 
+               * @param listId  选中的列表Id
+               * @param taskId  当前任务Id
+               * 
+               *************************/
             },
             fail: function(res) {
               console.log('点击失败', res.errMsg)
