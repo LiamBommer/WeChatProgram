@@ -418,7 +418,7 @@ Page({
             tasklist_title.push(tasklist[i].title)
           }
           console.log('任务列表: ', tasklist)
-          console.log('任务标题数组: ', tasklist_title)
+          console.log('任务列表标题数组: ', tasklist_title)
 
           wx.showActionSheet({
             itemList: tasklist_title,
@@ -427,15 +427,18 @@ Page({
               var index = res.tapIndex
               var listId = tasklist[index].listId
               var taskId = that.data.taskId
-
+              console.log('选中的任务列表的标题'+tasklist_title[index])
               /*************************
                * 
                * 调用后台,移动至别的列表
                * 
                * @param listId  选中的列表Id
                * @param taskId  当前任务Id
+               * @param listTitle 选中的任务列表的标题
                * 
                *************************/
+              that.moveTask(taskId, listId, tasklist_title[index])
+
             },
             fail: function(res) {
               console.log('点击失败', res.errMsg)
@@ -473,7 +476,40 @@ Page({
      });
 
   },
-  
+
+  /**
+   * 将任务移到另外一个任务列表内
+   * 2018-09-19
+   * @author mrli
+   * @parameter taskId 当前的任务的id
+   * @parameter taskListId 选中的任务列表的id
+   * @param listTitle 选中的任务列表的标题
+   */
+  moveTask: function (taskId, taskListId, listTitle) {
+    var that = this
+    var Task = Bmob.Object.extend('task')
+    var taskQuery = new Bmob.Query(Task)
+
+    taskQuery.get(taskId, {
+      success: function (result) {
+        result.set('list_id', taskListId);
+        result.save();
+        console.log("移动任务成功!")
+        //记录并通知projId,taskId, userName, record
+        var taskTitle = result.get('title')
+        var projId = wx.getStorageSync('Project-detail').id
+        if(projId != null && projId != ''){
+          that.addTaskRecord(projId, result.id,getApp().globalData.nickName,"将任务'"+taskTitle+"'移动至任务列表:"+listTitle)
+        }
+        
+      },
+      error: function (object, error) {
+        //失败
+        console.log("移动任务失败")
+      }
+    });
+  },
+
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
     //开始触摸时 重置所有删除
@@ -1552,23 +1588,30 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
     var subtaskQuery = new Bmob.Query(Subtask)
 
     //删除子任务
+    subtaskQuery.limit(1)
     subtaskQuery.equalTo('objectId', subTaskId)
-    subtaskQuery.destroyAll({
-      success: function () {
-        //删除成功
-        console.log("删除子任务成功！")
-        that.modifySubNum(taskId,-1)
-        //记录操作
-        that.addTaskRecord(projId, taskId, userName, DELETE_SUB_TASK + subTaskTitle)
-        //成功
-        wx.showToast({
-          title: '删除成功',
-        })
-      },
-      error: function (err) {
-        // 删除失败
-      }
-    })
+    subtaskQuery.find().then(function(todos){
+        var subTaskTitle = todos[0].attributes.title
+        // console.log(todos[0].attributes.title)
+        Bmob.Object.destroyAll(todos);
+        return subTaskTitle
+        }).then(function(title){
+          //成功
+          wx.showToast({
+            title: '删除成功',
+          })
+          // console.log(title)
+          //子任务数量减一
+          that.modifySubNum(taskId,-1)
+          //记录操作
+          that.addTaskRecord(projId, taskId, userName, DELETE_SUB_TASK + title)
+
+        },
+          function(error){
+            console.log("删除失败")
+            // 删除失败
+        } 
+    )
   },
 
 
@@ -1648,8 +1691,9 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
          that.data.ChildTask.splice(e.currentTarget.dataset.index, 1)
          var subTaskId = e.currentTarget.dataset.id
          var taskId = that.data.taskId
-         var subTaskTitle = e.currentTarget.dataset.childTitle
-         console.log(subTaskTitle)
+        //  var subTaskTitle = e.currentTarget.dataset.childTitle
+        //  console.log(subTaskTitle)
+         var subTaskTitle = ""
          var userName = getApp().globalData.nickName
          if(!that.data.isShared){
            that.deleteSubTask(wx.getStorageSync('Project-detail').id, taskId, subTaskId, userName, subTaskTitle)
@@ -1664,7 +1708,6 @@ deleteSubTask:function (projId,taskId,subTaskId, userName, subTaskTitle) {
              //image:''  //可以加图片
            })
          }
-         
        }
       }
     })
