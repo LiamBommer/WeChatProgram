@@ -61,6 +61,7 @@ Page({
     focus:false,//输入框焦点
     show: false,
     projectId:"",//项目id 
+    tasklist: [],   // 项目的任务列表简要信息：标题 & id
 
     taskDesc: "", // 任务描述
 
@@ -317,7 +318,7 @@ Page({
      var that = this;
 
      wx.showActionSheet({
-       itemList: ['添加子任务', '添加反馈', '删除该任务'],
+       itemList: ['添加子任务', '添加反馈', '移动至别的任务列表', '删除该任务'],
        success: function(res) {
         //  // 提醒时间
         //  if(res.tapIndex == 0) {
@@ -407,8 +408,43 @@ Page({
            }
          }
 
-         // 删除
+         // 移动至别的列表
          if(res.tapIndex == 2) {
+          // 获取任务列表
+          var tasklist = that.data.tasklist
+          // 获取任务列表标题数组
+          var tasklist_title = []
+          for(var i in tasklist) {
+            tasklist_title.push(tasklist[i].title)
+          }
+          console.log('任务列表: ', tasklist)
+          console.log('任务标题数组: ', tasklist_title)
+
+          wx.showActionSheet({
+            itemList: tasklist_title,
+            success: function(res) {
+
+              var index = res.tapIndex
+              var listId = tasklist[index].listId
+              var taskId = that.data.taskId
+
+              /*************************
+               * 
+               * 调用后台,移动至别的列表
+               * 
+               * @param listId  选中的列表Id
+               * @param taskId  当前任务Id
+               * 
+               *************************/
+            },
+            fail: function(res) {
+              console.log('点击失败', res.errMsg)
+            }
+          })
+         }
+
+         // 删除
+         if(res.tapIndex == 3) {
           //  if (that.data.showDescription == false) {
           //    that.setData({
           //      showDescription: true
@@ -1992,6 +2028,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     var mineProjName = wx.getStorageSync("Mine-projName")
     var mineProjmemberArr = wx.getStorageSync("Mine-projmemberArr")
     var mineTaskLeaderId = wx.getStorageSync("Mine-taskLeaderId")
+    // 获取所有任务列表
+    var tasklist = wx.getStorageSync("ProjectMore-TaskList")
 
     //mrli 删除了if判断语句里面的 taskLeaderId != "" 因为任务可能没有负责人
     if (requestId != "" && projectName != "" && projmember != ""/* && taskLeaderId != ""*/) {
@@ -2006,7 +2044,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         taskId: requestId,
         leaderId: taskLeaderId,
         projectName: projectName,
-        projectMember:projmember
+        projectMember:projmember,
+        tasklist: tasklist,
       })
       that.getTaskDetail(requestId);//获取任务详情
       that.getTaskMember(requestId, taskLeaderId)//获取任务成员
@@ -2026,7 +2065,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
         taskId: mineTaskId,
         leaderId: mineTaskLeaderId,
         projectName: mineProjName,
-        projectMember: mineProjmemberArr
+        projectMember: mineProjmemberArr,
+        tasklist: tasklist,
       })
       that.getTaskDetail(mineTaskId);//获取任务详情
       that.getTaskMember(mineTaskId, mineTaskLeaderId)//获取任务成员
@@ -2063,7 +2103,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
           }
           that.setData({
             taskId: taskId,
-            leaderId: taskLeaderId
+            leaderId: taskLeaderId,
+            tasklist: tasklist,
           })
           that.getTaskDetail(taskId);//获取任务详情
           that.getTaskMember(taskId, taskLeaderId)//获取任务成员
@@ -2161,6 +2202,7 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     wx.removeStorageSync("Mine-projName")
     wx.removeStorageSync("Mine-projmemberArr")
     wx.removeStorageSync("Mine-taskLeaderId")
+    wx.removeStorageSync("ProjectMore-TaskList")  // 任务列表信息
   },
 
   /**
