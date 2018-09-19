@@ -4,8 +4,8 @@
 }
 
 .title-view .project-img {
-  width: 110rpx;
-  height: 110rpx;
+  width: 96rpx;
+  height: 96rpx;
   border-radius: 10rpx;
 }
 

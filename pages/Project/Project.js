@@ -75,15 +75,37 @@ Page({
     var project_list = that.data.StarProject
     var flag = project_list[index].expand
 
-    if(flag == true) flag = false
-    else flag = true
-
-    this.arrowSpinAnimation()
-
+    // setData路径
     var path = 'StarProject[' + index + '].expand'
-    that.setData({
-      [path]: flag
+    var path_animation = 'StarProject[' + index + '].expandAnimation'
+
+    // 动画尝试
+    var animation = wx.createAnimation({
+      duration: 200,
     })
+
+    // 展开
+    if(flag == true){
+      flag = false
+      animation.rotate(180).step()
+      that.setData({
+        [path_animation]: animation.export(),
+      })
+    } 
+    else {  // 未展开
+      flag = true
+      animation.rotate(0).step()
+      that.setData({
+        [path_animation]: animation.export(),
+      })
+    }
+
+    // 设置展开标志
+    that.setData({
+      [path]: flag,   
+    })
+
+
   },
   expandProject: function(e) {
     var that = this
@@ -91,12 +113,32 @@ Page({
     var project_list = that.data.Project
     var flag = project_list[index].expand
 
-    if(flag == true) flag = false
-    else flag = true
-
-    this.arrowSpinAnimation()
-
+    // setData路径
     var path = 'Project[' + index + '].expand'
+    var path_animation = 'Project[' + index + '].expandAnimation'
+
+    // 动画尝试
+    var animation = wx.createAnimation({
+      duration: 200,
+    })
+
+    // 展开
+    if(flag == true){
+      flag = false
+      animation.rotate(0).step()
+      that.setData({
+        [path_animation]: animation.export(),
+      })
+    } 
+    else {  // 未展开
+      flag = true
+      animation.rotate(-180).step()
+      that.setData({
+        [path_animation]: animation.export(),
+      })
+    }
+
+    // 设置展开标志
     that.setData({
       [path]: flag
     })
@@ -329,6 +371,7 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: false,
               expand: false,
+              expandAnimation: [],
               meeting: '暂未有会议',
               meeting_start_time: '',
               tasks: [
@@ -348,6 +391,7 @@ getProjectList:function(){
               id: result.attributes.project.objectId,
               checked: true,
               expand: true,
+              expandAnimation: [],
               meeting: '暂未有会议',
               meeting_start_time: '',
               tasks: [
@@ -515,7 +559,7 @@ getTasks:function (projId, isStarProj){
   var taskQuery = new Bmob.Query(Task)
 
   taskQuery.limit(50)    //返回最多50条数据
-  taskQuery.descending('createdAt')    //根据创建时间降序排列
+  // taskQuery.descending('createdAt')    //根据创建时间降序排列
   taskQuery.equalTo('is_delete', false)  //获取未删除
   taskQuery.equalTo('is_finish', false)  //获取未完成
   taskQuery.equalTo("proj_id", projId)
