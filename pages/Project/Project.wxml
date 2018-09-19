@@ -51,8 +51,9 @@
           </view>
           <!-- <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}"> -->
           <view class='item-two' data-index="{{index}}" bindtap="expandStarProject">
-            <image class='itemmore-icon' src='/img/arrow_down.png' style="display:{{item.expand?'none':'inline-block'}}; {{arrow_spin_style}}"></image>
-            <image class='itemmore-icon' src='/img/arrow_up.png' style="display:{{item.expand?'inline-block':'none'}}; {{arrow_spin_style}}"></image>
+            <image class='itemmore-icon' src='/img/arrow_down.png' animation='{{item.expandAnimation}}' ></image>
+            <!-- <image class='itemmore-icon' src='/img/arrow_down.png' style="display:{{item.expand?'none':'inline-block'}}; {{arrow_spin_style}}"></image> -->
+            <!-- <image class='itemmore-icon' src='/img/arrow_up.png' style="display:{{item.expand?'inline-block':'none'}}; {{arrow_spin_style}}"></image> -->
           </view>
         </view>
         <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
@@ -101,8 +102,9 @@
             </view>
             <!-- <view class='item-two' bindtap='showProjectDetail' data-index="{{index}}"> -->
             <view class='item-two' data-index="{{index}}" bindtap="expandProject">
-              <image class='itemmore-icon' src='/img/arrow_down.png' style="display:{{item.expand?'none':'inline-block'}}; {{arrow_spin_style}}"></image>
-              <image class='itemmore-icon' src='/img/arrow_up.png' style="display:{{item.expand?'inline-block':'none'}}; {{arrow_spin_style}}"></image>
+              <image class='itemmore-icon' src='/img/arrow_up.png' animation='{{item.expandAnimation}}' ></image>
+              <!-- <image class='itemmore-icon' src='/img/arrow_down.png' style="display:{{item.expand?'none':'inline-block'}}; {{arrow_spin_style}}"></image>
+              <image class='itemmore-icon' src='/img/arrow_up.png' style="display:{{item.expand?'inline-block':'none'}}; {{arrow_spin_style}}"></image> -->
             </view>
           </view>
           <view class="item-bottom" style="display:{{item.expand ? 'block' : 'none'}}">
