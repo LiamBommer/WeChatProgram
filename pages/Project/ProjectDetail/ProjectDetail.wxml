@@ -2,7 +2,7 @@
 
   <view class='view-container'>
     <view class='title-view ver-align'>
-      <image class='project-img' src='{{project_img}}' bindtap='PictrueSelect'></image>
+      <image class='project-img'mode='aspectFill' src='{{project_img}}' bindtap='PictrueSelect'></image>
       <text class='title' bindtap="modalinputTitle">{{project_name}}</text>
       <modal hidden="{{hiddenmodalputTitle}}" title="项目名称" confirm-text="提交" cancel-text="取消" bindcancel="cancelTitle" bindconfirm="confirmTitle"> 
         <input bindinput='ProjectTitle' value='{{title}}' type='text'placeholder="请输入项目名称" maxlength='20'/>  

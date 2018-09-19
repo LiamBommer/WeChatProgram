@@ -5,7 +5,8 @@
     <view class="userinfo">
       <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
       <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.userPic}}" background-size="cover"></image>
+        <image bindtap="bindViewTap" mode="aspectFill" class="userinfo-avatar" src="{{userInfo.userPic}}" 
+        background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
         <!-- 暂时删除标签模块 -->
         <!-- <view class='taglist'>
