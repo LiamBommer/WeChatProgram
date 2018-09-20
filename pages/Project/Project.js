@@ -79,6 +79,7 @@ Page({
     var path = 'StarProject[' + index + '].expand'
     var path_animation = 'StarProject[' + index + '].expandAnimation'
 
+
     // 动画尝试
     var animation = wx.createAnimation({
       duration: 200,
