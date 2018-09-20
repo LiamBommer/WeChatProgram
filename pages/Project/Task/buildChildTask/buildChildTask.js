@@ -245,7 +245,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-   wx.removeStorageSync("buildTask-memberList-membericon")
+    
+    wx.removeStorageSync("buildTask-memberList-membericon")
+    wx.removeStorageSync("buildChildTask-memberList-member")
   },
 
   /**

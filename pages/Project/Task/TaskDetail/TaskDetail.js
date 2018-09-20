@@ -499,7 +499,7 @@ Page({
         var taskTitle = result.get('title')
         var projId = wx.getStorageSync('Project-detail').id
         if(projId != null && projId != ''){
-          that.addTaskRecord(projId, result.id,getApp().globalData.nickName,"将任务'"+taskTitle+"'移动至任务列表:"+listTitle)
+          that.addTaskRecord(projId, result.id,getApp().globalData.nickName,"将任务'"+taskTitle+"'移动至任务列表："+listTitle)
         }
         wx.showToast({
           title: '转移成功',

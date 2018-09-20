@@ -23,7 +23,7 @@
       <!-- 项目描述 -->
     </view>
     <view class='task-desc' bindtap='Describe'>
-      <text wx:if="{{taskDesc == ''}}">暂未有描述</text>
+      <text wx:if="{{taskDesc == ''}}" style='color:#888888'>暂未有描述</text>
       <text wx:else>{{taskDesc}}</text>
     </view>
     <view class="item-view pro-name">
@@ -224,8 +224,8 @@
     <!-- 任务消息 -->
     <block wx:for="{{taskremind}}">
       <view class='taskremind' id="remind{{index}}">
-        <view class='text'>{{item.text}}</view>
-        <view class='time'>{{item.time}}</view>
+        <text class='text'>{{item.text}}</text>
+        <text class='time'>{{item.time}}</text>
       </view>
     </block>
     <!-- cursor-spacing="20"confirm-hold="true" adjust-position="true" -->
