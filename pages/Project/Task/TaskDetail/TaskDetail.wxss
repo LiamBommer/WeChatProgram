@@ -11,6 +11,7 @@
   align-items: center;
   width: calc(750 - 80 -  250)rpx;
 }
+/* //560rpx */
 
 .title-view .share{
   background-color: #fff;
@@ -53,7 +54,8 @@ button[hover-class="share-hover"]::after {
 .view-container .title-view {
   /* border-bottom: 2rpx solid #f2f2f2; */
   height: 120rpx;
-  padding: 16rpx 0rpx;
+  padding-bottom:8px;
+  padding-top:25rpx;
 }
 
 .view-container .item-view.pro-name {
@@ -110,7 +112,7 @@ button[hover-class="share-hover"]::after {
 /* 任务基本信息 */
 .task-desc {
   min-height: 150rpx;
-  padding: 8rpx 0rpx;
+  padding: 16rpx 0rpx;
   /* color: #888888; */
 }
 

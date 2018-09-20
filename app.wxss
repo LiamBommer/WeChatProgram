@@ -100,3 +100,8 @@ button[size="default"] {
  .textarea{
   height: 1000rpx;
 }
+
+text{
+    word-break: break-all;
+    letter-spacing: 1rpx;
+}
