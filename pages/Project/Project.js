@@ -75,8 +75,16 @@ Page({
     var project_list = that.data.StarProject
     var flag = project_list[index].expand
 
-    if(flag == true) flag = false
-    else flag = true
+
+    // setData路径
+    var path = 'StarProject[' + index + '].expand'
+    var path_animation = 'StarProject[' + index + '].expandAnimation'
+
+
+    // 动画尝试
+    var animation = wx.createAnimation({
+      duration: 200,
+    })
 
     this.arrowSpinAnimation()
 
