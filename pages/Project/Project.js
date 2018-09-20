@@ -633,7 +633,6 @@ colorTasks: function (a) {
     var endTimeA = new Date(new Date(a.replace(/-/g, "/")))
     var daysA = endTimeA.getTime() - currentTime.getTime()
     var dayA = parseInt(daysA / (1000 * 60 * 60 * 24))  //时间差值
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",a, dayA)
     if (dayA <= 1) return 'red'
     else return 'green'
 },
