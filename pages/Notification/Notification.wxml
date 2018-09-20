@@ -32,7 +32,7 @@
                 bindtouchmove="touchmoveNotification">
                   <!-- 列表左 -->
                   <view class='item-first'>
-                    <image class='item-icon' mode='aspectFill' src='{{item.icon}}'></image>
+                    <image class='item-icon' src='{{item.icon}}'></image>
                     <view style='display:{{item.isRead? "none":""}}' class='item-message'>1</view>
                     <view class='item-text' style='margin-left:{{item.isRead? "20rpx":"-6rpx"}}'>
                       <view class='item-read'>项目：{{item.projectName}}</view>

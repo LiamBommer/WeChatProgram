@@ -22,7 +22,7 @@
   <view class='has-content' style='display:{{StarProject.length==0 && Project.length==0 ? "none":""}}'>
     <!-- 置顶标题 -->
     <view class='startitle' style="display:{{StarProject.length==0 ? 'none':''}}">
-      <image src='/img/star.png' mode='aspectFill'></image>
+      <image src='/img/star.png'></image>
       <text>星标项目</text>
     </view>
     <view class="projectItem-container">
@@ -42,7 +42,7 @@
         <!-- <view class="progress-bar"></view> -->
         <view class="item-top">
           <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
-            <image class='item-icon' mode='aspectFill' src='{{item.icon}}'></image>
+            <image class='item-icon' src='{{item.icon}}'></image>
             <view class='item-text'>
               <view class='item-text-top'>{{item.name}}</view>
               <!-- <view class='item-text-bottom'>日程进度</view> -->
@@ -93,7 +93,7 @@
           <!-- <view class="progress-bar"></view> -->
           <view class="item-top">
             <view class='item-one' bindtap='projectmore' data-index="{{index}}"> 
-              <image class='item-icon' mode='aspectFill' src='{{item.icon}}'></image>
+              <image class='item-icon' src='{{item.icon}}'></image>
               <view class='item-text'>
                 <view class='item-text-top'>{{item.name}}</view>
                 <!-- <view class='item-text-bottom'>日程进度</view> -->
