@@ -708,7 +708,7 @@ Page({
         }
         tasklists[listIndex].tasks = unfinishTaskArr.concat(finishTaskArr)
 
-        console.log('任务名：' + tasks.title)
+        // console.log('任务名：' + tasks.title)
 
         // 先判断是否与目前的列表相同
         // 若相同，则不刷新
@@ -1645,5 +1645,7 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  
 })
