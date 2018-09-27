@@ -46,7 +46,7 @@ Page({
     hiddenmodalputChildTitle: true,//弹出子任务标题模态框
     childIndex:"",//当前子任务下标
     childtaskId:'',//当前子任务ID
-    projectName:"",//项目名
+    projectName:"加载中",//项目名
     taskId:"",//任务ID
     checked:false,//勾选任务
     childChecked:false,//勾选子任务
@@ -62,10 +62,12 @@ Page({
     show: false,
     projectId:"",//项目id 
     tasklist: [],   // 项目的任务列表简要信息：标题 & id
+    CurrentTaskListId: '',//当前任务列表ID
+    CurrentTaskListTitle: '',//当前任务列表标题
 
-    taskDesc: "", // 任务描述
+    taskDesc: "加载中", // 任务描述
 
-    deadline: '2018-06-01',//截止时间
+    deadline: '加载中',//截止时间
     DeadlineisTouchMove: false,//判断滑动截止时间
     DeadlinetxtStyle:"",//截止时间滑动距离
 
@@ -94,7 +96,6 @@ Page({
     aniFeedbackStyle: '',
     aniDescriptionStyle: '',
     aniChildTaskStyle: '',
-
 
     icon_chatperson: '/img/me.png',
     icon_add:'/img/add.png',
@@ -315,10 +316,18 @@ Page({
 
   //添加更多内容
   addMorecontent:function(){
-     var that = this;
+    var that = this;
+    var tasklist = that.data.tasklist
+    var itemList
+    if(tasklist.length == 1){
+      itemList = ['添加子任务', '添加反馈', '删除该任务']
+    }
+    else{
+      itemList = ['添加子任务', '添加反馈', '移动至别的任务列表', '删除该任务']
+    }
 
      wx.showActionSheet({
-       itemList: ['添加子任务', '添加反馈', '移动至别的任务列表', '删除该任务'],
+       itemList: itemList,
        success: function(res) {
         //  // 提醒时间
         //  if(res.tapIndex == 0) {
@@ -410,11 +419,14 @@ Page({
 
          // 移动至别的列表
          if(res.tapIndex == 2) {
-          // 获取任务列表
-          var tasklist = that.data.tasklist
+          // 获取当前任务列表id
+           var CurrentTaskListId = that.data.CurrentTaskListId
+           var CurrentTaskListTitle = that.data.CurrentTaskListTitle
+
           // 获取任务列表标题数组
           var tasklist_title = []
           for(var i in tasklist) {
+            // if (tasklist[i].listId != CurrentTaskListId) //除去当前的任务列表
             tasklist_title.push(tasklist[i].title)
           }
           console.log('任务列表: ', tasklist)
@@ -423,10 +435,10 @@ Page({
           wx.showActionSheet({
             itemList: tasklist_title,
             success: function(res) {
-
               var index = res.tapIndex
               var listId = tasklist[index].listId
               var taskId = that.data.taskId
+
               console.log('选中的任务列表的标题'+tasklist_title[index])
               /*************************
                * 
@@ -437,8 +449,15 @@ Page({
                * @param listTitle 选中的任务列表的标题
                * 
                *************************/
-              that.moveTask(taskId, listId, tasklist_title[index])
-
+              if (tasklist_title[index] == CurrentTaskListTitle){
+                wx.showToast({
+                  title: '此任务已在该列表里啦',
+                  icon:'none'
+                })
+              }
+              else{
+                that.moveTask(taskId, listId, tasklist_title[index])
+              }
             },
             fail: function(res) {
               console.log('点击失败', res.errMsg)
@@ -2079,6 +2098,9 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     var mineTaskLeaderId = wx.getStorageSync("Mine-taskLeaderId")
     // 获取所有任务列表
     var tasklist = wx.getStorageSync("ProjectMore-TaskList")
+    var CurrentTaskListId = wx.getStorageSync("ProjectMore-TaskList-currentId")
+    var CurrentTaskListTitle = wx.getStorageSync("ProjectMore-TaskList-currentTitle")
+
 
     //mrli 删除了if判断语句里面的 taskLeaderId != "" 因为任务可能没有负责人
     if (requestId != "" && projectName != "" && projmember != ""/* && taskLeaderId != ""*/) {
@@ -2154,6 +2176,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
             taskId: taskId,
             leaderId: taskLeaderId,
             tasklist: tasklist,
+            CurrentTaskListId: CurrentTaskListId, 
+            CurrentTaskListTitle: CurrentTaskListTitle, 
           })
           that.getTaskDetail(taskId);//获取任务详情
           that.getTaskMember(taskId, taskLeaderId)//获取任务成员
@@ -2252,6 +2276,8 @@ sendTaskCommentPicture:function (taskId, publisherId) {
     wx.removeStorageSync("Mine-projmemberArr")
     wx.removeStorageSync("Mine-taskLeaderId")
     wx.removeStorageSync("ProjectMore-TaskList")  // 任务列表信息
+    wx.removeStorageSync("ProjectMore-TaskList-currentId")
+    wx.removeStorageSync("ProjectMore-TaskList-currentTitle")
   },
 
   /**

@@ -406,6 +406,8 @@ Page({
     var taskListIndex = that.data.currentItem
     var projName = that.data.currentProjName
     var index = e.currentTarget.dataset.index
+    var CurrentTaskListId = that.data.tasklist[taskListIndex].listId
+    var CurrentTaskListTitle = that.data.tasklist[taskListIndex].title
 
     //数据分析
     that.setData({
@@ -440,6 +442,8 @@ Page({
     //   data: tasklist
     // })
     wx.setStorageSync("ProjectMore-TaskList", tasklist)
+    wx.setStorageSync("ProjectMore-TaskList-currentId", CurrentTaskListId)
+    wx.setStorageSync("ProjectMore-TaskList-currentTitle", CurrentTaskListTitle)
 
     // 去除动画效果
     this.setData({
@@ -1400,7 +1404,7 @@ Page({
         //失败
         //查询点子失败
         wx.showToast({
-          title: '查询点子失败，请稍后再试',
+          title: '网络连接失败，请稍后再试',
           icon: 'none',
           duration: 1000
         })

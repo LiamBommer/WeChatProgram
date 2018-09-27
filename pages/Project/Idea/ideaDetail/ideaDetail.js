@@ -450,9 +450,13 @@ Page({
 
     // 本点子任务的id
     wx.removeStorageSync('IdeaDetail-oriTaskId')
-    //清除通知带来的缓存
+    //清除【通知】带来的缓存
     wx.removeStorageSync('Notification-ideaId')
     wx.removeStorageSync('Notification-projId')
+    //清除【我的】带来的缓存
+    wx.removeStorageSync('Mine-ideaId')
+    wx.removeStorageSync('Mine-projId')
+
 
     
   },

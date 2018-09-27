@@ -35,6 +35,7 @@
   background-color: #567b95;
   color: white;
   margin-right:15rpx;
+  justify-content:space-between;
 }
 
 .post-view .postIdea:nth-child(even) {
@@ -48,6 +49,7 @@
   background-color: #567b95;
   color: white;
   margin-left:15rpx;
+  justify-content:space-between;
 }
 
 .post-view .user-info {
@@ -66,7 +68,7 @@
 
 .post-view .content {
  
-  margin: 26rpx 0rpx;
+  margin: 10rpx 0rpx;
   font-size: 30rpx;
   line-height: 40rpx;
 
@@ -83,6 +85,8 @@
 
 .post-view .bottom-view {
   font-size: 26rpx;
+  height:60rpx;
+  flex-direction: row-reverse;
 }
 
 .img-share {

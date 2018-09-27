@@ -22,7 +22,7 @@
 }
 
 .buildTask-container .item .item-content{
-  margin-left: 20rpx;
+  margin-left: 40rpx;
     font-size: 34rpx;
     width: 540rpx;
 }

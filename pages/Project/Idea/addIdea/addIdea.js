@@ -33,7 +33,7 @@ Page({
       '#79bd9a',  // light green
       '#576b95',  // blue
       '#e64340',  // red
-      '#ffc952'   // yellow
+      '#EEE8AA'   // yellow
     ],
 
     // 墙里的匿名列表

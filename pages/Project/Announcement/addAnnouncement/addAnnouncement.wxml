@@ -7,7 +7,7 @@
           <input class='title' name="title" placeholder='公告标题'/>
         </view> -->
         <view class='content-view'>
-          <textarea maxlength='-1' auto-height class='content' name="content" placeholder='以下是工作安排、明天开会的主要内容...'/>
+          <textarea maxlength='-1' auto-height class='content' name="content" placeholder='描述：以下是工作安排、明天的开会内容...'/>
         </view>
       </view>
 

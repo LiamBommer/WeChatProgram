@@ -28,7 +28,7 @@
               {{item.content}}
             </view>
             <view class='bottom-view ver-align space-between'>
-              <text class='task'>{{item.taskTitle}}</text>
+              {{item.taskTitle}}
               <!-- <image src='/img/share.png' class='img-share'></image> -->
             </view>
           </view>

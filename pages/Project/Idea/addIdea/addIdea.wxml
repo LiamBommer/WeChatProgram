@@ -3,7 +3,7 @@
   <form bindsubmit='BuildIdea'>
     <view class='view-container'>
         <view class='content-view'>
-          <textarea maxlength='-1' auto-height class='content'  name="content" placeholder='我觉得策划来自需求、宣传注重渠道...'/>
+          <textarea maxlength='-1' auto-height class='content'  name="content" placeholder='描述：我觉得加大宣传会更好...'/>
         </view>
         <view class="item-view ver-align space-between">
           <view class='ver-align'>

@@ -249,7 +249,7 @@
 }
 
 .item-bottom-list .list-content-task {
-  margin-top: 16rpx;
+  margin-top: 10rpx;
   margin-left: 16rpx;
   display:flex;
   flex-wrap:wrap;
@@ -261,7 +261,7 @@
   color: #888888;
   border-radius: 10rpx;
   margin-right: 16rpx;
-  margin-bottom:5px;
+  margin-bottom:10rpx;
 }
 .item-bottom-list .list-content-task .task.green {
   /* border: 2rpx solid #09BB07; */

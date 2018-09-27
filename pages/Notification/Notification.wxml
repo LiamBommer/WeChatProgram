@@ -6,7 +6,7 @@
     <view class='noitem'>
       <image class='noitem-icon' src='/img/noNotification.png'></image>
       <view class='noitem-title'>还没有通知哦</view>
-      <view class='noitem-content'>和我有关的项目通知都会在这里出现</view>
+      <view class='noitem-content'>和我有关的通知都会出现在这里哦</view>
     </view>
   </view>
   <!-- 有内容 -->
