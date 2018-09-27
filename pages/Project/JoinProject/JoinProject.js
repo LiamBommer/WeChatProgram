@@ -19,9 +19,9 @@ Page({
    */
   confirm: function() {
 
-    wx.showLoading({
-      title: '正在加入...',
-    })
+    // wx.showLoading({
+    //   title: '正在加入...',
+    // })
     // submit
     console.log('加入项目id：' + this.data.projectShareId + '\n用户id：' + this.data.currentUserId)
     if (this.data.projectShareId == -1){
@@ -85,7 +85,6 @@ Page({
     projectmemberQuery.first({
       success: function (result) {
         if (result == null) {
-
           // 未在项目中，加入项目
           var project = Bmob.Object.createWithoutData('project',projectId)  //与项目关联，可用来优化项目页获取用的项目信息
           projectmember.save({
@@ -99,7 +98,7 @@ Page({
               success: function (result) {
                 // 加入成功
                 // 反馈
-                wx.hideLoading()
+                // wx.hideLoading()
                 wx.showToast({
                   title: '加入' + that.data.projectName + '成功！',
                   duration: 1000,
@@ -114,11 +113,13 @@ Page({
             })           
         } else {
           // 已在项目中
-          wx.hideLoading()
+          // wx.hideLoading()
           wx.showToast({
             title: '你已在项目中！',
+            icon:"none",
             duration: 1000,
           })
+          console.log('你已在项目中！')
           //跳转的项目主页
           wx.switchTab({
             url: '../Project',
