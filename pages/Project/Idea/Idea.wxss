@@ -64,12 +64,13 @@
 }
 
 .post-view .user-info .username {
+  font-size: 26rpx;
 }
 
 .post-view .content {
  
   margin: 10rpx 0rpx;
-  font-size: 30rpx;
+  font-size: 34rpx;
   line-height: 40rpx;
 
   /* 3行省略 */
