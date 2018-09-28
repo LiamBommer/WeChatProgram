@@ -36,7 +36,7 @@
 
 .buildTask-container .item .item-content{
   font-size:40rpx;
-  width: 540rpx;
+  width: 600rpx;
 }
 
 .buildTask-container .submit{

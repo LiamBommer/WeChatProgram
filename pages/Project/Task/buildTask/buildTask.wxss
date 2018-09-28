@@ -23,7 +23,7 @@
 .buildTask-container .item image{
   width:50rpx;
   height:50rpx;
-  margin-left:35rpx;
+  margin-left:40rpx;
   border-radius:50%;
 }
 
@@ -36,7 +36,7 @@
 .buildTask-container .item .item-content{
   margin-left: 40rpx;
   font-size:28rpx;
-  width:540rpx;
+  width:600rpx;
 }
 .buildTask-container .item .item-content.titleContent{
   font-size: 40rpx;

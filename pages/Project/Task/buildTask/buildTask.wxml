@@ -6,7 +6,7 @@
       <view style='background:#fff'>
         <view class='item itemTitle'>
             <!-- <view class='item-title'>名称</view> -->
-            <input class='item-content titleContent' name='name' placeholder='名称：写策划书、采购...'></input>
+            <input class='item-content titleContent' name='name' maxlength='25' placeholder='名称：写策划书、采购...'></input>
         </view>
       </view>
       <!-- 列表项 -->
