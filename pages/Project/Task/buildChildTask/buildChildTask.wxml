@@ -3,9 +3,11 @@
 
     <form bindsubmit='BuildTask'>
       <!-- 列表项 -->
-      <view class='item'>
-          <view class='item-title'>名称</view>
-          <input class='item-content' name='name' placeholder='摆摊、布置场地...'></input>
+      <view style='background:#fff'>
+        <view class='item itemTitle'>
+            <!-- <view class='item-title'></view> -->
+            <input class='item-content' name='name' placeholder='名称：摆摊、布置场地...'></input>
+        </view>
       </view>
       <!-- 列表项 -->
       <view class='item' bindtap='AddMember'>

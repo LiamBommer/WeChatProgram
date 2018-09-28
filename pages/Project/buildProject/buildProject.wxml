@@ -3,9 +3,11 @@
 
     <form bindsubmit='BuildProject'>
       <!-- 列表项 -->
-    <view class='item'>
-        <!-- <view class='item-title'>名称</view> -->
-        <input type='text' class='item-content' name='title' placeholder-class='placeholder' placeholder='名称：女生节活动、荧光夜跑...' maxlength='20'></input>
+    <view style='background:#fff'>
+      <view class='item itemTitle'>
+          <!-- <view class='item-title'>名称</view> -->
+          <input type='text' class='item-title' name='title' placeholder-class='placeholder' placeholder='名称：女生节活动、荧光夜跑...' maxlength='20'></input>
+      </view>
     </view>
     <!-- 列表项 -->
     <view class='item'>

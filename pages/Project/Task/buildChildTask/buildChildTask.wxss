@@ -7,29 +7,35 @@
 }
 
 .buildTask-container .item{
-    background: #fff;
-    color: #000;
-    width: 100%;
-    height: 120rpx;
-    display: flex;
-    align-items: center;
+    background:#fff;
+    color:#000;
+    width:100%;
+    height:50rpx;
+    display:flex;
+    align-items:center;
+    padding:35rpx 0rpx;
+}
+.buildTask-container .item.itemTitle{
+    height: 150rpx;
+    border-bottom:2rpx solid #f2f2f2;
+    margin:0rpx 40rpx;
 }
 .buildTask-container .item image{
-  width:60rpx;
-  height:60rpx;
+  width:50rpx;
+  height:50rpx;
   margin-left:20rpx;
   border-radius: 50%;
 }
 
 .buildTask-container .item .item-title{
    margin-left: 40rpx;
-   width: 140rpx;
-   font-size: 32rpx;
+   width: 100rpx;
+   font-size: 28rpx;
 }
 
+
 .buildTask-container .item .item-content{
-  margin-left: 20rpx;
-  font-size:34rpx;
+  font-size:40rpx;
   width: 540rpx;
 }
 
